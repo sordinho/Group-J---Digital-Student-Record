@@ -6,8 +6,8 @@
  * @author: GroupJ 
  *
  */
-require_once($_SERVER['DOCUMENT_ROOT']."//site_config.php");
-
+//require_once($_SERVER['DOCUMENT_ROOT']."//site_config.php");
+require_once(__DIR__."/../site_config.php");
 define('APP_RAN', '');//Per verificare se un file � incluso!
 class csite{
     

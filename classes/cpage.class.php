@@ -6,8 +6,7 @@
  * @author: GroupJ 
  *
  */
-require_once($_SERVER['DOCUMENT_ROOT']."//site_config.php");
-
+require_once(__DIR__."/../site_config.php");
 class cpage {
     
     private $title;

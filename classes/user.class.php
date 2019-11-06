@@ -4,9 +4,7 @@
  *
  *
  */
-$hardpath = $_SERVER['DOCUMENT_ROOT'];
-require($hardpath."/site_config.php");
-
+require_once(__DIR__."/../site_config.php");
 class user {
     protected $login_iduser = null;
     protected $username = null;
