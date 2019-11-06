@@ -1,3 +1,7 @@
 
 .idea/
 /site_config.php
+ # Others
+composer.json
+composer.lock
+vendor/
