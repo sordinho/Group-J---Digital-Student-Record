@@ -5,7 +5,7 @@
  *
  */
 require_once(__DIR__."/../site_config.php");
-class cuser {
+class user {
     protected $login_iduser = null;
     protected $username = null;
     protected $password = null;
