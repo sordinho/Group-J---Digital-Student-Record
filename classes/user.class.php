@@ -19,8 +19,8 @@ class user {
         //In real not usefull if not creating with Users($_SESSION)
 //        if (isset($data['usergroup'])) $this->usergroup = stripslashes(strip_tags($data['usergroup'])); // todo remove if we want to make login same for all users
     }
-
-    private function connectMySQL() {
+    // protected and not private so that every inheriting class can access this method
+    protected function connectMySQL() {
         $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         /* check connection */
         if ($mysqli->connect_errno) {
