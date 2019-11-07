@@ -17,7 +17,7 @@ class user {
         if (isset($data['username'])) $this->username = stripslashes(strip_tags($data['username']));
         if (isset($data['password'])) $this->password = stripslashes(strip_tags($data['password']));
         //In real not usefull if not creating with Users($_SESSION)
-        if (isset($data['usergroup'])) $this->usergroup = stripslashes(strip_tags($data['usergroup']));
+//        if (isset($data['usergroup'])) $this->usergroup = stripslashes(strip_tags($data['usergroup'])); // todo remove if we want to make login same for all users
     }
 
     private function connectMySQL() {
@@ -83,8 +83,9 @@ class user {
         if (password_verify($password, $pass)) {
             // If here login was successful (hash was verified)
             $success = true;
-            //set_logged();
+            $this->set_logged($username);
             $this->set_usergroup("Parent"); // todo modify when extend login
+            $this->set_username($username); // todo check if we really need to save username, may be enough to store it in session[id]
         }
         $query->close();
         $mysqli->close();
