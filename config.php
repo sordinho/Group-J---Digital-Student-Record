@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("{$_SERVER['DOCUMENT_ROOT']}//site_config.php");
+require_once("site_config.php");
 /*
  * This is an autoconfiguration file used to autoload the defined classes
  * @file: config.php
