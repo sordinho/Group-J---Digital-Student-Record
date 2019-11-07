@@ -16,6 +16,7 @@ $content='
       <th scope="col">Date</th>
       <th scope="col">Grade</th>
       <th scope="col">Subject</th>
+      <th scope="col">Professor</th>
       <th scope="col">Category</th>
     </tr>
   </thead>
@@ -24,18 +25,21 @@ $content='
       <th scope="row">07/11/2019</th>
       <td>7</td>
       <td>Math</td>
+      <td>MathProfessor</td>
       <td>Written</td>
     </tr>
     <tr>
       <th scope="row">07/11/2019</th>
       <td>8</td>
       <td>English</td>
+      <td>English Professor</td>
       <td>Oral</td>
     </tr>
     <tr>
       <th scope="row">07/11/2019</th>
       <td>9</td>
       <td>History</td>
+      <td>History Professor</td>
       <td>Laboratory</td>
     </tr>
   </tbody>
