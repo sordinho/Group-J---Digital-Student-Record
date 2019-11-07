@@ -24,6 +24,9 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
             case "Teacher":
                 $url .= "/usergroup/teacher/index.php";
                 break;
+            case "Parent":
+                $url .= "/usergroup/parent/parent.php";
+                break;
             case "TODO":
                 $url .= "/TODO.php";
                 break; 
