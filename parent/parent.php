@@ -13,30 +13,30 @@ $content='
 <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Date</th>
+      <th scope="col">Grade</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Category</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th scope="row">07/11/2019</th>
+      <td>7</td>
+      <td>Math</td>
+      <td>Written</td>
     </tr>
     <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <th scope="row">07/11/2019</th>
+      <td>8</td>
+      <td>English</td>
+      <td>Oral</td>
     </tr>
     <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <th scope="row">07/11/2019</th>
+      <td>9</td>
+      <td>History</td>
+      <td>Laboratory</td>
     </tr>
   </tbody>
 </table>
