@@ -7,6 +7,7 @@ $page = new cpage("Home");
 $site->setPage($page);
 
 $content = "<center><h2>Test2</h2></center>";
+$content.='<a href="parent/parent.php">parentPage</a>';
 
 $page->setContent($content);
 $site->render();
@@ -38,6 +39,7 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
     echo "Authenticated?".$usr->is_logged();
     echo "\nUsergroup: ".$usr->get_usergroup();
     echo "\nUsername: ".$usr->get_username();
+
 }
 
 

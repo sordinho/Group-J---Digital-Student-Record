@@ -45,8 +45,8 @@ print '<!DOCTYPE html>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="./css/bootstrap.min.css" crossorigin="anonymous">
-		<link rel="stylesheet" href="./css/styleTicket.css">
+		<link rel="stylesheet" href="'.PLATFORM_PATH.'/css/bootstrap.min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="'.PLATFORM_PATH.'/css/styleTicket.css">
 		<!-- Other resources -->
 		<meta charset="UTF-8">
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -54,7 +54,7 @@ print '<!DOCTYPE html>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<!--Custom css/jss-->
-		<link href="./css/style.css" rel="stylesheet">
+		<link href="'.PLATFORM_PATH.'/css/style.css" rel="stylesheet">
 		<title>StudentDigitalRecord System</title>
 	</head>
 	
