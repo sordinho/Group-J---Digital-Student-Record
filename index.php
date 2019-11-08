@@ -6,7 +6,7 @@ initialize_site($site);
 $page = new cpage("Home");
 $site->setPage($page);
 
-$content ='<a href="parent/parent.php">parentPage</a>';
+$content ='<a href="usergroup/parent/parent.php">parentPage</a>';
 
 $page->setContent($content);
 $site->render();
