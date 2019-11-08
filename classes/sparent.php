@@ -14,12 +14,14 @@ class sparent extends user
             //todo
         }
         $conn = $this->connectMySql();
-        $sql = "SELECT Mark, T.Name, Timestamp, Te.Surname 
+        $stmt = $conn->prepare("SELECT Mark, T.Name, Timestamp, Te.Surname 
                 FROM Topic T, MarksRecord M, Teacher Te
                 WHERE M.TeacherID = Te.ID
                     AND M.TopicID = T.ID
-                    AND M.StudentID = '$childID';"; //todo edit this
-        $res = $conn->query($sql);
+                    AND M.StudentID = ?;");
+        $stmt->bind_param('s',$childID);
+        $stmt->execute();
+        $res = $stmt->get_result();
         $content ="";
         if($res->num_rows > 0){
             $content = '
