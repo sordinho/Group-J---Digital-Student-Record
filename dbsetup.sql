@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2.1
--- http://www.phpmyadmin.net
+-- version 4.9.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Creato il: Nov 07, 2019 alle 13:38
--- Versione del server: 5.7.27-0ubuntu0.16.04.1
--- Versione PHP: 7.0.33-0ubuntu0.16.04.7
+-- Host: 127.0.0.1
+-- Creato il: Nov 08, 2019 alle 17:28
+-- Versione del server: 10.4.8-MariaDB
+-- Versione PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,38 +19,31 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `softeng2Final`
+-- Database: `softeng2final`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `MarksRecord`
+-- Struttura della tabella `marksrecord`
 --
 
-DROP TABLE IF EXISTS `MarksRecord`;
-CREATE TABLE `MarksRecord` (
+CREATE TABLE `marksrecord` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `Mark` float NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `TopicID` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Svuota la tabella prima dell'inserimento `MarksRecord`
---
-
-TRUNCATE TABLE `MarksRecord`;
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Parent`
+-- Struttura della tabella `parent`
 --
 
-DROP TABLE IF EXISTS `Parent`;
-CREATE TABLE `Parent` (
+CREATE TABLE `parent` (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) NOT NULL,
   `Surname` varchar(50) NOT NULL,
@@ -58,28 +53,20 @@ CREATE TABLE `Parent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Svuota la tabella prima dell'inserimento `Parent`
+-- Dump dei dati per la tabella `parent`
 --
 
-TRUNCATE TABLE `Parent`;
---
--- Dump dei dati per la tabella `Parent`
---
-
-INSERT INTO `Parent` (`ID`, `Name`, `Surname`, `Email`, `Password`, `StudentID`) VALUES
-(1, 'pn1', 'ps1', 'pns1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 1),
-(2, 'pn1', 'ps1', 'pns1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 1),
-(3, 'pn2', 'sn2', 'pns2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 2),
-(4, 'pn2', 'sn2', 'pns2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 2);
+INSERT INTO `parent` (`ID`, `Name`, `Surname`, `Email`, `Password`, `StudentID`) VALUES
+(5, 'Peppino', 'Lavatrice', 'pns1@io.io', '$2y$12$z4NlHAWpIEGgw3pff.ZBVOd6tFFyjRPvup.atP5px136.UiQz0ifa', 3),
+(6, 'Gianna', 'Lavatrice', 'gianna.lav@io.io', '$2y$12$BIuQCBgYvq37/FmonwvYVuof1gOvV3wLHQQpCAf/Umleoeg9wv8qu', 3);
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Student`
+-- Struttura della tabella `student`
 --
 
-DROP TABLE IF EXISTS `Student`;
-CREATE TABLE `Student` (
+CREATE TABLE `student` (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) NOT NULL,
   `Surname` varchar(50) NOT NULL,
@@ -88,15 +75,10 @@ CREATE TABLE `Student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Svuota la tabella prima dell'inserimento `Student`
+-- Dump dei dati per la tabella `student`
 --
 
-TRUNCATE TABLE `Student`;
---
--- Dump dei dati per la tabella `Student`
---
-
-INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`) VALUES
+INSERT INTO `student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`) VALUES
 (1, 'name1', 'sur1', 10, 'cf1'),
 (2, 'name1', 'sur1', 10, 'cf1'),
 (3, 'name2', 'sur2', 10, 'cf2'),
@@ -108,23 +90,23 @@ INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`) VALUE
 --
 
 --
--- Indici per le tabelle `MarksRecord`
+-- Indici per le tabelle `marksrecord`
 --
-ALTER TABLE `MarksRecord`
+ALTER TABLE `marksrecord`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`);
 
 --
--- Indici per le tabelle `Parent`
+-- Indici per le tabelle `parent`
 --
-ALTER TABLE `Parent`
+ALTER TABLE `parent`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`);
 
 --
--- Indici per le tabelle `Student`
+-- Indici per le tabelle `student`
 --
-ALTER TABLE `Student`
+ALTER TABLE `student`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -132,35 +114,39 @@ ALTER TABLE `Student`
 --
 
 --
--- AUTO_INCREMENT per la tabella `MarksRecord`
+-- AUTO_INCREMENT per la tabella `marksrecord`
 --
-ALTER TABLE `MarksRecord`
+ALTER TABLE `marksrecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT per la tabella `Parent`
+-- AUTO_INCREMENT per la tabella `parent`
 --
-ALTER TABLE `Parent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `parent`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
--- AUTO_INCREMENT per la tabella `Student`
+-- AUTO_INCREMENT per la tabella `student`
 --
-ALTER TABLE `Student`
+ALTER TABLE `student`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- Limiti per le tabelle scaricate
 --
 
 --
--- Limiti per la tabella `MarksRecord`
+-- Limiti per la tabella `marksrecord`
 --
-ALTER TABLE `MarksRecord`
-  ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `marksrecord`
+  ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `Parent`
+-- Limiti per la tabella `parent`
 --
-ALTER TABLE `Parent`
-  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `parent`
+  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
