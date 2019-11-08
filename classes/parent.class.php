@@ -1,6 +1,6 @@
 <?php
 
-
+//non posso rinominarla in parent, parent è "reserved"
 class sparent extends user
 {
     private $parent_id = null;
@@ -9,7 +9,7 @@ class sparent extends user
     private $email = null;
     //private $childs = array();
 
-    public function get_grades_html($childID){
+    public function get_grades($childID){
 
         if(!isset($childID)){
             //todo
@@ -22,37 +22,7 @@ class sparent extends user
                     AND M.StudentID = ?;");
         $stmt->bind_param('s',$childID);
         $stmt->execute();
-        $res = $stmt->get_result();
-        $content ="";
-        if($res->num_rows > 0){
-            $content = '
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Grade</th>
-      <th scope="col">Subject</th>
-      <th scope="col">Professor</th>
-      <th scope="col">Category</th>
-    </tr>
-  </thead>
-  <tbody>';
-
-            while($row = $res->fetch_row()){
-                //todo decidere se nella colonna professor stamperemo solo il cognome o anche il nome
-                //  inoltre cosa intendiamo con category? Nelle tabelle dello schema AR non c'è il campo
-                $content.="
-    <tr>
-      <th scope='row'>$row[2]</th>
-      <td>$row[0]</td>
-      <td>$row[1]</td>
-      <td>$row[3]</td>
-      <td>??</td>
-    </tr>";
-            }
-            $content.='</tbody></table>';
-        }
-        return $content;
+        return $stmt->get_result();
     }
 
     // Register the childs in a session
