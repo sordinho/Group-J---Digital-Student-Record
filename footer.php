@@ -9,5 +9,8 @@
     </div>
 </footer>
 <!-- Footer -->
+<script src="
+<?php print PLATFORM_PATH.'/js/sidebar.js"></script>"' ; ?>
+
 </body>
 </html>

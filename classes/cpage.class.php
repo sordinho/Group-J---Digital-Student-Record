@@ -25,7 +25,8 @@ class cpage {
         
         //La funzione render crea il contenuto della pagina in html
         echo "<div class='container' id='content'>";
-        echo "<H1>{$this->title}</H1>";
+        $mtitle = "<center><h2>{$this->title}</h2></center>";
+        echo $mtitle;
         echo $this->content;
         //echo "</div>";
         echo "</div>";//<div id=main>
