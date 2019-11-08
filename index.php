@@ -15,19 +15,24 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
     echo "You just tried login";
     $usr = new user;
     $usr->storeFormValues( $_POST );
+
+    $post_data["username"] = $_POST['username'];
+    $post_data["password"] = $_POST['password'];
+
+    echo $_POST['username'] . $_POST['password'];
     
-    if( $usr->userLogin() ) {
+    if($usr->user_login($post_data)) {
         $usergroup = $usr->get_usergroup();
-        $url = "";
+        $url = "/index.php";
         switch($usergroup){
             case "Teacher":
-                $url .= "/usergroup/teacher/index.php";
+                //$url .= "/usergroup/teacher/index.php";
                 break;
             case "Parent":
-                $url .= "/usergroup/parent/parent.php";
+                //$url .= "/usergroup/parent/parent.php";
                 break;
             case "TODO":
-                $url .= "/TODO.php";
+                //$url .= "/TODO.php";
                 break; 
         }
         echo "Success";

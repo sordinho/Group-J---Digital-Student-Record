@@ -47,6 +47,51 @@ class user {
         return $userinfo;
     }
 
+    /**
+     * @param $mail, $password, $name, $surname, $student
+     * @return bool
+     */
+    function register($mail, $password, $name, $surname, $student)
+    {
+        //TODO: eventually modify for other types of registration - this is thought for parents
+        $success = false;
+        /*
+        // TODO: eventually edit with has_permission() (related to admin capabilities to add clerk)
+        if (!is_admin()) {
+            //die("You are already registered and logged in");
+            return $success;
+        }*/
+        $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
+        if ($mysqli->connect_errno) {
+            printf("Connect failed: %s\n", mysqli_connect_error());
+            return $success;
+        }
+
+        $options = [
+            //'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
+            'cost' => 12 // default is 10, better have a little more security
+        ];
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
+        // In a real scenario it should be a nice practice to generate an activation code and let the user confirm that value (ex. with a link)
+        //$activation_code = rand(100, 999).rand(100,999).rand(100,999);
+        $sql = "INSERT INTO parent (ID, Name, Surname, Email,  Password, StudentID) VALUES (0, ?, ?, ?, ?, ?)";
+        $query = $mysqli->prepare($sql);
+        $query->bind_param("ssssi", $name, $surname, $mail, $hashed_password, $student);
+        //TODO: handle ID value
+        $res = $query->execute();
+        if (!$res) {
+            printf("Error message: %s\n", $mysqli->error);
+            return $success;
+        } else {
+            $query->close();
+            $mysqli->close();
+            $mail_enc = urlencode($mail);
+            $url = PLATFORM_PATH;
+            $url .= "register.php?front_office=" . $mail_enc;
+            die("<meta http-equiv='refresh' content='1; url=$url' />");
+        }
+    }
+
     /** Verify username and password for a user to consent log in (can be different "types" of users)
      *
      * @param $post_data : array containing username and password
@@ -91,7 +136,7 @@ class user {
         $mysqli->close();
 
         // Extends login when needed
-        //$userinfo = get_user_data($front_office);
+        //$userinfo = get_user_data($user);
         //set_usergroup($userinfo['usergroup']);
         //set_username($userinfo['username']);             // todo controllare questa riga, era: set_name($userinfo['name']); ----- ma name non esiste
 
