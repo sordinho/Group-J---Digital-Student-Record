@@ -17,7 +17,7 @@
 ### Precondition
 - Parent successfully authenticated
 ### Minimum Guarantees
-- The table is showed
+- The table is printed
 ### Success Guarantees
 - The page shows a table with all the marks
 ### Trigger
