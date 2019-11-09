@@ -22,7 +22,7 @@ class user {
 
 	// protected and not private so that every inheriting class can access this method
 	protected function connectMySQL() {
-		$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+		$mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
 		/* check connection */
 		if ($mysqli->connect_errno) {
 			printf("Connect failed: %s\n", $mysqli->connect_errno);
@@ -74,6 +74,7 @@ class user {
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
 		// In a real scenario it should be a nice practice to generate an activation code and let the user confirm that value (ex. with a link)
 		//$activation_code = rand(100, 999).rand(100,999).rand(100,999);
+        //TODO: modify because parent now has esternal KEY userID with pwd and email
 		$sql = "INSERT INTO parent (ID, Name, Surname, Email,  Password, StudentID) VALUES (0, ?, ?, ?, ?, ?)";
 		$query = $mysqli->prepare($sql);
 		$query->bind_param("ssssi", $name, $surname, $mail, $hashed_password, $student);
@@ -111,7 +112,7 @@ class user {
 
 //        todo: first version: LOGIN ONLY FOR PARENTS
 		// Here using prepared statement to avoid SQLi
-		$query = $mysqli->prepare("SELECT ID, Password FROM parent WHERE Email = ?");
+		$query = $mysqli->prepare("SELECT ID, Password,usergroup FROM user u WHERE Email = ?");
 		$query->bind_param('s', $username);
 		$res = $query->execute();
 		if (!$res) {
@@ -120,7 +121,7 @@ class user {
 		}
 
 		$query->store_result();
-		$query->bind_result($id, $pass);
+		$query->bind_result($id, $pass, $retrievedUsergroup);
 		// In case of success there should be just 1 user for a given (username is also a primary key for its table)
 		if ($query->num_rows != 1) {
 			return $success;

@@ -6,7 +6,6 @@ initialize_site($site);
 $page = new cpage("Home");
 $site->setPage($page);
 
-$content = '<a href="usergroup/parent/parent.php">parentPage</a>';
 
 $page->setContent($content);
 $site->render();
@@ -28,8 +27,8 @@ if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 			case "Teacher":
 				$url = "/usergroup/teacher/index.php";
 				break;
-			case "Parent":
-				$url = "/usergroup/parent/parent.php";
+			case "parent":
+				$url = "/usergroup/parent/";
 				break;
 			case "TODO":
 				//$url = "/TODO.php";

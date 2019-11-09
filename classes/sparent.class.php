@@ -15,10 +15,10 @@ class sparent extends user
             //todo
         }
         $conn = $this->connectMySql();
-        $stmt = $conn->prepare("SELECT Mark, T.Name, Timestamp, Te.Surname 
-                FROM Topic T, MarksRecord M, Teacher Te
-                WHERE M.TeacherID = Te.ID
-                    AND M.TopicID = T.ID
+        //TODO: add topic table in db and add the topic to this query
+        $stmt = $conn->prepare("SELECT Mark, Timestamp, u.Surname 
+                FROM MarksRecord M, Teacher Te,user u
+                WHERE M.TeacherID = Te.teacherID AND Te.userID=u.ID
                     AND M.StudentID = ?;");
         $stmt->bind_param('s',$childID);
         $stmt->execute();
