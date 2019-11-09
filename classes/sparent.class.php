@@ -15,11 +15,10 @@ class sparent extends user
             //todo
         }
         $conn = $this->connectMySql();
-        //TODO: add topic table in db and add the topic to this query
-        $stmt = $conn->prepare("SELECT Mark, Timestamp, u.Surname 
-                FROM MarksRecord M, Teacher Te,user u
-                WHERE M.TeacherID = Te.ID AND Te.userID=u.ID
-                    AND M.StudentID = ?;");
+        $stmt = $conn->prepare("SELECT t.Name, Mark, Timestamp, u.Surname 
+                FROM  Topic t, MarksRecord M, Teacher Te,User u
+                WHERE M.TeacherID = Te.ID AND Te.UserID=u.ID AND t.ID=M.TopicID
+                    AND M.StudentID = ?");
         $stmt->bind_param('s',$childID);
         $stmt->execute();
         return $stmt->get_result();
@@ -37,7 +36,7 @@ class sparent extends user
       $stmt->execute();
       $res = $stmt->get_result();
       while($row = $res->fetch_row()){
-        array_push($childs, row[0]);
+        array_push($childs, $row[0]);
       }
       $_SESSION['childsID'] = $childs;
       //$_SESSION['childNames'] = $child_names;

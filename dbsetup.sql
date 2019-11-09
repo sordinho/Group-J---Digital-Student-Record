@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 09, 2019 alle 12:42
+-- Creato il: Nov 09, 2019 alle 13:36
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.0.33-0ubuntu0.16.04.7
 
@@ -103,7 +103,6 @@ CREATE TABLE `Teacher` (
   `ID` int(11) NOT NULL,
   `MeetingHourID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
-  `Password` text NOT NULL,
   `FiscalCode` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -111,14 +110,14 @@ CREATE TABLE `Teacher` (
 -- Dump dei dati per la tabella `Teacher`
 --
 
-INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `Password`, `FiscalCode`) VALUES
-(1, 0, 0, 'psw1', 'fc1'),
-(2, 0, 0, 'psw2', 'fc2'),
-(3, 0, 0, 'psw3', 'fc3'),
-(4, 0, 0, 'psw4', 'fc4'),
-(5, 0, 0, 'psw5', 'fc5'),
-(6, 0, 0, 'psw6', 'fc6'),
-(7, 0, 0, 'psw7', 'fc7');
+INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
+(1, 0, 3, 'fc1'),
+(2, 0, 4, 'fc2'),
+(3, 0, 5, 'fc3'),
+(4, 0, 6, 'fc4'),
+(5, 0, 7, 'fc5'),
+(6, 0, 8, 'fc6'),
+(7, 0, 9, 'fc7');
 
 -- --------------------------------------------------------
 
@@ -166,7 +165,14 @@ CREATE TABLE `User` (
 
 INSERT INTO `User` (`ID`, `Name`, `Surname`, `email`, `password`, `usergroup`) VALUES
 (1, 'ParentName1A', 'ParentSurname2a', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
-(2, 'ParentName2A', 'ParentSurame2A', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent');
+(2, 'ParentName2A', 'ParentSurame2A', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
+(3, 'TeacherName1', 'TeacherSur1', 'TeacherEmail1', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(4, 'TeacherName2', 'TeacherSur2', 'TeacherEmail2', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(5, 'TeacherName3', 'TeacherSur3', 'TeacherEmail3', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(6, 'TeacherName4', 'TeacherSur4', 'TeacherEmail4', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(7, 'TeacherName5', 'TeacherSur5', 'TeacherEmail5', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(8, 'TeacherName6', 'TeacherSur6', 'TeacherEmail6', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(9, 'TeacherName7', 'TeacherSur7', 'TeacherEmail7', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher');
 
 --
 -- Indici per le tabelle scaricate
@@ -246,7 +252,7 @@ ALTER TABLE `Topic`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -262,8 +268,14 @@ ALTER TABLE `MarksRecord`
 -- Limiti per la tabella `Parent`
 --
 ALTER TABLE `Parent`
-  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_userID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_parentID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `Teacher`
+--
+ALTER TABLE `Teacher`
+  ADD CONSTRAINT `fk_teacherID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
