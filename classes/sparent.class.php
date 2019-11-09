@@ -1,6 +1,5 @@
 <?php
 
-//non posso rinominarla in parent, parent è "reserved"
 class sparent extends user
 {
     private $parent_id = null;

@@ -26,6 +26,4 @@
 
 ### Main Succes Scenario
 
-- <step number>
-
 ### Extensions
