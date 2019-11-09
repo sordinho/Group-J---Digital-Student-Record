@@ -12,7 +12,7 @@ class sparent extends user
     public function get_grades($childID){
 
         if(!isset($childID)){
-            //todo
+            return array();
         }
         $conn = $this->connectMySql();
         $stmt = $conn->prepare("SELECT t.Name, Mark, Timestamp, u.Surname 

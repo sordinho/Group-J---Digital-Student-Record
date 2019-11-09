@@ -26,12 +26,12 @@ $content='
 $grades = $parentObj -> get_grades(3);
 
 while($row = $grades->fetch_row()){
-      //Mark, Timestamp, u.Surname
+      //t.Name, Mark, Timestamp, u.Surname
     $content.='<tr>
-      <th scope="row">'.$row[1].'</th>
+      <th scope="row">'.$row[2].'</th>
+      <td>'.$row[1].'</td>
       <td>'.$row[0].'</td>
-      <td>TODO</td>
-      <td>'.$row[2].'</td>
+      <td>'.$row[3].'</td>
       <td>TODO</td>
     </tr>';
 }
