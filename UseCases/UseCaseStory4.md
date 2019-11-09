@@ -1,0 +1,39 @@
+# Use Case 4
+
+## Use Case
+
+- Administrative officer performing student enrollment.
+
+### Scope
+Enrollment system
+### Level
+User-goal
+### Intention in context
+Student enrollment performed by administrative officer while authenticated.
+### Primary actor
+Administrative officer
+#### Support Actors
+None
+### Stakeholder's interests
+Principal: wants that Administrative officers approve enrollment for each student.
+### Precondition
+The administrative officer has a valid account and is authenticated.
+There is at least one student not enrolled yet.
+
+### Minimum Guarantees
+A feedback is shown to the user to show the status of the performed operation.
+### Success Guarantees
+A (previously registered) user is now officially enrolled in a class.
+### Trigger
+The administrative officer clicks on the "Enroll student" button.
+### Main Succes Scenario
+
+- <1> Administrative officer visit the *Enrollment* page
+- <2> the system retrieves all the data for the student that needs to be enrolled
+- <3> the system shows the data for the student
+- <4> administrative officer checks the fields and the class assosiation for the given student
+- <5> user clicks on the *Enroll student* button
+- <6> the system shows the success feedback message
+- <7> the system save the enrollment and update its status.
+### Extensions
+In step 4, if there is any issue (i.e. the student was already enrolled by another administrative officer), a warning message of failure is shown to the user and a log is saved.
