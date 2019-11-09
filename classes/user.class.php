@@ -111,8 +111,9 @@ class user {
 		}
 
 //        todo: first version: LOGIN ONLY FOR PARENTS
+//TODO: extend with name and surname (maybe save that in an array as user_info[] ?)
 		// Here using prepared statement to avoid SQLi
-		$query = $mysqli->prepare("SELECT ID, Password,usergroup FROM user WHERE Email = ?");
+		$query = $mysqli->prepare("SELECT ID, password,usergroup FROM User WHERE email = ?");
 		$query->bind_param('s', $username);
 		$res = $query->execute();
 		if (!$res) {

@@ -44,7 +44,7 @@ class Teacher extends user
         //todo : qual è il tipo delle variabili id? login_iduser
         //       al suo interno salva l'id dell'utente nelle tabelle del db?
         //  NB : uso query preparate per prevenire sql injection
-        $stmt->bind_param('ssss',$this->login_iduser,$topicID,$lectureDescription,$timestamp);
+        $stmt->bind_param('iiss',$this->login_iduser,$topicID,$lectureDescription,$timestamp);
         $stmt->execute();
         return $stmt->get_result();//True || False
     }
@@ -58,7 +58,7 @@ class Teacher extends user
         $stmt = $conn->prepare("SELECT TeacherID, Timestamp 
                                       FROM TopicRecord
                                       WHERE TopicID = ?;");
-        $stmt->bind_param('s',$topicID);
+        $stmt->bind_param('i',$topicID);
         $stmt->execute();
         $res = $stmt->get_result();
         if($res->num_rows<=0){
@@ -81,7 +81,7 @@ class Teacher extends user
             }
             $res->close();
             $stmt = $conn->prepare("INSERT INTO TopicRecord VALUES (?,?,?,?);");
-            $stmt->bind_param("ssss",$this->login_iduser,$topicID,$newDescription,$row[1]);
+            $stmt->bind_param("iiss",$this->login_iduser,$topicID,$newDescription,$row[1]);
             $stmt->execute();
             return $stmt->get_result();
         }
