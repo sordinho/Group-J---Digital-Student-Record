@@ -37,3 +37,9 @@ The administrative officer clicks on the "Enroll student" button.
 - <7> the system save the enrollment and update its status.
 ### Extensions
 In step 4, if there is any issue (i.e. the student was already enrolled by another administrative officer), a warning message of failure is shown to the user and a log is saved.
+- <4a> DB not responding
+- <4a.1 > An error message of failure is shown to the user and a log is saved.
+- <4a.2> user is redirected to the homepage.
+- <4b> Student already enrolled
+- <4b.1> a warning message of failure is shown to the user.
+- <4b.2> user is redirected to the homepage.
