@@ -17,9 +17,10 @@ if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 	$post_data["username"] = $_POST['username'];
 	$post_data["password"] = $_POST['password'];
 
-	echo $_POST['username'] . $_POST['password'];
+	echo $_POST['username'] . " ". $_POST['password'];
 
 	if ($usr->user_login($post_data)) {
+		print "AAA";
 		$usergroup = $usr->get_usergroup();
 		$url = "/index.php";
 		switch ($usergroup) {
