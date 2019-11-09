@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 09, 2019 alle 12:22
+-- Creato il: Nov 09, 2019 alle 12:38
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.0.33-0ubuntu0.16.04.7
 
@@ -34,6 +34,19 @@ CREATE TABLE `MarksRecord` (
   `TopicID` int(11) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `MarksRecord`
+--
+
+INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `Timestamp`) VALUES
+(1, 2, 7, 1, 1, '2019-11-09 07:00:00'),
+(2, 2, 7, 2, 2, '2019-11-09 08:00:00'),
+(3, 3, 4, 3, 3, '2019-11-09 09:00:00'),
+(4, 4, 2, 4, 4, '2019-11-09 10:00:00'),
+(5, 1, 2, 5, 5, '2019-11-09 11:00:00'),
+(6, 1, 5, 6, 6, '2019-11-09 12:00:00'),
+(7, 5, 9, 7, 7, '2019-11-09 13:00:00');
 
 -- --------------------------------------------------------
 
@@ -94,6 +107,19 @@ CREATE TABLE `Teacher` (
   `FiscalCode` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dump dei dati per la tabella `Teacher`
+--
+
+INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `Password`, `FiscalCode`) VALUES
+(1, 0, 0, 'psw1', 'fc1'),
+(2, 0, 0, 'psw2', 'fc2'),
+(3, 0, 0, 'psw3', 'fc3'),
+(4, 0, 0, 'psw4', 'fc4'),
+(5, 0, 0, 'psw5', 'fc5'),
+(6, 0, 0, 'psw6', 'fc6'),
+(7, 0, 0, 'psw7', 'fc7');
+
 -- --------------------------------------------------------
 
 --
@@ -105,6 +131,19 @@ CREATE TABLE `Topic` (
   `Name` varchar(100) NOT NULL,
   `Description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `Topic`
+--
+
+INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
+(1, 'topic1', 'desc1'),
+(2, 'topic2', 'desc2'),
+(3, 'topic3', 'desc3'),
+(4, 'topic4', 'desc4'),
+(5, 'topic5', 'desc5'),
+(6, 'topic6', 'desc6'),
+(7, 'topic7', 'desc7');
 
 -- --------------------------------------------------------
 
@@ -181,7 +220,7 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT per la tabella `MarksRecord`
 --
 ALTER TABLE `MarksRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT per la tabella `Parent`
 --
@@ -196,12 +235,12 @@ ALTER TABLE `Student`
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
 ALTER TABLE `Teacher`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --
 ALTER TABLE `Topic`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT per la tabella `User`
 --

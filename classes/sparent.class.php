@@ -18,7 +18,7 @@ class sparent extends user
         //TODO: add topic table in db and add the topic to this query
         $stmt = $conn->prepare("SELECT Mark, Timestamp, u.Surname 
                 FROM MarksRecord M, Teacher Te,user u
-                WHERE M.TeacherID = Te.teacherID AND Te.userID=u.ID
+                WHERE M.TeacherID = Te.ID AND Te.userID=u.ID
                     AND M.StudentID = ?;");
         $stmt->bind_param('s',$childID);
         $stmt->execute();
