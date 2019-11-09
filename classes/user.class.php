@@ -112,7 +112,7 @@ class user {
 
 //        todo: first version: LOGIN ONLY FOR PARENTS
 		// Here using prepared statement to avoid SQLi
-		$query = $mysqli->prepare("SELECT ID, Password,usergroup FROM user u WHERE Email = ?");
+		$query = $mysqli->prepare("SELECT ID, Password,usergroup FROM user WHERE Email = ?");
 		$query->bind_param('s', $username);
 		$res = $query->execute();
 		if (!$res) {
