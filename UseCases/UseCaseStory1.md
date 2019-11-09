@@ -1,26 +1,28 @@
-# Check child's marks
-#### Scope
+# Use case
+- Story 1
+- Check child's mark
+### Scope
 - System
-#### Level
+### Level
 - User-goal
-#### Intention in context
+### Intention in context
 - Parent authenticate into the system, expects to see a table showing the marks of the selected child
-#### Primary actor
+### Primary actor
 - Parent
-#### Support Actors
+### Support Actors
 - None
-#### Stakeholder's interests
+### Stakeholder's interests
 - The parent expects the table showing the date, grade,  topic and teacher's surname for each mark
 - The principal, teacher and class coordinator expect that the tables show consistent informations and correctly load the marks from the server
-#### Precondition
+### Precondition
 - Parent successfully authenticated
-#### Minimum Guarantees
+### Minimum Guarantees
 - The table is showed
-#### Success Guarantees
+### Success Guarantees
 - The page shows a table with all the marks
-#### Trigger
+### Trigger
 - The parent authenticate and access the dashboard page
-#### Main success scenario
+### Main success scenario
 
 |Step|Description|
 |---|---|
@@ -35,7 +37,7 @@
 
 The use case terminates with success
 
-#### Extensions
+### Extensions
 
 |Step|Extension|Extension step|Description|
 |---|---|---|---|
@@ -52,7 +54,7 @@ The use case terminates with success
 | | |2|The system notifies that the database is not reachable|
 |8|a|1|The table prints no rows|
 
-#### Use case diagram
+### Use case diagram
 
 ![](story%231_use_case_diagram.png)
 
