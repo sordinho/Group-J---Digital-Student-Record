@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 09, 2019 alle 12:38
+-- Creato il: Nov 09, 2019 alle 12:42
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.0.33-0ubuntu0.16.04.7
 
@@ -66,7 +66,7 @@ CREATE TABLE `Parent` (
 
 INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (1, 1, 1),
-(3, 2, 2);
+(2, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -185,7 +185,8 @@ ALTER TABLE `MarksRecord`
 --
 ALTER TABLE `Parent`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `StudentID` (`StudentID`);
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- Indici per le tabelle `Student`
@@ -261,7 +262,8 @@ ALTER TABLE `MarksRecord`
 -- Limiti per la tabella `Parent`
 --
 ALTER TABLE `Parent`
-  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_userID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
