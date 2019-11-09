@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 09, 2019 alle 12:05
+-- Creato il: Nov 09, 2019 alle 12:22
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.0.33-0ubuntu0.16.04.7
 
@@ -83,6 +83,20 @@ INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `Teacher`
+--
+
+CREATE TABLE `Teacher` (
+  `ID` int(11) NOT NULL,
+  `MeetingHourID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `Password` text NOT NULL,
+  `FiscalCode` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `Topic`
 --
 
@@ -141,6 +155,13 @@ ALTER TABLE `Student`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indici per le tabelle `Teacher`
+--
+ALTER TABLE `Teacher`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `UserID` (`UserID`);
+
+--
 -- Indici per le tabelle `Topic`
 --
 ALTER TABLE `Topic`
@@ -171,6 +192,11 @@ ALTER TABLE `Parent`
 --
 ALTER TABLE `Student`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT per la tabella `Teacher`
+--
+ALTER TABLE `Teacher`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --
