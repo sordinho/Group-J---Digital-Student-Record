@@ -31,7 +31,7 @@ while($row = $grades->fetch_row()){
       <th scope="row">'.$row[1].'</th>
       <td>'.$row[0].'</td>
       <td>TODO</td>
-      <td>'.$row[3].'</td>
+      <td>'.$row[2].'</td>
       <td>TODO</td>
     </tr>';
 }
