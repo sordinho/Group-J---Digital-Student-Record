@@ -9,7 +9,6 @@ $site->setPage($page);
 
 $page->setContent($content);
 $site->render();
-
 if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 	echo "You just tried login";
 	$usr = new user;
@@ -47,7 +46,10 @@ if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 	echo "<br>Username: " . $usr->get_username();
 	echo "<br>ID: " . $usr->get_id();
 	echo "<br>Base_URL: " . $usr->get_base_url();
-
+	if($usr->is_logged()){
+		$html = "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $usr->get_base_url() . "' />";
+		die($html);
+	}
 }
 
 
