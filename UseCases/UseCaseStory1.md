@@ -1,4 +1,4 @@
-# Use case
+## Use case
 - Story 1
 - Check child's mark
 ### Scope
