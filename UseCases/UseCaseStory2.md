@@ -60,6 +60,5 @@
 
 ### Extensions
 - 4.a teacher refreshes the page before clicking confirm button
-- 4.b teacher doesn't click on confirm button
 - 5.a the DB is busy
 - 5.a.1 there's a error message and the topics are not registered
