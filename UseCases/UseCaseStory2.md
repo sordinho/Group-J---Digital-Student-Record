@@ -59,7 +59,6 @@
 
 
 ### Extensions
-- 1.a Teacher has access credentials.
 - 4.a teacher refreshes the page before clicking confirm button
 - 4.b teacher doesn't click on confirm button
 - 5.a the DB is busy
