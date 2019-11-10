@@ -23,15 +23,15 @@ There is at least one student not enrolled yet.
 ### Minimum Guarantees
 A feedback is shown to the user to show the status of the performed operation.
 ### Success Guarantees
-A (previously registered) user is now officially enrolled in a class.
+A given user is now enrolled in the school. All the anagraphic datas are stored in the database.
 ### Trigger
 The administrative officer clicks on the "Enroll student" button.
 ### Main Succes Scenario
 
 - <1> Administrative officer visit the *Enrollment* page
 - <2> the system retrieves all the data for the student that needs to be enrolled
-- <3> the system shows the data for the student
-- <4> administrative officer checks the fields and the class assosiation for the given student
+- <3> the system shows the form to insert data for the given student
+- <4> administrative officer checks the fields 
 - <5> user clicks on the *Enroll student* button
 - <6> the system shows the success feedback message
 - <7> the system save the enrollment and update its status.
