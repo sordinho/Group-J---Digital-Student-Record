@@ -23,6 +23,7 @@ $content='
   </thead>
   <tbody>';
 
+//TODO get the current child selected by the parent
 $grades = $parentObj -> get_grades(3);
 
 while($row = $grades->fetch_row()){
