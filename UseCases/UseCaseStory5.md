@@ -30,7 +30,8 @@ Define classes composition: which student are in each class.
 
 ### Precondition
 
-Administrative officer is authenticated
+- Administrative officer is authenticated
+- Students needs are already enrolled 
 
 ### Minimum Guarantees
 
@@ -39,14 +40,12 @@ A feedback is shown to the user
 ### Success Guarantees
 
 Information about the chosen class composition is saved
-A class composition is defined for a class, following these constraints:
-- number of student is at minimum 15 for the years after first
-- no minimum number of student is defined for the first year
+A class composition is defined for a class, following this constraint:
 - number of student is at maximum 30
 
 ### Trigger
 
-The administrative officer select a class and clicks on "Define class composition"
+None
 
 ### Main Success Scenario
 
@@ -56,8 +55,8 @@ The administrative officer select a class and clicks on "Define class compositio
 - <4> The system displays which are the constraints to follow 
 - <5> Administrative officer selects which students need be inserted in that class
 - <6> Administrative officer clicks on the *Submit Composition* button
-- <7> The system shows the success feedback message
-- <8> The system saves the composition and updates its status
+- <7> The system saves the composition and updates its status
+- <8> The system shows a success feedback message
 
 ### Extensions
 |Step#| Description|
