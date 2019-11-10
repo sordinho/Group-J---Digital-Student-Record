@@ -3,9 +3,10 @@
 ## Use Case
 
 - Story 2
-- Allow teachers to record daily lecture topics 
 
 ### Scope
+
+- Allow teachers to record daily lecture topics 
 
 ### Level
 
@@ -19,11 +20,11 @@
 
 ### Primary actor
 
-- teachers
+- teacher
 
 #### Support Actors
 
-- 
+- none
 
 ### Stakeholder's interests
 
@@ -32,10 +33,15 @@
 ### Precondition
 
 - Teacher authenticated 
+- Teacher had a class in which he teaches
 
 ### Minimum Guarantees
 
+- Teacher can insert a text in which explains the daily lecture topics
+
 ### Success Guarantees
+
+- the daily lesson topics are registered correctly, so that all students (of the class) and parents can read them
 
 ### Trigger
 
@@ -53,4 +59,8 @@
 
 
 ### Extensions
-- 1 Teacher has access credentials.
+- 1.a Teacher has access credentials.
+- 4.a teacher refreshes the page before clicking confirm button
+- 4.b teacher doesn't click on confirm button
+- 5.a the DB is busy
+- 5.a.1 there's a error message and the topics are not registered
