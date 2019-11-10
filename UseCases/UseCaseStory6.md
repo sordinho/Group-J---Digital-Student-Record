@@ -57,7 +57,7 @@ None
 ### Extensions
 
 - 3.a teacher has no teaching classes 
-- 6.a teacher doesnt click the confirm button 
+- 6.a teacher cancel the operation 
 - 6.b teacher refresh the page before the mark is sent to the server.
 - 7.a the DB is busy
 - 7.a.1 an error message is shown and mark is not registered
