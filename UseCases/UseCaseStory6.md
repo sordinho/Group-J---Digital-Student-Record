@@ -50,17 +50,15 @@ None
 3. System retrieve the students enrolled in the classes where the teacher is teaching in the current year
 4. Teacher choose the student between the enrolled ones
 5. System shows up a list of possibles grades(see minimum guarantees)
-5. Teacher choose a mark in the given list 
-6. Teacher confirms the choosen mark by clicking the confirm button
-7. The system register the new marks for the given course to the specific student career
+6. Teacher choose a mark in the given list
+7. Teacher confirms the choosen mark by clicking the confirm button
+8. The system register the new marks for the given course to the specific student career
+9. The system shows the success feedback message
 
 ### Extensions
 
-- 3.a teacher has no teaching classes 
-- 6.a teacher cancel the operation 
+- 3.a teacher has no teaching classes
+- 6.a teacher cancel the operation
 - 6.b teacher refresh the page before the mark is sent to the server.
 - 7.a the DB is busy
-- 7.a.1 an error message is shown and mark is not registered
-
-
-
+- 8.a an error message is shown and mark is not registered
