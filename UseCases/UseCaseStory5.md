@@ -60,7 +60,8 @@ The administrative officer select a class and clicks on "Define class compositio
 - <8> The system saves the composition and updates its status
 
 ### Extensions
-
+|Step#| Description|
+|----|---------------------------------------------|
 |1a1 | Login for administrative officer is expired |
 |1a2 | An error message is shown, detailing the issue |
 |1a3 | Administrative officer is redirected to the login page |
