@@ -15,7 +15,7 @@ Administrative officer
 #### Support Actors
 None
 ### Stakeholder's interests
-Principal: wants that Administrative officers approve enrollment for each student.
+Principal: wants that Administrative officers to enroll each student.
 ### Precondition
 The administrative officer has a valid account and is authenticated.
 There is at least one student not enrolled yet.
