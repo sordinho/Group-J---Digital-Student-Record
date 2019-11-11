@@ -25,7 +25,7 @@ A feedback is shown to the user to show the status of the performed operation.
 ### Success Guarantees
 A given user is now enrolled in the school. All the anagraphic datas are stored in the database.
 ### Trigger
-The administrative officer clicks on the "Enroll student" button.
+None
 ### Main Succes Scenario
 
 - <1> Administrative officer visit the *Enrollment* page
