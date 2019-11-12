@@ -1,4 +1,4 @@
-## Use Case Story #6
+## Use Case 6
 
 Teacher assign a grade to a student
 

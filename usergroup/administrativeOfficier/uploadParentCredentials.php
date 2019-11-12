@@ -8,7 +8,17 @@ $site->setPage($page);
 
 /*here content*/
 
-//todo
+//1 get generated credentials
+// $officier = new AdministrativeOfficier();
+// $res = $officier->getGeneratedCredentials();
+//2 show generated credentials in a tabular fashion
+// while($row = $res->fetch_row()){
+//      print a table
+// }
+//3 confirm the operation
+// ask for user confirmation
+//3.a send mail
+// IF user confirms --> notify mailer class
 
 $page->setContent($content);
 $site->render();

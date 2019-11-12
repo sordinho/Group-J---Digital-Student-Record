@@ -3,11 +3,15 @@
 class sparent extends user
 {
     private $parent_id = null;
-    private $name = null;
-    private $surname = null;
-    private $email = null;
     //private $childs = array();
 
+    public function __construct($data = array())
+    {
+        parent::__construct($data);
+        $this->parent_id = $data['parent_id'];
+    }
+
+    //returns the result of the query that selects all the grades of @childID
     public function get_grades($childID){
 
         if(!isset($childID)){

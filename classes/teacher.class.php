@@ -26,6 +26,14 @@ class Teacher extends user
             return false;
         return true;
     }
+    /*
+     * @lectureDescritpion --> string with the description of a single lecture
+     * @topicID            --> Id of the subject
+     * @timestamp          --> date of the lecture "yyyy-mm-dd hh:mm:ss"
+     *
+     * return               true            if successful
+     *                      false           otherwise
+     * */
     public function insert_new_lecture_topic($lectureDescription,$topicID,$timestamp){
         //todo : come arriva la data dell'inserzione? UNIX timestamp o già formattata?
         //       come salviamo nel db il timestamp? Al momento sto ipotizzando arrivino
@@ -48,6 +56,14 @@ class Teacher extends user
         $stmt->execute();
         return $stmt->get_result();//True || False
     }
+
+    /*
+     * @newDescritpion     --> string with the new description of a single lecture (already registeret)
+     * @topicID            --> Id of the subject
+     *
+     * return               true            if successful
+     *                      false           otherwise
+     * */
 
     public function modify_lecture_topic($topicID,$newDescription){
         if(!isset($topicID)||!isset($newDescription)){
