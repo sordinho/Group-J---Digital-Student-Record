@@ -62,7 +62,7 @@ print '<!DOCTYPE html>
 	<body>
 	<ul class="nav flex-column shadow d-flex sidebar mobile-hid">
 		<li class="nav-item logo-holder">
-			<div class="text-center text-white logo py-4 mx-4"><a class="text-white text-decoration-none" id="title" href="#"><strong>Sidebar</strong></a><a class="text-white float-right" id="sidebarToggleHolder" href="#"><i class="fas fa-bars" id="sidebarToggle"></i></a></div>
+			<div class="text-center text-white logo py-4 mx-4"><a class="text-white text-decoration-none" id="title" href="#"><img src="' . PLATFORM_PATH . '/media/logopoli2.jpg" alt="logopoli" style="height: 100%; width: 100%; object-fit: contain"/></a><a class="text-white float-right" id="sidebarToggleHolder" href="#"><i class="fas fa-bars" id="sidebarToggle"></i></a></div>
 		</li>
 		<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="#"><i class="fas fa-tachometer-alt mx-3"></i><span class="text-nowrap mx-2">Dashboard</span></a></li>
 		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="#"><i class="fas fa-user mx-3"></i><span class="text-nowrap mx-2">User profile</span></a></li>
