@@ -7,275 +7,291 @@
 require_once(__DIR__ . "/../site_config.php");
 
 class user {
-    protected $login_iduser = null;
-    protected $username = null;
-    protected $password = null;
-    protected $usergroup = null;
-    protected $base_url = './';
+	protected $login_iduser = null;
+	protected $username = null;
+	protected $password = null;
+	protected $usergroup = null;
+	protected $base_url = null; // cosa dobbiamo mettere? usergroup/parent/ ad esempio?
 
-    public function __construct($data = array()) {
-        if (isset($data['username'])) $this->username = stripslashes(strip_tags($data['username']));
-        if (isset($data['password'])) $this->password = stripslashes(strip_tags($data['password']));
-        //In real not usefull if not creating with Users($_SESSION)
+	public function __construct($data = array()) {
+		if (isset($data['username'])) $this->username = stripslashes(strip_tags($data['username']));
+		if (isset($data['password'])) $this->password = stripslashes(strip_tags($data['password']));
+		//In real not usefull if not creating with Users($_SESSION)
 //        if (isset($data['usergroup'])) $this->usergroup = stripslashes(strip_tags($data['usergroup'])); // todo remove if we want to make login same for all users
-    }
-    // protected and not private so that every inheriting class can access this method
-    protected function connectMySQL() {
-        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-        /* check connection */
-        if ($mysqli->connect_errno) {
-            printf("Connect failed: %s\n", $mysqli->connect_errno);
-            exit();
-        }
-        return $mysqli;
-    }
+	}
 
-    public function storeFormValues($params) {
-        //Memorizzo i parametri
-        $this->__construct($params);
-    }
+	// protected and not private so that every inheriting class can access this method
+	protected function connectMySQL() {
+		$mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_errno);
+			exit();
+		}
+		return $mysqli;
+	}
 
-    /** Get data for a given user to log in (administrative officer, teacher, parents, admin)
-     *
-     * Service Id is set only for clerk
-     *
-     * @param $post_data
-     * @return userinfo []
-     */
-    public function getUserData($id) {
-        $userinfo = [];
-        return $userinfo;
-    }
+	public function storeFormValues($params) {
+		//Memorizzo i parametri
+		$this->__construct($params);
+	}
 
-    /**
-     * @param $mail, $password, $name, $surname, $student
-     * @return bool
-     */
-    function register($mail, $password, $name, $surname, $student)
-    {
-        //TODO: eventually modify for other types of registration - this is thought for parents
-        $success = false;
-        /*
-        // TODO: eventually edit with has_permission() (related to admin capabilities to add clerk)
-        if (!is_admin()) {
-            //die("You are already registered and logged in");
-            return $success;
-        }*/
-        $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
-        if ($mysqli->connect_errno) {
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            return $success;
-        }
+	/** Get data for a given user to log in (administrative officer, teacher, parents, admin)
+	 *
+	 * Service Id is set only for clerk
+	 *
+	 * @param $post_data
+	 * @return userinfo []
+	 */
+	public function getUserData($id) {
+		$userinfo = [];
+		return $userinfo;
+	}
 
-        $options = [
-            //'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
-            'cost' => 12 // default is 10, better have a little more security
-        ];
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
-        // In a real scenario it should be a nice practice to generate an activation code and let the user confirm that value (ex. with a link)
-        //$activation_code = rand(100, 999).rand(100,999).rand(100,999);
-        $sql = "INSERT INTO parent (ID, Name, Surname, Email,  Password, StudentID) VALUES (0, ?, ?, ?, ?, ?)";
-        $query = $mysqli->prepare($sql);
-        $query->bind_param("ssssi", $name, $surname, $mail, $hashed_password, $student);
-        //TODO: handle ID value
-        $res = $query->execute();
-        if (!$res) {
-            printf("Error message: %s\n", $mysqli->error);
-            return $success;
-        } else {
-            $query->close();
-            $mysqli->close();
-            $mail_enc = urlencode($mail);
-            $url = PLATFORM_PATH;
-            $url .= "register.php?front_office=" . $mail_enc;
-            die("<meta http-equiv='refresh' content='1; url=$url' />");
-        }
-    }
+	/**
+	 * @param $mail , $password, $name, $surname, $student
+	 * @return bool
+	 */
+	function register($mail, $password, $name, $surname, $student) {
+		//TODO: eventually modify for other types of registration - this is thought for parents
+		$success = false;
+		/*
+		// TODO: eventually edit with has_permission() (related to admin capabilities to add clerk)
+		if (!is_admin()) {
+			//die("You are already registered and logged in");
+			return $success;
+		}*/
+		$mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", mysqli_connect_error());
+			return $success;
+		}
 
-    /** Verify username and password for a user to consent log in (can be different "types" of users)
-     *
-     * @param $post_data : array containing username and password
-     * @return bool
-     */
-    function user_login($post_data) {
-        $username = $post_data["username"];
-        $password = $post_data["password"];
-        $success = false;
+		$options = [
+			//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
+			'cost' => 12 // default is 10, better have a little more security
+		];
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
+		// In a real scenario it should be a nice practice to generate an activation code and let the user confirm that value (ex. with a link)
+		//$activation_code = rand(100, 999).rand(100,999).rand(100,999);
+        //TODO: modify because parent now has esternal KEY userID with pwd and email
+		$sql = "INSERT INTO parent (ID, Name, Surname, Email,  Password, StudentID) VALUES (0, ?, ?, ?, ?, ?)";
+		$query = $mysqli->prepare($sql);
+		$query->bind_param("ssssi", $name, $surname, $mail, $hashed_password, $student);
+		//TODO: handle ID value
+		$res = $query->execute();
+		if (!$res) {
+			printf("Error message: %s\n", $mysqli->error);
+			return $success;
+		} else {
+			$query->close();
+			$mysqli->close();
+			$mail_enc = urlencode($mail);
+			$url = PLATFORM_PATH;
+			$url .= "register.php?front_office=" . $mail_enc;
+			die("<meta http-equiv='refresh' content='1; url=$url' />");
+		}
+	}
 
-        $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
-        if ($mysqli->connect_errno) {
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            return $success;
-        }
+	/** Verify username and password for a user to consent log in (can be different "types" of users)
+	 *
+	 * @param $post_data : array containing username and password
+	 * @return bool
+	 */
+	function user_login($post_data) {
+		$username = $post_data["username"];
+		$password = $post_data["password"];
+		$retrievedUsergroup = "parent"; // todo modify when usergroup is retrieved from DB
+		$success = false;
+
+		$mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", mysqli_connect_error());
+			return $success;
+		}
 
 //        todo: first version: LOGIN ONLY FOR PARENTS
-        // Here using prepared statement to avoid SQLi
-        $query = $mysqli->prepare("SELECT Password FROM parent WHERE Email = ?");
-        $query->bind_param('s', $username);
-        $res = $query->execute();
-        if (!$res) {
-            printf("Error message: %s\n", $mysqli->error);
-            return $success;
-        }
+//TODO: extend with name and surname (maybe save that in an array as user_info[] ?)
+		// Here using prepared statement to avoid SQLi
+		$query = $mysqli->prepare("SELECT ID, password,usergroup FROM User WHERE email = ?");
+		$query->bind_param('s', $username);
+		$res = $query->execute();
+		if (!$res) {
+			printf("Error message: %s\n", $mysqli->error);
+			return $success;
+		}
 
-        $query->store_result();
-        $query->bind_result($pass);
-        // In case of success there should be just 1 user for a given (username is also a primary key for its table)
-        if ($query->num_rows != 1) {
-            return $success;
-        }
-        $query->fetch();
-        if (password_verify($password, $pass)) {
-            // If here login was successful (hash was verified)
-            $success = true;
-            $this->set_logged($username);
-            $this->set_usergroup("Parent"); // todo modify when extend login
-            $this->set_username($username); // todo check if we really need to save username, may be enough to store it in session[id]
-        }
-        $query->close();
-        $mysqli->close();
+		$query->store_result();
+		$query->bind_result($id, $pass, $retrievedUsergroup);
+		// In case of success there should be just 1 user for a given (username is also a primary key for its table)
+		if ($query->num_rows != 1) {
+			return $success;
+		}
+		$query->fetch();
+		if (password_verify($password, $pass)) {
+			// If here login was successful (hash was verified)
+			$success = true;
+			$this->set_logged($id); // we save DB ID of the parent (don't know if needed)
+			$this->login_iduser = $id;
+			$this->set_usergroup($retrievedUsergroup);
+			$this->usergroup = $retrievedUsergroup;
+			$this->set_username($username); // todo check if we really need to save username, may be enough to store it in session[id]
+			$this->base_url = "/usergroup/" . $retrievedUsergroup . "/";
+			$this->set_base_url($this->base_url);
+		}
+		$query->close();
+		$mysqli->close();
 
-        // Extends login when needed
-        //$userinfo = get_user_data($user);
-        //set_usergroup($userinfo['usergroup']);
-        //set_username($userinfo['username']);             // todo controllare questa riga, era: set_name($userinfo['name']); ----- ma name non esiste
+		return $success;
+	}
 
-        return $success;
-    }
+	/***********************************
+	 *            SETTERS
+	 ***********************************/
 
-    // verifica sintassi username
-    public function is_username($username) {
-        $regex = '/^[a-z0-9\.\-_]{3,30}$/i';
-        return preg_match($regex, $username);
-    }
+	// set login
+	protected function set_logged($id_user) {
+		$_SESSION['id'] = $id_user;
+		return;
+	}
 
-    // verifica sintassi email (TRUE se ok)
-    public function is_email($email) {
-        $regex = '/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/';
-        return preg_match($regex, $email);
-    }
+	//Memorizza nelle sessioni lo username
+	protected function set_username($username) {
+		$_SESSION['username'] = $username;
+		return;
+	}
 
-    // Retur TRUE if constraints are satisfied
-    public function is_secure_password($password) {
-        if (strlen($password) >= 5) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
+	protected function set_usergroup($usergroup) {
+		$_SESSION['usergroup'] = $usergroup;
+		return;
+	}
 
-    /***********************************
-     * VERIFICA DELLO STATO DI LOGIN UTENTE
-     ***********************************/
+	// Save name for gui?
+	protected function set_name($name) {
+		$_SESSION['name'] = ucfirst($name);
+		return;
+	}
 
-    // verifica login
-    public function is_logged() {
-        return isset($_SESSION['id']);
-    }
-
-    // set login
-    protected function set_logged($id_user) {
-        $_SESSION['id'] = $id_user;
+	protected function set_base_url($baseUrl) {
+        $_SESSION['base_url'] = $baseUrl;
         return;
-    }
+	}
+
+	/***********************************
+	 *             GETTERS
+	 ***********************************/
+
+	// verifica login
+	public function is_logged() {
+		return isset($_SESSION['id']);
+	}
+
+	//Restituisce la mail memorizzata nelle sessioni
+	public function get_username() {
+		return isset($_SESSION['username']) ? $_SESSION['username'] : '';
+	}
+
+	public function get_name() {
+		return isset($_SESSION['name']) ? $_SESSION['name'] : '';
+	}
+
+	public function get_usergroup() {
+		return isset($_SESSION['usergroup']) ? $_SESSION['usergroup'] : '';
+	}
+
+	public function get_id() {
+		return isset($_SESSION['id']) ? $_SESSION['id'] : '';
+	}
+
+	// TODO what is need to be saved also in session
+	public function get_base_url() {
+		return isset($_SESSION['base_url']) ? $_SESSION['base_url'] : '';
+
+	}
+
+	/* Error handling */
+	// Redirect to error.php (Error handler)
+	public function get_error($id, $noref = null) {
+		$html = "<meta http-equiv='refresh' content='0; url=" . $this->base_url . "/error.php?message=$id' />";
+		if (!empty($noref)) {
+			$html = "<meta http-equiv='refresh' content='0; url=" . $this->base_url . "/error.php?message=$id&noref=1' />";
+		}
+		print $html;
+		//echo "url=".$this->base_url."/error.php?message=$id";
+		exit();
+	}
+
+	/*  Return the logout link */
+	public function get_link_logout() {
+		if ($this->is_logged()) {
+			return '<a href="' . $this->Urls['logout_page'] . '" class="logout">Logout</a>';
+		}
+		return '';
+	}
 
 
-    //Memorizza nelle sessioni lo username
-    protected function set_username($username) {
-        $_SESSION['username'] = $username;
-        return;
-    }
+	/*
+	public function sendEmail($to, $subject, $content, $name){
+		//Modifico php.ini per far si da utilizzare il protocollo smtp senza autenticazione.
+		ini_set('SMTP', 'smtp.mydomain.it');
+		ini_set('smtp_port', 25);
+		ini_set('sendmail_from', "info@mydomain.it");
+		//Controllo che l'email sia sintassicamente corretta.
+		if(!$this->is_email($to)) {
+			return false;
+		}
+		$subject = htmlspecialchars($subject);
+		// message
+		$message = '
+		<html>
+		<head>
+			<title>Grazie '.$name.'</title>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		</head>
+		<body>'.
+			$content
+		.'</body><br><br>
+		<small>
+			Questa email è stata generata dal sito <a href=http://mydomain.it>colosi.it</a><br>
+			Per ogni altra informazione o per l\'eliminazione del proprio account andare sul sito o scrivere a<br>
+			info@mydomain.it</small>
+		</html>
+		';
+		// Modifico il Content-type poichè è una mail in formato html.
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+		// Aggiungo header per non mandarla in SPAM.
+		$headers .= 'To: '.htmlspecialchars($name).' <'.$to.'>' . "\r\n";
+		$headers .= 'From: Digital Student Recorder<info@mydomain.it>' . "\r\n";
+		// Uso la funzione mail per inviare.
+		if(mail($to, $subject, $message, $headers)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}*/
 
-    protected function set_usergroup($usergroup) {
-        $_SESSION['usergroup'] = $usergroup;
-        return;
-    }
+	// Verify username syntax
+	public function is_username($username) {
+		$regex = '/^[a-z0-9\.\-_]{3,30}$/i';
+		return preg_match($regex, $username);
+	}
 
-    // Save name for gui?
-    protected function set_name($name) {
-        $_SESSION['name'] = ucfirst($name);
-        return;
-    }
+	// Verify email syntax (TRUE if ok)
+	public function is_email($email) {
+		$regex = '/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/';
+		return preg_match($regex, $email);
+	}
 
-    //Restituisce la mail memorizzata nelle sessioni
-    public function get_username() {
-        return isset($_SESSION['username']) ? $_SESSION['username'] : '';
-    }
-
-    public function get_name() {
-        return isset($_SESSION['name']) ? $_SESSION['name'] : '';
-    }
-
-    public function get_usergroup() {
-        return isset($_SESSION['usergroup']) ? $_SESSION['usergroup'] : '';
-    }
-
-    public function get_id() {
-        return isset($_SESSION['id']) ? $_SESSION['id'] : '';
-    }
-
-    /* Error handling */
-    // Redirect to error.php (Error handler)
-    public function get_error($id, $noref = null) {
-        $html = "<meta http-equiv='refresh' content='0; url=" . $this->base_url . "/error.php?message=$id' />";
-        if (!empty($noref)) {
-            $html = "<meta http-equiv='refresh' content='0; url=" . $this->base_url . "/error.php?message=$id&noref=1' />";
-        }
-        print $html;
-        //echo "url=".$this->base_url."/error.php?message=$id";
-        exit();
-    }
-
-    /*  Return the logout link */
-    public function get_link_logout() {
-        if ($this->is_logged()) {
-            return '<a href="' . $this->Urls['logout_page'] . '" class="logout">Logout</a>';
-        }
-        return '';
-    }
-
-
-    /*
-    public function sendEmail($to, $subject, $content, $name){
-        //Modifico php.ini per far si da utilizzare il protocollo smtp senza autenticazione.
-        ini_set('SMTP', 'smtp.mydomain.it'); 
-        ini_set('smtp_port', 25); 
-        ini_set('sendmail_from', "info@mydomain.it");
-        //Controllo che l'email sia sintassicamente corretta.
-        if(!$this->is_email($to)) {
-            return false;
-        }
-        $subject = htmlspecialchars($subject);
-        // message
-        $message = '
-        <html>
-        <head>
-            <title>Grazie '.$name.'</title>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        </head>
-        <body>'.
-            $content
-        .'</body><br><br>
-        <small>
-            Questa email è stata generata dal sito <a href=http://mydomain.it>colosi.it</a><br>
-            Per ogni altra informazione o per l\'eliminazione del proprio account andare sul sito o scrivere a<br>
-            info@mydomain.it</small>
-        </html>
-        ';
-        // Modifico il Content-type poichè è una mail in formato html.
-        $headers  = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-        // Aggiungo header per non mandarla in SPAM.
-        $headers .= 'To: '.htmlspecialchars($name).' <'.$to.'>' . "\r\n";
-        $headers .= 'From: Digital Student Recorder<info@mydomain.it>' . "\r\n";
-        // Uso la funzione mail per inviare.
-        if(mail($to, $subject, $message, $headers)){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }*/
+	// Verify if constraints on password strength are satisfied
+	public function is_secure_password($password) {
+		if (strlen($password) >= 5) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
 }
 
 ?>

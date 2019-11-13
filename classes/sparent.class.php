@@ -1,25 +1,27 @@
 <?php
 
-//non posso rinominarla in parent, parent è "reserved"
 class sparent extends user
 {
     private $parent_id = null;
-    private $name = null;
-    private $surname = null;
-    private $email = null;
     //private $childs = array();
 
+    public function __construct($data = array())
+    {
+        parent::__construct($data);
+        $this->parent_id = $data['parent_id'];
+    }
+
+    //returns the result of the query that selects all the grades of @childID
     public function get_grades($childID){
 
         if(!isset($childID)){
-            //todo
+            return array();
         }
         $conn = $this->connectMySql();
-        $stmt = $conn->prepare("SELECT Mark, T.Name, Timestamp, Te.Surname 
-                FROM Topic T, MarksRecord M, Teacher Te
-                WHERE M.TeacherID = Te.ID
-                    AND M.TopicID = T.ID
-                    AND M.StudentID = ?;");
+        $stmt = $conn->prepare("SELECT t.Name, Mark, Timestamp, u.Surname 
+                FROM  Topic t, MarksRecord M, Teacher Te,User u
+                WHERE M.TeacherID = Te.ID AND Te.UserID=u.ID AND t.ID=M.TopicID
+                    AND M.StudentID = ?");
         $stmt->bind_param('s',$childID);
         $stmt->execute();
         return $stmt->get_result();
@@ -37,7 +39,7 @@ class sparent extends user
       $stmt->execute();
       $res = $stmt->get_result();
       while($row = $res->fetch_row()){
-        array_push($childs, row[0]);
+        array_push($childs, $row[0]);
       }
       $_SESSION['childsID'] = $childs;
       //$_SESSION['childNames'] = $child_names;

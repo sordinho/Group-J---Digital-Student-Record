@@ -6,7 +6,6 @@ initialize_site($site);
 $page = new cpage("Home");
 $site->setPage($page);
 
-$content ='<a href="usergroup/parent/parent.php">parentPage</a>';
 
 $page->setContent($content);
 $site->render();
@@ -42,11 +41,16 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
         $usr->get_error(11);
     }
 } else {
-    $usr = new user();
-    echo "Authenticated?".$usr->is_logged();
-    echo "\nUsergroup: ".$usr->get_usergroup();
-    echo "\nUsername: ".$usr->get_username();
-
+	$usr = new user();
+	echo "Authenticated?" . $usr->is_logged();
+	echo "<br>Usergroup: " . $usr->get_usergroup();
+	echo "<br>Username: " . $usr->get_username();
+	echo "<br>ID: " . $usr->get_id();
+	echo "<br>Base_URL: " . $usr->get_base_url();
+	if($usr->is_logged()){
+		$html = "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $usr->get_base_url() . "' />";
+		die($html);
+	}
 }
 
 
