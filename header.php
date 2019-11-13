@@ -8,7 +8,7 @@ if (!$user->is_logged()){
 	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  data-toggle="modal" href="#myModal"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log in</span></a></li>';
 
 } else {
-	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  href="'. PLATFORM_PATH .'logout.php"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log out</span></a></li>';
+	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  href="'. PLATFORM_PATH .'/logout.php"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log out</span></a></li>';
 }
 /*
 if (is_admin()) {
