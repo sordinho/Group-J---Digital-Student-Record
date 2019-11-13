@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2.1
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Creato il: Nov 13, 2019 alle 16:19
--- Versione del server: 10.4.8-MariaDB
--- Versione PHP: 7.3.10
+-- Host: localhost
+-- Creato il: Nov 13, 2019 alle 19:02
+-- Versione del server: 5.7.27-0ubuntu0.16.04.1
+-- Versione PHP: 7.0.33-0ubuntu0.16.04.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,29 +17,29 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `softeng2final`
+-- Database: `softeng2Final`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `marksrecord`
+-- Struttura della tabella `MarksRecord`
 --
 
-CREATE TABLE `marksrecord` (
+CREATE TABLE `MarksRecord` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `Mark` float NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `TopicID` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `marksrecord`
+-- Dump dei dati per la tabella `MarksRecord`
 --
 
-INSERT INTO `marksrecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `Timestamp`) VALUES
+INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `Timestamp`) VALUES
 (1, 2, 7, 1, 1, '2019-11-09 07:00:00'),
 (2, 2, 7, 2, 2, '2019-11-09 08:00:00'),
 (3, 3, 4, 3, 3, '2019-11-09 09:00:00'),
@@ -53,30 +51,30 @@ INSERT INTO `marksrecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `parent`
+-- Struttura della tabella `Parent`
 --
 
-CREATE TABLE `parent` (
+CREATE TABLE `Parent` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `parent`
+-- Dump dei dati per la tabella `Parent`
 --
 
-INSERT INTO `parent` (`ID`, `StudentID`, `UserID`) VALUES
+INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (1, 1, 1),
 (2, 2, 2);
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `student`
+-- Struttura della tabella `Student`
 --
 
-CREATE TABLE `student` (
+CREATE TABLE `Student` (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) NOT NULL,
   `Surname` varchar(50) NOT NULL,
@@ -85,10 +83,10 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `student`
+-- Dump dei dati per la tabella `Student`
 --
 
-INSERT INTO `student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`) VALUES
+INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`) VALUES
 (1, 'name1', 'sur1', 10, 'cf1'),
 (2, 'name1', 'sur1', 10, 'cf1'),
 (3, 'name2', 'sur2', 10, 'cf2'),
@@ -98,10 +96,10 @@ INSERT INTO `student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`) VALUE
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `teacher`
+-- Struttura della tabella `Teacher`
 --
 
-CREATE TABLE `teacher` (
+CREATE TABLE `Teacher` (
   `ID` int(11) NOT NULL,
   `MeetingHourID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
@@ -109,10 +107,10 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `teacher`
+-- Dump dei dati per la tabella `Teacher`
 --
 
-INSERT INTO `teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
+INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 (1, 0, 3, 'fc1'),
 (2, 0, 4, 'fc2'),
 (3, 0, 5, 'fc3'),
@@ -124,20 +122,20 @@ INSERT INTO `teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `topic`
+-- Struttura della tabella `Topic`
 --
 
-CREATE TABLE `topic` (
+CREATE TABLE `Topic` (
   `ID` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `topic`
+-- Dump dei dati per la tabella `Topic`
 --
 
-INSERT INTO `topic` (`ID`, `Name`, `Description`) VALUES
+INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
 (1, 'topic1', 'desc1'),
 (2, 'topic2', 'desc2'),
 (3, 'topic3', 'desc3'),
@@ -149,13 +147,13 @@ INSERT INTO `topic` (`ID`, `Name`, `Description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `topicrecord`
+-- Struttura della tabella `TopicRecord`
 --
 
-CREATE TABLE `topicrecord` (
+CREATE TABLE `TopicRecord` (
   `ID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Description` varchar(512) NOT NULL,
   `TopicID` int(11) NOT NULL,
   `SpecifiClassID` int(11) NOT NULL
@@ -164,10 +162,10 @@ CREATE TABLE `topicrecord` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `user`
+-- Struttura della tabella `User`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `User` (
   `ID` int(11) NOT NULL,
   `Name` varchar(200) NOT NULL,
   `Surname` varchar(200) NOT NULL,
@@ -177,69 +175,69 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `user`
+-- Dump dei dati per la tabella `User`
 --
 
-INSERT INTO `user` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
-(1, 'ParentName1A', 'ParentSurname2a', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
-(2, 'ParentName2A', 'ParentSurame2A', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
-(3, 'TeacherName1', 'TeacherSur1', 'TeacherEmail1', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(4, 'TeacherName2', 'TeacherSur2', 'TeacherEmail2', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(5, 'TeacherName3', 'TeacherSur3', 'TeacherEmail3', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(6, 'TeacherName4', 'TeacherSur4', 'TeacherEmail4', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(7, 'TeacherName5', 'TeacherSur5', 'TeacherEmail5', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(8, 'TeacherName6', 'TeacherSur6', 'TeacherEmail6', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(9, 'TeacherName7', 'TeacherSur7', 'TeacherEmail7', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher');
+INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
+(1, 'ParentName1A', 'ParentSurname2a', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Parent'),
+(2, 'ParentName2A', 'ParentSurame2A', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Parent'),
+(3, 'TeacherName1', 'TeacherSur1', 'TeacherEmail1', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Teacher'),
+(4, 'TeacherName2', 'TeacherSur2', 'TeacherEmail2', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Teacher'),
+(5, 'TeacherName3', 'TeacherSur3', 'TeacherEmail3', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Teacher'),
+(6, 'TeacherName4', 'TeacherSur4', 'TeacherEmail4', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Teacher'),
+(7, 'TeacherName5', 'TeacherSur5', 'TeacherEmail5', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Teacher'),
+(8, 'TeacherName6', 'TeacherSur6', 'TeacherEmail6', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Teacher'),
+(9, 'TeacherName7', 'TeacherSur7', 'TeacherEmail7', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'Teacher');
 
 --
 -- Indici per le tabelle scaricate
 --
 
 --
--- Indici per le tabelle `marksrecord`
+-- Indici per le tabelle `MarksRecord`
 --
-ALTER TABLE `marksrecord`
+ALTER TABLE `MarksRecord`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `TopicID` (`TopicID`);
 
 --
--- Indici per le tabelle `parent`
+-- Indici per le tabelle `Parent`
 --
-ALTER TABLE `parent`
+ALTER TABLE `Parent`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indici per le tabelle `student`
+-- Indici per le tabelle `Student`
 --
-ALTER TABLE `student`
+ALTER TABLE `Student`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indici per le tabelle `teacher`
+-- Indici per le tabelle `Teacher`
 --
-ALTER TABLE `teacher`
+ALTER TABLE `Teacher`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indici per le tabelle `topic`
+-- Indici per le tabelle `Topic`
 --
-ALTER TABLE `topic`
+ALTER TABLE `Topic`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indici per le tabelle `topicrecord`
+-- Indici per le tabelle `TopicRecord`
 --
-ALTER TABLE `topicrecord`
+ALTER TABLE `TopicRecord`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indici per le tabelle `user`
+-- Indici per le tabelle `User`
 --
-ALTER TABLE `user`
+ALTER TABLE `User`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -247,71 +245,63 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT per la tabella `marksrecord`
+-- AUTO_INCREMENT per la tabella `MarksRecord`
 --
-ALTER TABLE `marksrecord`
+ALTER TABLE `MarksRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
--- AUTO_INCREMENT per la tabella `parent`
+-- AUTO_INCREMENT per la tabella `Parent`
 --
-ALTER TABLE `parent`
+ALTER TABLE `Parent`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
--- AUTO_INCREMENT per la tabella `student`
+-- AUTO_INCREMENT per la tabella `Student`
 --
-ALTER TABLE `student`
+ALTER TABLE `Student`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
--- AUTO_INCREMENT per la tabella `teacher`
+-- AUTO_INCREMENT per la tabella `Teacher`
 --
-ALTER TABLE `teacher`
+ALTER TABLE `Teacher`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
--- AUTO_INCREMENT per la tabella `topic`
+-- AUTO_INCREMENT per la tabella `Topic`
 --
-ALTER TABLE `topic`
+ALTER TABLE `Topic`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
--- AUTO_INCREMENT per la tabella `topicrecord`
+-- AUTO_INCREMENT per la tabella `TopicRecord`
 --
-ALTER TABLE `topicrecord`
+ALTER TABLE `TopicRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT per la tabella `user`
+-- AUTO_INCREMENT per la tabella `User`
 --
-ALTER TABLE `user`
+ALTER TABLE `User`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
 --
 -- Limiti per le tabelle scaricate
 --
 
 --
--- Limiti per la tabella `marksrecord`
+-- Limiti per la tabella `MarksRecord`
 --
-ALTER TABLE `marksrecord`
-  ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_topic` FOREIGN KEY (`TopicID`) REFERENCES `topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `MarksRecord`
+  ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_topic` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `parent`
+-- Limiti per la tabella `Parent`
 --
-ALTER TABLE `parent`
-  ADD CONSTRAINT `fk_parentID` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Parent`
+  ADD CONSTRAINT `fk_parentID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `teacher`
+-- Limiti per la tabella `Teacher`
 --
-ALTER TABLE `teacher`
-  ADD CONSTRAINT `fk_teacherID` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
+ALTER TABLE `Teacher`
+  ADD CONSTRAINT `fk_teacherID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
