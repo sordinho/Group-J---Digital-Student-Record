@@ -45,7 +45,7 @@ class Teacher extends user
         //todo : come arriva la data dell'inserzione? UNIX timestamp o già formattata?
         //       come salviamo nel db il timestamp? Al momento sto ipotizzando arrivino
         //       nello stesso formato di actual_date
-
+        $classID = -1;
         // actual unix timestamp
         $actual_date = strtotime(date("Y-m-d H:i:s"));
         // given unix timestamp
@@ -54,8 +54,8 @@ class Teacher extends user
         if(!$this->by_the_end_of_the_week($actual_date,$lecture_date))
             return false;
         $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("INSERT INTO TopicRecord VALUES (?,?,?,?);");
-        $stmt->bind_param('iiss',$this->teacherID,$topicID,$lectureDescription,$timestamp);
+        $stmt = $conn->prepare("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?);");
+        $stmt->bind_param('issii',$this->teacherID,$timestamp,$lectureDescription,$topicID,$classID);
         $stmt->execute();
         return $stmt->get_result();//True || False
     }
