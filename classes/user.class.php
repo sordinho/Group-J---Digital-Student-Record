@@ -115,7 +115,7 @@ class user {
 
 		//TODO: extend with name and surname (maybe save that in an array as user_info[] ?)
 		// Here using prepared statement to avoid SQLi
-		$query = $mysqli->prepare("SELECT ID, Name, Surname, password,usergroup FROM User WHERE email = ?");
+		$query = $mysqli->prepare("SELECT ID, Name, Surname, Password,UserGroup FROM User WHERE Email = ?");
 		$query->bind_param('s', $username);
 		$res = $query->execute();
 		if (!$res) {
