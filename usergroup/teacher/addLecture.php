@@ -19,11 +19,11 @@ if(!$teacher ->is_logged()){
 }
 
 
-if(!isset($_POST["lDescription"])){
+if(!isset($_POST["description"])){
 //$content ='<a href="usergroup/teacher/teacherAction1ToMove.php">Action1To incorporate in MENU</a>';
 	$content = '<div class="container article-clean">
 	<div class="row">
-	<form>
+	<form method="POST">
 		<div class="form-group">
 		<label for="Title">Title</label>
 		<input type="text" class="form-control" name="title" id="title" placeholder="Course Introduction">
