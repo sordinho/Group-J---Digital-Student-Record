@@ -42,13 +42,16 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
     }
 } else {
 	$usr = new user();
-	echo "Authenticated?" . $usr->is_logged();
+	echo "Authenticated? " . $usr->is_logged();
 	echo "<br>Usergroup: " . $usr->get_usergroup();
 	echo "<br>Username: " . $usr->get_username();
+	echo "<br>Name: " . $usr->get_name();
+	echo "<br>Surname: " . $usr->get_surname();
 	echo "<br>ID: " . $usr->get_id();
 	echo "<br>Base_URL: " . $usr->get_base_url();
 	if($usr->is_logged()){
-		$html = "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $usr->get_base_url() . "' />";
+		// TODO reset refresh to 1 sec. Set to 5 for debug print
+		$html = "<meta http-equiv='refresh' content='5; url=" . PLATFORM_PATH . $usr->get_base_url() . "' />";
 		die($html);
 	}
 }
