@@ -10,6 +10,26 @@ if (!$user->is_logged()){
 } else {
 	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  href="'. PLATFORM_PATH .'/logout.php"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log out</span></a></li>';
 }
+
+// Custom menu definition for each group
+switch($_SESSION["usergroup"]){
+	case "parent":
+		$children[0]["Name"] = "CName1";
+		$children[0]["Surname"] = "CSurnName2";
+		$children[0]["childID"] = "0";
+		$hidden_menu .= '<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Children</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+		<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
+		foreach ($children as $i=> $child) {
+			$hidden_menu .= '
+			<a class="dropdown-item text-white" role="presentation" href="./index.php?action=changeChild&childID='. $child["childID"].'"><span>'. $child["Name"]." ".$child["Surname"].'</span></a>';
+		}
+		$hidden_menu .= '</div>
+		</li>';
+	break;
+	case "TODOs":
+	break;
+
+}
 /*
 if (is_admin()) {
     //$navbar_edit .= '<li class="nav-item"><a class="nav-link" data-toggle="modal" href="#registerModal"> Register new clerk</a></li>';
@@ -75,6 +95,7 @@ print '<!DOCTYPE html>
 			<a class="dropdown-item text-white" role="presentation" href="#"><span>Change email</span></a>
 			<a class="dropdown-item text-white" role="presentation" href="#"><span>More</span></a></div>
 		</li>'. 
+		$hidden_menu.
 		$login_out_button.
 	'</ul> 
 ';
