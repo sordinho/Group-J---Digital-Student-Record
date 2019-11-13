@@ -3,9 +3,16 @@
 
 class Teacher extends user
 {
+    private $teacherID = null;
     private $name = null;
     private $surname = null;
     private $email = null;
+
+    public function __construct($data = array())
+    {
+        parent::__construct($data);
+        $this->teacherID = $data['teacher_id'];
+    }
 
     private function by_the_end_of_the_week($actual_date,$lecture_date){
         // secondi in una settimana
@@ -47,12 +54,8 @@ class Teacher extends user
         if(!$this->by_the_end_of_the_week($actual_date,$lecture_date))
             return false;
         $conn = $this->connectMySQL();
-        //todo : aggiornare quando TopicRecord sarà nel db
         $stmt = $conn->prepare("INSERT INTO TopicRecord VALUES (?,?,?,?);");
-        //todo : qual è il tipo delle variabili id? login_iduser
-        //       al suo interno salva l'id dell'utente nelle tabelle del db?
-        //  NB : uso query preparate per prevenire sql injection
-        $stmt->bind_param('iiss',$this->login_iduser,$topicID,$lectureDescription,$timestamp);
+        $stmt->bind_param('iiss',$this->teacherID,$topicID,$lectureDescription,$timestamp);
         $stmt->execute();
         return $stmt->get_result();//True || False
     }

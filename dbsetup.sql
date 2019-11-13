@@ -154,16 +154,16 @@ CREATE TABLE `User` (
   `ID` int(11) NOT NULL,
   `Name` varchar(200) NOT NULL,
   `Surname` varchar(200) NOT NULL,
-  `email` text NOT NULL,
-  `password` text NOT NULL,
-  `usergroup` varchar(25) NOT NULL
+  `Email` text NOT NULL,
+  `Password` text NOT NULL,
+  `UserGroup` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `User`
 --
 
-INSERT INTO `User` (`ID`, `Name`, `Surname`, `email`, `password`, `usergroup`) VALUES
+INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
 (1, 'ParentName1A', 'ParentSurname2a', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (2, 'ParentName2A', 'ParentSurame2A', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (3, 'TeacherName1', 'TeacherSur1', 'TeacherEmail1', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
