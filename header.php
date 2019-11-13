@@ -21,7 +21,7 @@ switch($_SESSION["usergroup"]){
 		<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
 		foreach ($children as $i=> $child) {
 			$hidden_menu .= '
-			<a class="dropdown-item text-white" role="presentation" href="./index.php?action=changeChild&childID='. $child["childID"].'"><span>'. $child["Name"]." ".$child["Surname"].'</span></a>';
+			<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID='. $child["childID"].'"><span>'. $child["Name"]." ".$child["Surname"].'</span></a>';
 		}
 		$hidden_menu .= '</div>
 		</li>';
