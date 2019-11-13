@@ -5,3 +5,7 @@
 composer.json
 composer.lock
 vendor/
+
+Tests/TestFoo.php
+
+Tests/.phpunit.result.cache
