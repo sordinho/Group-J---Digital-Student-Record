@@ -18,7 +18,7 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
     $post_data["username"] = $_POST['username'];
     $post_data["password"] = $_POST['password'];
 
-    echo $_POST['username'] . $_POST['password'];
+    //echo $_POST['username'] . $_POST['password'];
     
     if($usr->user_login($post_data)) {
         $usergroup = $usr->get_usergroup();
@@ -27,8 +27,8 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
             case "Teacher":
                 $url = "/usergroup/teacher/index.php";
                 break;
-            case "Parent":
-                $url = "/usergroup/parent/parent.php";
+            case "parent":
+                $url = "/usergroup/parent/index.php";
                 break;
             case "TODO":
                 //$url = "/TODO.php";
