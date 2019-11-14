@@ -8,7 +8,7 @@ class sparent extends user
     public function __construct($data = array())
     {
         parent::__construct($data);
-        $this->parent_id = $data['parent_id'];
+        $this->parent_id = $_SESSION['parentID'];
     }
 
     //returns the result of the query that selects all the grades of @childID
@@ -46,12 +46,13 @@ class sparent extends user
     }
     // Register a child as the current to view and analyze by saving the studentID into the session
     public function set_current_child($childID){
+      // TODO: for security reason should verify that the id is in the children array relative to the parent
       $_SESSION['curChild'] = $childID;
       //$_SESSION['childNames'] = $child_names;
 
     }
     // Return -1 if no current child was choosen until now, return the studentID of the child otherwise
-    public function get_current_child($childID){
+    public function get_current_child(){
         return isset($_SESSION['curChild']) ? $_SESSION['curChild'] : -1; 
     }
 
