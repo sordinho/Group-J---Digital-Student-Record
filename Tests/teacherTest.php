@@ -39,12 +39,6 @@ class teacherTest extends TestCase {
     {
         //TODO
         // variables
-//        $login["unsername"]="TeacherEmail1";
-//        $login["password"]="frontoffice1";
-//
-//        $login=array("TeacherEmail1","frontoffice1");
-//        $user=new user($login);
-//        $user->user_login($login);
         $_SESSION["teacherID"]=1;
         $teacherObject = new Teacher($_SESSION);
         $topicID=1;
@@ -61,9 +55,6 @@ class teacherTest extends TestCase {
         //perform insertion in the DB
         $this->assertNotNull($teacherObject->insert_new_lecture_topic($description,$topicID,$dateActualDate));
 
-
-
-
         $conn=connectMySQLTests();
 
         $stmt = $conn->prepare("SELECT ID FROM TopicRecord WHERE Timestamp = ?;");
@@ -74,13 +65,12 @@ class teacherTest extends TestCase {
             return false;
         }else{
             $row=$res->fetch_row();
+            printf("topicRecordID: %d\n",$row[0]);
             $topicRecordID=$row[0];
         }
         $res->close();
-        $conn->close();
 
 
-        $conn=connectMySQLTests();
         $stmt = $conn->prepare("SELECT COUNT(*) FROM TopicRecord WHERE ID = ?;");
         $stmt->bind_param('i', $topicRecordID);
         $stmt->execute();
