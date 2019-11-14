@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 14, 2019 alle 10:43
+-- Creato il: Nov 14, 2019 alle 12:08
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -47,6 +47,18 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (5, 1, 2, 5, 5, '2019-11-09 11:00:00'),
 (6, 1, 5, 6, 6, '2019-11-09 12:00:00'),
 (7, 5, 9, 7, 7, '2019-11-09 13:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Officer`
+--
+
+CREATE TABLE `Officer` (
+  `ID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `FiscalCode` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -187,7 +199,9 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 (6, 'TeacherName4', 'TeacherSur4', 'TeacherEmail4', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (7, 'TeacherName5', 'TeacherSur5', 'TeacherEmail5', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (8, 'TeacherName6', 'TeacherSur6', 'TeacherEmail6', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(9, 'TeacherName7', 'TeacherSur7', 'TeacherEmail7', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher');
+(9, 'TeacherName7', 'TeacherSur7', 'TeacherEmail7', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(10, 'officerName1', 'officerSurname1', 'off1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
+(11, 'officerName2', 'officerSurname2', 'off2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer');
 
 --
 -- Indici per le tabelle scaricate
@@ -200,6 +214,13 @@ ALTER TABLE `MarksRecord`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `TopicID` (`TopicID`);
+
+--
+-- Indici per le tabelle `Officer`
+--
+ALTER TABLE `Officer`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- Indici per le tabelle `Parent`
@@ -250,6 +271,11 @@ ALTER TABLE `User`
 ALTER TABLE `MarksRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
+-- AUTO_INCREMENT per la tabella `Officer`
+--
+ALTER TABLE `Officer`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT per la tabella `Parent`
 --
 ALTER TABLE `Parent`
@@ -278,7 +304,7 @@ ALTER TABLE `TopicRecord`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -289,6 +315,12 @@ ALTER TABLE `User`
 ALTER TABLE `MarksRecord`
   ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_topic` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `Officer`
+--
+ALTER TABLE `Officer`
+  ADD CONSTRAINT `fk_officerID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Parent`

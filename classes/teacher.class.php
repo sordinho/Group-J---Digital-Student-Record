@@ -10,7 +10,7 @@ class Teacher extends user
 
 	public function __construct($data = array()) {
 		parent::__construct($data);
-		$this->teacherID = $data['teacher_id'];
+		$this->teacherID = $data['teacherID'];
 	}
 
 	private function by_the_end_of_the_week($actual_date, $lecture_date) {
