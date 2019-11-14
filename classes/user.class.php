@@ -133,18 +133,69 @@ class user {
 		if (password_verify($password, $pass)) {
 			// If here login was successful (hash was verified)
 			$success = true;
-			$this->set_logged($id); // we save DB ID of the parent (don't know if needed)
+			$this->set_logged($id);
 			$this->set_usergroup($retrievedUsergroup);
 			$this->set_username($username);
 			$this->set_name($name);
 			$this->set_surname($surname);
 			$this->base_url = "/usergroup/" . $retrievedUsergroup . "/";
 			$this->set_base_url($this->base_url);
+
+			// Get specific ID for teacher, parent ...
+			switch ($retrievedUsergroup) {
+				case "parent":
+					$queryID = $mysqli->prepare("SELECT ID FROM Parent where UserID = ?");
+					break;
+				case "teacher":
+					$queryID = $mysqli->prepare("SELECT ID FROM Teacher where UserID = ?");
+					break;
+				case "officer":
+					$queryID = $mysqli->prepare("SELECT ID FROM Officer where UserID = ?");
+					break;
+				default:
+					return false;
+			}
+			$queryID->bind_param('i', $userID);
+
+			$result = $queryID->execute();
+			if (!$result) {
+				printf("Error message: %s\n", $mysqli->error);
+				return false;
+			}
+			$queryID->store_result();
+			$queryID->bind_result($specificID);
+			// In case of success there should be just 1 user for a given (username is also a primary key for its table)
+			if ($query->num_rows != 1) {
+				return false;
+			}
+			$query->fetch();
+			$this->set_specific_ID($specificID, $retrievedUsergroup);
 		}
 		$query->close();
 		$mysqli->close();
 
 		return $success;
+	}
+
+	/**
+	 * This function sets the specific ID (parentID, teacherID ...) given the user ID and the usergroup
+	 * @param $specificID : general user ID from user table
+	 * @param $usergroup
+	 */
+	private function set_specific_ID($specificID, $usergroup) {
+		switch ($usergroup) {
+			case "parent":
+				$_SESSION['parentID'] = $specificID;
+				break;
+			case "teacher":
+				$_SESSION['teacherID'] = $specificID;
+				break;
+			case "officer":
+				$_SESSION['officerID'] = $specificID;
+				break;
+			default:
+				break;
+		}
 	}
 
 	/***********************************
