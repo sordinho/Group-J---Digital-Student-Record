@@ -54,30 +54,28 @@ class teacher extends user
 		if (!$this->by_the_end_of_the_week($actual_date, $lecture_date))
 			return false;
 		$conn = $this->connectMySQL();
-		$stmt = $conn->prepare("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?);");
+		$stmt = $conn->prepare("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?)");
 		$stmt->bind_param('issii', $this->teacherID, $timestamp, $lectureDescription, $topicID, $classID);
 		$stmt->execute();
 		return $stmt->get_result();//True || False
 	}
 
 	/*
-	 * @newDescritpion     --> string with the new description of a single lecture (already registeret)
+	 * @newDescription     --> string with the new description of a single lecture (already registeret)
 	 * @topicID            --> Id of the subject
 	 *
 	 * return               true            if successful
 	 *                      false           otherwise
 	 * */
 
-	public function modify_lecture_topic($topicID, $newDescription) {
-		if (!isset($topicID) || !isset($newDescription)) {
+	public function modify_lecture_topic($newDescription,$topicRecordID) {
+		if (!isset($topicRecordID) || !isset($newDescription)) {
 			return false;
 		}
 
 		$conn = $this->connectMySQL();
-		$stmt = $conn->prepare("SELECT TeacherID, Timestamp 
-                                      FROM TopicRecord
-                                      WHERE TopicID = ?;");
-		$stmt->bind_param('i', $topicID);
+		$stmt = $conn->prepare("SELECT Timestamp FROM TopicRecord WHERE ID = ?;");
+		$stmt->bind_param('i', $topicRecordID);
 		$stmt->execute();
 		$res = $stmt->get_result();
 		if ($res->num_rows <= 0) {
@@ -88,19 +86,13 @@ class teacher extends user
 
 			//modifica entro la fine della settimana
 			$actual_date = strtotime(date("Y-m-d H:i:s"));
-			$lecture_date = strtotime($row[1]);
+			$lecture_date = strtotime($row[0]);
 			if (!$this->by_the_end_of_the_week($actual_date, $lecture_date))
 				return false;
 
-			//controllo se questa lecture l'ha inserita lo stesso
-			//prof che sta eseguendo la modifica, se non è lo stesso
-			//non permetto la modifica
-			if ($row[0] != $this->login_iduser) {
-				return false;
-			}
 			$res->close();
-			$stmt = $conn->prepare("INSERT INTO TopicRecord VALUES (?,?,?,?);");
-			$stmt->bind_param("iiss", $this->login_iduser, $topicID, $newDescription, $row[1]);
+			$stmt = $conn->prepare("UPDATE TopicRecord SET Description=? WHERE ID=$topicRecordID");
+			$stmt->bind_param("s", $newDescription);
 			$stmt->execute();
 			return $stmt->get_result();
 		}
