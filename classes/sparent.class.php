@@ -29,26 +29,28 @@ class sparent extends user {
 	// Register the childs in a session
 	public function retrieve_and_register_childs() {
 
-		$childs = array();
-		$conn = $this->connectMySql();
-		$stmt = $conn->prepare("SELECT StudentID
-              FROM Parent
-              WHERE ID = ?;");
-		$stmt->bind_param('d', $this->parent_id);
-		$stmt->execute();
-		$res = $stmt->get_result();
-		while ($row = $res->fetch_row()) {
-			array_push($childs, $row[0]);
-		}
-		$_SESSION['childsID'] = $childs;
-		//$_SESSION['childNames'] = $child_names;
-	}
-
-	// Register a child as the current to view and analyze by saving the studentID into the session
-	public function set_current_child($childID) {
-		// TODO: for security reason should verify that the id is in the children array relative to the parent
-		$_SESSION['curChild'] = $childID;
-		//$_SESSION['childNames'] = $child_names;
+      //$childs = array();
+      $conn = $this->connectMySql();
+      $stmt = $conn->prepare("SELECT S.ID AS StudentID, P.ID AS ParentID, S.Name, S.Surname 
+              FROM Parent P,Student S
+              WHERE P.ID = ?
+                AND P.StudentID = S.ID;");
+      //$stmt->bind_param('d',$this->parent_id);
+      $stmt->bind_param('d',$_SESSION['parent_id']);
+      $stmt->execute();
+      $res = $stmt->get_result();
+      /*while($row = $res->fetch_row()){
+        array_push($childs, $row[0]);
+      }
+      $_SESSION['childsID'] = $childs;
+      //$_SESSION['childNames'] = $child_names;*/
+      return $res;
+    }
+    // Register a child as the current to view and analyze by saving the studentID into the session
+    public function set_current_child($childID){
+      // TODO: for security reason should verify that the id is in the children array relative to the parent
+      $_SESSION['curChild'] = $childID;
+      //$_SESSION['childNames'] = $child_names;
 
 	}
 
