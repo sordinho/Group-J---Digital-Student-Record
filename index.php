@@ -24,7 +24,7 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
         $usergroup = $usr->get_usergroup();
         $url = "/index.php";
         switch($usergroup){
-            case "Teacher":
+            case "teacher":
                 $url = "/usergroup/teacher/index.php";
                 break;
             case "parent":
