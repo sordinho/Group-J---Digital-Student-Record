@@ -20,6 +20,7 @@ class teacherTest extends TestCase {
 	public function testModify_lecture_topic() {
 		$_SESSION["teacherID"] = 1;
 		$topicID = 1;
+		$_SESSION["id"]=3;
 		$description = "Test topic description";
 		$modifiedDescription = "MODIFIED Test topic description";
 		$teacherObject = new Teacher($_SESSION);
@@ -30,7 +31,7 @@ class teacherTest extends TestCase {
 		$this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp));
 
 		// Try to modify the topic record
-		$teacherObject->modify_lecture_topic($topicID, $modifiedDescription);
+		$teacherObject->modify_lecture_topic($modifiedDescription,);
 
 	}
 
