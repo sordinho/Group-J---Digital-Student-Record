@@ -9,8 +9,11 @@
     </div>
 </footer>
 <!-- Footer -->
+
 <script src="
 <?php print PLATFORM_PATH.'/js/sidebar.js"></script>' ; ?>
+<script src="
 <?php print PLATFORM_PATH.'/js/datepicker.js"></script>' ; ?>
+
 </body>
 </html>
