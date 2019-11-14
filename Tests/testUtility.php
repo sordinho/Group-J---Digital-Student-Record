@@ -113,3 +113,14 @@ function TestsConnectMySQL() {
 function get_serviceID_by_service_name($service_name) {
     return perform_SELECT_return_single_value("SELECT ID FROM Service WHERE Name = '{$service_name}'");
 }
+
+// protected and not private so that every inheriting class can access this method
+function connectMySQLTests() {
+    $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
+    /* check connection */
+    if ($mysqli->connect_errno) {
+        printf("Connect failed: %s\n", $mysqli->connect_errno);
+        exit();
+    }
+    return $mysqli;
+}

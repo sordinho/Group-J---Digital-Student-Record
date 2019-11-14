@@ -13,7 +13,6 @@ $site->render();
 if(!isset($_SESSION['id']) && isset($_POST['username'])) {
     echo "You just tried login";
     $usr = new user;
-    $usr->storeFormValues( $_POST );
 
     $post_data["username"] = $_POST['username'];
     $post_data["password"] = $_POST['password'];
