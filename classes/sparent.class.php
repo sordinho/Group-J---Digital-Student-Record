@@ -15,7 +15,8 @@ class sparent extends user {
 
 		if (!isset($childID)) {
 			return array();
-		}
+    }
+    $grades_info = array();
 		$conn = $this->connectMySql();
 		$stmt = $conn->prepare("SELECT t.Name, Mark, Timestamp, u.Surname 
                 FROM  Topic t, MarksRecord M, Teacher Te,User u
@@ -23,7 +24,12 @@ class sparent extends user {
                     AND M.StudentID = ?");
 		$stmt->bind_param('s', $childID);
 		$stmt->execute();
-		return $stmt->get_result();
+    if(!$stmt->get_result())
+      return false;
+    while($row = $res->fetch_assoc()){
+        array_push($grades_info, $row);
+      }
+    return $grades_info; 
 	}
 
 	// Register the childs in a session
@@ -76,7 +82,7 @@ class sparent extends user {
 		$children[0]["childID"] = "-1";
     return isset($_SESSION['children_info']) ? $_SESSION['children_info'] : $children; 
   }
-  
+
     /**
      * @return mixed|null
      */
