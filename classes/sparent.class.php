@@ -62,4 +62,14 @@ class sparent extends user {
 		return isset($_SESSION['parentID']) ? $_SESSION['parentID'] : -1;
 	}
 
+    /**
+     * @return mixed|null
+     */
+    public function getParentId()
+    {
+        return $this->parent_id;
+    }
+
+
+
 }
