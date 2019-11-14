@@ -1,19 +1,17 @@
 <?php
 
 require_once 'testUtility.php';
+
 use PHPUnit\Framework\TestCase;
+require_once "../classes/user.class.php";
 
 class userTest extends TestCase
 {
 
-    public function testIs_username()
-    {
-
-    }
-
     public function testGet_name()
     {
-
+        $_SESSION['name'] = "test";
+        $this->assertEquals("test",get_name(),"userTest : test_get_name wrong returned value");
     }
 
     public function test__construct()
@@ -23,17 +21,25 @@ class userTest extends TestCase
 
     public function testIs_secure_password()
     {
-
+        //case password < 5
+        $user = new user();
+        $this->assertFalse($user->is_secure_password('cat'), 'is_secure_password accepts lenght(password) < 5');
+        //case password == 5
+        $this->assertTrue($user->is_secure_password('cover'), 'is_secure password not accepting lenght(password) == 5');
+        //case password > 5
+        $this->assertTrue($user->is_secure_password('elephant'), 'is_secure_password not accepting lenght(password) > 5');
     }
 
     public function testIs_email()
     {
-
-    }
-
-    public function testStoreFormValues()
-    {
-
+        $user = new user();
+        $this->assertEquals($user->is_email('adamo@paradiso.it'),1,'testIs_email failed: valid email is to be accepted');
+        $this->assertEquals($user->is_email('adamoparadiso.it'),0,'testIs_email failed: non-valid email is not to be accepted');
+        $this->assertEquals($user->is_email('adamo@paradisoit'),0,'testIs_email failed: non-valid email is not to be accepted');
+        $this->assertEquals($user->is_email('adamoparadisoit'),0,'testIs_email failed: non-valid email is not to be accepted');
+        $this->assertEquals($user->is_email('@paradiso.it'),0,'testIs_email failed: non-valid email is not to be accepted');
+        $this->assertEquals($user->is_email('@paradiso'),0,'testIs_email failed: non-valid email is not to be accepted');
+        $this->assertEquals($user->is_email('adamo@'),0,'testIs_email failed: non-valid email is not to be accepted');
     }
 
     public function testIs_logged()

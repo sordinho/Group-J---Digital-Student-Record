@@ -95,7 +95,30 @@ class teacherTest extends TestCase {
         $conn->close();
 
         //Prints for debug
-        //printf("TeacherID: %d\nDateActual: %s\nDescription: %s\nTopicID: %d\nSpecifiClassID: %d",$teacherID,$dateActualDate,$description,$topicID,$specificClassID);
+        printf("TeacherID: %d\nDateActual: %s\nDescription: %s\nTopicID: %d\nSpecifiClassID: %d",$teacherID,$dateActualDate,$description,$topicID,$specificClassID);
+
+
+//        $conn = $teacherObject->connectMySQL();
+//
+//        if ($result = $conn->query($sql)) {
+//            $row = $result->fetch_array();
+//            $value = $row[0];
+//
+//            $result->close();
+//            return  $value;
+//        } else {
+//            printf("Error message: %s\n", $conn->error);
+//        }
+
+        //Verify that the insertion has been executed correctly
+        $count = perform_SELECT_return_single_value(
+            "SELECT COUNT(*) FROM topicrecord WHERE TeacherID=$teacherID AND Timestamp=$dateActualString AND Description='$description' AND TopicID=$topicID AND SpecificClassID=$specificClassID"
+        );
+
+        printf("\n%d",$count);
+
+
+		$this->assertEquals("a", "a");
 
 	}
 }
