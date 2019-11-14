@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 14, 2019 alle 14:30
+-- Creato il: Nov 14, 2019 alle 14:58
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -205,7 +205,7 @@ CREATE TABLE `TopicRecord` (
   `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Description` varchar(512) NOT NULL,
   `TopicID` int(11) NOT NULL,
-  `SpecifiClassID` int(11) NOT NULL
+  `SpecificClassID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

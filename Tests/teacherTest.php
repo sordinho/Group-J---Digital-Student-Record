@@ -6,25 +6,35 @@ require_once 'testUtility.php';
 require_once '../classes/user.class.php';
 require_once '../classes/teacher.class.php';
 
-class teacherTest extends TestCase
-{
-    public static function setUpBeforeClass():void{
-        createTestDatabase();
-    }
-    public static function tearDownAfterClass(): void
-    {
-        dropTestDatabase();
-    }
+class teacherTest extends TestCase {
+	public static function setUpBeforeClass(): void {
+		createTestDatabase();
+	}
+
+	public static function tearDownAfterClass(): void {
+		dropTestDatabase();
+	}
 
 
-    public function testModify_lecture_topic()
-    {
-        //TODO
-        $teacherObject = new Teacher();
+	public function testModify_lecture_topic() {
+		$_SESSION["teacherID"] = 1;
+		$topicID = 1;
+		$description = "Test topic description";
+		$modifiedDescription = "MODIFIED Test topic description";
+		$teacherObject = new Teacher($_SESSION);
+		$teacherID = $teacherObject->get_teacher_ID();
+		$timestamp = strtotime(date("Y-m-d H:i:s"));
 
-        $this->assertEquals("a","a");
+		// Insert a topic record to modify
+		$this->assertTrue($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp));
 
-    }
+		// Try to modify the topic record
+		$this->assertTrue($teacherObject->modify_lecture_topic($topicID, $modifiedDescription));
+
+
+		$this->assertEquals("a", "a");
+
+	}
 
     public function testInsert_new_lecture_topic()
     {
@@ -60,8 +70,7 @@ class teacherTest extends TestCase
         //$this->assertTrue($max_after == ($max_before + 1), "TestQueue: test_add_top not performed correctly or not performed");*/
 
 
+		$this->assertEquals("a", "a");
 
-        $this->assertEquals("a","a");
-
-    }
+	}
 }
