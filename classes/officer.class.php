@@ -1,6 +1,6 @@
 <?php
 
-class Officer extends user {
+class officer extends user {
 
 	private $officer_id = null;
 
@@ -13,6 +13,23 @@ class Officer extends user {
 	public function get_officer_ID() {
 		return isset($_SESSION['officerID']) ? $_SESSION['officerID'] : -1;
 	}
+
+	// Enroll a new student (anagraphic datas that should be saved into db)
+	public function enroll_student($student_info) {
+		if(!array_key_exists("name", $student_info) ){
+			return false;
+		}
+		$classID = -1;
+		// immetricolation info inserted also now? 
+		$actual_year= strtotime(date("Y"));
+		$conn = $this->connectMySQL();
+		//(`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) 
+		$stmt = $conn->prepare("INSERT INTO Student(Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES (?,?,?,?,?)");
+		$stmt->bind_param('ssfsi', $student_info["name"], $student_info["surname"], $student_info["avgLastSchool"], $student_info["CF"], $classID);
+		$stmt->execute();
+		return $stmt->get_result();//True || False
+	}	
+
 /*
  * questa funzione riceve nome, cognome, email, informazioni sui figli e numero di figli
  * e provvede a inserire un nuovo utente nella tabella user e un nuovo parent nella tabella parent (una entry per ogni
@@ -54,7 +71,6 @@ class Officer extends user {
             if(!$stmt2->get_result())
                 return false;
         }
-
         return true;//True || False
     }
 }
