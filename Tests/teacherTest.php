@@ -24,7 +24,7 @@ class teacherTest extends TestCase {
 		$modifiedDescription = "MODIFIED Test topic description";
 		$teacherObject = new Teacher($_SESSION);
 		$teacherID = $teacherObject->get_teacher_ID();
-		$timestamp = strtotime(date("Y-m-d H:i:s"));
+		$timestamp = date("Y-m-d H:i:s");
 
 		// Insert a topic record to modify
 		$this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp));
@@ -38,14 +38,22 @@ class teacherTest extends TestCase {
     {
         //TODO
         // variables
+//        $login["unsername"]="TeacherEmail1";
+//        $login["password"]="frontoffice1";
+//
+//        $login=array("TeacherEmail1","frontoffice1");
+//        $user=new user($login);
+//        $user->user_login($login);
         $_SESSION["teacherID"]=1;
         $teacherObject = new Teacher($_SESSION);
         $topicID=1;
+        $description="Lecture 1 topic 1";
         $dateActualDate=date("Y-m-d H:i:s");
         $dateActualString=strtotime($dateActualDate);
         $specificClassID=1;
-        $description="Lecture 1 topic 1";
         $teacherID=$teacherObject->get_teacher_ID();
+
+
         //TODO
         //printf("%d",$teacherObject->get_teacher_ID());
 
