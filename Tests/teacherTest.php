@@ -32,9 +32,9 @@ class teacherTest extends TestCase
         $_SESSION["teacherID"]=1;
         $teacherObject = new Teacher($_SESSION);
         //TODO
-        printf("%d",$teacherObject->get_id());
+        printf("%d",$teacherObject->get_teacher_ID());
         //$
-        printf("Ciao");
+        //printf("Ciao");
         // perform insertion of one value
         //$teacherObject->
 
