@@ -13,7 +13,7 @@ require_once 'testConfig.php';
 function createTestDatabase() {
     $filename = 'testDBsetup.sql';
 
-    $mysqli = new mysqli(DBAddrTest, DBUserTest, DBPasswordTest);
+    $mysqli = new mysqli(DBAddr, DBUser, DBPassword);
 
     if ($mysqli->connect_errno) {
         printf("Connect failed: %s\n", $mysqli->connect_errno);
@@ -50,10 +50,10 @@ function createTestDatabase() {
 function dropTestDatabase() {
     $mysqli = TestsConnectMySQL();
 
-    if ($mysqli->query("DROP DATABASE " . DBNameTest) === TRUE)
-        echo "Database " . DBNameTest . " dropped successfully";
+    if ($mysqli->query("DROP DATABASE " . DBName) === TRUE)
+        echo "Database " . DBName . " dropped successfully";
     else
-        echo "Unable to drop database " . DBNameTest . ". ERROR: " . $mysqli->error;
+        echo "Unable to drop database " . DBName . ". ERROR: " . $mysqli->error;
 }
 
 /**
@@ -101,7 +101,7 @@ function perform_INSERT_or_DELETE($sql) {
  * @return mysqli connection
  */
 function TestsConnectMySQL() {
-    $mysqli = new mysqli(DBAddrTest, DBUserTest, DBPasswordTest, DBNameTest);
+    $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
     /* check connection */
     if ($mysqli->connect_errno) {
         printf("Connect failed: %s\n", $mysqli->connect_errno);
@@ -112,15 +112,4 @@ function TestsConnectMySQL() {
 
 function get_serviceID_by_service_name($service_name) {
     return perform_SELECT_return_single_value("SELECT ID FROM Service WHERE Name = '{$service_name}'");
-}
-
-// protected and not private so that every inheriting class can access this method
-function connectMySQLTests() {
-    $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
-    /* check connection */
-    if ($mysqli->connect_errno) {
-        printf("Connect failed: %s\n", $mysqli->connect_errno);
-        exit();
-    }
-    return $mysqli;
 }

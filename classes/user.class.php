@@ -261,12 +261,11 @@ class user {
 	}
 
 	public function get_id() {
-		return isset($_SESSION['id']) ? $_SESSION['id'] : '';
+        return isset($_SESSION['id']) ? $_SESSION['id'] : '';
 	}
 
 	public function get_base_url() {
 		return isset($_SESSION['base_url']) ? $_SESSION['base_url'] : '';
-
 	}
 
 	/* Error handling */
@@ -283,10 +282,10 @@ class user {
 
 	/*  Return the logout link */
 	public function get_link_logout() {
-		if ($this->is_logged()) {
+		if ($this->is_logged())
 			return '<a href="' . $this->Urls['logout_page'] . '" class="logout">Logout</a>';
-		}
-		return '';
+		else
+		    return '';
 	}
 
 
