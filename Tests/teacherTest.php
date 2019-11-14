@@ -27,7 +27,7 @@ class teacherTest extends TestCase {
 		$timestamp = strtotime(date("Y-m-d H:i:s"));
 
 		// Insert a topic record to modify
-		$teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp);
+		$this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp));
 
 		// Try to modify the topic record
 		$teacherObject->modify_lecture_topic($topicID, $modifiedDescription);
