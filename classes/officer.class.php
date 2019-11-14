@@ -74,5 +74,43 @@ class officer extends user {
                 return false;
         }
         return true;//True || False
-    }
+	}
+	
+	/**
+	 * Generate a random string, using a cryptographically secure 
+	 * pseudorandom number generator (random_int)
+	 * 
+	 * For PHP 7, random_int is a PHP core function
+	 * 
+	 * @param int $length      How many characters do we want?
+	 * @param string $keyspace A string of all possible characters
+	 *                         to select from
+	 * @return string
+	 */
+	private function random_str(
+		$length,
+		$keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	) {
+		$str = '';
+		$max = mb_strlen($keyspace, '8bit') - 1;
+		if ($max < 1) {
+			throw new Exception('$keyspace must be at least two characters long');
+		}
+		for ($i = 0; $i < $length; ++$i) {
+			$str .= $keyspace[random_int(0, $max)];
+		}
+		return $str;
+	}
+
+	private function generate_and_register_password(){
+		$rand_pass = $this->random_str(10);
+		$options = [
+			//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
+			'cost' => 12 // default is 10, better have a little more security
+		];
+		$hashed_password = password_hash($rand_pass, PASSWORD_DEFAULT, $options);
+		// TODO: Perform insert query
+
+		return $rand_pass;  // will be used by the caller to send email
+	}
 }
