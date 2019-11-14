@@ -40,23 +40,14 @@ if(!isset($_POST["description"])){
 		</div>
 		<div class="form-group">
 		<label for="exampleFormControlTextarea1">Description</label>
-		<textarea class="form-control" id="description" name="description rows="3"></textarea>
+		<textarea class="form-control" id="description" name="description" rows="3"></textarea>
 		</div>
-		<div class="row">
-			Date formats: yyyy-mm-dd, yyyymmdd, dd-mm-yyyy, dd/mm/yyyy, ddmmyyyyy
+		<div class="form-group">
+		<label for="exampleFormControlTextarea1">Date</label>
+		<input type="date" id="date" name="date">
 		</div>
-		<br />
-			<div class="row">
-				<div class="col-sm-3 ">
-					<div class="form-group">
-						<div class="input-group date" id="datetimepicker1">
-							<input type="text" class="form-control" />
-							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
+		
+		
 	</form>
 	</div>
 	</div>';

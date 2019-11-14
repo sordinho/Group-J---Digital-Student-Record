@@ -15,8 +15,10 @@ class officer extends user {
 	}
 
 	// Enroll a new student (anagraphic datas that should be saved into db)
+	// keys of student_info are: name, surname, avgLastSchool, CF
 	public function enroll_student($student_info) {
-		if(!array_key_exists("name", $student_info) ){
+		$si = $student_info; 
+		if(isset($si["name"]) && isset($si["suname"]) && isset($si["avgLastSchool"]) && isset($si["CF"]) ){
 			return false;
 		}
 		$classID = -1;
