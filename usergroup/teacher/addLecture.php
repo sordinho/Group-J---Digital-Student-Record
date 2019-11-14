@@ -3,9 +3,9 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Teacher homepage");
+$page = new cpage("Add lecture");
 $site->setPage($page);
-$teacher = new Teacher();
+$teacher = new teacher();
 
 if(!$teacher ->is_logged()){
 	$content = '
@@ -42,9 +42,27 @@ if(!isset($_POST["description"])){
 		<label for="exampleFormControlTextarea1">Description</label>
 		<textarea class="form-control" id="description" name="description rows="3"></textarea>
 		</div>
+		<div class="row">
+			Date formats: yyyy-mm-dd, yyyymmdd, dd-mm-yyyy, dd/mm/yyyy, ddmmyyyyy
+		</div>
+		<br />
+			<div class="row">
+				<div class="col-sm-3 ">
+					<div class="form-group">
+						<div class="input-group date" id="datetimepicker1">
+							<input type="text" class="form-control" />
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
 	</form>
 	</div>
 	</div>';
+} else{
+	print("Now we should insert the topic");
+	//$teacher->$insert_new_lecture_topic(lectureDescription,topicRecordID, );
 }
 
 $page->setContent($content);

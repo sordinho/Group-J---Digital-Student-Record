@@ -1,12 +1,12 @@
 <?php
 
 
-class Teacher extends user
+class teacher extends user
 {
-    private $teacherID = null;
-    private $name = null;
-    private $surname = null;
-    private $email = null;
+    protected $teacherID = null;
+    protected $name = null;
+    protected $surname = null;
+    protected $email = null;
 
     public function __construct($data = array())
     {
@@ -104,6 +104,32 @@ class Teacher extends user
             $stmt->execute();
             return $stmt->get_result();
         }
-
     }
+
+    /*
+     * Get the topics information for which the teacher is current in charge of
+     *
+     * return               empty            if successful
+     *                      array of array   otherwise
+     * */ 
+    public function get_topics(){
+        $topics = array();
+        // TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
+        // Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT  TopicID, TopicName, TopicDescription
+                                      FROM TopicTeacherClass JOIN ....
+                                      WHERE TeacherID=?;");
+        $stmt->bind_param('ii',$topicID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows<=0){
+            return false;
+        }else{
+            $row = $res->fetch_assoc();
+            array_push($topics, $row);
+        }
+        return $topics;
+    }
+
 }
