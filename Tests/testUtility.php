@@ -1,6 +1,6 @@
 <?php
 
-// todo : require_once 'testConfig.php';
+require_once 'testConfig.php';
 // todo rearrange this for our project
 
 /**
