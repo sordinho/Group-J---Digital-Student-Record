@@ -28,6 +28,9 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
                 break;
             case "parent":
                 $url = "/usergroup/parent/index.php";
+                // Register children infos
+                $sparent = new sparent();
+                $sparent->retrieve_and_register_childs();
                 break;
             case "TODO":
                 //$url = "/TODO.php";
