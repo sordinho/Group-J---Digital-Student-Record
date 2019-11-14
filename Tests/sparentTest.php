@@ -51,6 +51,7 @@ class sparentTest extends TestCase
     {
         $_SESSION["parentID"] = 1;
         $parentObj = new sparent();
+        $parentObj->retrieve_and_register_childs();
         $childsIDs = $_SESSION["childsID"];
         $this->assertEquals(1, $childsIDs[0], "ok");
     }
