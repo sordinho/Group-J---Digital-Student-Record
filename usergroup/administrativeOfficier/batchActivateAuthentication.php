@@ -31,6 +31,11 @@ if($_GET["action"] != "activate"){
         </div>
     </div>';
 }else{
+    // call method to get the current inactive account
+    // for each of them
+        // call the method to generate password and insert it in the db
+        //officer->generate_and_register_password()
+        // Call the method to send email
 }
 $page->setContent($content);
 $site->render();
