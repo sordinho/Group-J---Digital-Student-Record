@@ -22,7 +22,41 @@ if(!$teacher ->is_logged()){
 
 if($_GET['action'] == "edit" && isset($_GET['lectureID'])){// is_logged should extend the base in user
   # Show form with default value equals to that in the DB for the given ID
-  
+  //$lecture_info = teacher->get_lecture_by_id($_GET['lectureID']))
+  $lecture_info["title"] = "TestTopicTitle";
+  $lecture_info["description"] = "TestTopicDescription can be so long and boring.... ";
+  $lecture_info["topicName"] = "TestTopicName";
+  $lecture_info["date"] = "2019-12-22 ";
+  $content = '<div class="container article-clean">
+                <div class="row">
+                <form method="POST">
+                  <div class="form-group">
+                  <label for="Title">Title</label>
+                  <input type="text" class="form-control" value = "'.$lecture_info["title"].'" name="title" id="title" placeholder="Course Introduction">
+                  </div>
+                  <div class="form-group">
+                  <label for="exampleFormControlSelect2">Topic multiple select</label>
+                  <select multiple class="form-control" name="topicID id="topicID">
+                    <option>Topic1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                  </div>
+                  <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Description</label>
+                  <textarea class="form-control" id="description" name="description" rows="3">'.$lecture_info["description"].'</textarea>
+                  </div>
+                  <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Date</label>
+                  <input type="date" id="date" value = "'.$lecture_info["date"].'" name="date">
+                  </div>
+                  
+                  
+                </form>
+                </div>
+                </div>';
 
 }
 elseif ($_POST["description"]) {
