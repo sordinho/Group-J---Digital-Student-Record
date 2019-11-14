@@ -54,7 +54,7 @@ class teacher extends user
 		if (!$this->by_the_end_of_the_week($actual_date, $lecture_date))
 			return false;
 		$conn = $this->connectMySQL();
-		$stmt = $conn->prepare("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?);");
+		$stmt = $conn->prepare("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?)");
 		$stmt->bind_param('issii', $this->teacherID, $timestamp, $lectureDescription, $topicID, $classID);
 		$stmt->execute();
 		return $stmt->get_result();//True || False
