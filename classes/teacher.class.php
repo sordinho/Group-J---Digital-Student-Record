@@ -1,11 +1,12 @@
 <?php
 
 
-class Teacher extends user {
-	private $teacherID = null;
-	private $name = null;
-	private $surname = null;
-	private $email = null;
+class Teacher extends user
+{
+    protected $teacherID = null;
+    protected $name = null;
+    protected $surname = null;
+    protected $email = null;
 
 	public function __construct($data = array()) {
 		parent::__construct($data);

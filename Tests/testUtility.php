@@ -1,6 +1,6 @@
 <?php
 
-// todo : require_once 'testConfig.php';
+require_once 'testConfig.php';
 // todo rearrange this for our project
 
 /**
@@ -11,7 +11,7 @@
  * @return null
  */
 function createTestDatabase() {
-    $filename = 'testDbsetup.sql';
+    $filename = 'testDBsetup.sql';
 
     $mysqli = new mysqli(DBAddrTest, DBUserTest, DBPasswordTest);
 
