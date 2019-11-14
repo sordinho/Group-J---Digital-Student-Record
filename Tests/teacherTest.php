@@ -19,22 +19,28 @@ class teacherTest extends TestCase {
 
 
 
-    /*public function testModify_lecture_topic() {
+    public function testModify_lecture_topic() {
         $_SESSION["teacherID"] = 1;
         $topicID = 1;
         $description = "Test topic description";
         $modifiedDescription = "MODIFIED Test topic description";
         $teacherObject = new Teacher($_SESSION);
-        $teacherID = $teacherObject->get_teacher_ID();
+        //$teacherID = $teacherObject->get_teacher_ID();
         $timestamp = date("Y-m-d H:i:s");
 
         // Insert a topic record to modify
         $this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp));
 
-        // Try to modify the topic record
-        $teacherObject->modify_lecture_topic($modifiedDescription,);
+        $topicRecordID = perform_SELECT_return_single_value("SELECT ID FROM TopicRecord WHERE Timestamp ='$timestamp'");
+        printf("topicRecordID: %d\n",$topicRecordID);
 
-    }*/
+        // Try to modify the topic record
+        $teacherObject->modify_lecture_topic($modifiedDescription,$topicRecordID);
+
+        $this->assertEquals($modifiedDescription,perform_SELECT_return_single_value("SELECT Description FROM TopicRecord WHERE ID=$topicRecordID"),"Test non superato");
+        printf("%s",$modifiedDescription);
+
+    }
 
     public function testInsert_new_lecture_topic()
     {
