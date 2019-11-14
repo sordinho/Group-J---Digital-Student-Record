@@ -1,7 +1,7 @@
 <?php
 
 
-class Teacher extends user
+class teacher extends user
 {
     protected $teacherID = null;
     protected $name = null;
@@ -105,7 +105,44 @@ class Teacher extends user
 			return $stmt->get_result();
 		}
 
+		//controllo se questa lecture l'ha inserita lo stesso
+		//prof che sta eseguendo la modifica, se non è lo stesso
+		//non permetto la modifica
+		if($row[0] != $this->login_iduser){
+			return false;
+		}
+		$res->close();
+		$stmt = $conn->prepare("INSERT INTO TopicRecord VALUES (?,?,?,?);");
+		$stmt->bind_param("iiss",$this->login_iduser,$topicID,$newDescription,$row[1]);
+		$stmt->execute();
+		return $stmt->get_result();
 	}
+
+    /*
+     * Get the topics information for which the teacher is current in charge of
+     *
+     * return               empty            if successful
+     *                      array of array   otherwise
+     * */ 
+    public function get_topics(){
+        $topics = array();
+        // TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
+        // Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT  TopicID, TopicName, TopicDescription
+                                      FROM TopicTeacherClass JOIN ....
+                                      WHERE TeacherID=?;");
+        $stmt->bind_param('ii',$topicID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows<=0){
+            return false;
+        }else{
+            $row = $res->fetch_assoc();
+            array_push($topics, $row);
+        }
+        return $topics;
+    }
 
 	// Return the teacher ID from teacher table
 	public function get_teacher_ID() {
