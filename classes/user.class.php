@@ -149,6 +149,9 @@ class user {
 				case "teacher":
 					$queryID = $mysqli->prepare("SELECT ID FROM Teacher where UserID = ?");
 					break;
+				case "officer":
+					$queryID = $mysqli->prepare("SELECT ID FROM Officer where UserID = ?");
+					break;
 				default:
 					return false;
 			}
@@ -166,7 +169,7 @@ class user {
 				return false;
 			}
 			$query->fetch();
-			$this->setSpecificID($specificID, $retrievedUsergroup);
+			$this->set_specific_ID($specificID, $retrievedUsergroup);
 		}
 		$query->close();
 		$mysqli->close();
@@ -186,6 +189,9 @@ class user {
 				break;
 			case "teacher":
 				$_SESSION['teacherID'] = $specificID;
+				break;
+			case "officer":
+				$_SESSION['officerID'] = $specificID;
 				break;
 			default:
 				break;
