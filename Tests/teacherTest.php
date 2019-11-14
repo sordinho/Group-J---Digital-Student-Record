@@ -32,7 +32,8 @@ class teacherTest extends TestCase
         $_SESSION["teacherID"]=1;
         $teacherObject = new Teacher($_SESSION);
         $topicID=1;
-        $dateActual="2019-11-14 14:10:10";
+        $dateActual1="2019-11-14 14:10:10";
+        $dateActual=strtotime($dateActual1);
         $specificClassID=1;
         $description="Lecture 1 topic 1";
         $teacherID=$teacherObject->get_teacher_ID();
@@ -40,13 +41,17 @@ class teacherTest extends TestCase
         //printf("%d",$teacherObject->get_teacher_ID());
 
         //perform insertion in the DB
-        perform_INSERT_or_DELETE("INSERT INTO topicrecord(TeacherID, Timestamp, Description, TopicID, SpecifiClassID) VALUES($teacherID,$dateActual,$description,$topicID,$specificClassID");
+        $teacherObject->insert_new_lecture_topic($description,$topicID,$dateActual);
+
+        printf("TeacherID: %d\nDateActual: %s\nDescription: %s\nTopicID: %d\nSpecifiClassID: %d",$teacherID,$dateActual1,$description,$topicID,$specificClassID);
 
         //Verify that the insertion has been executed correctly
         $count = perform_SELECT_return_single_value(
-            "SELECT COUNT(*) FROM topicrecord WHERE TeacherID=$teacherID AND Timestamp='$dateActual' AND Description='$description' AND TopicID=$topicID AND SpecifiClassID=$specificClassID"
+            "SELECT COUNT(*) FROM topicrecord WHERE TeacherID=$teacherID AND Timestamp=$dateActual AND Description='$description' AND TopicID=$topicID AND SpecifiClassID=$specificClassID"
         );
 
+
+        printf("\n%d",$count);
 //        //add_top("Packages");
 //        $max_after = perform_SELECT_return_single_value(
 //            "SELECT MAX(TicketNumber) FROM Queue WHERE ServiceID =1;"

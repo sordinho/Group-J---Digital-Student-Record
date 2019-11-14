@@ -156,7 +156,7 @@ CREATE TABLE `TopicRecord` (
   `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Description` varchar(512) NOT NULL,
   `TopicID` int(11) NOT NULL,
-  `SpecifiClassID` int(11) NOT NULL
+  `SpecificClassID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
