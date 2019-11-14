@@ -30,6 +30,7 @@ class sparent extends user {
 	public function retrieve_and_register_childs() {
 
       $childs = array();
+      $children_info = array();
       $conn = $this->connectMySql();
       $stmt = $conn->prepare("SELECT S.ID AS StudentID, P.ID AS ParentID, S.Name, S.Surname 
               FROM Parent P,Student S
@@ -43,7 +44,11 @@ class sparent extends user {
         	array_push($childs, $row[0]);
       }
       $_SESSION['childsID'] = $childs;
-      //$_SESSION['childNames'] = $child_names;
+      /*while($row = $res->fetch_assoc()){
+        array_push($children_info, $row);
+      }
+      $_SESSION['childrenInfo'] = $children_info;
+      */
       return $res;
     }
     // Register a child as the current to view and analyze by saving the studentID into the session
@@ -64,6 +69,14 @@ class sparent extends user {
 		return isset($_SESSION['parentID']) ? $_SESSION['parentID'] : -1;
 	}
 
+  // Return the current registered child for the parent
+  public function get_children_info(){
+    $children[0]["Name"] = "No children";
+		$children[0]["Surname"] = "Registered";
+		$children[0]["childID"] = "-1";
+    return isset($_SESSION['children_info']) ? $_SESSION['children_info'] : $children; 
+  }
+  
     /**
      * @return mixed|null
      */
