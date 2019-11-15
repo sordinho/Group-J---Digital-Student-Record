@@ -18,8 +18,42 @@ if(!$teacher ->is_logged()){
     render_page($content, '');
 }
 
-
 if(!isset($_POST["description"])){
+
+	/*	TODO This is the confirm page, operation result should be:
+				0 if unsuccessful
+				1 if successful
+				any other number won't be accepted (see default option)
+	uncomment if it is ok
+*/
+	/*if(isset($_GET['operation_result'])){
+        $content = "";
+        switch ($_GET['operation_result']){
+            case 1:
+                $content.=<<<OUT
+    <div class="alert alert-success" role="alert">
+      Lecture successfully registered. <a href="addLecture.php" class="alert-link">Add another lecture</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+    </div>
+    OUT;
+                break;
+            case 0:
+                $content.=<<<OUT
+    <div class="alert alert-danger" role="alert">
+     Error in registering a new lecture. <a href="addLecture.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+    </div>
+    OUT;
+
+                break;
+            default:
+                $content.=<<<OUT
+    <div class="alert alert-dark" role="alert">
+      Operation not allowed.
+    </div>
+    OUT;
+        }
+    } else {
+    */
+
 //$content ='<a href="usergroup/teacher/teacherAction1ToMove.php">Action1To incorporate in MENU</a>';
 	$content = '<div class="container article-clean">
 	<div class="row">
@@ -51,6 +85,7 @@ if(!isset($_POST["description"])){
 	</form>
 	</div>
 	</div>';
+	//}
 } else{
 	print("Now we should insert the topic");
 	//$teacher->$insert_new_lecture_topic(lectureDescription,topicRecordID, );
