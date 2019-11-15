@@ -37,19 +37,6 @@ class user
         return $mysqli;
     }
 
-    /** Get data for a given user to log in (administrative officer, teacher, parents, admin)
-     *
-     * Service Id is set only for clerk
-     *
-     * @param $post_data
-     * @return userinfo []
-     */
-    public function getUserData($id)
-    {
-        $userinfo = [];
-        return $userinfo;
-    }
-
     /**
      * @param $mail , $password, $name, $surname, $student
      * @return bool
