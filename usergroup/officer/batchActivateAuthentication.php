@@ -9,7 +9,7 @@ $officier = new officer();
 if(!$officier->get_officer_ID()){
     $content = '
     <div class="alert alert-warning" role="warning">
-        You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
+        You are not authorized. If you are in a hurry <a href="index.php" class="alert-link">just click here!</a>
     </div> ';
     $content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
     $page->setContent($content);

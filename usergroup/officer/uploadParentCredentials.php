@@ -50,16 +50,16 @@ if(!empty($_POST)){
     if(isset($_GET['operation_result'])){
         switch ($_GET['operation_result']){
             case 1:
-                $content.=<<<OUT
+                $content.= <<<OUT
 <div class="alert alert-success" role="alert">
   Parent successfully uploaded. <a href="uploadParentCredentials.php" class="alert-link">Add another parent</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
 </div>
 OUT;
                 break;
             case 0:
-                $content.=<<<OUT
+                $content.= <<<OUT
 <div class="alert alert-danger" role="alert">
- Error in uploading parent's master data. <a href="#" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+ Error in uploading parent's master data. <a href="#" class="alert-link">Retry </a> or <a href="../officer/index.php" class="alert-link">back to your homepage.</a>
 </div>
 OUT;
 

@@ -20,9 +20,8 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
     //echo $_POST['username'] . $_POST['password'];
     
     if($usr->user_login($post_data)) {
-        $usergroup = $usr->get_usergroup();
         $url = "/index.php";
-        switch($usergroup){
+        switch($usr->get_usergroup()){
             case "teacher":
                 $url = "/usergroup/teacher/index.php";
                 break;
@@ -37,7 +36,7 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
                 break; 
         }
         echo "Success";
-        $html = "<meta http-equiv='refresh' content='1; url=".PLATFORM_PATH.$url."' />";
+        $html = "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $url ."' />";
         die($html);
     } else {
         $usr->get_error(11);
