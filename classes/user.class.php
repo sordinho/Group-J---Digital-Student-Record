@@ -149,9 +149,10 @@ class user
 
             // Get specific ID for teacher, parent ...
 
-            if ($user_group_table = $this->get_user_group_table_name($retrievedUsergroup) != false) {
-                $queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
-                $queryID->bind_param('i', $userID);
+            $user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
+            if ($user_group_table != false) {
+                $queryID = $mysqli->prepare("SELECT ID FROM ? WHERE UserID = ?");
+                $queryID->bind_param('si', $user_group_table, $id);
 
                 $result = $queryID->execute();
                 if (!$result) {
@@ -166,8 +167,7 @@ class user
                 }
                 $query->fetch();
                 $this->set_specific_ID($specificID, $retrievedUsergroup);
-            }
-            else {
+            } else {
                 return false;
             }
         }
