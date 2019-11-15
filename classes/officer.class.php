@@ -33,6 +33,66 @@ class officer extends user {
 	}	
 
 /*
+ * register a new parent in the user table.
+ *
+ * @return          -1 if the operation is not successful
+ *                  parent's user_id if the operation is successful
+ * */
+    public function add_new_user($name,$surname,$email){
+        if(!isset($name)||!isset($surname)||!isset($email))
+            return -1;
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("INSERT INTO User (Name, Surname, Email, Password, UserGroup) VALUES (?,?,?,?);");
+        if(!$stmt)
+            return -1;
+        $stmt->bind_param('sssss', $name, $surname, $email, '', 'parent');
+        $stmt->execute();
+        if(!$stmt->get_result())
+            return -1;
+        $stmt = $conn->prepare("SELECT ID
+                                      FROM User
+                                      WHERE Name = ?
+                                        AND Surname= ? 
+                                        AND Email = ?
+                                        AND UserGroup = 'parent';");
+        if(!$stmt)
+            return -1;
+        $stmt->bind_param('sss', $name, $surname, $email);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows<=0)
+            return -1;
+        return $res->fetch_row()[0];
+    }
+    /*
+     * given a user_id inserts $child_N rows in Parent table.
+     *
+     * @return          false if the operation was not successful
+     *                  true if the operation was successful
+     * */
+    public function add_new_parent($user_id,$child_info,$child_N){
+        $conn = $this->connectMySQL();
+        for($i = 0; $i < $child_N;$i++){
+            $stmt2 =$conn->prepare("SELECT ID FROM Student WHERE CF = ?;");
+            if(!$stmt2)
+                return false;
+            $stmt2->bind_param('s',$child_info['cf_'.$i]);
+            $stmt2->execute();
+            $res = $stmt2->get_result();
+            if($res->num_rows <=0)
+                return false;
+            $student_id = $res->fetch_row()[0];
+            $stmt2 = $conn->prepare("INSERT INTO Parent(StudentID, UserID) VALUES(?,?);");
+            if(!$stmt2)
+                return false;
+            $stmt2->bind_param('ii',$student_id,$user_id);
+            $stmt2->execute();
+            if(!$stmt2->get_result())
+                return false;
+        }
+        return true;//True || False
+    }
+    /*
  * questa funzione riceve nome, cognome, email, informazioni sui figli e numero di figli
  * e provvede a inserire un nuovo utente nella tabella user e un nuovo parent nella tabella parent (una entry per ogni
  * figlio)
