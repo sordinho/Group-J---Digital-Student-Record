@@ -32,10 +32,42 @@ if($_GET["action"] != "activate"){
     </div>';
 }else{
     // call method to get the current inactive account
-    // for each of them
-        // call the method to generate password and insert it in the db
-        //officer->generate_and_register_password()
-        // Call the method to send email
+    $parents = $officier->get_parents_without_access_credentials();
+    if(count($parents) == 0){
+        //todo edit this
+        $content=<<<OUT
+<div class="alert alert-danger" role="alert">
+ There are no parents without credentials.<a href="index.php" class="alert-link">Back to your homepage.</a>
+</div>
+OUT;
+    } else {
+        foreach($parents as $parent){
+            $pwd = $officier->generate_and_register_password($parent['ID']);
+            if($pwd == ""){
+                //todo
+                $content=<<<OUT
+<div class="alert alert-danger" role="alert">
+ Error in sending parent's credentials. <a href="batchActivateAuthentication.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+</div>
+OUT;
+                die(); //todo edit this
+            } else {
+                $msg = "Dear parent,
+                        Your access credentials to the digital student record system are : 
+                        - username : ".$parent['Email']."
+                        - password : ".$pwd." 
+                        Best Regards
+                        The school administration.";
+                //todo edit this
+                mail($parent['Email'],"Access Credentials",$msg);
+            }
+        }
+        $content.=<<<OUT
+<div class="alert alert-success" role="alert">
+  Parent credentials successfully generated and sent. <a href="index.php" class="alert-link">Back to your homepage.</a>
+</div>
+OUT;
+    }
 }
 $page->setContent($content);
 $site->render();

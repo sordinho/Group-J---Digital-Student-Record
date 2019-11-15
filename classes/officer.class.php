@@ -162,15 +162,38 @@ class officer extends user {
 		return $str;
 	}
 
-	private function generate_and_register_password(){
+	public function get_parents_without_access_credentials(){
+	    $conn = $this->connectMySQL();
+	    //todo : to be edited
+	    // Se un parent non ha password cosa c'è in quel campo della tabella User? Stringa vuota o altro?
+	    $res = $conn->query("SELECT ID,Email FROM User WHERE UserGroup = 'parent' AND Password = ''");
+	    if($res->num_rows<=0)
+	        return array();
+	    $IDs = array();
+	    for($i = 0; $i < $res->num_rows; $i++){
+            $row = $res->fetch_assoc();
+            array_push($IDs,$row);
+        }
+	    $res->close();
+	    return $IDs;
+    }
+
+	public function generate_and_register_password($userID){
 		$rand_pass = $this->random_str(10);
 		$options = [
 			//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
 			'cost' => 12 // default is 10, better have a little more security
 		];
 		$hashed_password = password_hash($rand_pass, PASSWORD_DEFAULT, $options);
-		// TODO: Perform insert query
-
+		//todo check correctness
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("UPDATE User SET Password = ? WHERE ID = ?");
+		if(!$stmt)
+		    return "";
+		$stmt->bind_param("si",$hashed_password,$userID);
+		$stmt->execute();
+		if(!$stmt->get_result())
+		    return "";
 		return $rand_pass;  // will be used by the caller to send email
 	}
 }
