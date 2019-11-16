@@ -7,9 +7,9 @@ $site = new csite();
 initialize_site($site);
 $page = new cpage("Parent");
 $site->setPage($page);
-$teacher= new teacher();
+$teacher= new teacher($_SESSION);
 
-if(!$teacher ->is_logged()){
+if(!$teacher ->is_logged() || !$teacher ->get_teacher_ID()){
 	$content = '
     <div class="alert alert-warning" role="warning">
         You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>

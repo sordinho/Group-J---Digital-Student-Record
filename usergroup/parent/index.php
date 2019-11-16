@@ -8,7 +8,8 @@ $site = new csite();
 initialize_site($site);
 $page = new cpage("Parent");
 $site->setPage($page);
-$sparent = new sparent();
+$sparent = new sparent($_SESSION);
+
 
 if($_GET['action'] == "switchChild" && $sparent->is_logged()){// is_logged should extend the base in user
   $new_childID = intval($_GET["childID"]);
