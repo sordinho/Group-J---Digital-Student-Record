@@ -125,7 +125,7 @@ CREATE TABLE `TopicRecord` (
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
         // todo manage class selection
-        $selectedClass = 1;
+        $selectedClass = 3;
         $teacherID = $this->get_teacher_ID();
         $stmt->bind_param('ii',$teacherID, $selectedClass);
         $stmt->execute();
