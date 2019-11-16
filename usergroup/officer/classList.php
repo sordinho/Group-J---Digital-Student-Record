@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Administrative Officier");
+$page = new cpage("Administrative Officer");
 $site->setPage($page);
 
 $content = <<<OUT
