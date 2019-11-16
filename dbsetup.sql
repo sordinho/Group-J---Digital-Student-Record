@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 14, 2019 alle 14:58
+-- Creato il: Nov 16, 2019 alle 18:37
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -93,6 +93,14 @@ CREATE TABLE `SpecificClass` (
   `UploadedPath` varchar(50) NOT NULL,
   `CoordinatorTeacherID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `SpecificClass`
+--
+
+INSERT INTO `SpecificClass` (`ID`, `YearClassID`, `Section`, `UploadedPath`, `CoordinatorTeacherID`) VALUES
+(1, 1, 'A', 'uploadedPath1', 1),
+(2, 1, 'B', 'uploadedPath2', 2);
 
 -- --------------------------------------------------------
 
@@ -211,6 +219,27 @@ CREATE TABLE `TopicRecord` (
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `TopicTeacherClass`
+--
+
+CREATE TABLE `TopicTeacherClass` (
+  `ID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `TopicID` int(11) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `TopicTeacherClass`
+--
+
+INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`) VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `User`
 --
 
@@ -309,6 +338,15 @@ ALTER TABLE `TopicRecord`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indici per le tabelle `TopicTeacherClass`
+--
+ALTER TABLE `TopicTeacherClass`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `TopicID` (`TopicID`),
+  ADD KEY `SpecificClassID` (`SpecificClassID`);
+
+--
 -- Indici per le tabelle `User`
 --
 ALTER TABLE `User`
@@ -337,7 +375,7 @@ ALTER TABLE `Parent`
 -- AUTO_INCREMENT per la tabella `SpecificClass`
 --
 ALTER TABLE `SpecificClass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT per la tabella `Student`
 --
@@ -363,6 +401,11 @@ ALTER TABLE `Topic`
 --
 ALTER TABLE `TopicRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT per la tabella `TopicTeacherClass`
+--
+ALTER TABLE `TopicTeacherClass`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT per la tabella `User`
 --
@@ -410,6 +453,14 @@ ALTER TABLE `Teacher`
 ALTER TABLE `TeacherTopic`
   ADD CONSTRAINT `fk_teacherTopicID` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`),
   ADD CONSTRAINT `fk_topicTeacherID` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`);
+
+--
+-- Limiti per la tabella `TopicTeacherClass`
+--
+ALTER TABLE `TopicTeacherClass`
+  ADD CONSTRAINT `fk_specificclassID` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_teacherID2` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_topicID` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
