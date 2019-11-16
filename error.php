@@ -26,8 +26,8 @@ $key = intval($message_script);
 if(array_key_exists($key, $messages)){
 	print($messages[$key]);
 }
-if(isset($_SERVER[HTTP_REFERER]) && !isset($_GET['noref'])){//Se no ref è settato dopo l'errore non si torna alla pagina di referer
-	$referer = $_SERVER[HTTP_REFERER];
+if(isset($_SERVER['HTTP_REFERER']) && !isset($_GET['noref'])){//Se no ref è settato dopo l'errore non si torna alla pagina di referer
+	$referer = $_SERVER['HTTP_REFERER'];
 }
 else{
 	$referer = "./index.php";
