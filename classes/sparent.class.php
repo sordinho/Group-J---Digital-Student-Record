@@ -76,17 +76,14 @@ class sparent extends user {
 		return isset($_SESSION['parentID']) ? $_SESSION['parentID'] : -1;
 	}
 
-  // Return the current registered child for the parent
-  public function get_children_info(){
-    $children[0]["Name"] = "No children";
-		$children[0]["Surname"] = "Registered";
-		$children[0]["childID"] = "-1";
-    return isset($_SESSION['children_info']) ? $_SESSION['children_info'] : $children;
-  }
+    // Return the current registered child for the parent
+    public function get_children_info(){
+        $children[0]["Name"] = "No children";
+        $children[0]["Surname"] = "Registered";
+        $children[0]["childID"] = "-1";
+        return isset($_SESSION['children_info']) ? $_SESSION['children_info'] : $children;
+    }
 
-    /**
-     * @return mixed|null
-     */
     public function getParentId()
     {
         return $this->parent_id;

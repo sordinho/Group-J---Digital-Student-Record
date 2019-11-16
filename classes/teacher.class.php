@@ -125,9 +125,7 @@ CREATE TABLE `TopicRecord` (
         // TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
         // Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
         $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("SELECT  TopicID, TopicName, TopicDescription
-                                      FROM TopicTeacherClass JOIN ....
-                                      WHERE TeacherID=?;");
+        $stmt = $conn->prepare("SELECT t.ID as TopicID, tt.TeacherID as TeacherID, u.Name as TeacherName, u.Surname as TeacherSurname, t.Name as TopicName, t.Description as TopicDescription From Topic t, TeacherTopic tt, User u, Teacher tc where tt.TopicID=t.ID and u.ID=tc.UserID and tt.TeacherID=tc.ID and tc.ID=?");
         $stmt->bind_param('ii',$topicID);
         $stmt->execute();
         $res = $stmt->get_result();

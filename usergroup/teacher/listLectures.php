@@ -36,7 +36,7 @@ if($_GET['action'] == "edit" && isset($_GET['lectureID'])){// is_logged should e
                   </div>
                   <div class="form-group">
                   <label for="exampleFormControlSelect2">Topic multiple select</label>
-                  <select multiple class="form-control" name="topicID id="topicID">
+                  <select multiple class="form-control" name="topicID" id="topicID">
                     <option>Topic1</option>
                     <option>2</option>
                     <option>3</option>
