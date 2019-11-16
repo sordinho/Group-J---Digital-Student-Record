@@ -104,21 +104,19 @@ class userTest extends TestCase
     {
 
         //TODO : Modify - still not working
-        /*$user_data = ['username' => 'email@test.test', 'password' => 'passwordtest'];
+        $user_data = ['username' => 'email@test.test', 'password' => 'passwordtest'];
         $user = new user($user_data);
 
         $hashed_password = password_hash($user_data['password'], PASSWORD_DEFAULT, ['cost' => 12]);
-        $query = "INSERT INTO Parent (ID, Name, Surname, Email,  Password, StudentID) VALUES (0, TestName, TestSurname, ?, " . $hashed_password . ", 0)"
-        $query->bind_param('s', $user_data['surname']);
-        perform_INSERT_or_DELETE($query);
+        $query = "INSERT INTO User (ID, Name, Surname, Email,  Password, UserGroup) VALUES (0, 'TestName', 'TestSurname', 'email@test.test', '$hashed_password', 'parent')";
+        $this->assertTrue(perform_INSERT_or_DELETE($query), 'query failed');
 
         //correct username e password
         $this->assertTrue($user->user_login($user_data), "userTest : testUser_login failed at login correctly");
 
         //password errata e utente corretto
-        $user_data_incorrect1 = $user_data;
-        $user_data_incorrect1['password'] = 'incorrectpasswordtest';
-        $this->assertFalse($user->user_login($user_data_incorrect1), "userTest : testUser_login correctly logged, when it would had not");
+        $user_data_incorrect1 = ['username' => 'email@test.test', 'password' => 'incorrectpasswordtest'];
+        $this->assertFalse($user->user_login($user_data_incorrect1), "userTest : testUser_login returned true, when it would had not");
 
         //password e utente scorretti
         $user_data_incorrect2 = $user_data_incorrect1;
@@ -126,7 +124,7 @@ class userTest extends TestCase
 
         //duplicate username insertion
         perform_INSERT_or_DELETE($query);
-        $this->assertFalse($user->user_login($user_data), "userTest : testUser_login correctly logged, when it would had not");*/
+        $this->assertFalse($user->user_login($user_data), "userTest : testUser_login returned true, when it would had not");
     }
 
     public function testGet_surname()

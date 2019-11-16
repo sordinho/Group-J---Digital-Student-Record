@@ -151,8 +151,8 @@ class user
 
             $user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
             if ($user_group_table != false) {
-                $queryID = $mysqli->prepare("SELECT ID FROM ? WHERE UserID = ?");
-                $queryID->bind_param('si', $user_group_table, $id);
+                $queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
+                $queryID->bind_param('i', $id);
 
                 $result = $queryID->execute();
                 if (!$result) {
@@ -170,7 +170,8 @@ class user
             } else {
                 return false;
             }
-        }
+        } else
+            return false;
         $query->close();
         $mysqli->close();
 
@@ -291,9 +292,9 @@ class user
     // Redirect to error.php (Error handler)
     public function get_error($id, $noref = null)
     {
-        $html = "<meta http-equiv='refresh' content='0; url=" . $this->base_url . "/error.php?message=$id' />";
+        $html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?message=$id' />";
         if (!empty($noref)) {
-            $html = "<meta http-equiv='refresh' content='0; url=" . $this->base_url . "/error.php?message=$id&noref=1' />";
+            $html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?message=$id&noref=1' />";
         }
         print $html;
         //echo "url=".$this->base_url."/error.php?message=$id";
