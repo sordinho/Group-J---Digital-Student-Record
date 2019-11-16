@@ -71,4 +71,8 @@ class teacherTest extends TestCase {
         //printf("TeacherID: %d\nDateActual: %s\nDescription: %s\nTopicID: %d\nSpecifiClassID: %d",$teacherID,$dateActualDate,$description,$topicID,$specificClassID);
 
     }
+
+    public function testGet_topics() {
+
+    }
 }
