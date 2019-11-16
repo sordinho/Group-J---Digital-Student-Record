@@ -68,8 +68,7 @@ CREATE TABLE `TopicRecord` (
 		if($stmt == false)
 		    return false;
 		$stmt->bind_param('issii', $this->teacherID, $timestamp, $lectureDescription, $topicID, $classID);
-		$stmt->execute();
-		return $stmt->get_result();//True || False
+		return $stmt->execute();//True || False
 	}
 
 	/*
@@ -109,8 +108,7 @@ CREATE TABLE `TopicRecord` (
 			if(!$stmt)
 			    return false;
 			$stmt->bind_param("s", $newDescription);
-			$stmt->execute();
-			return $stmt->get_result();
+			return $stmt->execute();
 		}
 	}
 

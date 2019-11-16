@@ -1,5 +1,5 @@
 <?php
-
+require_once "user.class.php";
 class officer extends user {
 
 	private $officer_id = null;
@@ -18,7 +18,7 @@ class officer extends user {
 	// keys of student_info are: name, surname, avgLastSchool, CF
 	public function enroll_student($student_info) {
 		$si = $student_info; 
-		if(isset($si["name"]) && isset($si["suname"]) && isset($si["avgLastSchool"]) && isset($si["CF"]) ){
+		if(!(isset($si["name"]) && isset($si["suname"]) && isset($si["avgLastSchool"]) && isset($si["CF"]))){
 			return false;
 		}
 		$classID = -1;
@@ -26,10 +26,9 @@ class officer extends user {
 		$actual_year= strtotime(date("Y"));
 		$conn = $this->connectMySQL();
 		//(`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) 
-		$stmt = $conn->prepare("INSERT INTO Student(Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES (?,?,?,?,?)");
-		$stmt->bind_param('ssfsi', $student_info["name"], $student_info["surname"], $student_info["avgLastSchool"], $student_info["CF"], $classID);
-		$stmt->execute();
-		return $stmt->get_result();//True || False
+		$stmt = $conn->prepare("INSERT INTO Student(ID,Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES (NULL,?,?,?,?,?)");
+		$stmt->bind_param('ssdsi', $student_info["name"], $student_info["surname"], $student_info["avgLastSchool"], $student_info["CF"], $classID);
+		return $stmt->execute();
 	}	
 
 /*
@@ -42,13 +41,13 @@ class officer extends user {
         if(!isset($name)||!isset($surname)||!isset($email))
             return -1;
         $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("INSERT INTO User (Name, Surname, Email, Password, UserGroup) VALUES (?,?,?,?);");
+        $stmt = $conn->prepare("INSERT INTO User (ID, Name, Surname, Email, Password, UserGroup) VALUES (NULL ,?,?,?,'','parent');");
         if(!$stmt)
-            return -1;
-        $stmt->bind_param('sssss', $name, $surname, $email, '', 'parent');
-        $stmt->execute();
-        if(!$stmt->get_result())
-            return -1;
+            return -2;
+
+        $stmt->bind_param('sss', $name, $surname, $email);
+        if(!$stmt->execute())
+            return -3;
         $stmt = $conn->prepare("SELECT ID
                                       FROM User
                                       WHERE Name = ?
@@ -56,12 +55,12 @@ class officer extends user {
                                         AND Email = ?
                                         AND UserGroup = 'parent';");
         if(!$stmt)
-            return -1;
+            return -4;
         $stmt->bind_param('sss', $name, $surname, $email);
         $stmt->execute();
         $res = $stmt->get_result();
         if($res->num_rows<=0)
-            return -1;
+            return -5;
         return $res->fetch_row()[0];
     }
     /*
@@ -86,8 +85,7 @@ class officer extends user {
             if(!$stmt2)
                 return false;
             $stmt2->bind_param('ii',$student_id,$user_id);
-            $stmt2->execute();
-            if(!$stmt2->get_result())
+            if(!$stmt2->execute())
                 return false;
         }
         return true;//True || False
