@@ -28,8 +28,18 @@ switch($_SESSION["usergroup"]){
 	case "teacher":
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addLecture.php"><i class="fas fa-archive mx-3"></i><span class="text-nowrap mx-2">Add Lecture</span></a></li>';
 	break;
-	case "TODOs":
-	break;
+	case "officer":
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="#"><i class="fas fa-tachometer-alt mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./batchActivateAuthentication.php"><i class="fas fa-envelope mx-3"></i><span class="text-nowrap mx-2">Parent Activation</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./uploadParentCredentials.php"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Upload Parent Info</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./classList.php"><i class="fas fa-graduation-cap mx-3"></i><span class="text-nowrap mx-2">Enroll Student</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Settings</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+										<div class="dropdown-menu border-0 animated fadeIn" role="menu">
+										<a class="dropdown-item text-white" role="presentation" href="#"><span>Change password</span></a>
+										<a class="dropdown-item text-white" role="presentation" href="#"><span>Change email</span></a>
+										<a class="dropdown-item text-white" role="presentation" href="#"><span>More</span></a></div>
+									</li>';
+		break;
 
 }
 /*
@@ -92,17 +102,7 @@ print '<!DOCTYPE html>
 		<li class="nav-item logo-holder">
 			<div class="text-center text-white logo py-4 mx-4"><a class="text-white text-decoration-none" id="title" href="#"><img src="' . PLATFORM_PATH . '/media/logopoli2.jpg" alt="logopoli" style="height: 100%; width: 100%; object-fit: contain"/></a><a class="text-white float-right" id="sidebarToggleHolder" href="#"><i class="fas fa-bars" id="sidebarToggle"></i></a></div>
 		</li>
-		<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="#"><i class="fas fa-tachometer-alt mx-3"></i><span class="text-nowrap mx-2">Dashboard</span></a></li>
-		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="#"><i class="fas fa-user mx-3"></i><span class="text-nowrap mx-2">User profile</span></a></li>
-		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="#"><i class="far fa-life-ring mx-3"></i><span class="text-nowrap mx-2">Support tickets</span></a></li>
-		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="#"><i class="fas fa-archive mx-3"></i><span class="text-nowrap mx-2">Archive</span></a></li>
-		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="#"><i class="fas fa-chart-bar mx-3"></i><span class="text-nowrap mx-2">Statistics</span></a></li>
-		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Settings</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
-			<div class="dropdown-menu border-0 animated fadeIn" role="menu">
-			<a class="dropdown-item text-white" role="presentation" href="#"><span>Change password</span></a>
-			<a class="dropdown-item text-white" role="presentation" href="#"><span>Change email</span></a>
-			<a class="dropdown-item text-white" role="presentation" href="#"><span>More</span></a></div>
-		</li>'. 
+		'.
 		$hidden_menu.
 		$login_out_button.
 	'</ul> 

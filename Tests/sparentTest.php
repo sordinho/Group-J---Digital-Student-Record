@@ -7,7 +7,6 @@ require_once "../classes/sparent.class.php";
 
 class sparentTest extends TestCase
 {
-
     private function printErrorMessage($testName,$optionalMsg){
         $toReturn ="sparentTest: error in ".$testName;
         if(isset($optionalMsg) && !empty($optionalMsg))
