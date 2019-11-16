@@ -9,3 +9,4 @@ vendor/
 Tests/TestFoo.php
 
 Tests/.phpunit.result.cache
+phpinfo.php

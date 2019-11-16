@@ -123,8 +123,11 @@ CREATE TABLE `TopicRecord` (
         // TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
         // Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
         $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("SELECT t.ID as TopicID, tt.TeacherID as TeacherID, u.Name as TeacherName, u.Surname as TeacherSurname, t.Name as TopicName, t.Description as TopicDescription From Topic t, TeacherTopic tt, User u, Teacher tc where tt.TopicID=t.ID and u.ID=tc.UserID and tt.TeacherID=tc.ID and tc.ID=?");
-        $stmt->bind_param('ii',$topicID);
+        $stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
+        // todo manage class selection
+        $selectedClass = 1;
+        $teacherID = $this->get_teacher_ID();
+        $stmt->bind_param('ii',$teacherID, $selectedClass);
         $stmt->execute();
         $res = $stmt->get_result();
         if($res->num_rows<=0){
@@ -138,6 +141,27 @@ CREATE TABLE `TopicRecord` (
 
 	// Return the teacher ID from teacher table
 	public function get_teacher_ID() {
-		return isset($_SESSION['teacherID']) ? $_SESSION['teacherID'] : -1;
+        // todo change $_SESSION['id'] to $_SESSION['teacherID']
+		return isset($_SESSION['id']) ? $_SESSION['id'] : -1;
 	}
+
+	/*
+	 * get ClassID, TopicName, TopicDescription for a given teacherID
+	 */
+	public function get_assigned_classes() {
+        $classes = array();
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT ttc.ID as ClassID, t.Name as TopicName, t.Description as TopicDescription from TopicTeacherClass ttc, Topic as t WHERE ttc.TopicID=t.ID and TeacherID=?");
+        $teacherID = $this->get_teacher_ID();
+        $stmt->bind_param('i',$teacherID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows<=0){
+            return false;
+        }else{
+            $row = $res->fetch_assoc();
+            array_push($classes, $row);
+        }
+        return $classes;
+    }
 }

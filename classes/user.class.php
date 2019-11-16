@@ -177,7 +177,6 @@ class user
 
         return true;
     }
-
     /**
      * This function sets the specific ID (parentID, teacherID ...) given the user ID and the usergroup
      * @param $specificID : general user ID from user table

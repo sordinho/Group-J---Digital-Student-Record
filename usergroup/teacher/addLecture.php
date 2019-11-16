@@ -55,6 +55,10 @@ if(!isset($_POST["description"])){
     */
 
 //$content ='<a href="usergroup/teacher/teacherAction1ToMove.php">Action1To incorporate in MENU</a>';
+	$topics = $teacher->get_topics();
+	foreach ($topics as $topic) {
+		$topic_list .= "<option>".$topic['TopicName']."</option>";
+	}
 	$content = '<div class="container article-clean">
 	<div class="row">
 	<form method="POST">
@@ -65,11 +69,7 @@ if(!isset($_POST["description"])){
 		<div class="form-group">
 		<label for="exampleFormControlSelect2">Topic multiple select</label>
 		<select multiple class="form-control" name="topicID" id="topicID">
-			<option>Topic1</option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
+			'.$topic_list.'
 		</select>
 		</div>
 		<div class="form-group">
