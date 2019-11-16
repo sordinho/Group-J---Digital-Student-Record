@@ -32,13 +32,13 @@ class teacherTest extends TestCase {
         $this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp));
 
         $topicRecordID = perform_SELECT_return_single_value("SELECT ID FROM TopicRecord WHERE Timestamp ='$timestamp'");
-        printf("topicRecordID: %d\n",$topicRecordID);
+        //printf("topicRecordID: %d\n",$topicRecordID);
 
         // Try to modify the topic record
         $teacherObject->modify_lecture_topic($modifiedDescription,$topicRecordID);
 
         $this->assertEquals($modifiedDescription,perform_SELECT_return_single_value("SELECT Description FROM TopicRecord WHERE ID=$topicRecordID"),"Test non superato");
-        printf("%s",$modifiedDescription);
+        //printf("%s",$modifiedDescription);
 
     }
 
@@ -58,7 +58,7 @@ class teacherTest extends TestCase {
         $this->assertNotNull($teacherObject->insert_new_lecture_topic($description,$topicID,$dateActualDate));
 
         $topicRecordID = perform_SELECT_return_single_value("SELECT ID FROM TopicRecord WHERE Timestamp ='$dateActualDate'");
-        printf("topicRecordID: %d\n",$topicRecordID);
+        //printf("topicRecordID: %d\n",$topicRecordID);
 
         $count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM TopicRecord WHERE ID =$topicRecordID");
         //printf("Count: %d\n",$count);

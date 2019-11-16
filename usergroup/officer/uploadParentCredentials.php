@@ -5,8 +5,8 @@ $site = new csite();
 initialize_site($site);
 $page = new cpage("Register new parent");
 $site->setPage($page);
-/*$officier = new Officer();
-if(!$officier->is_logged()){
+$officer = new Officer();
+/*if(!$officer->is_logged()){
     $content = '
     <div class="alert alert-warning" role="warning">
         You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
@@ -20,29 +20,30 @@ $num = 1;
 $content="";
 
 if(!empty($_POST)){
-    $content = "OK";
     $parent_N = $_POST['parent_first_name'];
     $parent_S = $_POST['parent_last_name'];
     $parent_email = $_POST['parent_email'];
     $child_N = $_POST['children'];
-    $content.="<p>Name: ".$parent_N."</p>";
-    $content.="<p>Surname: ".$parent_S."</p>";
-    $content.="<p>Email: ".$parent_email."</p>";
-    $content.="<p>Child#: ".$child_N."</p>";
     $child_info = array();
     for($i = 0; $i<$child_N;$i++){
         $child_info['first_name_'.$i]= $_POST['first_name_child_'.$i];
         $child_info['last_name_'.$i]= $_POST['last_name_child_'.$i];
         $child_info['cf_'.$i] = $_POST['cf_'.$i];
-        $content.="<p>Name: ".$child_info['first_name_'.$i].'</p>';
-        $content.="<p>Surname: ".$child_info['last_name_'.$i].'</p>';
-        $content.="<p>CF: ".$child_info['cf_'.$i].'</p>';
-
     }
-    //TODO creare uno user con dette credenziali e aggiungere le varie entry nella tabella parent
-    $res = true; //todo edit
-    // $res = officier->register_new_parent(...);
-    if($res){
+    $userID = $officer->add_new_user($parent_N,$parent_S,$parent_email);
+    if($userID <= 0){
+        header("Location: uploadParentCredentials.php?operation_result=0");
+        die();
+    } else {
+        $res = $officer->add_new_parent($userID,$child_info,$child_N);
+        if(!$res){
+            if(!$officer->remove_user($userID)){
+                header("Location: uploadParentCredentials.php?operation_result=-1");
+                die();
+            }
+            header("Location: uploadParentCredentials.php?operation_result=0");
+            die();
+        }
         header("Location: uploadParentCredentials.php?operation_result=1");
         die();
     }
@@ -59,7 +60,15 @@ OUT;
             case 0:
                 $content.= <<<OUT
 <div class="alert alert-danger" role="alert">
- Error in uploading parent's master data. <a href="#" class="alert-link">Retry </a> or <a href="../officer/index.php" class="alert-link">back to your homepage.</a>
+ Error in uploading parent's master data. <a href="uploadParentCredentials.php" class="alert-link">Retry </a> or <a href="../officer/index.php" class="alert-link">back to your homepage.</a>
+</div>
+OUT;
+
+                break;
+            case -1:
+                $content.= <<<OUT
+<div class="alert alert-danger" role="alert">
+ Fatal error, contact the database administrator. <a href="../officer/index.php" class="alert-link">Back to your homepage.</a>
 </div>
 OUT;
 

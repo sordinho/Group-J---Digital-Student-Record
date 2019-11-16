@@ -91,49 +91,37 @@ class officer extends user {
         return true;//True || False
     }
     /*
- * questa funzione riceve nome, cognome, email, informazioni sui figli e numero di figli
- * e provvede a inserire un nuovo utente nella tabella user e un nuovo parent nella tabella parent (una entry per ogni
- * figlio)
- * */
-	public function register_new_parent($name,$surname,$email,$child_info,$child_N){
-        //todo check correctness
-	    if(!isset($name)||!isset($surname)||!isset($email)||!isset($child_info)||empty($child_info))
-	        return false;
-	    $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("INSERT INTO User (Name, Surname, Email, Password, UserGroup) VALUES (?,?,?,?);");
-        $stmt->bind_param('sssss', $name, $surname, $email, '', 'parent');
-        $stmt->execute();
-        if(!$stmt->get_result())
+     * removes a user from the USER table and all his entries from Parent table
+     *
+     * @param userID ---> the id of the user to be removed
+     *
+     * @return true ---> operation successful
+     *         false --> operation unsuccessful
+     * */
+    public function remove_user($userID){
+        if(!isset($userID))
             return false;
-        $stmt = $conn->prepare("SELECT ID
-                                      FROM User
-                                      WHERE Name = ?
-                                        AND Surname= ? 
-                                        AND Email = ?
-                                        AND UserGroup = 'parent';");
-        $stmt->bind_param('sss', $name, $surname, $email);
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT * FROM User WHERE ID = ?;");
+        if(!$stmt)
+            return false;
+        $stmt->bind_param("i",$userID);
         $stmt->execute();
         $res = $stmt->get_result();
-        if($res->num_rows<=0)
+        if($res->num_rows!= 1)
             return false;
-        $parent_id = $res->fetch_row()[0];
-        for($i = 0; $i < $child_N;$i++){
-            $stmt2 =$conn->prepare("SELECT ID FROM Student WHERE CF = ?;");
-            $stmt2->bind_param('s',$child_info['cf_'.$i]);
-            $stmt2->execute();
-            $res = $stmt2->get_result();
-            if($res->num_rows <=0)
-                return false;
-            $student_id = $res->fetch_row()[0];
-            $stmt2 = $conn->prepare("INSERT INTO Parent(StudentID, UserID) VALUES(?,?);");
-            $stmt2->bind_param('ii',$student_id,$parent_id);
-            $stmt2->execute();
-            if(!$stmt2->get_result())
-                return false;
-        }
-        return true;//True || False
-	}
-	
+        $stmt = $conn->prepare("DELETE FROM User WHERE ID = ?;");
+        if(!$stmt)
+            return false;
+        $stmt->bind_param("i",$userID);
+        if(!$stmt->execute())
+            return false;
+        $stmt = $conn->prepare("DELETE FROM Parent WHERE UserID = ?;");
+        IF(!$stmt)
+            return false;
+        $stmt->bind_param("i",$userID);
+        return $stmt->execute();
+    }
 	/**
 	 * Generate a random string, using a cryptographically secure 
 	 * pseudorandom number generator (random_int)
@@ -189,8 +177,7 @@ class officer extends user {
 		if(!$stmt)
 		    return "";
 		$stmt->bind_param("si",$hashed_password,$userID);
-		$stmt->execute();
-		if(!$stmt->get_result())
+		if(!$stmt->execute())
 		    return "";
 		return $rand_pass;  // will be used by the caller to send email
 	}
