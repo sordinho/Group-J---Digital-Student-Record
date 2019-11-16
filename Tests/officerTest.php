@@ -100,4 +100,15 @@ class officerTest extends TestCase
         $res = $officer->add_new_parent($usr_id,$child_info,$childN);
         $this->assertFalse($res,$this->printErrorMessage('testAddNewParent','returned value should be false'));
     }
+    public function testRegisterNewParent(){
+        $name = 'Jon';
+        $surname = 'Snow';
+        $email = 'kingIn@the.north';
+        $childinfo= array();
+        $childinfo['cf_0']='cf1';
+        $childN = 1;
+        $officer = new officer();
+        $res = $officer->register_new_parent($name,$surname,$email,$childinfo,$childN);
+        $this->assertTrue($res);
+    }
 }
