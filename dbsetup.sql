@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 16, 2019 alle 18:37
+-- Creato il: Nov 16, 2019 alle 18:47
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -100,7 +100,8 @@ CREATE TABLE `SpecificClass` (
 
 INSERT INTO `SpecificClass` (`ID`, `YearClassID`, `Section`, `UploadedPath`, `CoordinatorTeacherID`) VALUES
 (1, 1, 'A', 'uploadedPath1', 1),
-(2, 1, 'B', 'uploadedPath2', 2);
+(2, 1, 'B', 'uploadedPath2', 2),
+(3, 1, 'C', 'uploadedPath3', 3);
 
 -- --------------------------------------------------------
 
@@ -235,7 +236,8 @@ CREATE TABLE `TopicTeacherClass` (
 
 INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`) VALUES
 (1, 1, 1, 1),
-(2, 2, 1, 2);
+(2, 2, 1, 2),
+(3, 3, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -375,7 +377,7 @@ ALTER TABLE `Parent`
 -- AUTO_INCREMENT per la tabella `SpecificClass`
 --
 ALTER TABLE `SpecificClass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT per la tabella `Student`
 --
@@ -405,7 +407,7 @@ ALTER TABLE `TopicRecord`
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
 ALTER TABLE `TopicTeacherClass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT per la tabella `User`
 --
