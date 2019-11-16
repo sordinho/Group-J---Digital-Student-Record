@@ -3,7 +3,7 @@ include 'config.php';
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Home");
+$page = new cpage("Your Digital Record System");
 $site->setPage($page);
 
 
@@ -11,7 +11,11 @@ $page->setContent($content);
 $site->render();
 
 if(!isset($_SESSION['id']) && isset($_POST['username'])) {
-    echo "You just tried login";
+    echo '<div class="d-flex justify-content-center"><div class="spinner-grow text-warning" style="width: 10rem; height: 10rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div></div>
+            
+            <div class="text-center"><button type="button" class="btn btn-outline-warning">Loading...</button></div>';
     $usr = new user;
 
     $post_data["username"] = $_POST['username'];
@@ -35,7 +39,6 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
                 //$url = "/TODO.php";
                 break; 
         }
-        echo "Success";
         $html = "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $url ."' />";
         die($html);
     } else {
@@ -43,13 +46,6 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
     }
 } else {
 	$usr = new user();
-	echo "Authenticated? " . $usr->is_logged();
-	echo "<br>Usergroup: " . $usr->get_usergroup();
-	echo "<br>Username: " . $usr->get_username();
-	echo "<br>Name: " . $usr->get_name();
-	echo "<br>Surname: " . $usr->get_surname();
-	echo "<br>ID: " . $usr->get_id();
-	echo "<br>Base_URL: " . $usr->get_base_url();
 	if($usr->is_logged()){
 		// TODO reset refresh to 1 sec. Set to 5 for debug print
 		$html = "<meta http-equiv='refresh' content='5; url=" . PLATFORM_PATH . $usr->get_base_url() . "' />";

@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Teacher homepage");
+$page = new cpage("Teacher Home");
 $site->setPage($page);
 $teacher= new teacher($_SESSION);
 

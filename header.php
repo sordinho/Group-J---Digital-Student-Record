@@ -26,13 +26,14 @@ switch($_SESSION["usergroup"]){
 		</li>';
 	break;
 	case "teacher":
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addLecture.php"><i class="fas fa-archive mx-3"></i><span class="text-nowrap mx-2">Add Lecture</span></a></li>';
+        $hidden_menu .= '		<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./index.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>';
+        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addLecture.php"><i class="fas fa-book-open mx-3"></i><span class="text-nowrap mx-2">Add Lecture</span></a></li>';
 	break;
 	case "officer":
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="#"><i class="fas fa-tachometer-alt mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./index.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./batchActivateAuthentication.php"><i class="fas fa-envelope mx-3"></i><span class="text-nowrap mx-2">Parent Activation</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./uploadParentCredentials.php"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Upload Parent Info</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./classList.php"><i class="fas fa-graduation-cap mx-3"></i><span class="text-nowrap mx-2">Enroll Student</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./studentEnrollment.php"><i class="fas fa-graduation-cap mx-3"></i><span class="text-nowrap mx-2">Enroll Student</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Settings</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 										<div class="dropdown-menu border-0 animated fadeIn" role="menu">
 										<a class="dropdown-item text-white" role="presentation" href="#"><span>Change password</span></a>
@@ -112,9 +113,10 @@ echo '<!-- Modal Login -->
 		<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
+				<form role="form" method="POST" action="' . PLATFORM_PATH . '/index.php">
 				<div class="modal-content">
 					<div class="modal-body" style="padding:40px 50px;">
-						<form role="form" method="POST" action="' . PLATFORM_PATH . '/index.php">
+						
 						<div class="form-group">
 							<label for="front_office"><span class="glyphicon glyphicon-user"></span> Email</label>
 							<input type="text" class="form-control" name="username" id="username" placeholder="Enter email">
@@ -123,18 +125,19 @@ echo '<!-- Modal Login -->
 							<label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
 							<input type="password" class="form-control" name="password" id="password" placeholder="Enter password">
 						</div>
-						<div class="checkbox">
+						
+						<div class="text-center"> <div class="checkbox">
 							<label><input type="checkbox" value="" checked>Remember me</label>
-						</div>
-							<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
-						</form>
+						</div></div>
+
+						
 					</div>
 					<div class="modal-footer">
+						<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
 						<button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-						<!--<p>Not a member? <a href="#">Sign Up</a></p>-->
-						<p>Forgot <a href="#">Password?</a></p>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div> 
 		';
