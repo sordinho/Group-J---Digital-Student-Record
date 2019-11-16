@@ -181,4 +181,24 @@ class officer extends user {
 		    return "";
 		return $rand_pass;  // will be used by the caller to send email
 	}
+
+    /**
+     * @return array
+     * Class that returns the array of all entries in the SpecificClass table in the DB
+     */
+	public function get_Class_List(){
+        $conn = $this->connectMySQL();
+
+        $res = $conn->query("SELECT ID, YearClassID, Section FROM SpecificClass");
+        if($res->num_rows<=0)
+            return array();
+        $IDs = array();
+        for($i = 0; $i < $res->num_rows; $i++){
+            $row = $res->fetch_assoc();
+            array_push($IDs,$row);
+        }
+        $res->close();
+        return $IDs;
+    }
+
 }
