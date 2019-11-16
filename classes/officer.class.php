@@ -102,6 +102,14 @@ class officer extends user {
         if(!isset($userID))
             return false;
         $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT * FROM User WHERE ID = ?;");
+        if(!$stmt)
+            return false;
+        $stmt->bind_param("i",$userID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows!= 1)
+            return false;
         $stmt = $conn->prepare("DELETE FROM User WHERE ID = ?;");
         if(!$stmt)
             return false;
@@ -169,8 +177,7 @@ class officer extends user {
 		if(!$stmt)
 		    return "";
 		$stmt->bind_param("si",$hashed_password,$userID);
-		$stmt->execute();
-		if(!$stmt->get_result())
+		if(!$stmt->execute())
 		    return "";
 		return $rand_pass;  // will be used by the caller to send email
 	}
