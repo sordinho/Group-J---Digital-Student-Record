@@ -25,6 +25,8 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
 
     if($result = $usr->user_login($post_data)) {
         $url = "/index.php";
+        //TODO: refractoring: use default case to handle string composition with base_url and 
+        //distinguish just the case (like parent) that needs further actions to be taken.
         switch($usr->get_usergroup()){
             case "teacher":
                 $url = "/usergroup/teacher/index.php";
@@ -34,6 +36,9 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
                 // Register children infos
                 $sparent = new sparent();
                 $sparent->retrieve_and_register_childs();
+                break;
+            case "officer":
+                $url = "/usergroup/officer/index.php";
                 break;
             case "TODO":
                 //$url = "/TODO.php";
