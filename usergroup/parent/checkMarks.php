@@ -5,7 +5,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Check child's marks");
+$page = new cpage("Marks");
 $site->setPage($page);
 $sparent = new sparent($_SESSION);
 
@@ -25,7 +25,7 @@ if($sparent->is_logged()){// TODO: is_logged should extend the base in user or c
 
   //Note: a warning message is already displayed in the index, so for now an ugly die is enough
   if($cur_child == -1){
-    die("You should have selected the child you want to operate on");
+    die('<div class="alert alert-danger" role="alert">Please, select a student</div>');
   }
 
   $grades = $sparent-> get_grades($cur_child);

@@ -34,8 +34,8 @@ $classes = $officer->get_Class_List();
 
 if(count($classes) == 0){
         $content=<<<OUT
-                        <div class=\"alert alert-danger\" role=\"alert\">
-                         There are no classes in DB.<a href=\"index.php\" class=\"alert-link\">Back to your homepage.</a>
+                        <div class="alert alert-danger text-center" role="alert">
+                        NO CLASSES AVAILABLE
                         </div>
                     OUT;
     } else {
