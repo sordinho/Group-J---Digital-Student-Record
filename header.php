@@ -16,8 +16,8 @@ switch($_SESSION["usergroup"]){
 	case "parent":
 		$par = new sparent();
 		$children = $par->get_children_info();
-		$hidden_menu .= '<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./checkMarks.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Check marks</span></a></li>';		
-		$hidden_menu .= '<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Children</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkMarks.php"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
+		$hidden_menu .= '<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-graduate mx-3"></i><span class="text-nowrap mx-2">Students</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 		<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
 		foreach ($children as $i=> $child) {
 			$hidden_menu .= '
@@ -27,14 +27,13 @@ switch($_SESSION["usergroup"]){
 		</li>';
 	break;
 	case "teacher":
-        $hidden_menu .= '		<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./index.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>';
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addLecture.php"><i class="fas fa-book-open mx-3"></i><span class="text-nowrap mx-2">Add Lecture</span></a></li>';
 	break;
 	case "officer":
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./index.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./batchActivateAuthentication.php"><i class="fas fa-envelope mx-3"></i><span class="text-nowrap mx-2">Parent Activation</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./uploadParentCredentials.php"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Upload Parent Info</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./studentEnrollment.php"><i class="fas fa-graduation-cap mx-3"></i><span class="text-nowrap mx-2">Enroll Student</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./classCompositionModification.php"><i class="fas fa-users mx-3"></i><span class="text-nowrap mx-2">Handle Classes</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Settings</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 										<div class="dropdown-menu border-0 animated fadeIn" role="menu">
 										<a class="dropdown-item text-white" role="presentation" href="#"><span>Change password</span></a>
@@ -112,6 +111,7 @@ print '<!DOCTYPE html>
 			</div>
 		</li>
 		'.
+		'<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./index.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>'.
 		$hidden_menu.
 		$login_out_button.
 	'</ul> 

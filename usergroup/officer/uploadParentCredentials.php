@@ -138,20 +138,20 @@ OUT;
             $content .= <<<OUT
             <hr>
             
-            <p class="card-body info-color white-text text-center py-4">Child $i</p>
+            <p class="card-body info-color white-text text-center py-4">Student $i</p>
             <div class="form-row">
                 <div class="col">
                     <!-- First name -->
                     <div class="md-form">
                         <input type="text" id="materialRegisterFormFirstNameChild$i" name="first_name_child_$i" class="form-control">
-                        <label for="materialRegisterFormFirstName">Child first name</label>
+                        <label for="materialRegisterFormFirstName">Student first name</label>
                     </div>
                 </div>
                 <div class="col">
                     <!-- Last name -->
                     <div class="md-form">
                         <input type="text" id="materialRegisterFormLastNameChild$i" name="last_name_child_$i" class="form-control">
-                        <label for="materialRegisterFormLastName">Child last name</label>
+                        <label for="materialRegisterFormLastName">Student last name</label>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@ OUT;
             <!-- CF -->
             <div class="md-form mt-0">
                 <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
-                <label for="materialRegisterFormEmail">Child fiscal code</label>
+                <label for="materialRegisterFormEmail">Student fiscal code</label>
             </div>
 OUT;
         }

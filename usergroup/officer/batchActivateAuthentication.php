@@ -23,7 +23,7 @@ if($_GET["action"] != "activate"){
     $content = '
     <!-- The container  -->
     <div class="container article-clean">
-        <div class="wrapper">
+        <div class="wrapper text-center">
             <br/>
             <h1>Batch parent activation process</h1>
             <p class="lead">Click on the button to generate the parent authentication data and send them by mail.<br></p>
