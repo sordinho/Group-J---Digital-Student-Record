@@ -159,7 +159,7 @@ CREATE TABLE `TopicRecord` (
         if($res->num_rows<=0){
             return false;
         }else{
-            $row = $res->fetch_assoc();
+            $row = $res->fetch_array();
             array_push($classes, $row);
         }
         return $classes;
