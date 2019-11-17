@@ -5,7 +5,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Parent");
+$page = new cpage("Teacher list recorded topics");
 $site->setPage($page);
 $teacher= new teacher($_SESSION);
 
@@ -81,15 +81,20 @@ else{
     </thead>
     <tbody>';
 
-  //TODO get the current child selected by the parent
-  $grades = $parentObj -> get_grades($sparent->get_current_child());
-
-  while($row = $grades->fetch_row()){
-        //t.Name, Mark, Timestamp, u.Surname
-      $content.='<tr>
-        <th scope="row">'.$row[0].'</th>
-        <td>'.$row[1].'</td>
-        <td>'.$row[2].'</td>
+  // TODO implement method to get data from db
+  //$grades = $teacher-> get_topics_record();//TODO: implement logic
+  $grades = array();
+  $grade["TopicDescription"] = "Description test ";
+  $grade["TopicName"] = "TopicName "; 
+  $grade["Timestamp"] = "12/03/2019"; 
+  array_push($grades, $grade);
+  foreach ($grades as $i=> $row) {
+        //ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription
+        $title = substr ($row['TopicDescription'], 0 , 16)."..."; // tODO: remove if title added to db
+        $content.='<tr>
+        <th scope="row">'.$title.'</th>
+        <td>'.$row['TopicName'].'</td>
+        <td>'.$row['Timestamp'].'</td>
       </tr>';
   }
 

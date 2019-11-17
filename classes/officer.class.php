@@ -17,8 +17,10 @@ class officer extends user {
 	// Enroll a new student (anagraphic datas that should be saved into db)
 	// keys of student_info are: name, surname, avgLastSchool, CF
 	public function enroll_student($student_info) {
+        if ($this->get_officer_ID() == -1) 
+            return false;
 		$si = $student_info; 
-		if(!(isset($si["name"]) && isset($si["suname"]) && isset($si["avgLastSchool"]) && isset($si["CF"]))){
+		if(!(isset($si["name"]) && isset($si["surname"]) && isset($si["avgLastSchool"]) && isset($si["CF"]))){
 			return false;
 		}
 		$classID = -1;
@@ -200,5 +202,42 @@ class officer extends user {
         $res->close();
         return $IDs;
     }
+
+    /**
+     * @param $classID
+     * @return array
+     * Function that given the classID, returns the array with ID, Name, Surname of every student of the requested class
+     */
+    public function get_Students_By_Class_ID($classID){
+        $conn = $this->connectMySQL();
+
+        $res = $conn->query("SELECT ID, Name, Surname FROM Student WHERE SpecificClassID=$classID ORDER BY Surname,Name");
+        if($res->num_rows<=0)
+            return array();
+        $IDs = array();
+        for($i = 0; $i < $res->num_rows; $i++){
+            $row = $res->fetch_assoc();
+            array_push($IDs,$row);
+        }
+        $res->close();
+        return $IDs;
+    }
+
+    /**
+     * @param $studentID
+     * Function that given the studentID removes it from the class it is actually assighed to (sets specificClassID=-1)
+     */
+    public function remove_Student_From_Class($studentID){
+        $conn = $this->connectMySQL();
+
+        if ($conn->query("UPDATE Student SET SpecificClassID=-1 WHERE ID=$studentID") === TRUE) {
+            echo "Record updated successfully, redirecting";
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
+        $conn->close();
+        return;
+    }
+
 
 }
