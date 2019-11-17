@@ -28,11 +28,11 @@ else {
         $students = $officer->get_Students_By_Class_ID($_GET['classID']);
 
         if (count($students) == 0) {
-            $content = <<<OUT
+            $content = "
                             <div class=\"alert alert-danger\" role=\"alert\">
-                             There are no students in the selected Class.<a href=\"index.php\" class=\"alert-link\">Back to your homepage.</a>
+                             There are no students in the selected Class.<a href=".PLATFORM_PATH."/usergroup/officer/index.php class=\"alert-link\">Back to your homepage.</a>
                             </div>
-                        OUT;
+                        ";
         } else {
             $content.="
                 <div class=\"card\">";
@@ -72,21 +72,10 @@ else {
 ";
 
     }else if (isset($_GET['studentID'])){
-
-
         $officer->remove_Student_From_Class($_GET['studentID']);
         header( "refresh:2;url=classCompositionModification.php" );
-
-
-
     }else {
-
-
-        $content = "<div class=\"card\">";
-
-
-
-        $content .= "
+        $content = "<div class=\"card\">
                     <div class=\"card-body \">";
         $content .=
 

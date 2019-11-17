@@ -203,6 +203,11 @@ class officer extends user {
         return $IDs;
     }
 
+    /**
+     * @param $classID
+     * @return array
+     * Function that given the classID, returns the array with ID, Name, Surname of every student of the requested class
+     */
     public function get_Students_By_Class_ID($classID){
         $conn = $this->connectMySQL();
 
@@ -218,6 +223,10 @@ class officer extends user {
         return $IDs;
     }
 
+    /**
+     * @param $studentID
+     * Function that given the studentID removes it from the class it is actually assighed to (sets specificClassID=-1)
+     */
     public function remove_Student_From_Class($studentID){
         $conn = $this->connectMySQL();
 
