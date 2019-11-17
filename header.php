@@ -16,11 +16,12 @@ switch($_SESSION["usergroup"]){
 	case "parent":
 		$par = new sparent();
 		$children = $par->get_children_info();
+		$hidden_menu .= '<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./checkMarks.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Check marks</span></a></li>';		
 		$hidden_menu .= '<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Children</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 		<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
 		foreach ($children as $i=> $child) {
 			$hidden_menu .= '
-			<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID='. $child["childID"].'"><span>'. $child["Name"]." ".$child["Surname"].'</span></a>';
+			<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID='. $child["StudentID"].'"><span>'. $child["Name"]." ".$child["Surname"].'</span></a>';
 		}
 		$hidden_menu .= '</div>
 		</li>';
