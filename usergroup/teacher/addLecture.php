@@ -26,7 +26,7 @@ if(!isset($_POST["description"])){
 				any other number won't be accepted (see default option)
 	uncomment if it is ok
 */
-	/*if(isset($_GET['operation_result'])){
+	if(isset($_GET['operation_result'])){
         $content = "";
         switch ($_GET['operation_result']){
             case 1:
@@ -52,7 +52,7 @@ if(!isset($_POST["description"])){
     OUT;
         }
     } else {
-    */
+
 
 //$content ='<a href="usergroup/teacher/teacherAction1ToMove.php">Action1To incorporate in MENU</a>';
 	$topics = $teacher->get_topics();
@@ -99,12 +99,17 @@ if(!isset($_POST["description"])){
 	</form>
 	</div>
 	</div>';
-	//}
+	}
 } else{
 	//print("Now we should insert the topic");
 	//	public function insert_new_lecture_topic($lectureDescription, $topicID, $timestamp) {
 
-	$teacher->insert_new_lecture_topic($_POST["description"], $_POST["topicID"], $_POST["date"], $_POST["classID"]);
+	if($teacher->insert_new_lecture_topic($_POST["description"], $_POST["topicID"], $_POST["date"], $_POST["classID"])){
+		header("Location: addLecture.php?operation_result=1");
+		die();
+	}
+	header("Location: addLecture.php?operation_result=0");
+	die();
 }
 
 $page->setContent($content);

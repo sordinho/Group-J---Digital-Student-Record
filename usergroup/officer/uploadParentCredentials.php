@@ -5,17 +5,8 @@ $site = new csite();
 initialize_site($site);
 $page = new cpage("Register new parent");
 $site->setPage($page);
-$officer = new Officer();
-/*if(!$officer->is_logged()){
-    $content = '
-    <div class="alert alert-warning" role="warning">
-        You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
-    </div> ';
-    $content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
-    $page->setContent($content);
-    $site->render();
-    render_page($content, '');
-}*/
+$officer = new Officer($_SESSION);
+
 $num = 1;
 $content="";
 
