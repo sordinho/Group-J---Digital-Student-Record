@@ -52,14 +52,14 @@ OUT;
 OUT;
                 die(); //todo edit this
             } else {
-                $msg = "Dear parent,
-                        Your access credentials to the digital student record system are : 
-                        - username : ".$parent['Email']."
-                        - password : ".$pwd." 
-                        Best Regards
-                        The school administration.";
-                //todo edit this
-                mail($parent['Email'],"Access Credentials",$msg);
+                // A valid password was generated, send it by mail
+                $message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: ".$parent['Email']."\nPassword:".$pwd."\nFor your security, please delete this message ASAP.";
+                $message .= "\nBest Regards\nThe school administration.";
+                $message = wordwrap($message, 70, "\n");
+                // try yo send
+                if( mail($parent['Email'],"Access Credentials (DSR)", $message) ){
+                    $status = true;
+                }
             }
         }
         $content.=<<<OUT
