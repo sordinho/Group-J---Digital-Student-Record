@@ -57,8 +57,14 @@ if(!isset($_POST["description"])){
 //$content ='<a href="usergroup/teacher/teacherAction1ToMove.php">Action1To incorporate in MENU</a>';
 	$topics = $teacher->get_topics();
 	foreach ($topics as $topic) {
-		$topic_list .= "<option>".$topic['TopicName']."</option>";
+		$topic_list .= "<option value='{$topic['TopicID']}'>".$topic['TopicName']."</option>";
 	}
+
+	$classes = $teacher->get_assigned_classes();
+	foreach ($classes as $class) {//TODO extend with class name (i.e. 4I)
+		$class_list.= "<option value='{$class['ClassID']}'>".$class['ClassID']."</option>";
+	}
+
 	$content = '<div class="container article-clean">
 	<div class="row">
 	<form method="POST">
@@ -72,6 +78,14 @@ if(!isset($_POST["description"])){
 			'.$topic_list.'
 		</select>
 		</div>
+
+		<div class="form-group">
+		<label for="exampleFormControlSelect3">Topic multiple select</label>
+		<select multiple class="form-control" name="classID" id="classID">
+			'.$class_list.'
+		</select>
+		</div>
+
 		<div class="form-group">
 		<label for="exampleFormControlTextarea1">Description</label>
 		<textarea class="form-control" id="description" name="description" rows="3"></textarea>
@@ -80,15 +94,17 @@ if(!isset($_POST["description"])){
 		<label for="exampleFormControlTextarea1">Date</label>
 		<input type="date" id="date" name="date">
 		</div>
-		
+		<button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Record</button>	
 		
 	</form>
 	</div>
 	</div>';
 	//}
 } else{
-	print("Now we should insert the topic");
-	//$teacher->$insert_new_lecture_topic(lectureDescription,topicRecordID, );
+	//print("Now we should insert the topic");
+	//	public function insert_new_lecture_topic($lectureDescription, $topicID, $timestamp) {
+
+	$teacher->insert_new_lecture_topic($_POST["description"], $_POST["topicID"], $_POST["date"], $_POST["classID"]);
 }
 
 $page->setContent($content);
