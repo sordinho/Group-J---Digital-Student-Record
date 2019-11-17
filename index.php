@@ -35,6 +35,7 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
                 $url = "/usergroup/parent/index.php";
                 // Register children infos
                 $sparent = new sparent();
+                print($sparent->get_parent_ID());
                 $sparent->retrieve_and_register_childs();
                 break;
             case "officer":

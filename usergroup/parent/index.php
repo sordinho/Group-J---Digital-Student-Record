@@ -22,37 +22,27 @@ if($_GET['action'] == "switchChild" && $sparent->is_logged()){// is_logged shoul
 }
 else{
 // Should be moved to other page and just linked in the menu
+$hidden_warning = ""; 
 
-  $content='
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Grade</th>
-        <th scope="col">Subject</th>
-        <th scope="col">Professor</th>
-        <th scope="col">Category</th>
-      </tr>
-    </thead>
-    <tbody>';
+// If no child was choosen show an alert
+if($sparent->get_current_child() == -1){
+  $hidden_warning = '<div class="alert alert-warning" role="alert">
+    Please select on which child you want to operate on from the sidebar.
+  </div>';
+}
+$content = '<div class="container article-clean">
+<div class="row">
+	<div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+		<div class="text-center intro">
+			<h1 class="text-center">What can i do?</h1>
+			<p class="text-center"><span class="by"></span> <a href="#"></a><span class="date"></span></p><!--<img class="img-fluid" src="assets/img/desk.jpg">--></div>
+		<div class="text">
+			<p>'.$hidden_warning.'</p>
+		</div>
+	</div>
+</div>
+</div>';
 
-  //TODO get the current child selected by the parent
-  $grades = $parentObj -> get_grades($sparent->get_current_child());
-
-  while($row = $grades->fetch_row()){
-        //t.Name, Mark, Timestamp, u.Surname
-      $content.='<tr>
-        <th scope="row">'.$row[2].'</th>
-        <td>'.$row[1].'</td>
-        <td>'.$row[0].'</td>
-        <td>'.$row[3].'</td>
-        <td>TODO</td>
-      </tr>';
-  }
-
-  $content.='
-    </tbody>
-  </table>';
 
 }
 
