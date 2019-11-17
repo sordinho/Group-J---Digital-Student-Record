@@ -23,7 +23,7 @@ if($_GET["action"] != "activate"){
     $content = '
     <!-- The container  -->
     <div class="container article-clean">
-        <div class="wrapper">
+        <div class="wrapper text-center">
             <br/>
             <h1>Batch parent activation process</h1>
             <p class="lead">Click on the button to generate the parent authentication data and send them by mail.<br></p>
@@ -41,32 +41,33 @@ if($_GET["action"] != "activate"){
 </div>
 OUT;
     } else {
+        $succes = false;
         foreach($parents as $parent){
             $pwd = $officier->generate_and_register_password($parent['ID']);
-            if($pwd == ""){
-                //todo
-                $content=<<<OUT
-<div class="alert alert-danger" role="alert">
- Error in sending parent's credentials. <a href="batchActivateAuthentication.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
-</div>
-OUT;
-                die(); //todo edit this
-            } else {
-                $msg = "Dear parent,
-                        Your access credentials to the digital student record system are : 
-                        - username : ".$parent['Email']."
-                        - password : ".$pwd." 
-                        Best Regards
-                        The school administration.";
-                //todo edit this
-                mail($parent['Email'],"Access Credentials",$msg);
+            if($pwd != ""){
+                // A valid password was generated, send it by mail
+                $message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: ".$parent['Email']."\nPassword:".$pwd."\nFor your security, please delete this message ASAP.";
+                $message .= "\nBest Regards\nThe school administration.";
+                $message = wordwrap($message, 70, "\n");
+                // try yo send
+                if( mail($parent['Email'],"Access Credentials (DSR)", $message) ){
+                    $succes = true;
+                }
             }
         }
-        $content.=<<<OUT
-<div class="alert alert-success" role="alert">
-  Parent credentials successfully generated and sent. <a href="index.php" class="alert-link">Back to your homepage.</a>
-</div>
-OUT;
+        if($succes){
+            $content.='
+                <div class="alert alert-success" role="alert">
+                    Parent credentials successfully generated and sent. <a href="index.php" class="alert-link">Back to your homepage.</a>
+                </div>
+                ';
+        }
+        else{
+            $content='
+                <div class="alert alert-danger" role="alert">
+                    Error in sending parent\'s credentials. <a href="batchActivateAuthentication.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+                </div>';
+        }
     }
 }
 $page->setContent($content);

@@ -6,8 +6,9 @@ class sparent extends user {
 	//private $childs = array();
 
 	public function __construct($data = array()) {
-		parent::__construct($data);
-		$this->parent_id = $_SESSION['parentID'];
+        parent::__construct($data);
+        //$this->parent_id = $_SESSION['parentID'];
+
 	}
 
 	//returns the result of the query that selects all the grades of @childID
@@ -24,9 +25,10 @@ class sparent extends user {
                     AND M.StudentID = ?");
 		$stmt->bind_param('s', $childID);
 		$stmt->execute();
-		$res = $stmt->get_result();
-        if(!$res)
+        $res = $stmt->get_result();
+        if(!$res){
             return false;
+        }
         while($row = $res->fetch_assoc()){
             array_push($grades_info, $row);
         }
@@ -36,27 +38,32 @@ class sparent extends user {
 	// Register the childs in a session
 	public function retrieve_and_register_childs() {
 
-      $childs = array();
-      $children_info = array();
-      $conn = $this->connectMySql();
-      $stmt = $conn->prepare("SELECT S.ID AS StudentID, P.ID AS ParentID, S.Name, S.Surname 
-              FROM Parent P,Student S
-              WHERE P.ID = ?
-                AND P.StudentID = S.ID;");
-      //$stmt->bind_param('d',$this->parent_id);
-      $stmt->bind_param('d',$_SESSION['parentID']);
-      $stmt->execute();
-      $res = $stmt->get_result();
-      while($row = $res->fetch_row()){
-        	array_push($childs, $row[0]);
-      }
-      $_SESSION['childsID'] = $childs;
-      /*while($row = $res->fetch_assoc()){
+    $childs = array();
+    $children_info = array();
+    $conn = $this->connectMySql();
+    print($_SESSION['parentID']);
+    $stmt = $conn->prepare("SELECT S.ID AS StudentID, P.ID AS ParentID, S.Name, S.Surname 
+            FROM Parent P,Student S
+            WHERE P.ID = ?
+            AND P.StudentID = S.ID;");
+    //$stmt->bind_param('d',$this->parent_id);
+    $stmt->bind_param('d',$_SESSION['parentID']);//use getter
+    $stmt->execute();
+    $res = $stmt->get_result();
+    /*while($row = $res->fetch_row()){
+        array_push($childs, $row[0]);
+    }
+    //$_SESSION['childsID'] = $childs;*/
+    if(!$res){
+        die("Error in SQL query. Contact admin (#Err: 137)");
+    }
+
+    while($row = $res->fetch_assoc()){
+        //var_dump($row);
         array_push($children_info, $row);
-      }
-      $_SESSION['childrenInfo'] = $children_info;
-      */
-      return $res;
+    }
+    $_SESSION['childrenInfo'] = $children_info;
+    return $res;
     }
     // Register a child as the current to view and analyze by saving the studentID into the session
     public function set_current_child($childID){
@@ -81,12 +88,13 @@ class sparent extends user {
         $children[0]["Name"] = "No children";
         $children[0]["Surname"] = "Registered";
         $children[0]["childID"] = "-1";
-        return isset($_SESSION['children_info']) ? $_SESSION['children_info'] : $children;
+        return isset($_SESSION['childrenInfo']) ? $_SESSION['childrenInfo'] : $children;
     }
 
     public function getParentId()
     {
-        return $this->parent_id;
+        //return $this->parent_id;
+        return $_SESSION['parentID'];
     }
 
 

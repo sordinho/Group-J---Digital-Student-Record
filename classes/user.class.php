@@ -150,6 +150,7 @@ class user
             // Get specific ID for teacher, parent ...
 
             $user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
+            $specificID = -1;
             if ($user_group_table != false) {
                 $queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
                 $queryID->bind_param('i', $id);
@@ -162,11 +163,12 @@ class user
                 $queryID->store_result();
                 $queryID->bind_result($specificID);
                 // In case of success there should be just 1 user for a given (username is also a primary key for its table)
-                if ($query->num_rows != 1) {
+                if ($queryID->num_rows != 1) {
                     return false;
                 }
-                $query->fetch();
-                $this->set_specific_ID($specificID, $retrievedUsergroup);
+                $queryID->fetch();
+                $this->set_specific_ID(intval($specificID), $retrievedUsergroup);
+                //die($specificID);
             } else {
                 return false;
             }
@@ -182,6 +184,7 @@ class user
      * @param $specificID : general user ID from user table
      * @param $usergroup
      */
+    // BTW was easier to write just a specificID and use it in combination with usergroup
     private function set_specific_ID($specificID, $usergroup)
     {
         switch ($usergroup) {
