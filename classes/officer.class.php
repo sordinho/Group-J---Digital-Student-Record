@@ -201,4 +201,32 @@ class officer extends user {
         return $IDs;
     }
 
+    public function get_Students_By_Class_ID($classID){
+        $conn = $this->connectMySQL();
+
+        $res = $conn->query("SELECT ID, Name, Surname FROM Student WHERE SpecificClassID=$classID ORDER BY Surname,Name");
+        if($res->num_rows<=0)
+            return array();
+        $IDs = array();
+        for($i = 0; $i < $res->num_rows; $i++){
+            $row = $res->fetch_assoc();
+            array_push($IDs,$row);
+        }
+        $res->close();
+        return $IDs;
+    }
+
+    public function remove_Student_From_Class($studentID){
+        $conn = $this->connectMySQL();
+
+        if ($conn->query("UPDATE Student SET SpecificClassID=-1 WHERE ID=$studentID") === TRUE) {
+            echo "Record updated successfully, redirecting";
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
+        $conn->close();
+        return;
+    }
+
+
 }
