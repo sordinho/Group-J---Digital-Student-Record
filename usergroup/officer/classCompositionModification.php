@@ -7,6 +7,8 @@ $page = new cpage("Class Composition Modification Page");
 $site->setPage($page);
 
 $officer = new officer();
+
+//if not logged returns the error
 if(!$officer->get_officer_ID()){
     $content = '
         <div class="alert alert-warning" role="warning">
@@ -19,7 +21,7 @@ if(!$officer->get_officer_ID()){
 }// should call get_error TODOs:
 else {
 
-
+    //if a class has been selected loads the list of students of the class so that officer can modify it
     if (isset($_GET['classID'])) {
         $content .= "
     
@@ -55,13 +57,31 @@ else {
             $content.="
                     
                         <form>
+                        
+                        <table class=\"table table - sm\">
+                          <thead>
+                            <tr>
+                              <th scope=\"col\">LastName</th>
+                              <th scope=\"col\">Name</th>
+                              <th scope=\"col\"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                        
                         ";
             foreach ($students as $student) {
-                        $content.="<li class=\"list-group-item\" value=".$student['ID'].">".$student['Surname']." ".$student['Name']."
-                                        <button value='Rimuovi Dalla Classe' id=".$student['ID'] ." type='button' onclick='removeStudent(id);'> Rimuovi </button>
-                                    </li>";
+                        $content.="
+                        
+                        
+                            <tr>
+                              <td>".$student['Surname']."</td>
+                              <td>".$student['Name']."</td>
+                              <td><button class='btn btn-primary' value='Rimuovi Dalla Classe' id=".$student['ID'] ." type='button' onclick='removeStudent(id);'> Rimuovi </button></td>
+                            </tr>";
             }
-            $content.=" </form>
+            $content.="
+                          </tbody>
+                        </table> </form>
                     </div>
                 </div>";
         }
@@ -96,6 +116,7 @@ else {
 
         $classes = $officer->get_Class_List();
 
+        //if no classes are in the DB, returns to the home
         if (count($classes) == 0) {
             $content = <<<OUT
                             <div class=\"alert alert-danger\" role=\"alert\">
@@ -103,8 +124,8 @@ else {
                             </div>
                         OUT;
         } else {
+            //for every student, creates the option so that officer can select which class wants to modify
             foreach ($classes as $class) {
-
                 $content .= "<option value=".$class['ID'].">".$class['YearClassID']." ".$class['Section']."</option>";
             }
         }
