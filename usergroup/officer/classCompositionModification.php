@@ -8,16 +8,16 @@ $site->setPage($page);
 
 $officer = new officer($_SESSION);
 
-if(!$officer ->is_logged() || $officer ->get_officer_ID()==-1){
-	$content = '
-    <div class="alert alert-warning" role="warning">
-        You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
-    </div> ';
-	$content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
-	$page->setContent($content);
-	$site->render();
-	exit();
-}
+//if not logged returns the error
+if(!$officer->is_logged()){
+    $content = '
+        <div class="alert alert-warning" role="warning">
+            You are not authorized. If you are in a hurry <a href="index.php" class="alert-link">just click here!</a>
+        </div> ';
+    $content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
+    $page->setContent($content);
+    $site->render();
+}// should call get_error TODOs:
 else {
 
     //if a class has been selected loads the list of students of the class so that officer can modify it
@@ -92,7 +92,7 @@ else {
 
     }else if (isset($_GET['studentID'])){
         $officer->remove_Student_From_Class($_GET['studentID']);
-        header( "refresh:2;url=classCompositionModification.php" );
+        header( "refresh:2;url=index.php" );
     }else {
         $content = "<div class=\"card\">
                     <div class=\"card-body \">";
