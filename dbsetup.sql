@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 16, 2019 alle 18:47
+-- Creato il: Nov 18, 2019 alle 12:49
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -59,6 +59,14 @@ CREATE TABLE `Officer` (
   `UserID` int(11) NOT NULL,
   `FiscalCode` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `Officer`
+--
+
+INSERT INTO `Officer` (`ID`, `UserID`, `FiscalCode`) VALUES
+(1, 10, 'FSCOFFICER1'),
+(2, 11, 'FSCOFFICER2');
 
 -- --------------------------------------------------------
 
@@ -217,6 +225,15 @@ CREATE TABLE `TopicRecord` (
   `SpecificClassID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dump dei dati per la tabella `TopicRecord`
+--
+
+INSERT INTO `TopicRecord` (`ID`, `TeacherID`, `Timestamp`, `Description`, `TopicID`, `SpecificClassID`) VALUES
+(3, 1, '2019-11-17 17:19:22', 'TopicLectureDescription for classID=3', 1, 3),
+(4, 1, '2019-11-14 23:00:00', 'TopicDescription1', 1, 3),
+(5, 1, '2019-11-18 23:00:00', 'description1', 1, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -367,7 +384,7 @@ ALTER TABLE `MarksRecord`
 -- AUTO_INCREMENT per la tabella `Officer`
 --
 ALTER TABLE `Officer`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT per la tabella `Parent`
 --
@@ -402,7 +419,7 @@ ALTER TABLE `Topic`
 -- AUTO_INCREMENT per la tabella `TopicRecord`
 --
 ALTER TABLE `TopicRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
