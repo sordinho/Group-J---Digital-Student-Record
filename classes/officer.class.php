@@ -243,5 +243,23 @@ class officer extends user {
         return $classID;
     }
 
+    /**
+     * @param $studentID
+     * Function that given the studentID removes it from the class it is actually assighed to (sets specificClassID=-1)
+     * returns the id of the class the student was in, to be able to redirect to that class composition modification
+     * @param $classID
+     * @return bool
+     */
+    public function add_student_to_class($studentID, $classID){
+        $conn = $this->connectMySQL();
+        $returnState=false;
+        if ($conn->query("UPDATE Student SET SpecificClassID=$classID WHERE ID=$studentID") === TRUE) {
+            $returnState=true;
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
+        $conn->close();
+        return $returnState;
+    }
 
 }
