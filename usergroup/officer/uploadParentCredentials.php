@@ -26,6 +26,8 @@ if(!empty($_POST)){
         header("Location: uploadParentCredentials.php?operation_result=0");
         die();
     } else {
+        // add new parent checks in the db for existing student get the student ID and create a parent record
+        // but does *NOT* create an entry in student table
         $res = $officer->add_new_parent($userID,$child_info,$child_N);
         if(!$res){
             if(!$officer->remove_user($userID)){
