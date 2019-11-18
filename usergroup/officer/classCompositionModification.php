@@ -40,7 +40,7 @@ else {
 
             $content.="
                     <h5 class=\"card-header info-color white-text text-center py-4\">
-                        <strong>Class Modification</strong>
+                        <strong>Students List</strong>
                     </h5>
                     
                     <div class=\"card-body\">
