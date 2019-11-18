@@ -69,25 +69,25 @@ if(!isset($_POST["description"])){
 	<div class="row">
 	<form method="POST">
 		<div class="form-group">
-		<label for="Title">Title</label>
+		<label for="Title">Title of the lecture</label>
 		<input type="text" class="form-control" name="title" id="title" placeholder="Course Introduction">
 		</div>
 		<div class="form-group">
-		<label for="exampleFormControlSelect2">Topic multiple select</label>
+		<label for="exampleFormControlSelect2">Subject select</label>
 		<select multiple class="form-control" name="topicID" id="topicID">
 			'.$topic_list.'
 		</select>
 		</div>
 
 		<div class="form-group">
-		<label for="exampleFormControlSelect3">Topic multiple select</label>
+		<label for="exampleFormControlSelect3">Class select</label>
 		<select multiple class="form-control" name="classID" id="classID">
 			'.$class_list.'
 		</select>
 		</div>
 
 		<div class="form-group">
-		<label for="exampleFormControlTextarea1">Description</label>
+		<label for="exampleFormControlTextarea1">Description of the lecture</label>
 		<textarea class="form-control" id="description" name="description" rows="3"></textarea>
 		</div>
 		<div class="form-group">
