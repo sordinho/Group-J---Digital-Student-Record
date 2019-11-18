@@ -234,9 +234,10 @@ class officer extends user {
         $res->close();
 
         if ($conn->query("UPDATE Student SET SpecificClassID=-1 WHERE ID=$studentID") === TRUE) {
-            echo "Record updated successfully, redirecting";
+
         } else {
             echo "Error updating record: " . $conn->error;
+            return -1;
         }
         $conn->close();
         return $classID;

@@ -92,7 +92,9 @@ else {
 
     }else if (isset($_GET['studentID'])){
         $classIDReturned = $officer->remove_Student_From_Class($_GET['studentID']);
-        header( "refresh:2;url=classCompositionModification.php?classID=".$classIDReturned);
+        if($classIDReturned!=-1) {
+            header("refresh:0.1;url=classCompositionModification.php?classID=" . $classIDReturned);
+        }
     }else {
         $content = "<div class=\"card\">
                     <div class=\"card-body \">";
