@@ -282,7 +282,7 @@ class user
 
     public function get_id()
     {
-        return isset($_SESSION['id']) ? $_SESSION['id'] : '';
+        return isset($_SESSION['id']) ? $_SESSION['id'] : -1;
     }
 
     public function get_base_url()

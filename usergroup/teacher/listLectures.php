@@ -9,7 +9,7 @@ $page = new cpage("Teacher list recorded topics");
 $site->setPage($page);
 $teacher= new teacher($_SESSION);
 
-if(!$teacher ->is_logged() || !$teacher ->get_teacher_ID()){
+if(!$teacher ->is_logged() || $teacher ->get_teacher_ID()==-1){
 	$content = '
     <div class="alert alert-warning" role="warning">
         You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
@@ -17,7 +17,7 @@ if(!$teacher ->is_logged() || !$teacher ->get_teacher_ID()){
 	$content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
 	$page->setContent($content);
 	$site->render();
-  render_page($content, '');
+	exit();
 }
 
 if($_GET['action'] == "edit" && isset($_GET['lectureID'])){// is_logged should extend the base in user
