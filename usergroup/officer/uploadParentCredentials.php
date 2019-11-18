@@ -10,6 +10,18 @@ $officer = new officer($_SESSION);
 $num = 1;
 $content="";
 
+if(!$officer ->is_logged() || $officer ->get_officer_ID()==-1){
+	$content = '
+    <div class="alert alert-warning" role="warning">
+        You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
+    </div> ';
+	$content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
+	$page->setContent($content);
+	$site->render();
+	exit();
+}
+
+
 if(!empty($_POST)){
     $parent_N = $_POST['parent_first_name'];
     $parent_S = $_POST['parent_last_name'];

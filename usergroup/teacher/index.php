@@ -8,7 +8,7 @@ $site->setPage($page);
 $teacher= new teacher($_SESSION);
 
 
-if(!$teacher ->is_logged() || !$teacher ->get_teacher_ID()){
+if(!$teacher ->is_logged() || $teacher ->get_teacher_ID()==-1){
 	$content = '
     <div class="alert alert-warning" role="warning">
         You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
@@ -16,7 +16,7 @@ if(!$teacher ->is_logged() || !$teacher ->get_teacher_ID()){
 	$content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
 	$page->setContent($content);
 	$site->render();
-	render_page($content, '');
+	exit();
 }
 
 //$content ='<a href="usergroup/teacher/teacherAction1ToMove.php">Action1To incorporate in MENU</a>';
