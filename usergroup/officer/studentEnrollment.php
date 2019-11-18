@@ -68,7 +68,7 @@ if (!empty($_POST)) {
           	</div>
           	<div class=\"form-group col-md-6\">
             	<label for=\"inputAverage\">Average Last School</label>
-            	<input type=\"number\" class=\"form-control\" id=\"inputAverage\" name=\"average_last_school\" placeholder=\"Insert Average of Last School\" min='6' max='10'>
+            	<input type=\"number\" class=\"form-control\" id=\"inputAverage\" name=\"average_last_school\" placeholder=\"Insert Average of Last School\" min='6' max='10' step='0.25'>
           	</div>
           </div>
           
