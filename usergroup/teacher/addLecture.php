@@ -34,14 +34,14 @@ if(!isset($_POST["description"])){
     <div class="alert alert-success" role="alert">
       Lecture successfully registered. <a href="addLecture.php" class="alert-link">Add another lecture</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
     </div>
-    OUT;
+OUT;
                 break;
             case 0:
                 $content.=<<<OUT
     <div class="alert alert-danger" role="alert">
      Error in registering a new lecture. <a href="addLecture.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
     </div>
-    OUT;
+OUT;
 
                 break;
             default:
@@ -49,7 +49,7 @@ if(!isset($_POST["description"])){
     <div class="alert alert-dark" role="alert">
       Operation not allowed.
     </div>
-    OUT;
+OUT;
         }
     } else {
 
