@@ -234,11 +234,10 @@ class officer extends user {
         $res->close();
 
         if ($conn->query("UPDATE Student SET SpecificClassID=-1 WHERE ID=$studentID") === TRUE) {
-            echo '<script type="text/javascript">
-            alert("Removed Student correctly")
-            </script>';
+
         } else {
             echo "Error updating record: " . $conn->error;
+            return -1;
         }
         $conn->close();
         return $classID;
