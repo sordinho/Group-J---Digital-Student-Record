@@ -145,6 +145,7 @@ class officer extends user {
 		return $str;
 	}
 
+
 	public function get_parents_without_access_credentials(){
 	    $conn = $this->connectMySQL();
 	    //todo : to be edited
@@ -217,7 +218,23 @@ class officer extends user {
         $res->close();
         return $IDs;
     }
+    public function retrive_classless_students(){
+        $conn = $this->connectMySQL();
 
+        $res= $conn->query("SELECT ID,Name,Surname
+                                  FROM Student
+                                  WHERE SpecificClassID = -1
+                                  ORDER BY Surname,Name;");
+        if($res->num_rows<=0)
+            return array();
+        $students = array();
+        for($i = 0; $i < $res->num_rows;$i++){
+            $row = $res->fetch_assoc();
+            array_push($students,$row);
+        }
+        $res->close();
+        return $students;
+    }
     /**
      * @param $studentID
      * Function that given the studentID removes it from the class it is actually assighed to (sets specificClassID=-1)
