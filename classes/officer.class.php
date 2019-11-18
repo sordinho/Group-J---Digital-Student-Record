@@ -223,9 +223,17 @@ class officer extends user {
     /**
      * @param $studentID
      * Function that given the studentID removes it from the class it is actually assighed to (sets specificClassID=-1)
+     * returns the id of the class the student was in, to be able to redirect to that class composition modification
      */
     public function remove_Student_From_Class($studentID){
         $conn = $this->connectMySQL();
+
+
+        $res = $conn->query("SELECT SpecificClassID FROM Student WHERE ID=$studentID");
+        $row = $res->fetch_assoc();
+        $classID=$row['SpecificClassID'];
+
+        $res->close();
 
         if ($conn->query("UPDATE Student SET SpecificClassID=-1 WHERE ID=$studentID") === TRUE) {
             echo "Record updated successfully, redirecting";
@@ -233,7 +241,7 @@ class officer extends user {
             echo "Error updating record: " . $conn->error;
         }
         $conn->close();
-        return;
+        return $classID;
     }
 
 

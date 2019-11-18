@@ -31,7 +31,7 @@ else {
         if (count($students) == 0) {
             $content = "
                             <div class=\"alert alert-danger\" role=\"alert\">
-                             There are no students in the selected Class.<a href=".PLATFORM_PATH."/usergroup/officer/index.php class=\"alert-link\">Back to your homepage.</a>
+                             There are no students in the selected Class.<a href=".PLATFORM_PATH."/usergroup/officer/classCompositionModification.php class=\"alert-link\">Back to class selection.</a>
                             </div>
                         ";
         } else {
@@ -91,8 +91,8 @@ else {
 ";
 
     }else if (isset($_GET['studentID'])){
-        $officer->remove_Student_From_Class($_GET['studentID']);
-        header( "refresh:2;url=index.php" );
+        $classIDReturned = $officer->remove_Student_From_Class($_GET['studentID']);
+        header( "refresh:2;url=classCompositionModification.php?classID=".$classIDReturned);
     }else {
         $content = "<div class=\"card\">
                     <div class=\"card-body \">";
