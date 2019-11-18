@@ -262,8 +262,6 @@ class officer extends user {
 
     /**
      * @param $studentID
-     * Function that given the studentID removes it from the class it is actually assighed to (sets specificClassID=-1)
-     * returns the id of the class the student was in, to be able to redirect to that class composition modification
      * @param $classID
      * @return bool
      */
