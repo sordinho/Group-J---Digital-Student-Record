@@ -45,7 +45,6 @@ $content = <<<OUT
                                 <a class="dropdown-item" href="#">3 A</a>
                                 <a class="dropdown-item" href="#">4 A</a>
                                 <a class="dropdown-item" href="#">5 A</a>
-                                <a class="dropdown-item" href="#">Patate</a>
                             </div>
                         </div>
                     </div>
