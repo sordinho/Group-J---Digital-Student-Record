@@ -61,8 +61,9 @@ OUT;
 	}
 
 	$classes = $teacher->get_assigned_classes();
-	foreach ($classes as $class) {//TODO extend with class name (i.e. 4I)
-		$class_list.= "<option value='{$class['ClassID']}'>".$class['ClassID']."</option>";
+	foreach ($classes as $class) {
+		$class_str = $class['YearClass']. $class['Section'];
+		$class_list.= "<option value='{$class['ClassID']}'>".$class_str."</option>";
 	}
 
 	$content = '<div class="container article-clean">

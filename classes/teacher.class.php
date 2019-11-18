@@ -144,9 +144,9 @@ CREATE TABLE `TopicRecord` (
 	public function get_assigned_classes() {
         $classes = array();
         $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("SELECT ttc.ID as ClassID, t.Name as TopicName, t.Description as TopicDescription, t.YearClassID as YearClass, t.Section as Section 
-                                      from TopicTeacherClass ttc, Topic as t 
-                                      WHERE ttc.TopicID=t.ID and TeacherID=?");
+        $stmt = $conn->prepare("SELECT ttc.ID as ClassID, t.Name as TopicName, t.Description as TopicDescription, sc.YearClassID as YearClass, sc.Section as Section 
+                                      from TopicTeacherClass ttc, Topic as t, SpecificClass as sc 
+                                      WHERE ttc.TopicID=t.ID and sc.ID = ttc.SpecificClassID and TeacherID=?");
         $teacherID = $this->get_teacher_ID();
         $stmt->bind_param('i',$teacherID);
         $stmt->execute();
