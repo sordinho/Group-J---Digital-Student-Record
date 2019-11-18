@@ -34,7 +34,7 @@ if ($_GET["action"] != "activate") {
     </div>';
 } else {
 	// call method to get the current inactive account
-	$parents = $officier->get_parents_without_access_credentials();
+	$parents = $officer->get_parents_without_access_credentials();
 	if (count($parents) == 0) {
 		//todo edit this
 		$content = <<<OUT
@@ -45,7 +45,7 @@ OUT;
 	} else {
 		$succes = false;
 		foreach ($parents as $parent) {
-			$pwd = $officier->generate_and_register_password($parent['ID']);
+			$pwd = $officer->generate_and_register_password($parent['ID']);
 			if ($pwd != "") {
 				// A valid password was generated, send it by mail
 				$message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: " . $parent['Email'] . "\nPassword:" . $pwd . "\nFor your security, please delete this message ASAP.";

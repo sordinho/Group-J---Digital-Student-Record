@@ -30,11 +30,13 @@ if (!empty($_POST)) {
 			<div class="alert alert-success" role="warning">
 			Student enrolled <a href="./studentEnrollment.php" class="alert-link">just click here!</a>
     		</div> ';
+		$content .= "<meta http-equiv='refresh' content='2'/>";
 	} else {
 		$content = '
 			<div class="alert alert-danger" role="warning">
 			There was a problem enrollin the student <a href="./studentEnrollment.php" class="alert-link">just click here!</a>
     		</div> ';
+		$content .= "<meta http-equiv='refresh' content='2' />";
 	}
 } else
 
