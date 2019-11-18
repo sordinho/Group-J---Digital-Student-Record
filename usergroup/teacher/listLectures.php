@@ -7,7 +7,7 @@ $site = new csite();
 initialize_site($site);
 $page = new cpage("Teacher list recorded topics");
 $site->setPage($page);
-$teacher= new teacher($_SESSION);
+$teacher= new teacher();
 
 if(!$teacher ->is_logged() || $teacher ->get_teacher_ID()==-1){
 	$content = '

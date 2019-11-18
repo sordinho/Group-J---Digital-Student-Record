@@ -8,7 +8,7 @@ $site = new csite();
 initialize_site($site);
 $page = new cpage("Parent");
 $site->setPage($page);
-$sparent = new sparent($_SESSION);
+$sparent = new sparent();
 
 if (!$sparent->is_logged() || $sparent->get_parent_ID() == -1) {
 	$content = '

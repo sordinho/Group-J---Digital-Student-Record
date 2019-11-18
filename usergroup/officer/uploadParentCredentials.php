@@ -5,7 +5,7 @@ $site = new csite();
 initialize_site($site);
 $page = new cpage("Register new parent");
 $site->setPage($page);
-$officer = new officer($_SESSION);
+$officer = new officer();
 
 $num = 1;
 $content="";

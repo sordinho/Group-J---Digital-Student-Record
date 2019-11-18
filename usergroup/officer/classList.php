@@ -6,7 +6,7 @@ initialize_site($site);
 $page = new cpage("Administrative Officer");
 $site->setPage($page);
 
-$officer = new officer($_SESSION);
+$officer = new officer();
 
 if(!$officer ->is_logged() || $officer ->get_officer_ID()==-1){
 	$content = '

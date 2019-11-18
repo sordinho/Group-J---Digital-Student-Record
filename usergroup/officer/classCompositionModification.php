@@ -6,18 +6,18 @@ initialize_site($site);
 $page = new cpage("Class Composition Modification Page");
 $site->setPage($page);
 
-$officer = new officer($_SESSION);
+$officer = new officer();
 
-//if not logged returns the error
-if(!$officer->is_logged()){
-    $content = '
-        <div class="alert alert-warning" role="warning">
-            You are not authorized. If you are in a hurry <a href="index.php" class="alert-link">just click here!</a>
-        </div> ';
-    $content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
-    $page->setContent($content);
-    $site->render();
-}// should call get_error TODOs:
+if(!$officer ->is_logged() || $officer ->get_officer_ID()==-1){
+	$content = '
+    <div class="alert alert-warning" role="warning">
+        You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
+    </div> ';
+	$content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
+	$page->setContent($content);
+	$site->render();
+	exit();
+}
 else {
 
     //if a class has been selected loads the list of students of the class so that officer can modify it
