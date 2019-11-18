@@ -6,10 +6,10 @@ initialize_site($site);
 $page = new cpage("Class Composition Modification Page");
 $site->setPage($page);
 
-$officer = new officer();
+$officer = new officer($_SESSION);
 
 //if not logged returns the error
-if(!$officer->get_officer_ID()){
+if(!$officer->is_logged()){
     $content = '
         <div class="alert alert-warning" role="warning">
             You are not authorized. If you are in a hurry <a href="index.php" class="alert-link">just click here!</a>
@@ -17,7 +17,6 @@ if(!$officer->get_officer_ID()){
     $content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
     $page->setContent($content);
     $site->render();
-    render_page($content, '');
 }// should call get_error TODOs:
 else {
 
@@ -93,7 +92,7 @@ else {
 
     }else if (isset($_GET['studentID'])){
         $officer->remove_Student_From_Class($_GET['studentID']);
-        header( "refresh:2;url=classCompositionModification.php" );
+        header( "refresh:2;url=index.php" );
     }else {
         $content = "<div class=\"card\">
                     <div class=\"card-body \">";
