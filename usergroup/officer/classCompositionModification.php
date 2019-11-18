@@ -123,7 +123,7 @@ else {
                             <div class=\"alert alert-danger\" role=\"alert\">
                              There are no classes in DB.<a href=\"index.php\" class=\"alert-link\">Back to your homepage.</a>
                             </div>
-                        OUT;
+OUT;
         } else {
             //for every student, creates the option so that officer can select which class wants to modify
             foreach ($classes as $class) {
