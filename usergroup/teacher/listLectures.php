@@ -82,7 +82,7 @@ if ($_GET['action'] == "edit" && isset($_GET['lectureID'])) {// is_logged should
 	$topicRecords = $teacher->get_topics_record();
 	foreach ($topicRecords as $i => $row) {
 		//ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription
-		$title = substr($row['TopicDescription'], 0, 20) . "..."; // tODO: remove if title added to db
+		$title = substr($row['TopicDescription'], 0, 30) . "..."; // tODO: remove if title added to db
 		$content .= '<tr>
         <th scope="row">' . $title . '</th>
         <td>' . $row['TopicName'] . '</td>
