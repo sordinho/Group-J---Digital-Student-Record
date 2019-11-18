@@ -22,15 +22,18 @@ if (!empty($_POST)) {
 	$studentInfo = array();
 	$studentInfo['name'] = $_POST['student_first_name'];
 	$studentInfo['surname'] = $_POST['student_last_name'];
-	$studentInfo['avgLastSchool'] = $_POST[''];
+	$studentInfo['avgLastSchool'] = $_POST['average_last_school'];
 	$studentInfo['CF'] = $_POST['fiscal_code'];
 
 	if ($officer->enroll_student($studentInfo)) {
-		$ciao = 0; // TODO only for test
+		$content = '
+			<div class="alert alert-success" role="warning">
+			Student enrolled <a href="./studentEnrollment.php" class="alert-link">just click here!</a>
+    		</div> ';
 	} else {
 		$content = '
-			<div class="alert alert-warning" role="warning">
-			There was a problem enrollin the student<a href="./studentEnrollment.php" class="alert-link">just click here!</a>
+			<div class="alert alert-danger" role="warning">
+			There was a problem enrollin the student <a href="./studentEnrollment.php" class="alert-link">just click here!</a>
     		</div> ';
 	}
 } else

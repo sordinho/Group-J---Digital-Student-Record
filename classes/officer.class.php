@@ -14,8 +14,6 @@ class officer extends user {
 	// Enroll a new student (anagraphic datas that should be saved into db)
 	// keys of student_info are: name, surname, avgLastSchool, CF
 	public function enroll_student($student_info) {
-        if ($this->get_officer_ID() == -1) 
-            return false;
 		$si = $student_info; 
 		if(!(isset($si["name"]) && isset($si["surname"]) && isset($si["avgLastSchool"]) && isset($si["CF"]))){
 			return false;
@@ -25,10 +23,10 @@ class officer extends user {
 		$actual_year= strtotime(date("Y"));
 		$conn = $this->connectMySQL();
 		//(`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) 
-		$stmt = $conn->prepare("INSERT INTO Student(ID,Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES (NULL,?,?,?,?,?)");
+		$stmt = $conn->prepare("INSERT INTO Student(Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES (?,?,?,?,?)");
 		$stmt->bind_param('ssdsi', $student_info["name"], $student_info["surname"], $student_info["avgLastSchool"], $student_info["CF"], $classID);
 		return $stmt->execute();
-	}	
+	}
 
 /*
  * register a new parent in the user table.
