@@ -79,7 +79,7 @@ if (isset($_GET['classID'])) {
             </div>";
 
     // Print now the second table (to add student to class)
-    $students = $officer->retrive_classless_students();
+    $ustudents = $officer->retrive_classless_students();
     $content.="
                     <form>
                     <table class=\"table table - sm\">
@@ -98,7 +98,7 @@ if (isset($_GET['classID'])) {
                         <tr>
                             <td>".$student['Surname']."</td>
                             <td>".$student['Name']."</td>
-                            <td><button class='btn btn-primary' value='Rimuovi Dalla Classe' id=".$student['ID'] ." type='button' onclick='removeStudent(id);'> Rimuovi </button></td>
+                            <td><button class='btn btn-primary' value='Aggiungi alla classe' id=".$student['ID'] ." type='button' onclick='addStudent(id);'> Aggiungi </button></td>
                         </tr>";
         }
         $content.="
