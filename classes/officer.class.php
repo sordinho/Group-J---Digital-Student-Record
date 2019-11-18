@@ -2,11 +2,8 @@
 require_once "user.class.php";
 class officer extends user {
 
-	private $officer_id = null;
-
-	public function __construct($data = array()) {
-		parent::__construct($data);
-		$this->officer_id = $_SESSION['officerID'];
+	public function __construct() {
+		parent::__construct();
 	}
 
 	// Return the parent ID from parent table

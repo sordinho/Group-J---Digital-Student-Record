@@ -3,14 +3,9 @@
 require_once 'user.class.php';
 class teacher extends user
 {
-    protected $teacherID = null;
-    protected $name = null;
-    protected $surname = null;
-    protected $email = null;
 
-	public function __construct($data = array()) {
-		parent::__construct($data);
-		$this->teacherID = $data['teacherID'];
+	public function __construct() {
+		parent::__construct();
 	}
 
 	private function by_the_end_of_the_week($actual_date, $lecture_date) {
