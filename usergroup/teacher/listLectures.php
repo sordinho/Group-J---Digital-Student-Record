@@ -60,10 +60,12 @@ if ($_GET['action'] == "edit" && isset($_GET['lectureID'])) {// is_logged should
 
 } elseif ($_POST["description"]) {
 	# call function to edit editLecture(lectID, title, description, topicID?)
-	# And show status message  (if status==ok the following should do the job)
+  # And show status message  (if status==ok the following should do the job)
+  
 	$content = '<div class="alert alert-success" role="alert">
     You just updated a topic lecture<br>In a few seconds you will be redirected to home. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
   </div>';
+
 	$content .= "<meta http-equiv='refresh' content='2; url=" . $_SESSION["base_url"] . "' />";
 } else {
 // Should be moved to other page and just linked in the menu
