@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 18, 2019 alle 12:49
+-- Creato il: Nov 19, 2019 alle 10:25
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -44,8 +44,6 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (2, 2, 7, 2, 2, '2019-11-09 08:00:00'),
 (3, 3, 4, 3, 3, '2019-11-09 09:00:00'),
 (4, 4, 2, 4, 4, '2019-11-09 10:00:00'),
-(5, 1, 2, 5, 5, '2019-11-09 11:00:00'),
-(6, 1, 5, 6, 6, '2019-11-09 12:00:00'),
 (7, 5, 9, 7, 7, '2019-11-09 13:00:00');
 
 -- --------------------------------------------------------
@@ -85,8 +83,8 @@ CREATE TABLE `Parent` (
 --
 
 INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
-(1, 1, 1),
-(2, 2, 2);
+(2, 2, 2),
+(5, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -131,11 +129,14 @@ CREATE TABLE `Student` (
 --
 
 INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
-(1, 'name1', 'sur1', 10, 'cf1', -1),
-(2, 'name1', 'sur1', 10, 'cf1', -1),
-(3, 'name2', 'sur2', 10, 'cf2', -1),
-(4, 'name3', 'sur3', 10, 'cf3', -1),
-(5, 'name4', 'sur4', 10, 'cf4', -1);
+(2, 'Vittorio', 'Di Leo', 10, 'cf1b', 1),
+(3, 'Emanuele', 'Munafo', 10, 'cf2', 1),
+(4, 'Davide', 'Sordi', 10, 'cf3', 1),
+(5, 'Francesco', 'Riba', 10, 'cf4', 1),
+(6, 'Riccardo', 'Mamone', 10, 'rf5', 1),
+(8, 'Antonio', 'Santoro', 10, 'cf6', 1),
+(9, 'Michael', 'Bing', 7, 'cf7', -1),
+(10, 'Francesco', 'Riba', 8, 'Cf8', -1);
 
 -- --------------------------------------------------------
 
@@ -202,13 +203,13 @@ CREATE TABLE `Topic` (
 --
 
 INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
-(1, 'topic1', 'desc1'),
-(2, 'topic2', 'desc2'),
-(3, 'topic3', 'desc3'),
-(4, 'topic4', 'desc4'),
-(5, 'topic5', 'desc5'),
-(6, 'topic6', 'desc6'),
-(7, 'topic7', 'desc7');
+(1, 'Subject1', 'Subject Description 1'),
+(2, 'Subject2', 'Subject Description 2'),
+(3, 'Subject3', 'Subject Description 3'),
+(4, 'Subject4', 'Subject Description 4'),
+(5, 'Subject5', 'Subject Description 5'),
+(6, 'Subject6', 'Subject Description 6'),
+(7, 'Subject7', 'Subject Description 7');
 
 -- --------------------------------------------------------
 
@@ -231,8 +232,8 @@ CREATE TABLE `TopicRecord` (
 
 INSERT INTO `TopicRecord` (`ID`, `TeacherID`, `Timestamp`, `Description`, `TopicID`, `SpecificClassID`) VALUES
 (3, 1, '2019-11-17 17:19:22', 'TopicLectureDescription for classID=3', 1, 3),
-(4, 1, '2019-11-14 23:00:00', 'TopicDescription1', 1, 3),
-(5, 1, '2019-11-18 23:00:00', 'description1', 1, 3);
+(5, 1, '2019-11-18 23:00:00', 'description1', 1, 3),
+(6, 1, '2019-11-17 23:00:00', 'test description', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -276,17 +277,17 @@ CREATE TABLE `User` (
 --
 
 INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
-(1, 'ParentName1A', 'ParentSurname2a', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
-(2, 'ParentName2A', 'ParentSurame2A', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
-(3, 'TeacherName1', 'TeacherSur1', 'TeacherEmail1', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(4, 'TeacherName2', 'TeacherSur2', 'TeacherEmail2', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(5, 'TeacherName3', 'TeacherSur3', 'TeacherEmail3', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(6, 'TeacherName4', 'TeacherSur4', 'TeacherEmail4', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(7, 'TeacherName5', 'TeacherSur5', 'TeacherEmail5', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(8, 'TeacherName6', 'TeacherSur6', 'TeacherEmail6', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(9, 'TeacherName7', 'TeacherSur7', 'TeacherEmail7', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(10, 'officerName1', 'officerSurname1', 'off1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
-(11, 'officerName2', 'officerSurname2', 'off2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer');
+(1, 'Mary', 'ParentSurname1', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
+(2, 'Joseph', 'ParentSurname2', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
+(3, 'Marco', 'Torchiano', 'teach1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(4, 'Paolo', 'Montuschi', 'teach2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(5, 'Renato', 'Ferrero', 'teach3@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(6, 'Elen', 'Baralis', 'teach4@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(7, 'Mauro', 'Morisio', 'teach5@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(8, 'Bartolo', 'Montrucchio', 'teach6@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(9, 'Tony', 'Lioy', 'teach7@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(10, 'John', 'Price', 'off1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
+(11, 'Paul', 'MacMillan', 'off2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer');
 
 --
 -- Indici per le tabelle scaricate
@@ -389,7 +390,7 @@ ALTER TABLE `Officer`
 -- AUTO_INCREMENT per la tabella `Parent`
 --
 ALTER TABLE `Parent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT per la tabella `SpecificClass`
 --
@@ -399,7 +400,7 @@ ALTER TABLE `SpecificClass`
 -- AUTO_INCREMENT per la tabella `Student`
 --
 ALTER TABLE `Student`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
@@ -419,7 +420,7 @@ ALTER TABLE `Topic`
 -- AUTO_INCREMENT per la tabella `TopicRecord`
 --
 ALTER TABLE `TopicRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
@@ -429,7 +430,7 @@ ALTER TABLE `TopicTeacherClass`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- Limiti per le tabelle scaricate
 --
