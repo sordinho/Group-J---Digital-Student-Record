@@ -13,7 +13,7 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 [Use cases](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/UseCases)
 ## Trello Board :memo: :pushpin:
 [Board](https://trello.com/b/R01iRsVf)
-## Demo
+## Demo :computer:
 [You can see a demo by clicking here](http://softeng2.my.to)
 ## The Team :busts_in_silhouette: 
 - [Vittorio Di Leo](https://github.com/VittorioDiLeo)
