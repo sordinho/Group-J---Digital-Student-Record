@@ -1,8 +1,8 @@
 <?php
 
 require_once 'user.class.php';
-class teacher extends user
-{
+
+class teacher extends user {
 
 	public function __construct() {
 		parent::__construct();
@@ -60,8 +60,8 @@ CREATE TABLE `TopicRecord` (
   `SpecificClassID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 		*/
-		if($stmt == false)
-		    return false;
+		if ($stmt == false)
+			return false;
 		$stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $lectureDescription, $topicID, $classID);
 		return $stmt->execute();//True || False
 	}
@@ -73,15 +73,15 @@ CREATE TABLE `TopicRecord` (
 	 * return               true            if successful
 	 *                      false           otherwise
 	 * */
-	public function modify_lecture_topic($newDescription,$topicRecordID) {
+	public function modify_lecture_topic($newDescription, $topicRecordID) {
 		if (!isset($topicRecordID) || !isset($newDescription)) {
 			return false;
 		}
 
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT Timestamp,TeacherID FROM TopicRecord WHERE ID = ?;");
-		if(!$stmt)
-		    return false;
+		if (!$stmt)
+			return false;
 		$stmt->bind_param('i', $topicRecordID);
 		$stmt->execute();
 		$res = $stmt->get_result();
@@ -95,43 +95,43 @@ CREATE TABLE `TopicRecord` (
 			$lecture_date = strtotime($row[0]);
 			if (!$this->by_the_end_of_the_week($actual_date, $lecture_date))
 				return false;
-            if($row[1] != $this->teacherID)
-                return false;
+			if ($row[1] != $this->teacherID)
+				return false;
 			$res->close();
 			$stmt = $conn->prepare("UPDATE TopicRecord SET Description=? WHERE ID=$topicRecordID");
-			if(!$stmt)
-			    return false;
+			if (!$stmt)
+				return false;
 			$stmt->bind_param("s", $newDescription);
 			return $stmt->execute();
 		}
 	}
 
-    /*
-     * Get the topics information for which the teacher is current in charge of
-     *
-     * return               empty            if successful
-     *                      array of array   otherwise
-     * */ 
-    public function get_topics(){
-        $topics = array();
-        // TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
-        // Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
-        $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
-        // todo manage class selection
-        $selectedClass = 3;
-        $teacherID = $this->get_teacher_ID();
-        $stmt->bind_param('ii',$teacherID, $selectedClass);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        if($res->num_rows<=0){
-            return false;
-        }else{
-            $row = $res->fetch_assoc();
-            array_push($topics, $row);
-        }
-        return $topics;
-    }
+	/*
+	 * Get the topics information for which the teacher is current in charge of
+	 *
+	 * return               empty            if successful
+	 *                      array of array   otherwise
+	 * */
+	public function get_topics() {
+		$topics = array();
+		// TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
+		// Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
+		// todo manage class selection
+		$selectedClass = 3;
+		$teacherID = $this->get_teacher_ID();
+		$stmt->bind_param('ii', $teacherID, $selectedClass);
+		$stmt->execute();
+		$res = $stmt->get_result();
+		if ($res->num_rows <= 0) {
+			return false;
+		} else {
+			$row = $res->fetch_assoc();
+			array_push($topics, $row);
+		}
+		return $topics;
+	}
 
 	// Return the teacher ID from teacher table
 	public function get_teacher_ID() {
@@ -142,21 +142,46 @@ CREATE TABLE `TopicRecord` (
 	 * get ClassID, TopicName, TopicDescription for a given teacherID
 	 */
 	public function get_assigned_classes() {
-        $classes = array();
-        $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("SELECT ttc.ID as ClassID, t.Name as TopicName, t.Description as TopicDescription, sc.YearClassID as YearClass, sc.Section as Section 
+		$classes = array();
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("SELECT ttc.ID as ClassID, t.Name as TopicName, t.Description as TopicDescription, sc.YearClassID as YearClass, sc.Section as Section 
                                       from TopicTeacherClass ttc, Topic as t, SpecificClass as sc 
                                       WHERE ttc.TopicID=t.ID and sc.ID = ttc.SpecificClassID and TeacherID=?");
-        $teacherID = $this->get_teacher_ID();
-        $stmt->bind_param('i',$teacherID);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        if($res->num_rows<=0){
-            return false;
-        }else{
-            $row = $res->fetch_assoc();
-            array_push($classes, $row);
-        }
-        return $classes;
-    }
+		$teacherID = $this->get_teacher_ID();
+		$stmt->bind_param('i', $teacherID);
+		$stmt->execute();
+		$res = $stmt->get_result();
+		if ($res->num_rows <= 0) {
+			return false;
+		} else {
+			$row = $res->fetch_assoc();
+			array_push($classes, $row);
+		}
+		return $classes;
+	}
+
+	/**
+	 * Get list of topic records inserted by the teacher
+	 */
+	public function get_topics_record() {
+		$topicRecords = array();
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamps, 
+									  TopicRecord.Description as TopicDescription, Topic.Name as TopicName
+									  FROM TopicRecord, Topic
+									  WHERE TopicRecord.TopicID=Topic.ID AND TopicRecord.TeacherID=?");
+//		$teacherID = $this->get_teacher_ID();
+		$teacherID = 1;
+		$stmt->bind_param('i', $teacherID);
+		$stmt->execute();
+		$res = $stmt->get_result();
+		if ($res->num_rows <= 0) {
+			return false;
+		} else {
+			while ($row = $res->fetch_assoc()) {
+				array_push($topicRecords, $row);
+			}
+		}
+		return $topicRecords;
+	}
 }
