@@ -144,8 +144,8 @@ class user {
 				}
 				$queryID->store_result();
 				$queryID->bind_result($specificID);
-				// In case of success there should be just 1 user for a given (username is also a primary key for its table)
-				if ($queryID->num_rows != 1) {
+				// In case of success there should be just 1 *USER* for a given (username is also a primary key for its table)
+				if ($queryID->num_rows < 1) {
 					return false;
 				}
 				$queryID->fetch();

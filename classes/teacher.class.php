@@ -135,7 +135,7 @@ CREATE TABLE `TopicRecord` (
 
 	// Return the teacher ID from teacher table
 	public function get_teacher_ID() {
-		return isset($_SESSION['teacherID']) ? $_SESSION['id'] : -1;
+		return isset($_SESSION['teacherID']) ? $_SESSION['teacherID'] : -1;
 	}
 
 	/*
