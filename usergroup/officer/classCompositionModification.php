@@ -81,6 +81,13 @@ if (isset($_GET['classID'])) {
     // Print now the second table (to add student to class)
     $ustudents = $officer->retrive_classless_students();
     $content.="
+            <div class=\"card\">
+                <h5 class=\"card-header info-color white-text text-center py-4\">
+                    <strong>Students without class</strong>
+                </h5>
+                <div class=\"card-body\">
+                ";
+    $content.="
                     <form>
                     <table class=\"table table - sm\">
                         <thead>
