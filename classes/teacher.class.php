@@ -112,20 +112,29 @@ CREATE TABLE `TopicRecord` (
 	 * return               empty            if successful
 	 *                      array of array   otherwise
 	 * */
-	public function get_topics() {
+	public function get_topics($selectedClass=0) {
 		$topics = array();
 		// TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
 		// Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
 		$conn = $this->connectMySQL();
-		$stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
-		// todo manage class selection
-		$selectedClass = 3;
 		$teacherID = $this->get_teacher_ID();
-		$stmt->bind_param('ii', $teacherID, $selectedClass);
+
+		// todo manage class selection
+		if($selectedClass){
+			$stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
+			$stmt->bind_param('ii', $teacherID, $selectedClass);
+
+		} else{
+			$stmt = $conn->prepare("SELECT tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? ");
+			$stmt->bind_param('i', $teacherID);
+		}
 		$stmt->execute();
 		$res = $stmt->get_result();
 		if ($res->num_rows <= 0) {
-			return false;
+			$dummy["TopicID"] = 0;
+			$dummy["TopicName"] = "No topic";
+			$dummy["TopicDescription"] = "No topic for this teacher";
+			array_push($topics, $dummy);
 		} else {
 			$row = $res->fetch_assoc();
 			array_push($topics, $row);
