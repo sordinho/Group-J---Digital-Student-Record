@@ -144,22 +144,7 @@ OUT;
             <hr>
             
             <p class="card-body info-color white-text text-center py-4">Student $i</p>
-            <div class="form-row">
-                <div class="col">
-                    <!-- First name -->
-                    <div class="md-form">
-                        <input type="text" id="materialRegisterFormFirstNameChild$i" name="first_name_child_$i" class="form-control">
-                        <label for="materialRegisterFormFirstName">Student first name</label>
-                    </div>
-                </div>
-                <div class="col">
-                    <!-- Last name -->
-                    <div class="md-form">
-                        <input type="text" id="materialRegisterFormLastNameChild$i" name="last_name_child_$i" class="form-control">
-                        <label for="materialRegisterFormLastName">Student last name</label>
-                    </div>
-                </div>
-            </div>
+            
             
             <!-- CF -->
             <div class="md-form mt-0">
