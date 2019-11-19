@@ -107,8 +107,9 @@ print '<!DOCTYPE html>
 					<i class="fas fa-bars" id="sidebarToggle"></i>
 				</a>
 				<a class="text-white text-decoration-none p-2" id="title" href="#">
-					<img src="' . PLATFORM_PATH . '/media/logopoli2.jpg" alt="logopoli" style="height: 100%; width: 100%; object-fit: contain"/>
+					<img src="' . PLATFORM_PATH . '/media/logopoli2.jpg" alt="logopoli" style="width: 100%; object-fit: contain"/>
 				</a>
+
 			</div>
 		</li>
 		'.
