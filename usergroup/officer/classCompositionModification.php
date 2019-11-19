@@ -69,7 +69,7 @@ if (isset($_GET['classID'])) {
                         <tr>
                             <td>".$student['Surname']."</td>
                             <td>".$student['Name']."</td>
-                            <td><button class='btn btn-primary' value='Remove from class' id=".$student['ID'] ." type='button' onclick='removeStudent(id);'> Remove</button></td>
+                            <td><button class='btn btn-primary' value='Rimuovi Dalla Classe' id=".$student['ID'] ." type='button' onclick='removeStudent(id);'> Remove </button></td>
                         </tr>";
         }
         $content.="
@@ -98,7 +98,7 @@ if (isset($_GET['classID'])) {
                         <tr>
                             <td>".$student['Surname']."</td>
                             <td>".$student['Name']."</td>
-                            <td><button class='btn btn-primary' value='Add student to class' id=".$student['ID'] ." type='button' onclick='addStudent(id);'> Add</button></td>
+                            <td><button class='btn btn-primary' value='Aggiungi alla classe' id=".$student['ID'] ." type='button' onclick='addStudent(id);'> Add </button></td>
                         </tr>";
         }
         $content.="

@@ -95,13 +95,13 @@ CREATE TABLE `TopicRecord` (
 			$lecture_date = strtotime($row[0]);
 			if (!$this->by_the_end_of_the_week($actual_date, $lecture_date))
 				return false;
-			if ($row[1] != $this->teacherID)
+			if ($row[1] != $_SESSION['teacherID'])
 				return false;
 			$res->close();
-			$stmt = $conn->prepare("UPDATE TopicRecord SET Description=? WHERE ID=$topicRecordID");
+			$stmt = $conn->prepare("UPDATE TopicRecord SET Description=? WHERE ID=?;");
 			if (!$stmt)
 				return false;
-			$stmt->bind_param("s", $newDescription);
+			$stmt->bind_param("si", $newDescription,$topicRecordID);
 			return $stmt->execute();
 		}
 	}
@@ -176,11 +176,11 @@ CREATE TABLE `TopicRecord` (
 		$topicRecords = array();
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamps, 
-									  TopicRecord.Description as TopicDescription, Topic.Name as TopicName
+									  TopicRecord.Description as TopicDescription, Topic.Name as TopicName, TopicRecord.ID as RecordID
 									  FROM TopicRecord, Topic
 									  WHERE TopicRecord.TopicID=Topic.ID AND TopicRecord.TeacherID=?");
 //		$teacherID = $this->get_teacher_ID();
-		$teacherID = 1;
+		$teacherID = $_SESSION['teacherID'];
 		$stmt->bind_param('i', $teacherID);
 		$stmt->execute();
 		$res = $stmt->get_result();
@@ -193,4 +193,24 @@ CREATE TABLE `TopicRecord` (
 		}
 		return $topicRecords;
 	}
+	public function get_lecture_by_id($lectureID){
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamp, 
+									  TopicRecord.Description as TopicDescription,
+									  TopicRecord.ID as TopicRecordID, 
+									  Topic.Name as TopicName
+									  FROM TopicRecord , Topic
+									  WHERE TopicRecord.TopicID=Topic.ID and TopicRecord.ID=?");
+
+        $stmt->bind_param('i', $lectureID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->num_rows <= 0) {
+            return false;
+        } else {
+            $lecture_info = array();
+            $lecture_info=$res->fetch_assoc();
+            return $lecture_info;
+        }
+    }
 }
