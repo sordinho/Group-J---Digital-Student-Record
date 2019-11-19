@@ -5,6 +5,9 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 
 ### 29/10/2019 - Project presentation
 [Electronic Student Record Management System](https://softeng.polito.it/courses/SE2/ESRMS.pdf)
+### 19/11/2019 - Demo 1
+- 5 Stories completed out of 6 committed
+- 40 StoryPoints out of 43
 
 ## Use cases collection
 [Use cases](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/UseCases)
