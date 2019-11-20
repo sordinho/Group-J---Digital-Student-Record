@@ -27,7 +27,7 @@ $content = '<div class="container article-clean">
 			<h1 class="text-center">What can i do?</h1>
 			<p class="text-center"><span class="by"></span> <a href="#"></a><span class="date"></span></p><!--<img class="img-fluid" src="assets/img/desk.jpg">--></div>
 		<div class="text">
-			<p>On the sidebar you can quickly perform many different actions.</p>
+			<p class="text-center">On the sidebar you can quickly perform many different actions.</p>
 		</div>
 	</div>
 </div>
