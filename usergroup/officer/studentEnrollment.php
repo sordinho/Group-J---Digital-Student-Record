@@ -69,6 +69,17 @@ if (!empty($_POST)) {
           	<div class=\"form-group col-md-6\">
             	<label for=\"inputAverage\">Average Last School</label>
             	<input type=\"number\" class=\"form-control\" id=\"inputAverage\" name=\"average_last_school\" placeholder=\"Insert Average of Last School\" min='6' max='10' step='0.25'>
+            </div>
+            <div class=\"form-group col-md-6\">
+              <!--<label for=\"gender\">Gender</label>-->
+              <div class='form-check form-check-inline'>
+                <input class='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1'>
+                <label class='form-check-label' for='inlineRadio1'>F</label>
+              </div>
+              <div class='form-check form-check-inline'>
+                <input class='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio2' value='option2'>
+                <label class='form-check-label' for='inlineRadio2'>M</label>
+              </div>
           	</div>
           </div>
           
@@ -76,6 +87,5 @@ if (!empty($_POST)) {
         </form>
     </div>
 </div>";
-
 $page->setContent($content);
 $site->render();

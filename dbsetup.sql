@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 19, 2019 alle 10:25
+-- Creato il: Nov 19, 2019 alle 17:19
 -- Versione del server: 5.7.27-0ubuntu0.16.04.1
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -84,7 +84,9 @@ CREATE TABLE `Parent` (
 
 INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (2, 2, 2),
-(5, 2, 1);
+(5, 2, 1),
+(7, 3, 2),
+(8, 3, 44);
 
 -- --------------------------------------------------------
 
@@ -136,7 +138,7 @@ INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `Spec
 (6, 'Riccardo', 'Mamone', 10, 'rf5', 1),
 (8, 'Antonio', 'Santoro', 10, 'cf6', 1),
 (9, 'Michael', 'Bing', 7, 'cf7', -1),
-(10, 'Francesco', 'Riba', 8, 'Cf8', -1);
+(11, 'Mario', 'Rossi', 7, 'Fc11', -1);
 
 -- --------------------------------------------------------
 
@@ -220,7 +222,7 @@ INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
 CREATE TABLE `TopicRecord` (
   `ID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Description` varchar(512) NOT NULL,
   `TopicID` int(11) NOT NULL,
   `SpecificClassID` int(11) NOT NULL
@@ -287,7 +289,8 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 (8, 'Bartolo', 'Montrucchio', 'teach6@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (9, 'Tony', 'Lioy', 'teach7@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (10, 'John', 'Price', 'off1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
-(11, 'Paul', 'MacMillan', 'off2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer');
+(11, 'Paul', 'MacMillan', 'off2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
+(44, 'name', 'surname', 'd1226143@urhen.com', '$2y$12$30A4FAueTEgqlQBS8tFsbeRcqpB6MNvkEfSk5odHdJHoEJkF7Z4h2', 'parent');
 
 --
 -- Indici per le tabelle scaricate
@@ -390,7 +393,7 @@ ALTER TABLE `Officer`
 -- AUTO_INCREMENT per la tabella `Parent`
 --
 ALTER TABLE `Parent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT per la tabella `SpecificClass`
 --
@@ -400,7 +403,7 @@ ALTER TABLE `SpecificClass`
 -- AUTO_INCREMENT per la tabella `Student`
 --
 ALTER TABLE `Student`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
@@ -430,7 +433,7 @@ ALTER TABLE `TopicTeacherClass`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- Limiti per le tabelle scaricate
 --

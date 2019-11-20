@@ -38,13 +38,12 @@ class sparent extends user {
 		$childs = array();
 		$children_info = array();
 		$conn = $this->connectMySql();
-		print($_SESSION['parentID']);
 		$stmt = $conn->prepare("SELECT S.ID AS StudentID, P.ID AS ParentID, S.Name, S.Surname 
             FROM Parent P,Student S
-            WHERE P.ID = ?
+            WHERE P.UserID = ?
             AND P.StudentID = S.ID;");
-		//$stmt->bind_param('d',$this->parent_id);
-		$stmt->bind_param('d', $_SESSION['parentID']);//use getter
+		//todo: use getter
+		$stmt->bind_param('d', $_SESSION['id']);//use getter
 		$stmt->execute();
 		$res = $stmt->get_result();
 		/*while($row = $res->fetch_row()){

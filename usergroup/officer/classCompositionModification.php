@@ -69,7 +69,7 @@ if (isset($_GET['classID'])) {
                         <tr>
                             <td>".$student['Surname']."</td>
                             <td>".$student['Name']."</td>
-                            <td><button class='btn btn-primary' value='Rimuovi Dalla Classe' id=".$student['ID'] ." type='button' onclick='removeStudent(id);'> Rimuovi </button></td>
+                            <td><button class='btn btn-primary' value='Rimuovi Dalla Classe' id=".$student['ID'] ." type='button' onclick='removeStudent(id);'> Remove </button></td>
                         </tr>";
         }
         $content.="
@@ -80,6 +80,13 @@ if (isset($_GET['classID'])) {
 
     // Print now the second table (to add student to class)
     $ustudents = $officer->retrive_classless_students();
+    $content.="
+            <div class=\"card\">
+                <h5 class=\"card-header info-color white-text text-center py-4\">
+                    <strong>Students without class</strong>
+                </h5>
+                <div class=\"card-body\">
+                ";
     $content.="
                     <form>
                     <table class=\"table table - sm\">
@@ -98,7 +105,7 @@ if (isset($_GET['classID'])) {
                         <tr>
                             <td>".$student['Surname']."</td>
                             <td>".$student['Name']."</td>
-                            <td><button class='btn btn-primary' value='Aggiungi alla classe' id=".$student['ID'] ." type='button' onclick='addStudent(id);'> Aggiungi </button></td>
+                            <td><button class='btn btn-primary' value='Aggiungi alla classe' id=".$student['ID'] ." type='button' onclick='addStudent(id);'> Add </button></td>
                         </tr>";
         }
         $content.="

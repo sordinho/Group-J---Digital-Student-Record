@@ -219,7 +219,7 @@ class officer extends user {
         return $IDs;
     }
     public function retrive_classless_students(){
-        $conn = $this->connectMySQL();
+        /*$conn = $this->connectMySQL();
 
         $res= $conn->query("SELECT ID,Name,Surname
                                   FROM Student
@@ -233,7 +233,8 @@ class officer extends user {
             array_push($students,$row);
         }
         $res->close();
-        return $students;
+        return $students;*/
+        return $this->get_Students_By_Class_ID(-1);
     }
     /**
      * @param $studentID

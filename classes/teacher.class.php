@@ -95,13 +95,13 @@ CREATE TABLE `TopicRecord` (
 			$lecture_date = strtotime($row[0]);
 			if (!$this->by_the_end_of_the_week($actual_date, $lecture_date))
 				return false;
-			if ($row[1] != $this->teacherID)
+			if ($row[1] != $_SESSION['teacherID'])
 				return false;
 			$res->close();
-			$stmt = $conn->prepare("UPDATE TopicRecord SET Description=? WHERE ID=$topicRecordID");
+			$stmt = $conn->prepare("UPDATE TopicRecord SET Description=? WHERE ID=?;");
 			if (!$stmt)
 				return false;
-			$stmt->bind_param("s", $newDescription);
+			$stmt->bind_param("si", $newDescription,$topicRecordID);
 			return $stmt->execute();
 		}
 	}
@@ -112,20 +112,29 @@ CREATE TABLE `TopicRecord` (
 	 * return               empty            if successful
 	 *                      array of array   otherwise
 	 * */
-	public function get_topics() {
+	public function get_topics($selectedClass=0) {
 		$topics = array();
 		// TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
 		// Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
 		$conn = $this->connectMySQL();
-		$stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
-		// todo manage class selection
-		$selectedClass = 3;
 		$teacherID = $this->get_teacher_ID();
-		$stmt->bind_param('ii', $teacherID, $selectedClass);
+
+		// todo manage class selection
+		if($selectedClass){
+			$stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
+			$stmt->bind_param('ii', $teacherID, $selectedClass);
+
+		} else{
+			$stmt = $conn->prepare("SELECT tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? ");
+			$stmt->bind_param('i', $teacherID);
+		}
 		$stmt->execute();
 		$res = $stmt->get_result();
 		if ($res->num_rows <= 0) {
-			return false;
+			$dummy["TopicID"] = 0;
+			$dummy["TopicName"] = "No topic";
+			$dummy["TopicDescription"] = "No topic for this teacher";
+			array_push($topics, $dummy);
 		} else {
 			$row = $res->fetch_assoc();
 			array_push($topics, $row);
@@ -135,7 +144,7 @@ CREATE TABLE `TopicRecord` (
 
 	// Return the teacher ID from teacher table
 	public function get_teacher_ID() {
-		return isset($_SESSION['teacherID']) ? $_SESSION['id'] : -1;
+		return isset($_SESSION['teacherID']) ? $_SESSION['teacherID'] : -1;
 	}
 
 	/*
@@ -167,11 +176,11 @@ CREATE TABLE `TopicRecord` (
 		$topicRecords = array();
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamps, 
-									  TopicRecord.Description as TopicDescription, Topic.Name as TopicName
+									  TopicRecord.Description as TopicDescription, Topic.Name as TopicName, TopicRecord.ID as RecordID
 									  FROM TopicRecord, Topic
 									  WHERE TopicRecord.TopicID=Topic.ID AND TopicRecord.TeacherID=?");
 //		$teacherID = $this->get_teacher_ID();
-		$teacherID = 1;
+		$teacherID = $_SESSION['teacherID'];
 		$stmt->bind_param('i', $teacherID);
 		$stmt->execute();
 		$res = $stmt->get_result();
@@ -184,4 +193,24 @@ CREATE TABLE `TopicRecord` (
 		}
 		return $topicRecords;
 	}
+	public function get_lecture_by_id($lectureID){
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamp, 
+									  TopicRecord.Description as TopicDescription,
+									  TopicRecord.ID as TopicRecordID, 
+									  Topic.Name as TopicName
+									  FROM TopicRecord , Topic
+									  WHERE TopicRecord.TopicID=Topic.ID and TopicRecord.ID=?");
+
+        $stmt->bind_param('i', $lectureID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->num_rows <= 0) {
+            return false;
+        } else {
+            $lecture_info = array();
+            $lecture_info=$res->fetch_assoc();
+            return $lecture_info;
+        }
+    }
 }
