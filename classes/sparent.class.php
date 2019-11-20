@@ -38,7 +38,6 @@ class sparent extends user {
 		$childs = array();
 		$children_info = array();
 		$conn = $this->connectMySql();
-		print($_SESSION['parentID']);
 		$stmt = $conn->prepare("SELECT S.ID AS StudentID, P.ID AS ParentID, S.Name, S.Surname 
             FROM Parent P,Student S
             WHERE P.UserID = ?
