@@ -213,4 +213,39 @@ CREATE TABLE `TopicRecord` (
             return $lecture_info;
         }
     }
+
+    public function insert_grade($studentID, $subjectID, $mark, $laude, $timestamp) {
+	    if ($mark < 1 or $mark > 10) return false;
+	    if ($laude !== true or $laude !== false) return false;
+
+	    //todo: add laude handling in DB and in query
+
+        $teacherID = $_SESSION['teacherID'];
+
+        $conn = $this->connectMySQL();
+        $sql = "    SELECT COUNT(*) 
+                    FROM TopicTeacherClass, Student
+                    WHERE TopicTeacherClass.TeacherID = '$teacherID'
+                    AND TopicTeacherClass.TopicID = '$subjectID'
+                    AND Student.ID = '$studentID'
+                    AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
+
+        if ($result = $conn->query($sql)) {
+            $row = $result->fetch_array();
+            $teachInThatClass = $row[0];
+
+            $result->close();
+
+            if ($teachInThatClass == 1) {
+                $sql = $conn->prepare("INSERT INTO MarksRecord (StudentID, Mark, TeacherID, TopicID, Timestamp) VALUES (?,?,?,?,?)");
+                $sql->bind_param('iiiis', $studentID, $mark, $_SESSION['teacherID'], $subjectID, $timestamp);
+                return $sql->execute();
+            } else {
+                return false;
+            }
+        } else {
+            printf("Error message: %s\n", $conn->error);
+            return false;
+        }
+	}
 }
