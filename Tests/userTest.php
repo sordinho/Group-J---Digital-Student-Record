@@ -65,7 +65,7 @@ class userTest extends TestCase
         $user = new user();
         $this->assertEquals("1", $user->get_id(), "userTest : testGet_id wrong returned value");
         unset($_SESSION['id']);
-        $this->assertEquals('', $user->get_id(), "userTest : testGet_id wrong returned value");
+        $this->assertEquals(-1, $user->get_id(), "userTest : testGet_id wrong returned value");
     }
 
     public function testGet_base_url()
