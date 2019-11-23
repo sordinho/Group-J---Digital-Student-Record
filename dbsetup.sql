@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 23, 2019 alle 20:36
+-- Creato il: Nov 23, 2019 alle 22:49
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -79,6 +79,22 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `NotPresentRecord`
+--
+
+CREATE TABLE `NotPresentRecord` (
+  `ID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL,
+  `HourSlotStart` int(11) NOT NULL,
+  `HourSlotEnd` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `LateFlag` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `Officer`
 --
 
@@ -114,7 +130,7 @@ CREATE TABLE `Parent` (
 
 INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (2, 2, 2),
-(5, 2, 1),
+(5, 4, 1),
 (7, 3, 2),
 (8, 3, 44);
 
@@ -161,6 +177,7 @@ CREATE TABLE `Student` (
 --
 
 INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
+(1, 'Hirving', 'Lozano', 10, 'cf1', 1),
 (2, 'Vittorio', 'Di Leo', 10, 'cf1b', 1),
 (3, 'Emanuele', 'Munafo', 10, 'cf2', 1),
 (4, 'Davide', 'Sordi', 10, 'cf3', 1),
@@ -343,6 +360,14 @@ ALTER TABLE `MarksRecord`
   ADD KEY `TopicID` (`TopicID`);
 
 --
+-- Indici per le tabelle `NotPresentRecord`
+--
+ALTER TABLE `NotPresentRecord`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `SpecificClassID` (`SpecificClassID`);
+
+--
 -- Indici per le tabelle `Officer`
 --
 ALTER TABLE `Officer`
@@ -428,6 +453,11 @@ ALTER TABLE `Homework`
 ALTER TABLE `MarksRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
+-- AUTO_INCREMENT per la tabella `NotPresentRecord`
+--
+ALTER TABLE `NotPresentRecord`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT per la tabella `Officer`
 --
 ALTER TABLE `Officer`
@@ -494,6 +524,13 @@ ALTER TABLE `Homework`
 ALTER TABLE `MarksRecord`
   ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_topic` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `NotPresentRecord`
+--
+ALTER TABLE `NotPresentRecord`
+  ADD CONSTRAINT `fk_specificClassID4` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_studentID2` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Officer`

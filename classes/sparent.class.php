@@ -68,9 +68,16 @@ class sparent extends user {
         }
         $homework_info = array();
         $conn = $this->connectMySql();
-        $stmt = $conn->prepare("select h.ID as HomeworkID, h.Description as HomeworkDescription, h.Deadline as HomeworkDeadline
-                                        from Student s, SpecificClass sc, Homework h
-                                        where s.SpecificClassID=sc.ID and h.SpecificClassID=s.SpecificClassID and s.ID=?");
+        $stmt = $conn->prepare("SELECT
+                                          h.ID AS HomeworkID,
+                                          h.Description AS HomeworkDescription,
+                                          h.Deadline AS HomeworkDeadline
+                                        FROM
+                                          Student s,
+                                          SpecificClass sc,
+                                          Homework h
+                                        WHERE
+                                          s.SpecificClassID = sc.ID AND h.SpecificClassID = s.SpecificClassID AND s.ID = ?");
         $stmt->bind_param('i', $childID);
         $stmt->execute();
         $res = $stmt->get_result();
