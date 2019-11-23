@@ -27,7 +27,6 @@ if ($_GET['action'] == "switchChild") {
 	$new_childID = intval($_GET["childID"]);
 	$sparent->set_current_child($new_childID);
 	$content = '<div class="alert alert-success" role="alert">You just switched student<br>In a few seconds you will be redirected to home. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a></div>';
-	// todo check this redirect
 	$content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . $_SESSION["base_url"] . "' />";
 
 } else {
