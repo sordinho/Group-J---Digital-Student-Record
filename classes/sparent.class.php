@@ -62,6 +62,27 @@ class sparent extends user {
 		return $res;
 	}
 
+	public function get_homeworks($childID) {
+        if (!isset($childID)) {
+            return array();
+        }
+        $homework_info = array();
+        $conn = $this->connectMySql();
+        $stmt = $conn->prepare("select h.ID as HomeworkID, h.Description as HomeworkDescription, h.Deadline as HomeworkDeadline
+                                        from Student s, SpecificClass sc, Homework h
+                                        where s.SpecificClassID=sc.ID and h.SpecificClassID=s.SpecificClassID and s.ID=?");
+        $stmt->bind_param('i', $childID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if (!$res) {
+            return false;
+        }
+        while ($row = $res->fetch_assoc()) {
+            array_push($homework_info, $row);
+        }
+        return $homework_info;
+    }
+
 	// Register a child as the current to view and analyze by saving the studentID into the session
 	public function set_current_child($childID) {
 		// TODO: for security reason should verify that the id is in the children array relative to the parent
