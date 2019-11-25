@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 19, 2019 alle 17:19
--- Versione del server: 5.7.27-0ubuntu0.16.04.1
+-- Creato il: Nov 23, 2019 alle 23:42
+-- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -19,6 +19,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `softeng2Final`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Homework`
+--
+
+CREATE TABLE `Homework` (
+  `ID` int(11) NOT NULL,
+  `Description` text NOT NULL,
+  `SpecificClassID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `Deadline` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `Homework`
+--
+
+INSERT INTO `Homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `Deadline`) VALUES
+(1, 'desc1', 1, 1, '2020-01-08'),
+(2, 'desc2', 1, 1, '2020-01-09'),
+(3, 'desc3', 1, 1, '2020-01-10'),
+(4, 'desc4', 1, 1, '2019-11-26'),
+(5, 'desc5', 1, 1, '2019-11-27'),
+(6, 'desc6', 1, 1, '2019-11-28'),
+(7, 'desc7', 2, 2, '2020-01-08'),
+(8, 'desc8', 2, 2, '2019-11-27'),
+(9, 'desc9', 3, 3, '2019-11-28'),
+(10, 'desc10', 3, 3, '2019-11-28');
 
 -- --------------------------------------------------------
 
@@ -45,6 +75,22 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (3, 3, 4, 3, 3, '2019-11-09 09:00:00'),
 (4, 4, 2, 4, 4, '2019-11-09 10:00:00'),
 (7, 5, 9, 7, 7, '2019-11-09 13:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `NotPresentRecord`
+--
+
+CREATE TABLE `NotPresentRecord` (
+  `ID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL,
+  `HourSlotStart` int(11) NOT NULL,
+  `HourSlotEnd` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `LateFlag` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -84,7 +130,7 @@ CREATE TABLE `Parent` (
 
 INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (2, 2, 2),
-(5, 2, 1),
+(5, 4, 1),
 (7, 3, 2),
 (8, 3, 44);
 
@@ -131,14 +177,15 @@ CREATE TABLE `Student` (
 --
 
 INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
+(1, 'Hirving', 'Lozano', 10, 'cf1', 1),
 (2, 'Vittorio', 'Di Leo', 10, 'cf1b', 1),
 (3, 'Emanuele', 'Munafo', 10, 'cf2', 1),
 (4, 'Davide', 'Sordi', 10, 'cf3', 1),
 (5, 'Francesco', 'Riba', 10, 'cf4', 1),
 (6, 'Riccardo', 'Mamone', 10, 'rf5', 1),
 (8, 'Antonio', 'Santoro', 10, 'cf6', 1),
-(9, 'Michael', 'Bing', 7, 'cf7', -1),
-(11, 'Mario', 'Rossi', 7, 'Fc11', -1);
+(9, 'Michael', 'Bing', 7, 'cf7', 2),
+(11, 'Mario', 'Rossi', 7, 'Fc11', 2);
 
 -- --------------------------------------------------------
 
@@ -297,12 +344,28 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 --
 
 --
+-- Indici per le tabelle `Homework`
+--
+ALTER TABLE `Homework`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `SpecificClassID` (`SpecificClassID`),
+  ADD KEY `TeacherID` (`TeacherID`);
+
+--
 -- Indici per le tabelle `MarksRecord`
 --
 ALTER TABLE `MarksRecord`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `TopicID` (`TopicID`);
+
+--
+-- Indici per le tabelle `NotPresentRecord`
+--
+ALTER TABLE `NotPresentRecord`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `SpecificClassID` (`SpecificClassID`);
 
 --
 -- Indici per le tabelle `Officer`
@@ -380,10 +443,20 @@ ALTER TABLE `User`
 --
 
 --
+-- AUTO_INCREMENT per la tabella `Homework`
+--
+ALTER TABLE `Homework`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
 -- AUTO_INCREMENT per la tabella `MarksRecord`
 --
 ALTER TABLE `MarksRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT per la tabella `NotPresentRecord`
+--
+ALTER TABLE `NotPresentRecord`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT per la tabella `Officer`
 --
@@ -439,11 +512,25 @@ ALTER TABLE `User`
 --
 
 --
+-- Limiti per la tabella `Homework`
+--
+ALTER TABLE `Homework`
+  ADD CONSTRAINT `fk_specificClassID2` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_teacherID3` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Limiti per la tabella `MarksRecord`
 --
 ALTER TABLE `MarksRecord`
   ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_topic` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `NotPresentRecord`
+--
+ALTER TABLE `NotPresentRecord`
+  ADD CONSTRAINT `fk_specificClassID4` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_studentID2` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Officer`
@@ -463,6 +550,12 @@ ALTER TABLE `Parent`
 --
 ALTER TABLE `SpecificClass`
   ADD CONSTRAINT `fk_coordTeacherID` FOREIGN KEY (`CoordinatorTeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `Student`
+--
+ALTER TABLE `Student`
+  ADD CONSTRAINT `fk_specificClassID3` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Teacher`

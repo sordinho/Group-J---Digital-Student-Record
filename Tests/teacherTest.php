@@ -27,9 +27,9 @@ class teacherTest extends TestCase {
         $teacherObject = new Teacher($_SESSION);
         //$teacherID = $teacherObject->get_teacher_ID();
         $timestamp = date("Y-m-d H:i:s");
-
+        $classID=1;
         // Insert a topic record to modify
-        $this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp));
+        $this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp,$classID));
 
         $topicRecordID = perform_SELECT_return_single_value("SELECT ID FROM TopicRecord WHERE Timestamp ='$timestamp'");
         //printf("topicRecordID: %d\n",$topicRecordID);
@@ -51,11 +51,11 @@ class teacherTest extends TestCase {
         $topicID=1;
         $description="Lecture 1 topic 1";
         $dateActualDate=date("Y-m-d H:i:s");
-
+        $classID = 1;
         //printf("DbName: %s",DBName);
 
         //perform insertion in the DB
-        $this->assertNotNull($teacherObject->insert_new_lecture_topic($description,$topicID,$dateActualDate));
+        $this->assertNotNull($teacherObject->insert_new_lecture_topic($description,$topicID,$dateActualDate,$classID));
 
         $topicRecordID = perform_SELECT_return_single_value("SELECT ID FROM TopicRecord WHERE Timestamp ='$dateActualDate'");
         //printf("topicRecordID: %d\n",$topicRecordID);
@@ -73,6 +73,6 @@ class teacherTest extends TestCase {
     }
 
     public function testGet_topics() {
-
+        $this->assertTrue(true);
     }
 }

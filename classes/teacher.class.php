@@ -193,6 +193,26 @@ CREATE TABLE `TopicRecord` (
 		}
 		return $topicRecords;
 	}
+
+	public function get_students_by_class_id($classID){
+	    $students = array();
+	    $conn = $this->connectMySQL();
+	    $stmt = $conn->prepare("SELECT ID, Name, Surname
+	                                  FROM Student
+	                                  WHERE SpecificClassID = ?;");
+	    if(!$stmt)
+	        return $students;
+	    $stmt->bind_param('i',$classID);
+	    $stmt->execute();
+	    $res = $stmt->get_result();
+	    if($res>0){
+	        while($row = $res->fetch_assoc()){
+	            array_push($students,$row);
+            }
+        }
+	    return $students;
+    }
+
 	public function get_lecture_by_id($lectureID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamp, 
