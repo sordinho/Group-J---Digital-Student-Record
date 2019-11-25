@@ -7,7 +7,7 @@ require_once "../classes/sparent.class.php";
 
 class sparentTest extends TestCase
 {
-    private function printErrorMessage($testName,$optionalMsg){
+    private function printErrorMessage($testName,$optionalMsg=''){
         $toReturn ="sparentTest: error in ".$testName;
         if(isset($optionalMsg) && !empty($optionalMsg))
             $toReturn.=" : ".$optionalMsg;
@@ -91,5 +91,20 @@ class sparentTest extends TestCase
          *
          *
          * */
+    }
+
+    public function testGet_homeworks() {
+        $parentObj = new sparent();
+        perform_INSERT_or_DELETE("DELETE FROM Homework");
+        perform_INSERT_or_DELETE("INSERT INTO Homework(Description, SpecificClassID, TeacherID, Deadline) VALUES('test',1,1,'2020-01-08')");
+        perform_INSERT_or_DELETE("INSERT INTO Student(Name, Surname, AverageLastSchool,CF, SpecificClassID) VALUES('test','test',9,'bab5',1)");
+
+        $studentID = perform_SELECT_return_single_value("SELECT ID FROM Student WHERE Name = 'test' AND Surname = 'test' AND AverageLastSchool = 9 AND CF = 'bab5' AND SpecificClassID = 1");
+
+        $homework_info = $parentObj->get_homeworks($studentID);
+
+        $this->assertEquals('test', $homework_info[0]['HomeworkDescription'], $this->printErrorMessage('testGet_homeworks'));
+        $this->assertEquals('2020-01-08', $homework_info[0]['HomeworkDeadline'], $this->printErrorMessage('testGet_homeworks'));
+        $this->assertTrue($homework_info[0]['HomeworkID'] != null, $this->printErrorMessage('testGet_homeworks'));
     }
 }

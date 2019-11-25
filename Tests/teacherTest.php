@@ -17,8 +17,6 @@ class teacherTest extends TestCase {
         dropTestDatabase();
     }
 
-
-
     public function testModify_lecture_topic() {
         $_SESSION["teacherID"] = 1;
         $topicID = 1;
@@ -74,5 +72,9 @@ class teacherTest extends TestCase {
 
     public function testGet_topics() {
         $this->assertTrue(true);
+    }
+
+    public function testGet_students_by_class_id() {
+
     }
 }
