@@ -46,6 +46,10 @@ switch($_SESSION["usergroup"]){
 										<a class="dropdown-item text-white" role="presentation" href="#"><span>More</span></a></div>
 									</li>';
 		break;
+	case "admin":
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./registerAccount.php"><i class="fas fa-user-plus mx-3"></i><span class="text-nowrap mx-2">Register Account</span></a></li>';
+
+		break;
 
 }
 /*

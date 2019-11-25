@@ -2,8 +2,6 @@
 
 require_once("../../config.php");
 
-// is this parent used?
-$parentObj = new sparent();
 
 $site = new csite();
 initialize_site($site);

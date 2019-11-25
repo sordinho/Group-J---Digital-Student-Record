@@ -22,51 +22,6 @@ class user {
 		return $mysqli;
 	}
 
-	/**
-	 * @param $mail , $password, $name, $surname, $student
-	 * @return bool
-	 */
-	function register($mail, $password, $name, $surname, $student) {
-		//TODO: eventually modify for other types of registration - this is thought for parents
-		$success = false;
-		/*
-		// TODO: eventually edit with has_permission() (related to admin capabilities to add clerk)
-		if (!is_admin()) {
-			//die("You are already registered and logged in");
-			return $success;
-		}*/
-		$mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
-		if ($mysqli->connect_errno) {
-			printf("Connect failed: %s\n", mysqli_connect_error());
-			return $success;
-		}
-
-		$options = [
-			//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
-			'cost' => 12 // default is 10, better have a little more security
-		];
-		$hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
-		// In a real scenario it should be a nice practice to generate an activation code and let the user confirm that value (ex. with a link)
-		//$activation_code = rand(100, 999).rand(100,999).rand(100,999);
-		//TODO: modify because parent now has esternal KEY userID with pwd and email
-		$sql = "INSERT INTO parent (ID, Name, Surname, Email,  Password, StudentID) VALUES (0, ?, ?, ?, ?, ?)";
-		$query = $mysqli->prepare($sql);
-		$query->bind_param("ssssi", $name, $surname, $mail, $hashed_password, $student);
-		//TODO: handle ID value
-		$res = $query->execute();
-		if (!$res) {
-			printf("Error message: %s\n", $mysqli->error);
-			return $success;
-		} else {
-			$query->close();
-			$mysqli->close();
-			$mail_enc = urlencode($mail);
-			$url = PLATFORM_PATH;
-			$url .= "register.php?front_office=" . $mail_enc;
-			die("<meta http-equiv='refresh' content='1; url=$url' />");
-		}
-	}
-
 	function get_user_group_table_name($usergroup) {
 		$table_name = false;
 		switch ($usergroup) {
@@ -130,31 +85,35 @@ class user {
 			$this->set_base_url($base_url);
 
 			// Get specific ID for teacher, parent ...
+			if ($retrievedUsergroup == 'admin')
+				$this->set_admin();
+			else {
+				$user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
+				$specificID = -1;
+				if ($user_group_table != false) {
+					$queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
+					$queryID->bind_param('i', $id);
 
-			$user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
-			$specificID = -1;
-			if ($user_group_table != false) {
-				$queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
-				$queryID->bind_param('i', $id);
-
-				$result = $queryID->execute();
-				if (!$result) {
-					printf("Error message: %s\n", $mysqli->error);
+					$result = $queryID->execute();
+					if (!$result) {
+						printf("Error message: %s\n", $mysqli->error);
+						return false;
+					}
+					$queryID->store_result();
+					$queryID->bind_result($specificID);
+					// In case of success there should be just 1 *USER* for a given (username is also a primary key for its table)
+					if ($queryID->num_rows < 1) {
+						return false;
+					}
+					$queryID->fetch();
+					$this->set_specific_ID(intval($specificID), $retrievedUsergroup);
+				} else {
 					return false;
 				}
-				$queryID->store_result();
-				$queryID->bind_result($specificID);
-				// In case of success there should be just 1 *USER* for a given (username is also a primary key for its table)
-				if ($queryID->num_rows < 1) {
-					return false;
-				}
-				$queryID->fetch();
-				$this->set_specific_ID(intval($specificID), $retrievedUsergroup);
-			} else {
-				return false;
 			}
 		} else
 			return false;
+
 		$query->close();
 		$mysqli->close();
 
@@ -193,6 +152,10 @@ class user {
 		return;
 	}
 
+	protected function set_admin(){
+		$_SESSION['admin'] = true;
+	}
+
 	//Memorizza nelle sessioni lo username
 	protected function set_username($username) {
 		$_SESSION['username'] = $username;
@@ -208,14 +171,12 @@ class user {
 	// Save name for gui?
 	protected function set_name($name) {
 		$_SESSION['name'] = ucfirst($name);
-		$this->name = $name;
 		return;
 	}
 
 	// Save surname for GUI
 	protected function set_surname($surname) {
 		$_SESSION['surname'] = $surname;
-		$this->surname = $surname;
 	}
 
 	protected function set_base_url($baseUrl) {
@@ -230,6 +191,11 @@ class user {
 	// verifica login
 	public function is_logged() {
 		return isset($_SESSION['id']);
+	}
+
+	// verify user is administrator
+	public function is_admin() {
+		return isset($_SESSION['admin']);
 	}
 
 	//Restituisce la mail memorizzata nelle sessioni
@@ -319,6 +285,32 @@ class user {
 			return false;
 		}
 	}*/
+
+	/**
+	 * Generate a random string, using a cryptographically secure
+	 * pseudorandom number generator (random_int)
+	 *
+	 * For PHP 7, random_int is a PHP core function
+	 *
+	 * @param int $length      How many characters do we want?
+	 * @param string $keyspace A string of all possible characters
+	 *                         to select from
+	 * @return string
+	 */
+	protected function random_str(
+		$length,
+		$keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	) {
+		$str = '';
+		$max = mb_strlen($keyspace, '8bit') - 1;
+		if ($max < 1) {
+			throw new Exception('$keyspace must be at least two characters long');
+		}
+		for ($i = 0; $i < $length; ++$i) {
+			$str .= $keyspace[random_int(0, $max)];
+		}
+		return $str;
+	}
 
 	// Verify email syntax (TRUE if ok)
 	public function is_email($email) {

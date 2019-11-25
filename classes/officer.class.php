@@ -119,32 +119,6 @@ class officer extends user {
         $stmt->bind_param("i",$userID);
         return $stmt->execute();
     }
-	/**
-	 * Generate a random string, using a cryptographically secure 
-	 * pseudorandom number generator (random_int)
-	 * 
-	 * For PHP 7, random_int is a PHP core function
-	 * 
-	 * @param int $length      How many characters do we want?
-	 * @param string $keyspace A string of all possible characters
-	 *                         to select from
-	 * @return string
-	 */
-	private function random_str(
-		$length,
-		$keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-	) {
-		$str = '';
-		$max = mb_strlen($keyspace, '8bit') - 1;
-		if ($max < 1) {
-			throw new Exception('$keyspace must be at least two characters long');
-		}
-		for ($i = 0; $i < $length; ++$i) {
-			$str .= $keyspace[random_int(0, $max)];
-		}
-		return $str;
-	}
-
 
 	public function get_parents_without_access_credentials(){
 	    $conn = $this->connectMySQL();
