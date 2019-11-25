@@ -18,9 +18,12 @@ class administrator extends user {
 	 * @return bool
 	 * @throws Exception
 	 */
+
 	function register_new_user($mail, $name, $surname, $usergroup) {
 		$mysqli = $this->connectMySQL();
 		$password = $this->random_str(10);
+		if ($password == "")
+			return false;
 
 		//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
 		// default is 10, better have a little more security
@@ -36,6 +39,11 @@ class administrator extends user {
 			printf("Error message: %s\n", $mysqli->error);
 			return false;
 		} else {
+			$message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: " . $mail . "\nPassword: " . $password . "\nFor your security, please delete this message ASAP.";
+			$message .= "\nBest Regards\nThe school administration.";
+			$message = wordwrap($message, 70, "\n");
+			if (!mail($mail, "Access Credentials (DSR)", $message))
+				return false;
 			$query->close();
 			$mysqli->close();
 			return true;

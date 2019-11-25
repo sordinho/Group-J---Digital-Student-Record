@@ -4,7 +4,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Administrator");
+$page = new cpage("Account Registration");
 $site->setPage($page);
 
 $administrator = new administrator();
