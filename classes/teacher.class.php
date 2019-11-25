@@ -234,11 +234,11 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
-    public function insert_grade($studentID, $subjectID, $mark, $laude, $timestamp) {
+    public function insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp) {
 	    if ($mark < 1 or $mark > 10) return false;
 	    if ($laude !== true or $laude !== false) return false;
-
-	    //todo: add laude handling in DB and in query
+	    if (!in_array($classID, $this->get_assigned_classes())) return false;
+        if ($mark != 10 && $laude == true) return false;
 
         $teacherID = $_SESSION['teacherID'];
 
@@ -257,8 +257,8 @@ CREATE TABLE `TopicRecord` (
             $result->close();
 
             if ($teachInThatClass == 1) {
-                $sql = $conn->prepare("INSERT INTO MarksRecord (StudentID, Mark, TeacherID, TopicID, Timestamp) VALUES (?,?,?,?,?)");
-                $sql->bind_param('iiiis', $studentID, $mark, $_SESSION['teacherID'], $subjectID, $timestamp);
+                $sql = $conn->prepare("INSERT INTO MarksRecord (StudentID, Mark, TeacherID, TopicID, Timestamp, Laude) VALUES (?,?,?,?,?,?)");
+                $sql->bind_param('iiiis', $studentID, $mark, $_SESSION['teacherID'], $subjectID, $timestamp, $laude);
                 return $sql->execute();
             } else {
                 return false;
