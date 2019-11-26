@@ -71,7 +71,8 @@ class sparent extends user {
         $stmt = $conn->prepare("SELECT
                                           h.ID AS HomeworkID,
                                           h.Description AS HomeworkDescription,
-                                          h.Deadline AS HomeworkDeadline
+                                          h.Deadline AS HomeworkDeadline,
+                                          h.TopicID
                                         FROM
                                           Student s,
                                           SpecificClass sc,
