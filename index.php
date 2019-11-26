@@ -54,8 +54,7 @@ if(!isset($_SESSION['id']) && isset($_POST['username'])) {
 } else {
 	$usr = new user();
 	if($usr->is_logged()){
-		// TODO reset refresh to 1 sec. Set to 5 for debug print
-		$content .= "<meta http-equiv='refresh' content='5; url=" . PLATFORM_PATH . $usr->get_base_url() . "' />";
+		$content .= "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . $usr->get_base_url() . "' />";
 	}
 }
 $page->setContent($content);
