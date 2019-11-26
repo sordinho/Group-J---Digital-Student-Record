@@ -27,7 +27,7 @@ class administrator extends user {
 
 		//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
 		// default is 10, better have a little more security
-        echo "Name: ".$user_info['name']." Surname: ".$user_info['surname']." Email: ".$user_info['email']." Usergroup: ".$user_info['usergroup']." Password: ".$user_info['password'];
+        //echo "Name: ".$user_info['name']." Surname: ".$user_info['surname']." Email: ".$user_info['email']." Usergroup: ".$user_info['usergroup']." Password: ".$user_info['password'];
 		$options = ['cost' => 12];
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
 
