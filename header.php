@@ -31,7 +31,7 @@ switch($_SESSION["usergroup"]){
 	case "teacher":
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addLecture.php"><i class="fas fa-book-open mx-3"></i><span class="text-nowrap mx-2">Add Lecture</span></a></li>';
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./listLectures.php"><i class="fas fa-bookmark mx-3"></i><span class="text-nowrap mx-2">List Lectures</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./insertGrades.php"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Assign Grades</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./insertGrades.php"><i class="fas fa-marker mx-3"></i><span class="text-nowrap mx-2">Assign Grades</span></a></li>';
 
 		break;
 	case "officer":
