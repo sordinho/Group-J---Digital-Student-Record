@@ -173,22 +173,24 @@ OUT;
         }
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
-            $now = date("Y-m-d H:i:s");
-            $laude = false;
-            $subID = (int)$_POST["subjectID_$id"];
-            $grade = (int)$_POST["grade_$id"];
-            if (isset($_POST["laude_$id"])) {
-                if ($_POST["laude_$id"] == 'yes')
-                    $laude = true;
-            }
-            if (isset($_POST["grade_$id"])) {
-                $res = $teacher->insert_grade($id, $classID, $subID, $grade, $laude, $now);
-                if (!$res) {
-                    header("Location: insertGrades.php?operation_result=0");
+            if(isset($_POST["subjectID_$id"]) && isset($_POST["grade_$id"])) {
+                $now = date("Y-m-d H:i:s");
+                $laude = false;
+                $subID = (int)$_POST["subjectID_$id"];
+                $grade = (int)$_POST["grade_$id"];
+                if (isset($_POST["laude_$id"])) {
+                    if ($_POST["laude_$id"] == 'yes')
+                        $laude = true;
+                }
+                if (isset($_POST["grade_$id"])) {
+                    $res = $teacher->insert_grade($id, $classID, $subID, $grade, $laude, $now);
+                    if (!$res) {
+                        header("Location: insertGrades.php?operation_result=0");
+                        die();
+                    }
+                    header("Location: insertGrades.php?operation_result=1");
                     die();
                 }
-                header("Location: insertGrades.php?operation_result=$res");
-                die();
             }
         }
     }
