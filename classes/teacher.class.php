@@ -247,7 +247,7 @@ CREATE TABLE `TopicRecord` (
      * @param int $mark <=10 >0
      * @param bool $laude
      * @param string $timestamp (AAAA-MM-DD)
-     * @return false or true if the operation has been performed
+     * @return true on success or false on failure
      */
     public function insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp) {
 	    if ($mark < 1 or $mark > 10) return false;
@@ -274,7 +274,7 @@ CREATE TABLE `TopicRecord` (
 
             if ($teachInThatClass == 1) {
                 $sql = $conn->prepare("INSERT INTO MarksRecord (StudentID, Mark, TeacherID, TopicID, Timestamp, Laude) VALUES (?,?,?,?,?,?)");
-                $sql->bind_param('iiiis', $studentID, $mark, $_SESSION['teacherID'], $subjectID, $timestamp, $laude);
+                $sql->bind_param('iiiisi', $studentID, $mark, $_SESSION['teacherID'], $subjectID, $timestamp, $laude);
                 return $sql->execute();
             } else {
                 return false;
