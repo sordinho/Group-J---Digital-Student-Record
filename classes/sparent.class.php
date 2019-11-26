@@ -92,10 +92,15 @@ class sparent extends user {
         return $homework_info;
     }
 
-    public function get_absences($childID) {
+    public function get_absences_by_date($childID, $timestamp) {
         if (!isset($childID)) {
             return array();
         }
+
+        $sql = "    SELECT
+                    FROM NotPresentRecord
+                    WHERE StudentID = $childID AND Timestamp = $timestamp
+        ";
 
         $absences_info = array();
 
