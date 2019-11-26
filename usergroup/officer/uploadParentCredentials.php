@@ -29,8 +29,6 @@ if(!empty($_POST)){
     $child_N = $_POST['children'];
     $child_info = array();
     for($i = 0; $i<$child_N;$i++){
-        $child_info['first_name_'.$i]= $_POST['first_name_child_'.$i];
-        $child_info['last_name_'.$i]= $_POST['last_name_child_'.$i];
         $child_info['cf_'.$i] = $_POST['cf_'.$i];
     }
     $userID = $officer->add_new_user($parent_N,$parent_S,$parent_email);
@@ -140,31 +138,25 @@ OUT;
 OUT;
 
         for ($i = 0; $i < $num; $i++) {
-            $content .= <<<OUT
-            <hr>
-            
-            <p class="card-body info-color white-text text-center py-4">Student $i</p>
-            
-            
-            <!-- CF -->
-            <div class="md-form mt-0">
-                <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
-                <label for="materialRegisterFormEmail">Student fiscal code</label>
-            </div>
-OUT;
+            $content .= '
+                        <hr>
+                        
+                        <p class="card-body info-color white-text text-center py-4">Student $i</p>
+                        
+                        
+                        <!-- CF -->
+                        <div class="md-form mt-0">
+                            <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
+                            <label for="materialRegisterFormEmail">Student fiscal code</label>
+                        </div>';
         }
-        $content .= <<<OUT
-    <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
-
-        </form>
-        <!-- Form -->
-
-    </div>
-
-</div>
-<!-- Material form register -->
-OUT;
+        $content .= '
+                <!-- Sign up button -->
+                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
+                </form>
+                <!-- Form -->
+                </div> 
+                </div>';
     }
 }
 $page->setContent($content);
