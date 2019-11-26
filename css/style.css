@@ -15,7 +15,7 @@ body {
     user-select: none;
 }
 .min_container{
-    min-height: 510px;
+    min-height: 570px;
 }
 @media (min-width: 768px) {
     .bd-placeholder-img-lg {

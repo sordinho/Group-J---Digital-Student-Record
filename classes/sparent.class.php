@@ -92,6 +92,15 @@ class sparent extends user {
         return $homework_info;
     }
 
+    public function get_absences($childID) {
+        if (!isset($childID)) {
+            return array();
+        }
+
+        $absences_info = array();
+
+    }
+
 	// Register a child as the current to view and analyze by saving the studentID into the session
 	public function set_current_child($childID) {
 		// TODO: for security reason should verify that the id is in the children array relative to the parent
