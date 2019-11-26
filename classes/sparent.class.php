@@ -72,13 +72,14 @@ class sparent extends user {
                                           h.ID AS HomeworkID,
                                           h.Description AS HomeworkDescription,
                                           h.Deadline AS HomeworkDeadline,
-                                          h.TopicID
+                                          t.Name as TopicName
                                         FROM
                                           Student s,
                                           SpecificClass sc,
-                                          Homework h
+                                          Homework h,
+                                          Topic t
                                         WHERE
-                                          s.SpecificClassID = sc.ID AND h.SpecificClassID = s.SpecificClassID AND s.ID = ?");
+                                          s.SpecificClassID = sc.ID AND h.SpecificClassID = s.SpecificClassID AND h.TopicID=t.ID AND s.ID = ?");
         $stmt->bind_param('i', $childID);
         $stmt->execute();
         $res = $stmt->get_result();
