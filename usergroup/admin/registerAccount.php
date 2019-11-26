@@ -26,7 +26,6 @@ if (!$administrator->is_logged() || !$administrator->is_admin()) {
         $userInfo['surname'] = $_POST['user_last_name'];
         $userInfo['email'] = $_POST['user_email'];
         $userInfo['usergroup'] = $_POST['usergroup'];
-        $userInfo['password'] = $_POST['user_password'];
 
         if ($administrator->register_new_user($userInfo)) {
             $content = '
@@ -85,13 +84,6 @@ if (!$administrator->is_logged() || !$administrator->is_admin()) {
             </div>
           </div>
           
-          <div class=\"form-row\">
-            <div class=\"form-group col-md-6\">
-            
-                  <label for=\"inputPassword5\">Password</label>
-                  <input type=\"password\" id=\"inputPassword5\" class=\"form-control\" aria-describedby=\"passwordHelpBlock\" name=\"user_password\">
-            </div>
-          </div>
           
           <button type=\"submit\" class=\"btn btn-primary\">Confirm</button>
         </form>
