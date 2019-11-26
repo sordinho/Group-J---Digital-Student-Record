@@ -30,6 +30,9 @@ $content = '<div class="container article-clean">
                   	  </div>
                   </div>
              </div>';
+
+
+
 $page->setContent($content);
 $site->render();
 ?>
