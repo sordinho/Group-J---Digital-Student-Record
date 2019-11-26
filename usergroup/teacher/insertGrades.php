@@ -99,7 +99,19 @@ OUT;
         }
 
 
-        $table_content = '<div class="card-body">
+        $table_content = '<script type="text/javascript"><!--
+function enableLaude(elem){
+    let id = elem.getAttribute("id");
+    let grade = parseFloat(elem.value);
+    if(grade == 10)
+        document.getElementById("laude_label_"+id).hidden=false;
+    else if(grade != 10 && document.getElementById("laude_"+id).hidden==false){
+        document.getElementById("laude_label_"+id).hidden=true;
+        document.getElementById("lause_"+id).checked = false;    
+    }
+}
+--></script>
+                      <div class="card-body">
                       <form method="post" class="form-inline" style="color:#757575" action="insertGrades.php">
                         <table class="table table-striped">
                       <thead>
@@ -124,7 +136,7 @@ OUT;
                                   <td>
                                   <div class="form-group row">
                                   <div class="col-xs-2">
-                                    <input type="number" id="materialRegisterFormGradeStudent$id" placeholder="grade" name="grade_$id" class="form-control" step="0.25" min="0" max="10">
+                                    <input onchange="enableLaude(this)" type="number" id="$id" placeholder="grade" name="grade_$id" class="form-control" step="0.25" min="0" max="10">
                                   </div>
                                   <div class="col-xs-3">
                                     <select class='mdb-select md-form' name='subjectID_$id'>
@@ -135,7 +147,7 @@ OUT;
                                   
                                   <div class="col-xs-2">
                                    
-                                    <label class="form-check-label" for="exampleCheck1">Laude:  <input type="checkbox" class="form-check-input" name="laude_$id" value="yes"></label>
+                                    <label class="form-check-label" id="laude_label_$id" for="exampleCheck1"  hidden>Laude:  <input type="checkbox" class="form-check-input" id="laude_$id" name="laude_$id" value="yes"></label>
                                   </div>
                                   </div>
                             </td>
@@ -152,10 +164,10 @@ OUT;
         $content = <<<OUT
                 <div class="card text-center">
                   <div class="card-header">
-                    You're in class $yearSection.
+                    Change class :
                     <div class="btn-group">
                       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Change class
+                        $yearSection
                       </button>
                       <div class="dropdown-menu">
                         $drop_down
@@ -188,11 +200,11 @@ OUT;
                         header("Location: insertGrades.php?operation_result=0");
                         die();
                     }
-                    header("Location: insertGrades.php?operation_result=1");
-                    die();
                 }
             }
         }
+        header("Location: insertGrades.php?operation_result=1");
+        die();
     }
 }
 $page->setContent($content);
