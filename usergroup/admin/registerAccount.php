@@ -52,24 +52,28 @@ if (!$administrator->is_logged() || !$administrator->is_admin()) {
     <div class=\"card-body px-lg-5 pt-0\">
         <p class=\"card-body info-color white-text text-center py-4\">Insert Data</p>
         <form action='registerAccount.php' method='post'>
+        
           <div class=\"form-row\">
-            <div class=\"form-group col-md-6\">
-              <label for=\"inputName\">First Name</label>
-              <input type=\"text\" id=\"materialRegisterFormFirstName\" name=\"user_first_name\" class=\"form-control\" placeholder=\"Insert Name\">
-            </div>
-            <div class=\"form-group col-md-6\">
-              <label for=\"inputSurname\">Last Name</label>
-              <input type=\"text\" id=\"materialRegisterFormLastName\" name=\"user_last_name\" class=\"form-control\"  placeholder=\"Insert Last Name\">
-            </div>
+                <div class=\"form-group col-md-6\">
+                  <label for=\"inputName\">First Name</label>
+                  <input type=\"text\" id=\"materialRegisterFormFirstName\" name=\"user_first_name\" class=\"form-control\" placeholder=\"Insert Name\">
+                </div>
+                <div class=\"form-group col-md-6\">
+                  <label for=\"inputSurname\">Last Name</label>
+                  <input type=\"text\" id=\"materialRegisterFormLastName\" name=\"user_last_name\" class=\"form-control\"  placeholder=\"Insert Last Name\">
+                </div>
           </div>
+          
           <div class=\"form-row\">
+          
           	<div class=\"form-group col-md-6\">
             	<label for=\"inputFC\">Email</label>
             	<input type=\"text\" class=\"form-control\" id=\"inputFC\" name=\"user_email\" placeholder=\"Insert Email\">
           	</div>
-          	<div class=\"form-group col-md-6\">
-            	<label for=\"inputFC\">Usergroup</label>
           	
+            <div class=\"form-group col-md-6\">
+                <label for=\"inputFC\">Usergroup</label>
+            
                 <div class=\"input-group mb-3\">
                   <select class=\"custom-select\" id=\"inputGroupSelect01\" name='usergroup'>
                     <option selected>Choose...</option>
@@ -78,28 +82,15 @@ if (!$administrator->is_logged() || !$administrator->is_admin()) {
                     <option value=\"principal\">Principal</option>
                   </select>
                 </div>
-          	
             </div>
+          </div>
           
-          
+          <div class=\"form-row\">
             <div class=\"form-group col-md-6\">
             
                   <label for=\"inputPassword5\">Password</label>
                   <input type=\"password\" id=\"inputPassword5\" class=\"form-control\" aria-describedby=\"passwordHelpBlock\" name=\"user_password\">
-          </div>
-          
-          
-            <div class=\"form - group col - md - 6\">
-              <!--<label for=\"gender\">Gender</label>-->
-              <div class='form-check form-check-inline'>
-                <input class='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1'>
-                <label class='form-check-label' for='inlineRadio1'>F</label>
-              </div>
-              <div class='form-check form-check-inline'>
-                <input class='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio2' value='option2'>
-                <label class='form-check-label' for='inlineRadio2'>M</label>
-              </div>
-          	</div>
+            </div>
           </div>
           
           <button type=\"submit\" class=\"btn btn-primary\">Confirm</button>

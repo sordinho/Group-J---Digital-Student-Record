@@ -52,6 +52,7 @@ class administrator extends user {
 			$message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: " . $user_info['email'] . "\nPassword: " . $user_info['password'] . "\nFor your security, please delete this message ASAP.";
 			$message .= "\nBest Regards\nThe school administration.";
 			$message = wordwrap($message, 70, "\n");
+			//TODO remove comment on server
 			/*if (!mail($user_info['user_email'], "Access Credentials (DSR)", $message))
 				return false;*/
 			$query->close();
