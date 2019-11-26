@@ -1,9 +1,9 @@
 <?php
 require_once("config.php");
-if(isset($_SESSION['base_url'])) $ulp = PLATFORM_PATH . $_SESSION['base_url']; // usergroup link prefix
 // Handle hidden menu and navbar render (note that is related to the user status (loggedin/typeOfUser))
 $hidden_menu = "";
 $user = new user();
+$ulp = PLATFORM_PATH.$user->get_base_url(); // usergroup link prefix
 if (!$user->is_logged()){
 	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  data-toggle="modal" href="#myModal"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log in</span></a></li>';
 
