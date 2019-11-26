@@ -148,7 +148,6 @@ class user {
 	// set login
 	protected function set_logged($id_user) {
 		$_SESSION['id'] = $id_user;
-		$this->login_iduser = $id_user;
 		return;
 	}
 
@@ -164,7 +163,6 @@ class user {
 
 	protected function set_usergroup($usergroup) {
 		$_SESSION['usergroup'] = $usergroup;
-		$this->usergroup = $usergroup;
 		return;
 	}
 
