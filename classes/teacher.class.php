@@ -256,10 +256,10 @@ CREATE TABLE `TopicRecord` (
      */
     public function insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp) {
 	    if ($mark < 1 or $mark > 10) return false;
-	    if ($laude != true and $laude != false) return false;
-	    if (!in_array($classID, $this->get_assigned_classes())) return false;
+	    if ($laude != 0 and $laude != 1) return false;
+	    //if (!in_array($classID, $this->get_assigned_classes())) return false;
         if ($mark != 10 && $laude == true) return false;
-        //if ($this->validateDate($timestamp) == false) return false;
+        if ($this->validateDate($timestamp) == false) return false;
 
         $teacherID = $_SESSION['teacherID'];
 
@@ -278,7 +278,7 @@ CREATE TABLE `TopicRecord` (
             $result->close();
 
             if ($teachInThatClass == 1) {
-                $sql = $conn->prepare("INSERT INTO MarksRecord (StudentID, Mark, TeacherID, TopicID, Timestamp, Laude) VALUES (?,?,?,?,?,?)");
+                $sql = $conn->prepare("INSERT INTO MarksRecord (StudentID, Mark, TeacherID, TopicID, Timestamp, Laude) VALUES (?,?,?,?,?,?);");
                 $sql->bind_param('iiiisi', $studentID, $mark, $_SESSION['teacherID'], $subjectID, $timestamp, $laude);
                 return $sql->execute();
             } else {
