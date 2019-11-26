@@ -41,7 +41,7 @@ class administrator extends user {
 		if (!$res) {
 			printf("Error message: %s\n", $mysqli->error);
 
-            echo "Problema2";
+            echo "Error in inserting the new User";
 			return false;
 		}
 
@@ -55,9 +55,9 @@ class administrator extends user {
 		    $res=$stmt->get_result();
             $row = $res->fetch_assoc();
 			$IDinsertedUser = $row['ID'];
-			echo "ID after Insert: ".$IDinsertedUser;
+			//echo "ID after Insert: ".$IDinsertedUser;
 		} else {
-		    echo "Problema1";
+		    echo "Unable to retrieve User ID";
 		    return false;
         }
         $tempzero=0;
@@ -85,7 +85,7 @@ class administrator extends user {
 		if (!$result) {
 			printf("Error message: %s\n", $mysqli->error);
 
-            echo "Problema3";
+            echo "Unable to add data to the specific user Table in the DB";
 			return false;
 		}
 		
