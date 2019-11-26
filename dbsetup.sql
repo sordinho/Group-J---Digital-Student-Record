@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 23, 2019 alle 23:42
+-- Creato il: Nov 26, 2019 alle 10:48
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -31,24 +31,25 @@ CREATE TABLE `Homework` (
   `Description` text NOT NULL,
   `SpecificClassID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
-  `Deadline` date DEFAULT NULL
+  `Deadline` date DEFAULT NULL,
+  `TopicID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `Homework`
 --
 
-INSERT INTO `Homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `Deadline`) VALUES
-(1, 'desc1', 1, 1, '2020-01-08'),
-(2, 'desc2', 1, 1, '2020-01-09'),
-(3, 'desc3', 1, 1, '2020-01-10'),
-(4, 'desc4', 1, 1, '2019-11-26'),
-(5, 'desc5', 1, 1, '2019-11-27'),
-(6, 'desc6', 1, 1, '2019-11-28'),
-(7, 'desc7', 2, 2, '2020-01-08'),
-(8, 'desc8', 2, 2, '2019-11-27'),
-(9, 'desc9', 3, 3, '2019-11-28'),
-(10, 'desc10', 3, 3, '2019-11-28');
+INSERT INTO `Homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `Deadline`, `TopicID`) VALUES
+(1, 'desc1', 1, 1, '2020-01-08', 1),
+(2, 'desc2', 1, 1, '2020-01-09', 2),
+(3, 'desc3', 1, 1, '2020-01-10', 3),
+(4, 'desc4', 1, 1, '2019-11-26', 1),
+(5, 'desc5', 1, 1, '2019-11-27', 2),
+(6, 'desc6', 1, 1, '2019-11-28', 3),
+(7, 'desc7', 2, 2, '2020-01-08', 1),
+(8, 'desc8', 2, 2, '2019-11-27', 2),
+(9, 'desc9', 3, 3, '2019-11-28', 3),
+(10, 'desc10', 3, 3, '2019-11-28', 4);
 
 -- --------------------------------------------------------
 
@@ -62,19 +63,20 @@ CREATE TABLE `MarksRecord` (
   `Mark` float NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `TopicID` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Laude` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `MarksRecord`
 --
 
-INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `Timestamp`) VALUES
-(1, 2, 7, 1, 1, '2019-11-09 07:00:00'),
-(2, 2, 7, 2, 2, '2019-11-09 08:00:00'),
-(3, 3, 4, 3, 3, '2019-11-09 09:00:00'),
-(4, 4, 2, 4, 4, '2019-11-09 10:00:00'),
-(7, 5, 9, 7, 7, '2019-11-09 13:00:00');
+INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `Timestamp`, `Laude`) VALUES
+(1, 2, 7, 1, 1, '2019-11-09 07:00:00', 0),
+(2, 2, 7, 2, 2, '2019-11-09 08:00:00', 0),
+(3, 3, 4, 3, 3, '2019-11-09 09:00:00', 0),
+(4, 4, 2, 4, 4, '2019-11-09 10:00:00', 0),
+(7, 5, 9, 7, 7, '2019-11-09 13:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -131,7 +133,7 @@ CREATE TABLE `Parent` (
 INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (2, 2, 2),
 (5, 4, 1),
-(7, 3, 2),
+(7, 3, 45),
 (8, 3, 44);
 
 -- --------------------------------------------------------
@@ -252,13 +254,13 @@ CREATE TABLE `Topic` (
 --
 
 INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
-(1, 'Subject1', 'Subject Description 1'),
-(2, 'Subject2', 'Subject Description 2'),
-(3, 'Subject3', 'Subject Description 3'),
-(4, 'Subject4', 'Subject Description 4'),
-(5, 'Subject5', 'Subject Description 5'),
-(6, 'Subject6', 'Subject Description 6'),
-(7, 'Subject7', 'Subject Description 7');
+(1, 'History', 'Subject Description 1'),
+(2, 'Physics', 'Subject Description 2'),
+(3, 'Maths', 'Subject Description 3'),
+(4, 'Science', 'Subject Description 4'),
+(5, 'Geography', 'Subject Description 5'),
+(6, 'Art', 'Subject Description 6'),
+(7, 'Music', 'Subject Description 7');
 
 -- --------------------------------------------------------
 
@@ -337,7 +339,8 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 (9, 'Tony', 'Lioy', 'teach7@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (10, 'John', 'Price', 'off1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
 (11, 'Paul', 'MacMillan', 'off2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
-(44, 'name', 'surname', 'd1226143@urhen.com', '$2y$12$30A4FAueTEgqlQBS8tFsbeRcqpB6MNvkEfSk5odHdJHoEJkF7Z4h2', 'parent');
+(44, 'Jude', 'surname', 'd1226143@urhen.com', '$2y$12$30A4FAueTEgqlQBS8tFsbeRcqpB6MNvkEfSk5odHdJHoEJkF7Z4h2', 'parent'),
+(45, 'Elisabeth', 'surname', 'pns4@io.io', '$2y$12$30A4FAueTEgqlQBS8tFsbeRcqpB6MNvkEfSk5odHdJHoEJkF7Z4h2', 'parent');
 
 --
 -- Indici per le tabelle scaricate
@@ -349,7 +352,8 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 ALTER TABLE `Homework`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `SpecificClassID` (`SpecificClassID`),
-  ADD KEY `TeacherID` (`TeacherID`);
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `HOMEWORK_TOPIC_INDEX` (`TopicID`);
 
 --
 -- Indici per le tabelle `MarksRecord`
@@ -506,7 +510,7 @@ ALTER TABLE `TopicTeacherClass`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -515,6 +519,7 @@ ALTER TABLE `User`
 -- Limiti per la tabella `Homework`
 --
 ALTER TABLE `Homework`
+  ADD CONSTRAINT `FK_HOMEWORK_TOPIC` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`),
   ADD CONSTRAINT `fk_specificClassID2` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_teacherID3` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 

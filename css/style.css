@@ -1,6 +1,6 @@
 body {
     background-color: rgb(225, 235, 240);
-    padding-top: 5rem;
+    padding-top: 3rem;
     }
 .starter-template {
     padding: 3rem 1.5rem;
@@ -21,4 +21,7 @@ body {
     .bd-placeholder-img-lg {
     font-size: 3.5rem;
     }
+}
+footer {
+    margin-top: 50px;
 }
