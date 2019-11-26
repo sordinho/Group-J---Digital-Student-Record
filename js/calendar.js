@@ -19,10 +19,8 @@
   Calendar.prototype.draw = function() {
     //Create Header
     this.drawHeader();
-
     //Draw Month
     this.drawMonth();
-
     this.drawLegend();
   }
 
@@ -56,11 +54,27 @@
     var self = this;
     
     this.events.forEach(function(ev) {
-      // Here we add the random date to homeworks/events (TODO: remove from here after css testing and add date field to data array )
-     ev.date = self.current.clone().date(Math.random() * (29 - 1) + 1);
+      //console.log(ev.date);
+      //Note: ev.date indicates the day here  (ev.full_date contains date in format YYYY-MM-DD)
+      // As of now, this works by:
+      // iterating over all the elments every times a new month is rendered (when u press next or prev month)
+      //    In the iteration we read the date of *every* events (full_date) then if the month is the same we are rendering
+      //    then we will add the date attribute with the day when that events should happen (33 otherwise, X>31 should be ok)
+      //console.log(self.current.clone().month());
+      var hDay = parseInt(ev.full_date.substring(8,10));
+      var hMonth = parseInt(ev.full_date.substring(5,7));
+      var hYear = parseInt(ev.full_date.substring(0,5)); // should not be usefull for this pourpose (just return from query last 6 month)
+      //ev.month = parseInt(ev.full_date.substring(6,8));
+      oldMonth = self.current.clone().month();
+      if(oldMonth+1 == hMonth){// +1 workaround because we need to create that month, so we are taking the oldone
+        ev.date = self.current.clone().date(hDay.toString());//To generate random days: Math.random() * (29 - 1) + 1
+      } 
+      else{
+        ev.date = self.current.clone().date("33");
+      }
     });
-    
-    
+    //console.log(this.events);
+
     if(this.month) {
       this.oldMonth = this.month;
       this.oldMonth.className = 'month out ' + (self.next ? 'next' : 'prev');
@@ -322,26 +336,42 @@
 }();
 
 !function() {
+  var returnedData;
+  /* Send the data using post and put the results in a div */
+  $.ajax({
+    url: "./homeworkAPI.php",
+    type: "get",
+    //data: val,
+    datatype: 'json',
+    async: false,
+    success: function(data){
+          //var jdata = JSON.parse(data);
+          if(data.status == "ok"){
+            returnedData = data.message;
+          } //else{
+    },
+    error:function(){
+      // just ignore for now, 
+        /*$("#result").html('There was an error ');
+        $("#result").addClass('error');
+        $("#result").fadeIn(1500);*/
+    }   
+  }); 
+
+  var data = Array.from(returnedData);
+
+  //Working testing data
+  /*
   var data = [
-    { eventName: 'Pages 30-36', calendar: 'History', color: 'orange' },
-    { eventName: 'Exercises 10-16 (page 40)', calendar: 'History', color: 'orange' },
-
-    { eventName: 'Listen to Bach', calendar: 'Music', color: 'blue' },
-    { eventName: 'Research about istory of viola ', calendar: 'Music', color: 'blue' },
-
-    { eventName: 'School Play', calendar: 'Kids', color: 'yellow' },
-    { eventName: 'Parent/Teacher Conference', calendar: 'Kids', color: 'yellow' },
-
-    { eventName: 'Code HelloWord', calendar: 'Other', color: 'green' },
-    { eventName: 'Research on pc', calendar: 'Other', color: 'green' }
-  ];
-
-  
+    { eventName: 'Pages 30-36', calendar: 'History', color: 'orange', full_date:"2019-11-27" },
+    { eventName: 'Pages 50-56', calendar: 'Maths', color: 'green', full_date:"2019-11-28" },
+  ];//*/
 
   function addDate(ev) {
     
   }
 
+  console.log(data);
   var calendar = new Calendar('#calendar', data);
 
 }();
