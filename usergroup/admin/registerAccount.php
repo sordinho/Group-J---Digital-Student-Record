@@ -27,7 +27,7 @@ if (!$administrator->is_logged() || !$administrator->is_admin()) {
         $userInfo['email'] = $_POST['user_email'];
         $userInfo['usergroup'] = $_POST['usergroup'];
 
-        if ($administrator->register_new_user($userInfo)) {
+        if ($administrator->register_new_user($_POST['user_first_name'],$_POST['user_last_name'],$_POST['user_email'],$_POST['usergroup'],$_POST['fcode'])) {
             $content = '
 			<div class="alert alert-success" role="warning">
 			User enrolled <a href="./registerAccount.php" class="alert-link">just click here!</a>
@@ -82,6 +82,14 @@ if (!$administrator->is_logged() || !$administrator->is_admin()) {
                   </select>
                 </div>
             </div>
+          </div>
+            
+          <div class=\"form-row\">
+          	<div class=\"form-group col-md-6\">
+            	<label for=\"inputFC\">Fiscal Code</label>
+            	<input type=\"text\" class=\"form-control\" id=\"inputFC\" name=\"fcode\" placeholder=\"Insert Fiscal Code\">
+            	<small id=\"passwordHelpBlock\" class=\"form-text text-muted\">Must be 16 digits.</small>
+          	</div>
           </div>
           
           
