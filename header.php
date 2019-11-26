@@ -101,6 +101,7 @@ print '<!DOCTYPE html>
 		<link rel="stylesheet" href="'.PLATFORM_PATH.'/fonts/font-awesome.min.css">
 		<link rel="stylesheet" href="'.PLATFORM_PATH.'/fonts/fontawesome5-overrides.min.css">
 
+		<link href="'.PLATFORM_PATH.'/css/calendar_style.css" rel="stylesheet">
 		<link href="'.PLATFORM_PATH.'/css/style.css" rel="stylesheet">
 		<link href="'.PLATFORM_PATH.'/css/sidebar.css" rel="stylesheet">
 		<title>StudentDigitalRecord System</title>
