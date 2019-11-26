@@ -102,7 +102,7 @@ docker push sordinho/digital_student_record
 
 ## Working example
 
-- You need th docker-compose.yml file
+- You need the docker-compose.yml file
 
 1. `docker pull -a sordinho/digital_student_record` Pull the images
 2. `docker-compose up` Run containers

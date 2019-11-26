@@ -165,6 +165,12 @@
 .orange { background: rgba(247, 167, 0, 1); }
 .green { background: rgba(153, 198, 109, 1); }
 .yellow { background: rgba(249, 233, 0, 1); }
+.red { background: rgb(249, 71, 0); }
+.white { background: rgb(255, 255, 255); }
+.silver{ background: rgb(196, 194, 169); }
+.olive{ background: rgb(11, 128, 55); }
+.navy { background: rgb(45, 79, 117); }
+.purple{ background: rgb(152, 60, 214); }
 
 .details {
   position: relative;
@@ -288,6 +294,12 @@
 .entry.orange:after { background: rgba(247, 167, 0, 1); }
 .entry.green:after { background: rgba(153, 198, 109, 1); }
 .entry.yellow:after { background: rgba(249, 233, 0, 1); }
+.entry.red:after { background: rgb(249, 71, 0); }
+.entry.white:after { background: rgb(255, 255, 255); }
+.entry.silver:after { background: rgb(196, 194, 169); }
+.entry.olive:after { background: rgb(11, 128, 55); }
+.entry.navy:after { background: rgb(45, 79, 117); }
+.entry.purple:after { background: rgb(152, 60, 214); }
 
 /* Animations are cool!  */
 @-webkit-keyframes moveFromTopFade {
