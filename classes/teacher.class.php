@@ -121,11 +121,16 @@ CREATE TABLE `TopicRecord` (
 
 		// todo manage class selection
 		if($selectedClass){
-			$stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
+			$stmt = $conn->prepare("SELECT ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, 
+                                                tc.Description as TopicDescription 
+                                            FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t 
+                                            WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? and ttc.SpecificClassID=?");
 			$stmt->bind_param('ii', $teacherID, $selectedClass);
 
 		} else{
-			$stmt = $conn->prepare("SELECT tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? ");
+			$stmt = $conn->prepare("SELECT tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription 
+                                            FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t 
+                                            WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? ");
 			$stmt->bind_param('i', $teacherID);
 		}
 		$stmt->execute();
@@ -252,18 +257,18 @@ CREATE TABLE `TopicRecord` (
     public function insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp) {
 	    if ($mark < 1 or $mark > 10) return false;
 	    if ($laude !== true and $laude !== false) return false;
-	    if (!in_array($classID, $this->get_assigned_classes())) return false;
+	    //if (!in_array($classID, $this->get_assigned_classes())) return false;
         if ($mark != 10 && $laude == true) return false;
-        if ($this->validateDate($timestamp) == false) return false;
+        //if ($this->validateDate($timestamp) == false) return false;
 
         $teacherID = $_SESSION['teacherID'];
 
         $conn = $this->connectMySQL();
         $sql = "    SELECT COUNT(*) 
                     FROM TopicTeacherClass, Student
-                    WHERE TopicTeacherClass.TeacherID = '$teacherID'
-                    AND TopicTeacherClass.TopicID = '$subjectID'
-                    AND Student.ID = '$studentID'
+                    WHERE TopicTeacherClass.TeacherID = $teacherID
+                    AND TopicTeacherClass.TopicID = $subjectID
+                    AND Student.ID = $studentID
                     AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
 
         if ($result = $conn->query($sql)) {
