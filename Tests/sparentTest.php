@@ -42,19 +42,37 @@ class sparentTest extends TestCase
                  --> 2 : TIMESTAMP
                  --> 3 : TEACHER SURNAME (id = 5 ---> TeacherSur5, id = 6 ---> TeacherSur6 )
 */
+        /*INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
+(1, 'History', 'Subject Description 1'),
+(2, 'Physics', 'Subject Description 2'),
+(3, 'Maths', 'Subject Description 3'),
+(4, 'Science', 'Subject Description 4'),
+(5, 'Geography', 'Subject Description 5'),
+(6, 'Art', 'Subject Description 6'),
+(7, 'Music', 'Subject Description 7');
+
+        INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `Timestamp`, `Laude`) VALUES
+(1, 2, 7, 1, 1, '2019-11-09 07:00:00', 0),
+(2, 2, 7, 2, 2, '2019-11-09 08:00:00', 0),
+(3, 3, 4, 3, 3, '2019-11-09 09:00:00', 0),
+(4, 4, 2, 4, 4, '2019-11-09 10:00:00', 0),
+(7, 5, 9, 7, 7, '2019-11-09 13:00:00', 0),
+(8, 2, 3.2, 2, 1, '2019-11-26 13:35:07', 1),
+(9, 2, 3.2, 2, 1, '2019-11-26 13:35:07', 1);
+         * */
         $_SESSION['parentID'] = 1;
         $parent = new sparent();
         //parent_id 1 ----> child_id 1
-        $grades = $parent->get_grades(1);
-        $this->assertEquals(2,count($grades),$this->printErrorMessage("testGet_grades","grades[] should have length == 2"));
-        $this->assertEquals("topic5",$grades[0]['Name'],$this->printErrorMessage("testGet_grades","line 51"));
-        $this->assertEquals(2,$grades[0]['Mark'],$this->printErrorMessage("testGet_grades","line 52"));
-        $this->assertEquals('2019-11-09 12:00:00',$grades[0]['Timestamp'],$this->printErrorMessage("testGet_grades","line 53"));
-        $this->assertEquals("TeacherSur5",$grades[0]["Surname"],$this->printErrorMessage("testGet_grades","line 54"));
-        $this->assertEquals("topic6",$grades[1]['Name'],$this->printErrorMessage("testGet_grades","line 55"));
-        $this->assertEquals(5,$grades[1]['Mark'],$this->printErrorMessage("testGet_grades","line 56"));
-        $this->assertEquals('2019-11-09 13:00:00',$grades[1]['Timestamp'],$this->printErrorMessage("testGet_grades","line 57"));
-        $this->assertEquals("TeacherSur6",$grades[1]["Surname"],$this->printErrorMessage("testGet_grades","line 58"));
+        $grades = $parent->get_grades(2);
+        $this->assertEquals(4,count($grades),$this->printErrorMessage("testGet_grades","grades[] should have length == 4"));
+        $this->assertEquals("History",$grades[0]['Name'],$this->printErrorMessage("testGet_grades","line 68"));
+        $this->assertEquals(7,$grades[0]['Mark'],$this->printErrorMessage("testGet_grades","line 69"));
+        $this->assertEquals('2019-11-09 08:00:00',$grades[0]['Timestamp'],$this->printErrorMessage("testGet_grades","line 70"));
+        $this->assertEquals("Torchiano",$grades[0]["Surname"],$this->printErrorMessage("testGet_grades","line 71"));
+        $this->assertEquals("Physics",$grades[1]['Name'],$this->printErrorMessage("testGet_grades","line 72"));
+        $this->assertEquals(7,$grades[1]['Mark'],$this->printErrorMessage("testGet_grades","line 73"));
+        $this->assertEquals('2019-11-09 09:00:00',$grades[1]['Timestamp'],$this->printErrorMessage("testGet_grades","line 74"));
+        $this->assertEquals("Montuschi",$grades[1]["Surname"],$this->printErrorMessage("testGet_grades","line 75"));
     }
 
     public function testSet_current_child()

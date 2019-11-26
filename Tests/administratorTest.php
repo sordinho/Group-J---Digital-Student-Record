@@ -24,7 +24,7 @@ class administratorTest extends TestCase
         dropTestDatabase();
     }
 
-    public function test_register_new_user_parent(){
+    /*public function test_register_new_user_parent(){
         $admin = new administrator();
         $user_info = array();
         $user_info['name'] = "Jon";
@@ -42,7 +42,7 @@ class administratorTest extends TestCase
         $res = $conn->query($query);
         $this->assertEquals(1,$res->fetch_row(),$this->printErrorMessage("test_register_new_user_parent","there are no new entries in the parent table."));
         $res->close();
-    }
+    }*/
 
     public function test_register_new_user_officer(){
         $admin = new administrator();
