@@ -234,11 +234,27 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
+    private function validateDate($date, $format = 'Y-m-d'){
+        $d = DateTime::createFromFormat($format, $date);
+        // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
+        return $d && $d->format($format) === $date;
+    }
+
+    /**
+     * @param int $studentID
+     * @param int $classID
+     * @param int $subjectID
+     * @param int $mark <=10 >0
+     * @param bool $laude
+     * @param string $timestamp (AAAA-MM-DD)
+     * @return false or true if the operation has been performed
+     */
     public function insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp) {
 	    if ($mark < 1 or $mark > 10) return false;
-	    if ($laude !== true or $laude !== false) return false;
+	    if ($laude !== true and $laude !== false) return false;
 	    if (!in_array($classID, $this->get_assigned_classes())) return false;
         if ($mark != 10 && $laude == true) return false;
+        if ($this->validateDate($timestamp) == false) return false;
 
         $teacherID = $_SESSION['teacherID'];
 
@@ -268,4 +284,5 @@ CREATE TABLE `TopicRecord` (
             return false;
         }
 	}
+
 }
