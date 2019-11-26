@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 26, 2019 alle 11:57
+-- Creato il: Nov 26, 2019 alle 15:09
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -63,7 +63,7 @@ CREATE TABLE `MarksRecord` (
   `Mark` float NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `TopicID` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Laude` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -76,7 +76,10 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (2, 2, 7, 2, 2, '2019-11-09 08:00:00', 0),
 (3, 3, 4, 3, 3, '2019-11-09 09:00:00', 0),
 (4, 4, 2, 4, 4, '2019-11-09 10:00:00', 0),
-(7, 5, 9, 7, 7, '2019-11-09 13:00:00', 0);
+(7, 5, 9, 7, 7, '2019-11-09 13:00:00', 0),
+(8, 2, 3.2, 2, 1, '2019-11-26 13:35:07', 1),
+(9, 2, 3.2, 2, 1, '2019-11-26 13:35:07', 1),
+(10, 1, 1, 1, 1, '2019-11-26 14:02:30', 0);
 
 -- --------------------------------------------------------
 
@@ -88,10 +91,11 @@ CREATE TABLE `NotPresentRecord` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `SpecificClassID` int(11) NOT NULL,
-  `HourSlotStart` int(11) NOT NULL,
-  `HourSlotEnd` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `LateFlag` tinyint(1) NOT NULL
+  `Date` date NOT NULL,
+  `AbsenceFlag` tinyint(1) NOT NULL,
+  `LateFlag` tinyint(1) NOT NULL,
+  `EarlyExitFlag` tinyint(1) NOT NULL,
+  `ExitHour` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -456,7 +460,7 @@ ALTER TABLE `Homework`
 -- AUTO_INCREMENT per la tabella `MarksRecord`
 --
 ALTER TABLE `MarksRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
@@ -535,8 +539,8 @@ ALTER TABLE `MarksRecord`
 -- Limiti per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
-  ADD CONSTRAINT `fk_specificClassID4` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_studentID2` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_specificClassID5` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_studentID3` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Officer`
