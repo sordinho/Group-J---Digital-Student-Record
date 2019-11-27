@@ -19,31 +19,31 @@ if (!$teacher->is_logged() || $teacher->get_teacher_ID() == -1) {
     exit();
 }
 
-if(isset($_GET['operation_result'])){
-    switch ($_GET['operation_result']){
+if (isset($_GET['operation_result'])) {
+    switch ($_GET['operation_result']) {
         case 1:
-            $content.= <<<OUT
+            $content .= <<<OUT
 <div class="alert alert-success" role="alert">
   Grades successfully registered. <a href="insertGrades.php" class="alert-link">Keep registering grades</a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
 </div>
 OUT;
             break;
         case 0:
-            $content.= <<<OUT
+            $content .= <<<OUT
 <div class="alert alert-danger" role="alert">
  Error in uploading students' grades. <a href="insertGrades.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
 </div>
 OUT;
             break;
         case -1:
-            $content.= <<<OUT
+            $content .= <<<OUT
 <div class="alert alert-danger" role="alert">
  PATATE <a href="insertGrades.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
 </div>
 OUT;
             break;
         default:
-            $content.=<<<OUT
+            $content .= <<<OUT
 <div class="alert alert-dark" role="alert">
   Operation not allowed.
 </div>
@@ -67,10 +67,9 @@ OUT;
         $content = <<<OUT
                 <div class="card text-center">
                   <div class="card-header">
-                    Choose a class :
                     <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Class
+                  <button type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Choose a class
                   </button>
                   <div class="dropdown-menu">
                     $drop_down
@@ -131,26 +130,26 @@ function enableLaude(elem){
             $table_content .= <<<OUT
                             <tr>
                                 <th scope="row">$i</th>
-                                  <td>$surname</td>
-                                  <td>$name</td>
-                                  <td>
-                                  <div class="form-group row">
-                                  <div class="col-xs-2">
-                                    <input onchange="enableLaude(this)" type="number" id="$id" placeholder="grade" name="grade_$id" class="form-control" step="0.25" min="0" max="10">
-                                  </div>
-                                  <div class="col-xs-3">
-                                    <select class='mdb-select md-form' name='subjectID_$id'>
-                                    <option value="" disabled selected>Choose a subject</option>
-                                    $select_content;
-                                    </select>
-                                  </div>
-                                  
-                                  <div class="col-xs-2">
-                                   
-                                    <label class="form-check-label" id="laude_label_$id" for="exampleCheck1"  hidden>Laude:  <input type="checkbox" class="form-check-input" id="laude_$id" name="laude_$id" value="yes"></label>
-                                  </div>
-                                  </div>
-                            </td>
+                                    <td><div class="col-xs-2 m-2">$surname</div></td>
+                                    <td><div class="col-xs-2 m-2">$name</div></td>
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2 pl-2 pr-2">
+                                                <input type="number" id="$id" placeholder="grade" name="grade_$id" class="form-control" step="0.25" min="0" max="10">
+                                            </div>
+                                            <div class="col-xs-2 pl-2 pr-2">
+                                                <select class='class="browser-default custom-select custom-select-lg"' name='subjectID_$id'>
+                                                    <option value="" disabled selected>Choose a subject</option>
+                                                        $select_content;
+                                                </select>
+                                            </div>
+                                                      
+                                            <div class="col-xs-2 pl-2 pr-2">
+                                                <input type="checkbox" class="form-check-input" id="laude_$id" name="laude_$id" value="yes">
+                                                <label class="form-check-label" id="laude_label_$id" for="exampleCheck1">Laude</label>
+                                            </div>
+                                        </div>
+                                    </td>
                             </tr>
 OUT;
         }
@@ -164,9 +163,8 @@ OUT;
         $content = <<<OUT
                 <div class="card text-center">
                   <div class="card-header">
-                    Change class :
                     <div class="btn-group">
-                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <button type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         $yearSection
                       </button>
                       <div class="dropdown-menu">
@@ -179,13 +177,13 @@ OUT;
 OUT;
     } else if (!empty($_POST)) {
         $students_info = $teacher->get_students_by_class_id($classID);
-        if(sizeof($students_info) == 0){
+        if (sizeof($students_info) == 0) {
             header("Location: insertGrades.php?operation_result=-1");
             die();
         }
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
-            if(isset($_POST["subjectID_$id"]) && isset($_POST["grade_$id"])) {
+            if (isset($_POST["subjectID_$id"]) && isset($_POST["grade_$id"])) {
                 $now = date("Y-m-d H:i:s");
                 $laude = false;
                 $subID = (int)$_POST["subjectID_$id"];
