@@ -1,9 +1,9 @@
 <?php
 require_once("config.php");
-if(isset($_SESSION['base_url'])) $ulp = PLATFORM_PATH . $_SESSION['base_url']; // usergroup link prefix
 // Handle hidden menu and navbar render (note that is related to the user status (loggedin/typeOfUser))
 $hidden_menu = "";
 $user = new user();
+$ulp = PLATFORM_PATH.$user->get_base_url(); // usergroup link prefix
 if (!$user->is_logged()){
 	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  data-toggle="modal" href="#myModal"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log in</span></a></li>';
 
@@ -36,7 +36,12 @@ switch($_SESSION["usergroup"]){
 		break;
 	case "officer":
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./batchActivateAuthentication.php"><i class="fas fa-envelope mx-3"></i><span class="text-nowrap mx-2">Parent Activation</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./uploadParentCredentials.php"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Upload Parent Info</span></a></li>';
+		// Upload info menu	
+		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Upload Parent Info</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+								<div class="dropdown-menu border-0 animated fadeIn" role="menu">
+								<a class="dropdown-item text-white" role="presentation" href="./uploadParentCredentials.php"><span>Manual Insert</span></a>
+								<a class="dropdown-item text-white" role="presentation" href="./uploadCSVParentCredentials.php"><span>CSV Upload</span></a>';
+		// Stundent enrollment, classcomposition and (unused for now) settings
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./studentEnrollment.php"><i class="fas fa-graduation-cap mx-3"></i><span class="text-nowrap mx-2">Enroll Student</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./classCompositionModification.php"><i class="fas fa-users mx-3"></i><span class="text-nowrap mx-2">Handle Classes</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Settings</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
