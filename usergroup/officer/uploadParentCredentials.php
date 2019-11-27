@@ -138,17 +138,13 @@ OUT;
 OUT;
 
         for ($i = 0; $i < $num; $i++) {
-            $content .= '
-                        <hr>
-                        
-                        <p class="card-body info-color white-text text-center py-4">Student $i</p>
-                        
-                        
+            $content .= "<hr>
+                        <p class='card-body info-color white-text text-center py-4'>Student $i</p>
                         <!-- CF -->
-                        <div class="md-form mt-0">
-                            <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
-                            <label for="materialRegisterFormEmail">Student fiscal code</label>
-                        </div>';
+                        <div class='md-form mt-0'>
+                            <input type='text' id='materialRegisterFormCF$i' name='cf_$i' class='form-control'>
+                            <label for='materialRegisterFormEmail'>Student fiscal code</label>
+                        </div>";
         }
         $content .= '
                 <!-- Sign up button -->
