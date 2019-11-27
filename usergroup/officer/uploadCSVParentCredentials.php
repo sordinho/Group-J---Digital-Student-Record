@@ -75,7 +75,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
                 // If the insert of user was successful we now need to insert parent with linked FK
                 $res = $officer->add_new_parent($userID,$child_info,$child_N);
                 if(!$res){
-                    // On failure use a workaround by removing that user to avoid inconsistent status in the DB
+                    // On failure use a workaround by trying to remove that user to avoid inconsistent status in the DB
                     if(!$officer->remove_user($userID)){
                         header("Location: uploadCSVParentCredentials.php?operation_result=-1");
                         exit();
@@ -124,12 +124,6 @@ if ( isset($_POST) && isset($_FILES["file"])) {
         $content .= '
         <!-- Material form register -->
         <div class="card">
-            <script type="text/javascript"><!--
-            function displayChildrenForm(elem){
-                let childNumber = parseInt(elem.value);
-                window.location.replace("uploadCSVParentCredentials.php?childN="+childNumber);
-            }
-            --></script>
             <h5 class="card-header info-color white-text text-center py-4">
                 <strong>Upload list of parent master data</strong>
             </h5>
@@ -144,8 +138,8 @@ if ( isset($_POST) && isset($_FILES["file"])) {
                         <div class="col">
                             <!-- First name -->
                             <div class="md-form">
-                                <input type="file" id="file" name="file" class="form-control">
-                                <label for="materialRegisterFormFirstName">First name</label>
+                                <input type="file" id="file" name="file" class="form-control-file">
+                                <!--<label for="CSVUpload">CSV Upload</label>-->
                             </div>
                         </div>
                 <!-- Sign up button -->
@@ -156,6 +150,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
                 </div>';
     }
 }
+
 $page->setContent($content);
 $site->render();
 /*
