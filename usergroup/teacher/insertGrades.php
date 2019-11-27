@@ -103,9 +103,9 @@ function enableLaude(elem){
     let id = elem.getAttribute("id");
     let grade = parseFloat(elem.value);
     if(grade == 10)
-        document.getElementById("laude_label_"+id).hidden=false;
-    else if(grade != 10 && document.getElementById("laude_"+id).hidden==false){
-        document.getElementById("laude_label_"+id).hidden=true;
+        document.getElementById("laude_"+id).disabled=false;
+    else if(grade != 10 && document.getElementById("laude_"+id).disabled==false){
+        document.getElementById("laude_"+id).disabled=true;
         document.getElementById("lause_"+id).checked = false;    
     }
 }
@@ -127,15 +127,16 @@ function enableLaude(elem){
             $name = $students_info[$i]['Name'];
             $surname = $students_info[$i]['Surname'];
             $id = $students_info[$i]['ID'];
+            $stud_num =$i+1;
             $table_content .= <<<OUT
                             <tr>
-                                <th scope="row">$i</th>
+                                <th scope="row">$stud_num</th>
                                     <td><div class="col-xs-2 m-2">$surname</div></td>
                                     <td><div class="col-xs-2 m-2">$name</div></td>
                                     <td>
                                         <div class="form-group row">
                                             <div class="col-xs-2 pl-2 pr-2">
-                                                <input type="number" id="$id" placeholder="grade" name="grade_$id" class="form-control" step="0.25" min="0" max="10">
+                                                <input type="number" onchange="enableLaude(this)" id="$id" placeholder="grade" name="grade_$id" class="form-control" step="0.25" min="0" max="10">
                                             </div>
                                             <div class="col-xs-2 pl-2 pr-2">
                                                 <select class='class="browser-default custom-select custom-select-lg"' name='subjectID_$id'>
@@ -145,7 +146,7 @@ function enableLaude(elem){
                                             </div>
                                                       
                                             <div class="col-xs-2 pl-2 pr-2">
-                                                <input type="checkbox" class="form-check-input" id="laude_$id" name="laude_$id" value="yes">
+                                                <input type="checkbox" class="form-check-input" id="laude_$id" name="laude_$id" value="yes" disabled>
                                                 <label class="form-check-label" id="laude_label_$id" for="exampleCheck1">Laude</label>
                                             </div>
                                         </div>

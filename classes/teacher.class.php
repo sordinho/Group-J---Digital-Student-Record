@@ -204,7 +204,8 @@ CREATE TABLE `TopicRecord` (
 	    $conn = $this->connectMySQL();
 	    $stmt = $conn->prepare("SELECT ID, Name, Surname
 	                                  FROM Student
-	                                  WHERE SpecificClassID = ?;");
+	                                  WHERE SpecificClassID = ?
+	                                  ORDER BY Surname,Name,ID;");
 	    if(!$stmt)
 	        return $students;
 	    $stmt->bind_param('i',$classID);

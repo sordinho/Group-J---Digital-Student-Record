@@ -46,12 +46,12 @@ class administratorTest extends TestCase
 
     public function test_register_new_user_officer(){
         $admin = new administrator();
-        $user_info = array();
-        $user_info['name'] = "Ned";
-        $user_info['surname'] = "Stark";
-        $user_info['usergroup'] = "officer";
-        $user_info['email'] = "king@inthe.grave";
-        $res = $admin->register_new_user($user_info);
+        $user_cf = "ned1";
+        $user_name = "Ned";
+        $user_surname = "Stark";
+        $user_usergroup = "officer";
+        $user_email = "king@inthe.grave";
+        $res = $admin->register_new_user($user_name,$user_surname,$user_email,$user_usergroup,$user_cf);
         $this->assertTrue($res,$this->printErrorMessage("test_register_new_user_officer","wrong returned value"));
 
 
@@ -66,12 +66,12 @@ class administratorTest extends TestCase
 
     public function test_register_new_user_teacher(){
         $admin = new administrator();
-        $user_info = array();
-        $user_info['name'] = "Jamie";
-        $user_info['surname'] = "Lannister";
-        $user_info['usergroup'] = "teacher";
-        $user_info['email'] = "king@slay.er";
-        $res = $admin->register_new_user($user_info);
+        $user_cf = "jam1";
+        $user_name = "Jamie";
+        $user_surname = "Lannister";
+        $user_usergroup = "teacher";
+        $user_email = "king@slay.er";
+        $res = $admin->register_new_user($user_name,$user_surname,$user_email,$user_usergroup,$user_cf);
         $this->assertTrue($res,$this->printErrorMessage("test_register_new_user_teacher","wrong returned value"));
 
 
@@ -86,30 +86,27 @@ class administratorTest extends TestCase
 
     public function test_register_new_user_BOUNDARY(){
         $admin = new administrator();
-        $user_info = array();
-        $user_info['name'] = "Jon";
-        $user_info['surname'] = "Snow";
-        $user_info['usergroup'] = "parent";
-        $res = $admin->register_new_user($user_info);
+        $user_cf = "jon1";
+        $user_name = "Jon";
+        $user_surname = "Snow";
+        $user_usergroup = "parent";
+        $user_email = "king@inthe.north";
+        $res = $admin->register_new_user($user_name,$user_surname,null,$user_usergroup,$user_cf);
         $this->assertFalse($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
 
-        $user_info['email'] = "king@inthe.north";
-        unset($user_info['name']);
-        $res = $admin->register_new_user($user_info);
+        $res = $admin->register_new_user(null,$user_surname,$user_email,$user_usergroup,$user_cf);
         $this->assertFalse($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
 
-        $user_info['name'] = "Jon";
-        unset($user_info['surname']);
-        $res = $admin->register_new_user($user_info);
+        $res = $admin->register_new_user($user_name,null,$user_email,$user_usergroup,$user_cf);
         $this->assertFalse($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
 
-        $user_info['surname'] = "Snow";
-        unset($user_info['usergroup']);
-        $res = $admin->register_new_user($user_info);
+        $res = $admin->register_new_user($user_name,$user_surname,$user_email,null,$user_cf);
         $this->assertFalse($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
 
-        $user_info['usergroup'] = "parent";
-        $res = $admin->register_new_user($user_info);
+        $res = $admin->register_new_user($user_name,$user_surname,$user_email,$user_usergroup,null);
+        $this->assertFalse($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
+
+        $res = $admin->register_new_user($user_name,$user_surname,$user_email,$user_usergroup,$user_cf);
         $this->assertTrue($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
     }
 

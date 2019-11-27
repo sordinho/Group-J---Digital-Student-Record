@@ -86,7 +86,7 @@ OUT;
 
 
     } else {
-        if (isset($_GET['childN']))
+        if(isset($_GET['childN']))
             $num = $_GET['childN'];
         $content .= <<<OUT
 <!-- Material form register -->
@@ -94,7 +94,12 @@ OUT;
     <script type="text/javascript"><!--
     function displayChildrenForm(elem){
         let childNumber = parseInt(elem.value);
-        window.location.replace("uploadParentCredentials.php?childN="+childNumber);
+        if(childNumber >= 1){
+            window.location.replace("uploadParentCredentials.php?childN="+childNumber);
+        }else{
+            alert("You can't upload a parent with no childs");
+            elem.value = $num;
+        }
     }
     --></script>
     <h5 class="card-header info-color white-text text-center py-4">
@@ -132,27 +137,30 @@ OUT;
             
             <!-- Children number-->
             <div class="md-form mt-0">
-                <input type="number" id="materialRegisterFormChildNumber" name="children" class="form-control" onchange="displayChildrenForm(this)" value="$num">
+                <input type="number" id="materialRegisterFormChildNumber" name="children" class="form-control" onchange="displayChildrenForm(this)" value="$num" min="1">
                 <label for="materialRegisterFormEmail">Number of children</label>
             </div>
 OUT;
 
         for ($i = 0; $i < $num; $i++) {
-            $content .= "<hr>
-                        <p class='card-body info-color white-text text-center py-4'>Student $i</p>
-                        <!-- CF -->
-                        <div class='md-form mt-0'>
-                            <input type='text' id='materialRegisterFormCF$i' name='cf_$i' class='form-control'>
-                            <label for='materialRegisterFormEmail'>Student fiscal code</label>
-                        </div>";
+            $stud_num = $i+1;
+            $content .= <<<OUT
+            <hr>
+            <p class="card-body info-color white-text text-center py-4">Student $stud_num</p>
+            <!-- CF -->
+            <div class="md-form mt-0">
+                <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
+                <label for="materialRegisterFormCF$i">Student fiscal code</label>
+            </div>
+OUT;
         }
         $content .= '
                 <!-- Sign up button -->
                 <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
                 </form>
                 <!-- Form -->
-                </div> 
-                </div>';
+          </div> 
+    </div>';
     }
 }
 $page->setContent($content);
