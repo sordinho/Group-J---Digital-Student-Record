@@ -66,7 +66,7 @@ class officer extends user {
      * @return          false if the operation was not successful
      *                  true if the operation was successful
      * */
-    public function add_new_parent($user_id,$child_info,$child_N){
+    public function add_new_parent($user_id,$child_info,$child_N){//TODO: you shouldnt need the child_n : can use foreach or just sizeof to return len(array)
         $conn = $this->connectMySQL();
         for($i = 0; $i < $child_N;$i++){
             $stmt2 =$conn->prepare("SELECT ID FROM Student WHERE CF = ?;");
