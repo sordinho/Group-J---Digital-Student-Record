@@ -1,9 +1,9 @@
 <?php
 require_once("config.php");
-
 // Handle hidden menu and navbar render (note that is related to the user status (loggedin/typeOfUser))
 $hidden_menu = "";
 $user = new user();
+$ulp = PLATFORM_PATH.$user->get_base_url(); // usergroup link prefix
 if (!$user->is_logged()){
 	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  data-toggle="modal" href="#myModal"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log in</span></a></li>';
 
@@ -16,7 +16,7 @@ switch($_SESSION["usergroup"]){
 	case "parent":
 		$par = new sparent();
 		$children = $par->get_children_info();
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkMarks.php"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="'.$ulp.'checkMarks.php"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkHomeworks.php"><i class="fas fa-book mx-3"></i><span class="text-nowrap mx-2">Check Homeworks</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkAttendance.php"><i class="fas fa-user mx-3"></i><span class="text-nowrap mx-2">Check Attendance</span></a></li>';
 		$hidden_menu .= '<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-graduate mx-3"></i><span class="text-nowrap mx-2">Students</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
@@ -31,7 +31,7 @@ switch($_SESSION["usergroup"]){
 	case "teacher":
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addLecture.php"><i class="fas fa-book-open mx-3"></i><span class="text-nowrap mx-2">Add Lecture</span></a></li>';
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./listLectures.php"><i class="fas fa-bookmark mx-3"></i><span class="text-nowrap mx-2">List Lectures</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./insertGrades.php"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Assign Grades</span></a></li>';
+		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./insertGrades.php"><i class="fas fa-marker mx-3"></i><span class="text-nowrap mx-2">Assign Grades</span></a></li>';
 
 		break;
 	case "officer":

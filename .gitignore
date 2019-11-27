@@ -2,6 +2,7 @@
 .idea/
 /site_config.php
  # Others
+composer.phar
 composer.json
 composer.lock
 vendor/
