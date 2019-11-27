@@ -17,6 +17,7 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 ## Use cases, Personas collection
 
 [Use cases](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/UseCases)
+
 [Personas](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/Personas)
 
 ## Trello Board :memo: :pushpin:
