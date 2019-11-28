@@ -1,3 +1,18 @@
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+.min_container {
+    flex: 1 0 auto;
+}
+.footer {
+    flex-shrink: 0;
+    background-color: rgba(108,108,108,0.9);
+}
+
 body {
     background-color: rgb(225, 235, 240);
     padding-top: 3rem;
@@ -19,13 +34,10 @@ body {
 }
 
 #navbar-title {
-    background-color: rgba(108, 108, 108, 0.5);
+    background-color: rgba(108, 108, 108, 0.9);
 }
 @media (min-width: 768px) {
     .bd-placeholder-img-lg {
     font-size: 3.5rem;
     }
-}
-footer {
-    margin-top: 50px;
 }
