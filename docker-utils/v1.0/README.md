@@ -1,4 +1,4 @@
-# Docker instructions and guides
+# Docker instructions and guides v1.0 (separated images)
 
 ## You need to install docker. !!! ATTENTION DOCKER RUN ON HYPER-V ==> VIRTUALBOX WILL STOP WORKING !!!
 

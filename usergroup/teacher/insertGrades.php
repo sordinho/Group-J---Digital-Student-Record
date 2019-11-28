@@ -9,14 +9,8 @@ $page = new cpage("Teacher");
 $site->setPage($page);
 
 if (!$teacher->is_logged() || $teacher->get_teacher_ID() == -1) {
-    $content = '
-    <div class="alert alert-warning" role="warning">
-        You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
-    </div> ';
-    $content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
-    $page->setContent($content);
-    $site->render();
-    exit();
+	header("location: /error.php?errorID=19");
+	exit();
 }
 
 if (isset($_GET['operation_result'])) {

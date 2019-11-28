@@ -11,17 +11,9 @@ $num = 1;
 $content="";
 
 // TODOS: [Improvement] 
-// - Refractor following if with is_authenticated method or is_logged overload.
-// - Use error.php instead of this redirect code replicated ine very usergroup page
 // - Consider what happens if in the middle of csv parsing a query fails (a full rollback seems too hard and useless to accomplish)
 if(!$officer ->is_logged() || $officer ->get_officer_ID()==-1){
-	$content = '
-    <div class="alert alert-warning" role="warning">
-        You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
-    </div> ';
-	$content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
-	$page->setContent($content);
-	$site->render();
+	header("location: /error.php?errorID=19");
 	exit();
 }
 
