@@ -283,4 +283,23 @@ CREATE TABLE `TopicRecord` (
                     AND Student.ID = $studentID
                     AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
     }
+
+    /**
+     * @param $assignmentDescription
+     * @param $topicID
+     * @param $timestamp
+     * @param $classID
+     * @return bool
+     * Function that given in input parameters, registers the assignment to the DB
+     */
+    public function insert_new_assignment($assignmentDescription, $topicID, $timestamp, $classID) {
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("INSERT INTO Assignment (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?);");
+
+        if ($stmt == false)
+            return false;
+        $stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $assignmentDescription, $topicID, $classID);
+        return $stmt->execute();//True || False
+    }
+
 }
