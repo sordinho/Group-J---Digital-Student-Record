@@ -11,7 +11,7 @@ require_once 'testConfig.php';
  * @return null
  */
 function createTestDatabase() {
-    $filename = 'testDBsetup.sql';
+    $filename = '../softeng2Final.sql';
 
     $mysqli = new mysqli(DBAddr, DBUser, DBPassword);
 

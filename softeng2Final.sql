@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 26, 2019 alle 15:09
+-- Creato il: Nov 28, 2019 alle 11:36
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -92,11 +92,18 @@ CREATE TABLE `NotPresentRecord` (
   `StudentID` int(11) NOT NULL,
   `SpecificClassID` int(11) NOT NULL,
   `Date` date NOT NULL,
-  `AbsenceFlag` tinyint(1) NOT NULL,
-  `LateFlag` tinyint(1) NOT NULL,
-  `EarlyExitFlag` tinyint(1) NOT NULL,
-  `ExitHour` int(11) NOT NULL
+  `Late` tinyint(1) NOT NULL DEFAULT '0',
+  `ExitHour` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `NotPresentRecord`
+--
+
+INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `Late`, `ExitHour`) VALUES
+(1, 1, 1, '2019-11-28', 1, 4),
+(2, 2, 1, '2019-11-28', 0, 0),
+(3, 3, 1, '2019-11-28', 0, 4);
 
 -- --------------------------------------------------------
 
@@ -218,28 +225,6 @@ INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 (5, 0, 7, 'fc5'),
 (6, 0, 8, 'fc6'),
 (7, 0, 9, 'fc7');
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `TeacherTopic`
---
-
-CREATE TABLE `TeacherTopic` (
-  `ID` int(11) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
-  `TopicID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dump dei dati per la tabella `TeacherTopic`
---
-
-INSERT INTO `TeacherTopic` (`ID`, `TeacherID`, `TopicID`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3),
-(4, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -413,14 +398,6 @@ ALTER TABLE `Teacher`
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indici per le tabelle `TeacherTopic`
---
-ALTER TABLE `TeacherTopic`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `TeacherID` (`TeacherID`),
-  ADD KEY `TopicID` (`TopicID`);
-
---
 -- Indici per le tabelle `Topic`
 --
 ALTER TABLE `Topic`
@@ -465,7 +442,7 @@ ALTER TABLE `MarksRecord`
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT per la tabella `Officer`
 --
@@ -475,7 +452,7 @@ ALTER TABLE `Officer`
 -- AUTO_INCREMENT per la tabella `Parent`
 --
 ALTER TABLE `Parent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT per la tabella `SpecificClass`
 --
@@ -491,11 +468,6 @@ ALTER TABLE `Student`
 --
 ALTER TABLE `Teacher`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT per la tabella `TeacherTopic`
---
-ALTER TABLE `TeacherTopic`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --
@@ -515,7 +487,7 @@ ALTER TABLE `TopicTeacherClass`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -572,13 +544,6 @@ ALTER TABLE `Student`
 --
 ALTER TABLE `Teacher`
   ADD CONSTRAINT `fk_teacherID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Limiti per la tabella `TeacherTopic`
---
-ALTER TABLE `TeacherTopic`
-  ADD CONSTRAINT `fk_teacherTopicID` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`),
-  ADD CONSTRAINT `fk_topicTeacherID` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`);
 
 --
 -- Limiti per la tabella `TopicTeacherClass`
