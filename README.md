@@ -32,7 +32,7 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 
 ### Files
 
-- [Docker compose](docker-utils/docker-compose.yml)
+- [Docker compose](docker-utils/v1.0/docker-compose.yml)
 
 ### How to run
 
