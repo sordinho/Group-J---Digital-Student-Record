@@ -15,6 +15,7 @@ class cpage {
     // Richiamando new cpage('title') creo l'oggetto pagina e setto il "titolo pagina"
     public function __construct($title){
         $this->title = $title;
+
     }
     
     public function __destruct(){
@@ -24,8 +25,8 @@ class cpage {
     public function render(){
         
         //La funzione render crea il contenuto della pagina in html
-        echo "<div class='container min_container' id='content'>";
-        $mtitle = "<center><h2>{$this->title}</h2></center>";
+        echo "<div class='container min_container mb-5' id='content'>";
+        $mtitle = "<div class='text-center mb-5'><h2>{$this->title}</h2></div>";
         echo $mtitle;
         echo $this->content;
         //echo "</div>";

@@ -3,58 +3,75 @@ require_once("config.php");
 // Handle hidden menu and navbar render (note that is related to the user status (loggedin/typeOfUser))
 $hidden_menu = "";
 $user = new user();
-$ulp = PLATFORM_PATH.$user->get_base_url(); // usergroup link prefix
-if (!$user->is_logged()){
-	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  data-toggle="modal" href="#myModal"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log in</span></a></li>';
+$ulp = PLATFORM_PATH . $user->get_base_url(); // usergroup link prefix
+if (!$user->is_logged()) {
+    $login_out_button = ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  data-toggle="modal" href="#myModal"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log in</span></a></li>';
 
 } else {
-	$login_out_button= ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  href="'. PLATFORM_PATH .'/logout.php"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log out</span></a></li>';
+    $login_out_button = ' <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"  href="' . PLATFORM_PATH . '/logout.php"><i class="fas fa-sign-out-alt mx-3"></i><i class="fa fa-caret-right d-none position-absolute"></i><span class="text-nowrap mx-2">Log out</span></a></li>';
 }
 
 // Custom menu definition for each group
-switch($_SESSION["usergroup"]){
-	case "parent":
-		$par = new sparent();
+switch ($_SESSION["usergroup"]) {
+    case "parent":
+        $par = new sparent();
 		$children = $par->get_children_info();
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="'.$ulp.'checkMarks.php"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkHomeworks.php"><i class="fas fa-book mx-3"></i><span class="text-nowrap mx-2">Check Homeworks</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkAttendance.php"><i class="fas fa-user mx-3"></i><span class="text-nowrap mx-2">Check Attendance</span></a></li>';
-		$hidden_menu .= '<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-graduate mx-3"></i><span class="text-nowrap mx-2">Students</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
-		<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
-		foreach ($children as $i=> $child) {
-			$hidden_menu .= '
-			<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID='. $child["StudentID"].'"><span>'. $child["Name"]." ".$child["Surname"].'</span></a>';
-		}
-		$hidden_menu .= '</div>
+
+        if ($par->get_current_child() == -1) {
+
+            $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
+			$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-book mx-3"></i><span class="text-nowrap mx-2">Check Homeworks</span></a></li>';
+			$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-user mx-3"></i><span class="text-nowrap mx-2">Check Attendance</span></a></li>';
+			$hidden_menu .= '<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-graduate mx-3"></i><span class="text-nowrap mx-2">Students</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+			
+				<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
+        } else {
+            $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="' . $ulp . 'checkMarks.php"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
+            $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkHomeworks.php"><i class="fas fa-book mx-3"></i><span class="text-nowrap mx-2">Check Homeworks</span></a></li>';
+            $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkAttendance.php"><i class="fas fa-user mx-3"></i><span class="text-nowrap mx-2">Check Attendance</span></a></li>';
+            $hidden_menu .= '<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-graduate mx-3"></i><span class="text-nowrap mx-2">Students</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+			
+				<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
+        }
+        foreach ($children as $i => $child) {
+            if ($child['childID'] == $_SESSION['curChild']) {
+                $hidden_menu .= '
+				<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID=' . $child["StudentID"] . '">
+					
+					<span>' . $child["Name"] . " " . $child["Surname"] . '</span>
+				</a>';
+            } else {
+                $hidden_menu .= '
+				<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID=' . $child["StudentID"] . '">
+					<span>' . $child["Name"] . " " . $child["Surname"] . '</span>
+					<i class="fas fa-check-circle float-right mr-3 mt-2"></i>
+				</a>';
+            }
+        }
+        $hidden_menu .= '</div>
 		</li>';
-	break;
-	case "teacher":
+        break;
+    case "teacher":
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addLecture.php"><i class="fas fa-book-open mx-3"></i><span class="text-nowrap mx-2">Add Lecture</span></a></li>';
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./listLectures.php"><i class="fas fa-bookmark mx-3"></i><span class="text-nowrap mx-2">List Lectures</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./insertGrades.php"><i class="fas fa-marker mx-3"></i><span class="text-nowrap mx-2">Assign Grades</span></a></li>';
+        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./insertGrades.php"><i class="fas fa-marker mx-3"></i><span class="text-nowrap mx-2">Assign Grades</span></a></li>';
 
-		break;
-	case "officer":
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./batchActivateAuthentication.php"><i class="fas fa-envelope mx-3"></i><span class="text-nowrap mx-2">Parent Activation</span></a></li>';
-		// Upload info menu	
+        break;
+    case "officer":
+        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./batchActivateAuthentication.php"><i class="fas fa-envelope mx-3"></i><span class="text-nowrap mx-2">Parent Activation</span></a></li>';
+        // Upload info menu
+        // Stundent enrollment, classcomposition and (unused for now) settings
+        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./studentEnrollment.php"><i class="fas fa-graduation-cap mx-3"></i><span class="text-nowrap mx-2">Enroll Student</span></a></li>';
+        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./classCompositionModification.php"><i class="fas fa-users mx-3"></i><span class="text-nowrap mx-2">Handle Classes</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Upload Parent Info</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 								<div class="dropdown-menu border-0 animated fadeIn" role="menu">
 								<a class="dropdown-item text-white" role="presentation" href="./uploadParentCredentials.php"><span>Manual Insert</span></a>
 								<a class="dropdown-item text-white" role="presentation" href="./uploadCSVParentCredentials.php"><span>CSV Upload</span></a>';
-		// Stundent enrollment, classcomposition and (unused for now) settings
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./studentEnrollment.php"><i class="fas fa-graduation-cap mx-3"></i><span class="text-nowrap mx-2">Enroll Student</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./classCompositionModification.php"><i class="fas fa-users mx-3"></i><span class="text-nowrap mx-2">Handle Classes</span></a></li>';
-		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-sliders-h mx-3"></i><span class="text-nowrap mx-2">Settings</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
-										<div class="dropdown-menu border-0 animated fadeIn" role="menu">
-										<a class="dropdown-item text-white" role="presentation" href="#"><span>Change password</span></a>
-										<a class="dropdown-item text-white" role="presentation" href="#"><span>Change email</span></a>
-										<a class="dropdown-item text-white" role="presentation" href="#"><span>More</span></a></div>
-									</li>';
-		break;
-	case "admin":
-		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./registerAccount.php"><i class="fas fa-user-plus mx-3"></i><span class="text-nowrap mx-2">Register Account</span></a></li>';
+        break;
+    case "admin":
+        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./registerAccount.php"><i class="fas fa-user-plus mx-3"></i><span class="text-nowrap mx-2">Register Account</span></a></li>';
 
-		break;
+        break;
 
 }
 /*
@@ -88,7 +105,7 @@ print '<!DOCTYPE html>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="'.PLATFORM_PATH.'/css/bootstrap.min.css" crossorigin="anonymous">
+		<link rel="stylesheet" href="' . PLATFORM_PATH . '/css/bootstrap.min.css" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/css/bootstrap-datetimepicker.min.css" crossorigin="anonymous">
 
 		<!-- Other resources -->
@@ -102,13 +119,13 @@ print '<!DOCTYPE html>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>
 
 		<!--Custom css/jss-->
-		<link rel="stylesheet" href="'.PLATFORM_PATH.'/fonts/fontawesome-all.min.css">
-		<link rel="stylesheet" href="'.PLATFORM_PATH.'/fonts/font-awesome.min.css">
-		<link rel="stylesheet" href="'.PLATFORM_PATH.'/fonts/fontawesome5-overrides.min.css">
+		<link rel="stylesheet" href="' . PLATFORM_PATH . '/fonts/fontawesome-all.min.css">
+		<link rel="stylesheet" href="' . PLATFORM_PATH . '/fonts/font-awesome.min.css">
+		<link rel="stylesheet" href="' . PLATFORM_PATH . '/fonts/fontawesome5-overrides.min.css">
 
-		<link href="'.PLATFORM_PATH.'/css/calendar_style.css" rel="stylesheet">
-		<link href="'.PLATFORM_PATH.'/css/style.css" rel="stylesheet">
-		<link href="'.PLATFORM_PATH.'/css/sidebar.css" rel="stylesheet">
+		<link href="' . PLATFORM_PATH . '/css/calendar_style.css" rel="stylesheet">
+		<link href="' . PLATFORM_PATH . '/css/style.css" rel="stylesheet">
+		<link href="' . PLATFORM_PATH . '/css/sidebar.css" rel="stylesheet">
 		<title>StudentDigitalRecord System</title>
 	</head>
 	
@@ -116,21 +133,20 @@ print '<!DOCTYPE html>
 	<body>
 	<ul class="nav flex-column shadow d-flex sidebar mobile-hid">
 		<li class="nav-item logo-holder">
-			<div class="text-center text-white logo p-2">
-				<a class="text-white float-left" id="sidebarToggleHolder" href="#">
+			<a class="text-white float-left m-3" id="sidebarToggleHolder" href="#">
 					<i class="fas fa-bars" id="sidebarToggle"></i>
-				</a>
+			</a>
+			<div class="text-center text-white logo p-4">
 				<a class="text-white text-decoration-none p-2" id="title" href="#">
-					<img src="' . PLATFORM_PATH . '/media/logopoli2.jpg" alt="logopoli" style="width: 100%; object-fit: contain"/>
+					<img src="' . PLATFORM_PATH . '/media/logopoli2.png" alt="logopoli" style="width: 100%; object-fit: contain"/>
 				</a>
-
 			</div>
 		</li>
-		'.
-		'<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./index.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>'.
-		$hidden_menu.
-		$login_out_button.
-	'</ul> 
+		' .
+    '<li class="nav-item"><a class="nav-link active text-left text-white py-1 px-0" href="./index.php"><i class="fas fa-home mx-3"></i><span class="text-nowrap mx-2">Home</span></a></li>' .
+    $hidden_menu .
+    $login_out_button .
+    '</ul> 
 ';
 /* Render the 2 modal view: Login and Register */
 echo '<!-- Modal Login -->

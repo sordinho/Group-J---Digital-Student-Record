@@ -94,7 +94,7 @@ class sparentTest extends TestCase
     {
         $_SESSION["parentID"] = 1;
         $parentObj = new sparent();
-        $this->assertEquals(1, $parentObj->getParentId(), $this->printErrorMessage("test__construct","parent object ID not equals to session ID"));
+        $this->assertEquals(1, $parentObj->get_parent_ID(), $this->printErrorMessage("test__construct","parent object ID not equals to session ID"));
     }
 
     public function testRetrieve_and_register_childs()

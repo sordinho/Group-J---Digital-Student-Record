@@ -183,12 +183,4 @@ class sparent extends user
         $children[0]["childID"] = "-1";
         return isset($_SESSION['childrenInfo']) ? $_SESSION['childrenInfo'] : $children;
     }
-
-    public function getParentId()
-    {
-        //return $this->parent_id;
-        return $_SESSION['parentID'];
-    }
-
-
 }
