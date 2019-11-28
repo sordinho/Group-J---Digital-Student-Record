@@ -11,13 +11,6 @@ $administrator = new administrator();
 
 if (!$administrator->is_logged() || !$administrator->is_admin()) {
 	header("location: /error.php?errorID=19");
-//	$content = '
-//    <div class="alert alert-warning" role="warning">
-//        You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
-//    </div> ';
-//	$content .= "<meta http-equiv='refresh' content='2; url=" . PLATFORM_PATH . "' />";
-//	$page->setContent($content);
-//	$site->render();
 	exit();
 }
 

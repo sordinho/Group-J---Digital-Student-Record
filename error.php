@@ -36,7 +36,6 @@ if(array_key_exists($key, $messages)){
     <div class="alert alert-danger" role="warning">
         '.$messages[$key].' If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
     </div> ';
-//	print($content);
 	$content .= "<meta http-equiv='refresh' content='105; url=" . PLATFORM_PATH . "' />";
 	$page->setContent($content);
 	$site->render();
