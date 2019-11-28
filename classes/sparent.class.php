@@ -98,7 +98,7 @@ class sparent extends user
     }
 
     //TODO: this is duplicated - it is used here and in teacher.class... needing some reformat
-    private function validateDate($date, $format = 'Y-m-d H:i:s')
+    private function validate_date($date, $format = 'Y-m-d H:i:s')
     {
         $d = DateTime::createFromFormat($format, $date);
         // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
@@ -117,17 +117,18 @@ class sparent extends user
 
         $conn = $this->connectMySql();
 
-        if ($this->validateDate($from_date) and $this->validateDate($to_date) and $from_date < $to_date) {
+        //TODO: change this code snippet by avoiding repetition in validate_date
+        if ($this->validate_date($from_date) and $this->validate_date($to_date) and $from_date < $to_date) {
             /*there are two dates which are not false and in a valid format*/
             $sql = $conn->prepare("    SELECT Date FROM NotPresentRecord WHERE StudentID = ? AND ExitHour = 0 AND Date >= ? AND Date < ?");
             $sql->bind_param('iss', $childID, $from_date, $to_date);
 
-        } else if ($this->validateDate($from_date)) {
+        } else if ($this->validate_date($from_date)) {
             /*only from_date is set, the other one is set at false or not in a valid form*/
             $sql = $conn->prepare("    SELECT Date FROM NotPresentRecord WHERE StudentID = ? AND ExitHour = 0 AND Date >= ?");
             $sql->bind_param('is', $childID, $from_date);
 
-        } else if ($this->validateDate($to_date)) {
+        } else if ($this->validate_date($to_date)) {
             /*only to_date is set, the other one is set at false or not in a valid form*/
             $sql = $conn->prepare("    SELECT Date FROM NotPresentRecord WHERE StudentID = ? AND ExitHour = 0 AND Date < ?");
             $sql->bind_param('is', $childID, $to_date);

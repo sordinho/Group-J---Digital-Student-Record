@@ -8,26 +8,6 @@ class teacher extends user {
 		parent::__construct();
 	}
 
-	private function by_the_end_of_the_week($actual_date, $lecture_date) {
-		// secondi in una settimana
-		$week = 60 * 60 * 24 * 7;
-		$max_limit = $lecture_date + $week;
-		//cond 1 : non possiamo registrare in anticipo
-		if ($actual_date < $lecture_date)
-			return false;
-		//cond 2 : non posso registrare un topic dopo la fine della settimana (dopo la domenica)
-		//cond 2.1 : actual_date < lecture_date+ 60*60*24*7
-		if ($actual_date >= $max_limit)
-			return false;
-		//cond 2.2 : giorno della settimana di lecture precedente alla domenica della settimana stessa
-		//todo : check correctness
-		$lecture_day_of_the_week_n = date('N', $lecture_date);
-		$actual_day_of_the_week_n = date('N', $actual_date);
-		if ($actual_day_of_the_week_n < $lecture_day_of_the_week_n)
-			return false;
-		return true;
-	}
-
 	/*
 	 * @lectureDescritpion --> string with the description of a single lecture
 	 * @topicID            --> Id of the subject
@@ -46,7 +26,7 @@ class teacher extends user {
 		// given unix timestamp
 		$lecture_date = strtotime($timestamp);
 		// secondi in una settimana
-		if (!$this->by_the_end_of_the_week($actual_date, $lecture_date))
+		if (!calendar::by_the_end_of_the_week($actual_date, $lecture_date))
 			return false;
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?);");
@@ -93,7 +73,7 @@ CREATE TABLE `TopicRecord` (
 			//modifica entro la fine della settimana
 			$actual_date = strtotime(date("Y-m-d H:i:s"));
 			$lecture_date = strtotime($row[0]);
-			if (!$this->by_the_end_of_the_week($actual_date, $lecture_date))
+			if (!calendar::by_the_end_of_the_week($actual_date, $lecture_date))
 				return false;
 			if ($row[1] != $_SESSION['teacherID'])
 				return false;
@@ -240,12 +220,6 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
-    private function validateDate($date, $format = 'Y-m-d H:i:s'){
-        $d = DateTime::createFromFormat($format, $date);
-        // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
-        return $d && $d->format($format) === $date;
-    }
-
     /**
      * @param int $studentID
      * @param int $classID
@@ -265,7 +239,7 @@ CREATE TABLE `TopicRecord` (
         if (!$found) return false;
 
         if ($mark != 10 and $laude == true) return false;
-        if ($this->validateDate($timestamp) == false) return false;
+        if (calendar::validate_date($timestamp) == false) return false;
 
         $teacherID = $_SESSION['teacherID'];
 
@@ -296,4 +270,17 @@ CREATE TABLE `TopicRecord` (
         }
 	}
 
+	public function register_late_arrival($studentID) {
+        /*the function is thought to be used only on previous-registered absences*/
+
+        $teacherID = $_SESSION['teacherID'];
+
+        $conn = $this->connectMySQL();
+        $sql = "    SELECT COUNT(*) 
+                    FROM TopicTeacherClass, Student
+                    WHERE TopicTeacherClass.TeacherID = $teacherID
+                    AND TopicTeacherClass.TopicID = $subjectID
+                    AND Student.ID = $studentID
+                    AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
+    }
 }
