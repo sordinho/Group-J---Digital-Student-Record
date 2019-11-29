@@ -22,6 +22,12 @@ class sparentTest extends TestCase
         dropTestDatabase();
     }
 
+    /*protected function setUp(): void
+    {
+        createTables();
+    }*/
+
+
     public function testGet_grades_NULL()
     {
         $parentObj = new sparent();
@@ -114,7 +120,7 @@ class sparentTest extends TestCase
     public function testGet_homeworks() {
         $parentObj = new sparent();
         perform_INSERT_or_DELETE("DELETE FROM Homework");
-        perform_INSERT_or_DELETE("INSERT INTO Homework(Description, SpecificClassID, TeacherID, Deadline) VALUES('test',1,1,'2020-01-08')");
+        perform_INSERT_or_DELETE("INSERT INTO Homework(Description, SpecificClassID, TeacherID, Deadline, TopicID) VALUES('test',1,1,'2020-01-08',1)");
         perform_INSERT_or_DELETE("INSERT INTO Student(Name, Surname, AverageLastSchool,CF, SpecificClassID) VALUES('test','test',9,'bab5',1)");
 
         $studentID = perform_SELECT_return_single_value("SELECT ID FROM Student WHERE Name = 'test' AND Surname = 'test' AND AverageLastSchool = 9 AND CF = 'bab5' AND SpecificClassID = 1");
@@ -126,17 +132,15 @@ class sparentTest extends TestCase
         $this->assertTrue($homework_info[0]['HomeworkID'] != null, $this->printErrorMessage('testGet_homeworks'));
     }
 
-
     public function testGet_absences() {
         $parentObj = new sparent();
-        // 2	Joseph	ParentSurname2	pns2a@io.io	$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by	parent
-        // 2	Vittorio	Di Leo	10	cf1b	1
-        $_SESSION['curChild'] = 2;
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-11-28', 'Yes', '4')");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-11-29', 'No', '0')");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (9, 2, '2019-12-02', 'No', '0')");
-        // perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (2, 1, '2019-12-03', 'Yes', '0')");
-
-        $this->assertTrue($parentObj->get_absences());
+        $_SESSION['curChild'] = 1;
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-11-29', 'Yes', '4')");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-12-03', 'No', '0')");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-12-04', 'No', '0')");
+        $this->assertEmpty($parentObj->get_absences(9), "array is not empty");
+        $absences = $parentObj->get_absences(1);
+        $this->assertEquals("2019-12-03", $absences[0]['Date']);
+        $this->assertEquals("2019-12-04", $absences[1]['Date']);
     }
 }
