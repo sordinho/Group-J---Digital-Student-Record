@@ -15,7 +15,7 @@ if (!$sparent->is_logged() || $sparent->get_parent_ID() == -1) {
 	exit();
 }
 
-$homework_info = $sparent->get_homeworks($sparent->get_current_child());
+//$homework_info = $sparent->get_homeworks($sparent->get_current_child());
 /*foreach ($homework_info as $homework) {
     var_dump($homework);
 }*/

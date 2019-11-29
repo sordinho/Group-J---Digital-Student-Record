@@ -14,52 +14,17 @@ $page_title = "Attendance of " . $children[$key]['Name'] . " " . $children[$key]
 $page = new cpage($page_title);
 $site->setPage($page);
 
+
 if (!$sparent->is_logged() || $sparent->get_parent_ID() == -1) {
 	header("location: /error.php?errorID=19");
 	exit();
-} else {
-    $content =<<<OUT
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Date</th>
-              <th scope="col">Absence</th>
-              <th scope="col">Late</th>
-              <th scope="col">Early exit</th>
-              <th scope="col">Exit hour</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>2019-11-20</td>
-              <td>No</td>
-              <td>Yes</td>
-              <td>Yes</td>
-              <td>11:00</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>2019-11-21</td>
-              <td>Yes</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>2019-11-22</td>
-              <td>No</td>
-              <td>No</td>
-              <td>Yes</td>
-              <td>11:00</td>
-            </tr>
-          </tbody>
-        </table>
-OUT;
-
 }
+
+$content = '<div id="calendar"></div>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>';
+$content .='<script src="'.PLATFORM_PATH.'/js/presencecalendar.js"></script>';
+
+
 
 $page->setContent($content);
 $site->render();
