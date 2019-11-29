@@ -12,7 +12,7 @@ class calendar
         return $d && $d->format($format) === $date;
     }
 
-    public function by_the_end_of_the_week($actual_date, $lecture_date) {
+    public static function by_the_end_of_the_week($actual_date, $lecture_date) {
         // secondi in una settimana
         $week = 60 * 60 * 24 * 7;
         $max_limit = $lecture_date + $week;
