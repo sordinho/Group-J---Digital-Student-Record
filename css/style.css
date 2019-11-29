@@ -1,9 +1,14 @@
-html, body {
+html{
     height: 100%;
 }
+
 body {
+    background-color: rgb(225, 235, 240);
+    padding-top: 3rem;
+
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 .min_container {
     flex: 1 0 auto;
@@ -11,12 +16,9 @@ body {
 .footer {
     flex-shrink: 0;
     background-color: rgba(108,108,108,0.9);
+    margin-top: 25px;		
 }
 
-body {
-    background-color: rgb(225, 235, 240);
-    padding-top: 3rem;
-    }
 .starter-template {
     padding: 3rem 1.5rem;
     text-align: center;
@@ -28,9 +30,6 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-.min_container{
-    min-height: 570px;
 }
 
 #navbar-title {

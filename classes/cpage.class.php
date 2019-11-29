@@ -29,7 +29,7 @@ class cpage {
         $mtitle = "<div class='text-center mb-5'><h2>{$this->title}</h2></div>";
         echo $mtitle;
         echo $this->content;
-        //echo "</div>";
+        echo "</div>";
         echo "</div>";//<div id=main>
     }
     
