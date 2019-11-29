@@ -116,19 +116,20 @@ class sparent extends user
         if (!isset($childID)) return false;
 
         $conn = $this->connectMySql();
-
+        $is_valid_from =  $this->validate_date($from_date);
+        $is_valid_to =  $this->validate_date($to_date);
         //TODO: change this code snippet by avoiding repetition in validate_date
-        if ($this->validate_date($from_date) and $this->validate_date($to_date) and $from_date < $to_date) {
+        if ($is_valid_from and $is_valid_to and $from_date < $to_date) {
             /*there are two dates which are not false and in a valid format*/
             $sql = $conn->prepare("    SELECT Date FROM NotPresentRecord WHERE StudentID = ? AND ExitHour = 0 AND Date >= ? AND Date < ?");
             $sql->bind_param('iss', $childID, $from_date, $to_date);
 
-        } else if ($this->validate_date($from_date)) {
+        } else if ($is_valid_from) {
             /*only from_date is set, the other one is set at false or not in a valid form*/
             $sql = $conn->prepare("    SELECT Date FROM NotPresentRecord WHERE StudentID = ? AND ExitHour = 0 AND Date >= ?");
             $sql->bind_param('is', $childID, $from_date);
 
-        } else if ($this->validate_date($to_date)) {
+        } else if ($is_valid_to) {
             /*only to_date is set, the other one is set at false or not in a valid form*/
             $sql = $conn->prepare("    SELECT Date FROM NotPresentRecord WHERE StudentID = ? AND ExitHour = 0 AND Date < ?");
             $sql->bind_param('is', $childID, $to_date);
