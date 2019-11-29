@@ -15,10 +15,11 @@ $page = new cpage($page_title);
 $site->setPage($page);
 
 
-if (!$sparent->is_logged() || $sparent->get_parent_ID() == -1) {
+if (!$sparent->is_logged()) {
 	header("location: /error.php?errorID=19");
 	exit();
 }
+// TODO check if child was selected 
 
 $content = '<div id="calendar"></div>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>';

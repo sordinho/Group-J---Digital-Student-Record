@@ -7,7 +7,7 @@ $page = new cpage("Add lecture");
 $site->setPage($page);
 $teacher = new teacher();
 
-if (!$teacher->is_logged() || $teacher->get_teacher_ID() == -1) {
+if (!$teacher->is_logged() ) {
     header("location: /error.php?errorID=19");
     exit();
 }
@@ -58,8 +58,7 @@ if (!isset($_POST["description"])) {
             $class_list .= "<option value='{$class['ClassID']}'>" . $class_str . "</option>";
         }
 
-        $content = '<div class="container article-clean">
-					<div class="row">
+        $content = '
 					<form method="POST">
 						<div class="form-group">
 						<label for="Title">Title of the lecture</label>

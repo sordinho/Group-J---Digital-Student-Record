@@ -8,13 +8,18 @@ initialize_site($site);
 $page = new cpage("Teacher");
 $site->setPage($page);
 
-if (!$teacher->is_logged() || $teacher->get_teacher_ID() == -1) {
+if (!$teacher->is_logged()) {
 	header("location: /error.php?errorID=19");
 	exit();
 }
 
 // If this page was called after performing an operation, the result is shown to the user
 if (isset($_GET['operation_result'])) {
+    /*$print = $_GET['operation_result'];
+    $content .= '
+                <div class="alert alert-danger" role="alert">'.
+                $print.
+                '</div>';*/
     switch ($_GET['operation_result']) {
         case 1:
             $content .= '
@@ -140,23 +145,30 @@ OUT;
             header("Location: addAbsence.php?operation_result=-1");
             exit();
         }
+        $counter = 0;
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
             if (isset($_POST["absence_$id"])) {
                 $absent = $_POST["absence_$id"] == 'yes';
-                //$now = date("Y-m-d H:i:s");
-                $date = $date? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
+
+                $date = $_POST['date'];
+                $date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
 
                 if ($absent) {
-                    $res = $teacher->insert_absence($id, $date);
+                    $res = $teacher->register_absence($id, $date);
                     if (!$res) {
                         header("Location: addAbsence.php?operation_result=0");
                         exit();
                     }
+                    $counter++;
                 }
             }
         }
-        header("Location: addAbsence.php?operation_result=1");
+        if($counter>0) {
+            header("Location: addAbsence.php?operation_result=1");
+            exit();
+        }
+        header("Location: addAbsence.php?operation_result=0");
         exit();
     }
 }

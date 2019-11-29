@@ -10,15 +10,12 @@ $page = new cpage("Homeworks");
 $site->setPage($page);
 $sparent = new sparent();
 
-if (!$sparent->is_logged() || $sparent->get_parent_ID() == -1) {
+if (!$sparent->is_logged()) {
 	header("location: /error.php?errorID=19");
 	exit();
 }
 
-//$homework_info = $sparent->get_homeworks($sparent->get_current_child());
-/*foreach ($homework_info as $homework) {
-    var_dump($homework);
-}*/
+// TODO check if child was selected 
 
 # Declare the div where the calendar will be injected, include dependency and custom js script to handle calendar
 $content = '<div id="calendar"></div>

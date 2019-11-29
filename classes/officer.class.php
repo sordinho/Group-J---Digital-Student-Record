@@ -252,4 +252,10 @@ class officer extends user {
         return $returnState;
     }
 
+     // Override of parent method, also check if the id was sent correctly
+    public function is_logged()
+    {
+        $cond = parent::is_logged() && $this->get_officer_ID() != -1;
+        return $cond;
+    }
 }
