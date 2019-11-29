@@ -123,4 +123,35 @@ class teacherTest extends TestCase {
 		$count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM MarksRecord WHERE StudentID =$studentID AND Timestamp='$timestamp'");
 		$this->assertEquals(1, $count, "Test non superato!");
 	}
+
+    public function testInsert_new_assignment() {
+        //TODO
+        // variables
+        $_SESSION["teacherID"] = 1;
+        $teacherObject = new Teacher();
+        $topicID = 1;
+        $description = "Assignment 1 topic 1";
+        $dateActualDate = date("Y-m-d H:i:s");
+        $classID = 1;
+        //printf("DbName: %s",DBName);
+
+        //perform insertion in the DB
+        //$assignmentDescription, $topicID, $timestamp, $classID
+        $this->assertNotNull($teacherObject->insert_new_assignment($description, $topicID, $dateActualDate, $classID));
+
+        $AssignmentID = perform_SELECT_return_single_value("SELECT ID FROM Assignment WHERE Timestamp ='$dateActualDate'");
+        //printf("AssignmentID: %d\n",$AssignmentID);
+
+        $count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM Assignment WHERE ID =$AssignmentID");
+        //printf("Count: %d\n",$count);
+
+        $this->assertEquals($count, 1, "Test non superato!");
+
+        $this->assertTrue(perform_INSERT_or_DELETE("DELETE FROM TopicRecord WHERE ID=$AssignmentID"));
+
+        //Prints for debug
+        //printf("TeacherID: %d\nDateActual: %s\nDescription: %s\nTopicID: %d\nSpecifiClassID: %d",$teacherID,$dateActualDate,$description,$topicID,$specificClassID);
+
+    }
+
 }

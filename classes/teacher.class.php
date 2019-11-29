@@ -347,6 +347,15 @@ CREATE TABLE `TopicRecord` (
 
         if ($stmt == false)
             return false;
+
+
+        $actual_date = strtotime(date("Y-m-d H:i:s"));
+        // given unix timestamp
+        $assignment_date = strtotime($timestamp);
+        // secondi in una settimana
+        if ($assignment_date<$actual_date)
+            return false;
+
         $stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $assignmentDescription, $topicID, $classID);
         return $stmt->execute();//True || False
     }

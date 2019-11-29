@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Add lecture");
+$page = new cpage("Add Assignment");
 $site->setPage($page);
 $teacher = new teacher();
 
@@ -23,9 +23,7 @@ if (!isset($_POST["description"])) {
     /*	TODO This is the confirm page, operation result should be:
                 0 if unsuccessful
                 1 if successful
-                any other number won't be accepted (see default option)
-    uncomment if it is ok
-*/
+                any other number won't be accepted (see default option)*/
     if (isset($_GET['operation_result'])) {
         $content = "";
         switch ($_GET['operation_result']) {
@@ -63,8 +61,7 @@ if (!isset($_POST["description"])) {
             $class_list .= "<option value='{$class['ClassID']}'>" . $class_str . "</option>";
         }
 
-        $content = '<div class="container article-clean">
-					<div class="row">
+        $content = '<div class="form-group">
 					<form method="POST">
 						<div class="form-group">
 						<label for="Title">Title of the Assignment</label>
@@ -72,14 +69,14 @@ if (!isset($_POST["description"])) {
 						</div>
 						<div class="form-group">
 						<label for="exampleFormControlSelect2">Subject select</label>
-						<select multiple class="form-control" name="topicID" id="topicID">
+						<select class="custom-select" name="topicID" id="topicID">
 							' . $topic_list . '
 						</select>
 						</div>
 				
 						<div class="form-group">
 						<label for="exampleFormControlSelect3">Class select</label>
-						<select multiple class="form-control" name="classID" id="classID">
+						<select class="custom-select" name="classID" id="classID">
 							' . $class_list . '
 						</select>
 						</div>
@@ -95,7 +92,6 @@ if (!isset($_POST["description"])) {
 						<button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Confirm</button>	
 						
 					</form>
-					</div>
 					</div>';
     }
 } else {
