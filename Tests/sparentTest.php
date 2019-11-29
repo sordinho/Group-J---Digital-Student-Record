@@ -134,13 +134,38 @@ class sparentTest extends TestCase
 
     public function testGet_absences() {
         $parentObj = new sparent();
-        $_SESSION['curChild'] = 1;
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-11-29', 'Yes', '4')");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-12-03', 'No', '0')");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-12-04', 'No', '0')");
-        $this->assertEmpty($parentObj->get_absences(9), "array is not empty");
-        $absences = $parentObj->get_absences(1);
+
+        perform_INSERT_or_DELETE("INSERT INTO Student (Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES ('testName', 'testSurname', 10, 'testCF', 1)");
+        $childID = perform_SELECT_return_single_value("SELECT ID FROM Student WHERE Name = 'testName' AND Surname = 'testSurname'");
+
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-11-29', 'Yes', '4')");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-03', 'No', '0')");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-04', 'No', '0')");
+        $this->assertEmpty($parentObj->get_absences(99));
+        $absences = $parentObj->get_absences($childID);
         $this->assertEquals("2019-12-03", $absences[0]['Date']);
         $this->assertEquals("2019-12-04", $absences[1]['Date']);
+
+        perform_INSERT_or_DELETE("INSERT INTO Student (Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES ('testName2', 'testSurname2', 10, 'testCF', 1)");
+        $childID = perform_SELECT_return_single_value("SELECT ID FROM Student WHERE Name = 'testName2' AND Surname = 'testSurname2'");
+
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-10', 'No', '0')");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-11', 'No', '0')");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-12', 'No', '0')");
+        $absences = $parentObj->get_absences($childID, "2019-12-01", "2019-12-20");
+        /*
+         * validate_date("2019-12-01") => false ??
+         */
+        $this->assertEquals("2019-12-10", $absences[0]['Date']);
+        $this->assertEquals("2019-12-11", $absences[1]['Date']);
+        $this->assertEquals("2019-12-12", $absences[2]['Date']);
+        $absences = $parentObj->get_absences($childID, "2019-12-10", "2019-12-12");
+        $this->assertEquals("2019-12-10", $absences[0]['Date']);
+        $this->assertEquals("2019-12-11", $absences[1]['Date']);
+        $this->assertEquals("2019-12-12", $absences[2]['Date']);
+        $absences = $parentObj->get_absences($childID, "2019-12-01", "2019-12-02");
+        $this->assertEmpty($absences);
+        $this->assertFalse($parentObj->get_absences($childID, "20"));
+        $this->assertFalse($parentObj->get_absences($childID, "2020-01-01"));
     }
 }
