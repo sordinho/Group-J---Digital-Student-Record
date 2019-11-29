@@ -191,10 +191,6 @@ class user {
 		return isset($_SESSION['id']);
 	}
 
-	// verify user is administrator
-	public function is_admin() {
-		return isset($_SESSION['admin']);
-	}
 
 	//Restituisce la mail memorizzata nelle sessioni
 	public function get_username() {

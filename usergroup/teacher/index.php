@@ -8,7 +8,7 @@ $site->setPage($page);
 $teacher= new teacher();
 
 
-if(!$teacher ->is_logged() || $teacher ->get_teacher_ID()==-1){
+if(!$teacher ->is_logged() ){
 	header("location: /error.php?errorID=19");
 	exit();
 }

@@ -7,7 +7,7 @@ $page = new cpage("Add Assignment");
 $site->setPage($page);
 $teacher = new teacher();
 
-if (!$teacher->is_logged() || $teacher->get_teacher_ID() == -1) {
+if (!$teacher->is_logged()) {
     $content = '
     <div class="alert alert-warning" role="warning">
         You are not authorized. If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>

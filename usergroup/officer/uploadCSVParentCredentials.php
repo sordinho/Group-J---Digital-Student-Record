@@ -12,7 +12,7 @@ $content="";
 
 // TODOS: [Improvement] 
 // - Consider what happens if in the middle of csv parsing a query fails (a full rollback seems too hard and useless to accomplish)
-if(!$officer ->is_logged() || $officer ->get_officer_ID()==-1){
+if(!$officer ->is_logged() ){
 	header("location: /error.php?errorID=19");
 	exit();
 }

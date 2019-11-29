@@ -10,7 +10,7 @@ $page = new cpage("Homeworks");
 $site->setPage($page);
 $sparent = new sparent();
 
-if (!$sparent->is_logged() || $sparent->get_parent_ID() == -1) {
+if (!$sparent->is_logged()) {
 	header("location: /error.php?errorID=19");
 	exit();
 }
