@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 require_once 'testUtility.php';
 require_once '../classes/user.class.php';
 require_once '../classes/teacher.class.php';
+require_once '../classes/calendar.class.php';
 
 class teacherTest extends TestCase {
 
