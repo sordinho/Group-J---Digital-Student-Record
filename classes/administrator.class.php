@@ -1,6 +1,7 @@
 <?php
 
 require_once 'user.class.php';
+/* A signle admin is assumed for now (no getter, no check og get_id on is_logged) */
 
 class administrator extends user {
 
@@ -102,5 +103,5 @@ class administrator extends user {
 		return true;
 
 	}
-
+	
 }

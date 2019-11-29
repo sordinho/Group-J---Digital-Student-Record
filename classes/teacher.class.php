@@ -455,5 +455,11 @@ CREATE TABLE `TopicRecord` (
         $stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $assignmentDescription, $topicID, $classID);
         return $stmt->execute();//True || False
     }
+    // Override of parent method, also check if the id was sent correctly
+    public function is_logged()
+    {
+        $cond = parent::is_logged() && $this->get_teacher_ID() != -1;
+        return $cond;
+    }
 
 }

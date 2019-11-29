@@ -184,4 +184,10 @@ class sparent extends user
         $children[0]["childID"] = "-1";
         return isset($_SESSION['childrenInfo']) ? $_SESSION['childrenInfo'] : $children;
     }
+    // Override of parent method, also check if the id was sent correctly
+    public function is_logged()
+    {
+        $cond = parent::is_logged() && $this->get_parent_ID() != -1;
+        return $cond;
+    }
 }
