@@ -5,7 +5,7 @@ $teacher = new teacher();
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Teacher");
+$page = new cpage("Student Presence Verification");
 $site->setPage($page);
 
 if (!$teacher->is_logged()) {

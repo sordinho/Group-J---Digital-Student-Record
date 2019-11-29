@@ -110,29 +110,29 @@ OUT;
                 <div class="col">
                     <!-- First name -->
                     <div class="md-form">
-                        <input type="text" id="materialRegisterFormFirstName" name="parent_first_name" class="form-control">
                         <label for="materialRegisterFormFirstName">First name</label>
+                        <input type="text" id="materialRegisterFormFirstName" name="parent_first_name" class="form-control">
                     </div>
                 </div>
                 <div class="col">
                     <!-- Last name -->
                     <div class="md-form">
-                        <input type="text" id="materialRegisterFormLastName" name="parent_last_name" class="form-control">
                         <label for="materialRegisterFormLastName">Last name</label>
+                        <input type="text" id="materialRegisterFormLastName" name="parent_last_name" class="form-control">
                     </div>
                 </div>
             </div>
 
             <!-- E-mail -->
             <div class="md-form mt-0">
-                <input type="email" id="materialRegisterFormEmail" name="parent_email" class="form-control">
                 <label for="materialRegisterFormEmail">E-mail</label>
+                <input type="email" id="materialRegisterFormEmail" name="parent_email" class="form-control">
             </div>
             
             <!-- Children number-->
             <div class="md-form mt-0">
-                <input type="number" id="materialRegisterFormChildNumber" name="children" class="form-control" onchange="displayChildrenForm(this)" value="$num" min="1">
                 <label for="materialRegisterFormEmail">Number of children</label>
+                <input type="number" id="materialRegisterFormChildNumber" name="children" class="form-control" onchange="displayChildrenForm(this)" value="$num" min="1">
             </div>
 OUT;
 
@@ -143,8 +143,8 @@ OUT;
             <p class="card-body info-color white-text text-center py-4">Student $stud_num</p>
             <!-- CF -->
             <div class="md-form mt-0">
-                <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
                 <label for="materialRegisterFormCF$i">Student fiscal code</label>
+                <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
             </div>
 OUT;
         }
