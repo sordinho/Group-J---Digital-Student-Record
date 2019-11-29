@@ -18,7 +18,6 @@ switch ($_SESSION["usergroup"]) {
 		$children = $par->get_children_info();
 
         if ($par->get_current_child() == -1) {
-
             $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
 			$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-book mx-3"></i><span class="text-nowrap mx-2">Check Homeworks</span></a></li>';
 			$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-user mx-3"></i><span class="text-nowrap mx-2">Check Attendance</span></a></li>';
@@ -33,18 +32,18 @@ switch ($_SESSION["usergroup"]) {
 			
 				<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
         }
-        foreach ($children as $i => $child) {
-            if ($child['childID'] == $_SESSION['curChild']) {
+        foreach ($children as $i => $child_info) {
+            if ($child_info['StudentID'] == $par->get_current_child()) {
                 $hidden_menu .= '
-				<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID=' . $child["StudentID"] . '">
-					
-					<span>' . $child["Name"] . " " . $child["Surname"] . '</span>
+				<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID=' . $child_info["StudentID"] . '">
+					<span>' . $child_info["Name"] . " " . $child_info["Surname"] . '</span>
+                    <i class="fas fa-check-circle float-right mr-3 mt-2"></i>
+
 				</a>';
             } else {
                 $hidden_menu .= '
-				<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID=' . $child["StudentID"] . '">
-					<span>' . $child["Name"] . " " . $child["Surname"] . '</span>
-					<i class="fas fa-check-circle float-right mr-3 mt-2"></i>
+				<a class="dropdown-item text-white" role="presentation" href="./index.php?action=switchChild&childID=' . $child_info["StudentID"] . '">
+					<span>' . $child_info["Name"] . " " . $child_info["Surname"] . '</span>
 				</a>';
             }
         }

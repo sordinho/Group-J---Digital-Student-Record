@@ -38,7 +38,6 @@ class sparent extends user
     // Register the childs in a session
     public function retrieve_and_register_childs()
     {
-
         $childs = array();
         $children_info = array();
         $conn = $this->connectMySql();
@@ -181,7 +180,7 @@ class sparent extends user
     {
         $children[0]["Name"] = "No children";
         $children[0]["Surname"] = "Registered";
-        $children[0]["childID"] = "-1";
+        $children[0]["StudentID"] = "-1";
         return isset($_SESSION['childrenInfo']) ? $_SESSION['childrenInfo'] : $children;
     }
 }
