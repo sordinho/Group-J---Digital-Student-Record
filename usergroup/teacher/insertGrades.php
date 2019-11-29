@@ -29,13 +29,6 @@ OUT;
 </div>
 OUT;
             break;
-        case -1:
-            $content .= <<<OUT
-<div class="alert alert-danger" role="alert">
- PATATE <a href="insertGrades.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
-</div>
-OUT;
-            break;
         default:
             $content .= <<<OUT
 <div class="alert alert-dark" role="alert">
@@ -81,9 +74,6 @@ OUT;
         //$classID = $_GET['classID'];
         $subject_info = $teacher->get_topics($classID);
         $select_content = "";
-        /*foreach($subject_info as $subject){
-
-        }*/
 
         for ($i = 0; $i < sizeof($subject_info); $i++) {
             $subjectID = $subject_info[$i]['TopicID'];
@@ -172,6 +162,7 @@ OUT;
 OUT;
     } else if (!empty($_POST)) {
         $students_info = $teacher->get_students_by_class_id($classID);
+        $counter = 0;
         if (sizeof($students_info) == 0) {
             header("Location: insertGrades.php?operation_result=-1");
             die();
@@ -179,6 +170,7 @@ OUT;
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
             if (isset($_POST["subjectID_$id"]) && isset($_POST["grade_$id"])) {
+                $counter++;
                 $now = date("Y-m-d H:i:s");
                 $laude = false;
                 $subID = (int)$_POST["subjectID_$id"];
@@ -196,7 +188,11 @@ OUT;
                 }
             }
         }
-        header("Location: insertGrades.php?operation_result=1");
+        if($counter>0) {
+            header("Location: insertGrades.php?operation_result=1");
+            die();
+        }
+        header("Location: insertGrades.php?operation_result=0");
         die();
     }
 }
