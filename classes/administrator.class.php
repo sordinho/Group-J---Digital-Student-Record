@@ -103,5 +103,10 @@ class administrator extends user {
 		return true;
 
 	}
+	// verify user is administrator should *NOT* be used, was in user.class, where it should stay for sure
+	// but it should use, use instad admin->is_logged only. I hadn't deleted for possible compatible issues (could be called in the code)
+	public function is_admin() {
+		return isset($_SESSION['usergroup']) ? $_SESSION['usergroup']=="admin" : ''; 
+	}
 	
 }
