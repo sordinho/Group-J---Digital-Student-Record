@@ -12,10 +12,11 @@ class administrator extends user {
 	/**
 	 *  Function used by administrator to register new users. Password is randomly generated.
 	 *
-	 * @param $mail
-	 * @param $name
-	 * @param $surname
+	 * @param $user_first_name
+	 * @param $user_last_name
+	 * @param $user_email
 	 * @param $usergroup
+	 * @param $fcode
 	 * @return bool
 	 * @throws Exception
 	 */
