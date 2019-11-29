@@ -58,8 +58,7 @@ if (!isset($_POST["description"])) {
             $class_list .= "<option value='{$class['ClassID']}'>" . $class_str . "</option>";
         }
 
-        $content = '<div class="container article-clean">
-					<div class="row">
+        $content = '
 					<form method="POST">
 						<div class="form-group">
 						<label for="Title">Title of the lecture</label>
