@@ -27,7 +27,7 @@ if (isset($_GET['classID'])) {
     } else {
         $content.="
             <div class=\"card\">
-                <h5 class=\"card-header info-color white-text text-center py-4\">
+                <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9)\">
                     <strong>Students List</strong>
                 </h5>
                 <div class=\"card-body\">
@@ -76,7 +76,7 @@ if (isset($_GET['classID'])) {
     $ustudents = $officer->retrive_classless_students();
     $content.="
             <div class=\"card\">
-                <h5 class=\"card-header info-color white-text text-center py-4\">
+                <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9)\">
                     <strong>Students without class</strong>
                 </h5>
                 <div class=\"card-body\">

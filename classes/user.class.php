@@ -154,7 +154,7 @@ class user {
 		return;
 	}
 
-	protected function set_admin(){
+	protected function set_admin() {
 		$_SESSION['admin'] = true;
 	}
 
@@ -289,15 +289,13 @@ class user {
 	 *
 	 * For PHP 7, random_int is a PHP core function
 	 *
-	 * @param int $length      How many characters do we want?
+	 * @param int $length How many characters do we want?
 	 * @param string $keyspace A string of all possible characters
 	 *                         to select from
 	 * @return string
+	 * @throws Exception
 	 */
-	protected function random_str(
-		$length,
-		$keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-	) {
+	protected function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'){
 		$str = '';
 		$max = mb_strlen($keyspace, '8bit') - 1;
 		if ($max < 1) {

@@ -16,7 +16,7 @@ if (!$sparent->is_logged() ) {
 # If user is correctly authenticated:
 $content = '
 <table class="table">
-  <thead class="thead-dark">
+  <thead style="background-color:rgba(108,108,108,0.9)">
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Grade</th>

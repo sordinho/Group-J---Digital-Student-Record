@@ -42,8 +42,7 @@ OUT;
 	$lecture_info = $teacher->get_lecture_by_id($_GET['lectureID']);
 	$lecture_info["Title"] = substr($lecture_info['TopicDescription'], 0, 16) . "...";
 
-	$content = '<div class="container article-clean">
-                <div class="row">
+	$content = '<div class="form-group">
                 <form method="POST" action="listLectures.php?action=submit">
                   <div class="form-group">
                   <label for="Title">Title</label>
@@ -67,7 +66,6 @@ OUT;
                   <button type="submit" class="btn btn-primary">Confirm</button>
                   
                 </form>
-                </div>
                 </div>';
 
 } /*elseif ($_POST["description"]) {
@@ -92,7 +90,7 @@ OUT;
 
 	$content = '
   <table class="table">
-    <thead class="thead-dark">
+    <thead style="background-color:rgba(108,108,108,0.9)">
       <tr>
         <th scope="col">Description</th>
         <th scope="col">Subject</th>
@@ -106,9 +104,9 @@ OUT;
 		//ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription
 		$title = substr($row['TopicDescription'], 0, 30) . "..."; // tODO: remove if title added to db
 		$content .= '<tr>
-        <th scope="row"><a class="alert-link" href="listLectures.php?action=edit&lectureID='.$row['RecordID'].'">' . $title . '</a></th>
-        <td>' . $row['TopicName'] . '</td>
-        <td>' . $row['TimeStamps'] . '</td>
+        <th class="border" scope="row"><a class="alert-link" href="listLectures.php?action=edit&lectureID='.$row['RecordID'].'">' . $title . '</a></th>
+        <td class="border" >' . $row['TopicName'] . '</td>
+        <td class="border" >' . $row['TimeStamps'] . '</td>
       </tr>';
 	}
 

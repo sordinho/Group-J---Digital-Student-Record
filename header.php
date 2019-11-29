@@ -135,14 +135,14 @@ print '<!DOCTYPE html>
 	
 
 	<body>
-	<ul class="nav flex-column shadow d-flex sidebar mobile-hid">
+	<ul class="nav flex-column shadow d-flex sidebar mobile-hid" id="sidebar">
 		<li class="nav-item logo-holder">
 			<a class="text-white float-left m-3" id="sidebarToggleHolder" href="#">
 					<i class="fas fa-bars" id="sidebarToggle"></i>
 			</a>
 			<div class="text-center text-white logo p-4">
 				<a class="text-white text-decoration-none p-2" id="title" href="#">
-					<img src="' . PLATFORM_PATH . '/media/logopoli2.png" alt="logopoli" style="width: 100%; object-fit: contain"/>
+					<img id="sidebarlogo" src="' . PLATFORM_PATH . '/media/logopoli2.png" alt="logopoli" style="width: 100%; object-fit: contain"/>
 				</a>
 			</div>
 		</li>
@@ -203,6 +203,8 @@ echo '<!-- Modal Login -->
 				</form>
 			</div>
 		</div> 
+		
+		
 		';
 echo '<!-- Modal for registration(signup) -->
 	<div class="modal fade" id="registerModal" role="dialog">

@@ -7,6 +7,7 @@
     <!-- Copyright notice! -->
     <div class="footer-copyright text-center py-3">© 2019 TeamJ Copyright</div>
 </footer>
+
 <!-- Footer -->
 
 <script src="

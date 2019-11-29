@@ -58,38 +58,37 @@ if (!isset($_POST["description"])) {
             $class_list .= "<option value='{$class['ClassID']}'>" . $class_str . "</option>";
         }
 
-        $content = '
+        $content = '<div class="form-group">
 					<form method="POST">
 						<div class="form-group">
-						<label for="Title">Title of the lecture</label>
-						<input type="text" class="form-control" name="title" id="title" placeholder="Course Introduction">
+                            <label for="Title">Title of the lecture</label>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="Course Introduction">
 						</div>
 						<div class="form-group">
-						<label for="exampleFormControlSelect2">Subject select</label>
-						<select multiple class="form-control" name="topicID" id="topicID">
-							' . $topic_list . '
-						</select>
+                            <label for="exampleFormControlSelect2">Subject select</label>
+                            <select multiple class="form-control" name="topicID" id="topicID">
+                                ' . $topic_list . '
+                            </select>
 						</div>
 				
 						<div class="form-group">
-						<label for="exampleFormControlSelect3">Class select</label>
-						<select multiple class="form-control" name="classID" id="classID">
-							' . $class_list . '
-						</select>
+                            <label for="exampleFormControlSelect3">Class select</label>
+                            <select multiple class="form-control" name="classID" id="classID">
+                                ' . $class_list . '
+                            </select>
 						</div>
 				
 						<div class="form-group">
-						<label for="exampleFormControlTextarea1">Description of the lecture</label>
-						<textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            <label for="exampleFormControlTextarea1">Description of the lecture</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
 						</div>
 						<div class="form-group">
-						<label for="exampleFormControlTextarea1">Date</label>
-						<input type="date" id="date" name="date">
-						</div>
+                            <label for="exampleFormControlTextarea1">Date</label>
+                            <input type="date" id="date" name="date">
+                            </div>
 						<button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Record</button>	
 						
 					</form>
-					</div>
 					</div>';
     }
 } else {
