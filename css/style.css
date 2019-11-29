@@ -32,11 +32,21 @@ body {
     user-select: none;
 }
 
+#sidebar {
+    position: fixed;
+}
+
 #navbar-title {
     background-color: rgba(108, 108, 108, 0.9);
 }
 @media (min-width: 768px) {
     .bd-placeholder-img-lg {
     font-size: 3.5rem;
+    }
+}
+
+@media (max-height: 812px) {
+    #sidebarlogo {
+        display: none;
     }
 }
