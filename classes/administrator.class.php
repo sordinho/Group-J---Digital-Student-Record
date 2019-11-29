@@ -12,10 +12,11 @@ class administrator extends user {
 	/**
 	 *  Function used by administrator to register new users. Password is randomly generated.
 	 *
-	 * @param $mail
-	 * @param $name
-	 * @param $surname
+	 * @param $user_first_name
+	 * @param $user_last_name
+	 * @param $user_email
 	 * @param $usergroup
+	 * @param $fcode
 	 * @return bool
 	 * @throws Exception
 	 */
@@ -24,9 +25,9 @@ class administrator extends user {
 		if($user_first_name==null || $user_last_name==null || $user_email==null || $usergroup==null || fcode == null)
 			return false;
 		$mysqli = $this->connectMySQL();
-		//$password = $this->random_str(10);
+		$password = $this->random_str(10);
         //TODO modify
-		$password = 'frontoffice1';
+		//$password = 'frontoffice1';
 		if ($password == "")
 			return false;
 
@@ -96,7 +97,7 @@ class administrator extends user {
 		$message .= "\nBest Regards\nThe school administration.";
 		$message = wordwrap($message, 70, "\n");
 		//TODO remove comment on server
-		/*if (!mail($user_info['user_email'], "Access Credentials (DSR)", $message))
+		/*if (!mail($user_email, "Access Credentials (DSR)", $message))
 			return false;*/
 		$query->close();
 		$mysqli->close();
