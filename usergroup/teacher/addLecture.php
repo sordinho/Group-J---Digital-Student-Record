@@ -24,26 +24,26 @@ if (!isset($_POST["description"])) {
         $content = "";
         switch ($_GET['operation_result']) {
             case 1:
-                $content .= <<<OUT
+                $content .= '
 								<div class="alert alert-success" role="alert">
-								  Lecture successfully registered. <a href="addLecture.php" class="alert-link">Add another lecture</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+									Lecture successfully registered. <a href="addLecture.php" class="alert-link">Add another lecture</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
 								</div>
-							OUT;
+							';
                 break;
             case 0:
-                $content .= <<<OUT
+                $content .= '
 								<div class="alert alert-danger" role="alert">
-								 Error in registering a new lecture. <a href="addLecture.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+									Error in registering a new lecture. <a href="addLecture.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
 								</div>
-							OUT;
+							';
 
                 break;
             default:
-                $content .= <<<OUT
+                $content .= '
 								<div class="alert alert-dark" role="alert">
-								  Operation not allowed.
+									Operation not allowed.
 								</div>
-							OUT;
+							';
         }
     } else {
 //$content ='<a href="usergroup/teacher/teacherAction1ToMove.php">Action1To incorporate in MENU</a>';
