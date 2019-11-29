@@ -135,19 +135,19 @@ class sparent extends user
 
         } else if ($from_date == false and $to_date == false) {
             /*both dates are set to false or the value has not been inserted*/
-            $sql = "SELECT Date FROM NotPresentRecord WHERE StudentID = $childID AND ExitHour = 0";
-
+            $sql = $conn->prepare("SELECT Date FROM NotPresentRecord WHERE StudentID = ? AND ExitHour = 0");
+            $sql->bind_param('i', $childID);
         } else {
             /*all the other cases are not valid*/
             return false;
 
         }
-
         $absences = array();
-
+        $sql->execute();
         $res = $sql->get_result();
-        if (!$res)
+        if (!$res){
             return false;
+        }
         while ($row = $res->fetch_assoc())
             array_push($absences, $row);
 
