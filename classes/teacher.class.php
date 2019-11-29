@@ -353,7 +353,7 @@ CREATE TABLE `TopicRecord` (
         // given unix timestamp
         $assignment_date = strtotime($timestamp);
         // secondi in una settimana
-        if ($assignment_date<$actual_date)
+        if ($assignment_date>$actual_date)
             return false;
 
         $stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $assignmentDescription, $topicID, $classID);
