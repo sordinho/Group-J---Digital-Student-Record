@@ -11,7 +11,7 @@ $content = "";
 
 if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 	if (!isset($_POST['usergroup'])) {
-		$url = 'location: '.PLATFORM_PATH.' /error.php?errorID=20';
+		$url = 'location: '.PLATFORM_PATH.'/error.php?errorID=20';
 		header($url);
 		exit();
 	}

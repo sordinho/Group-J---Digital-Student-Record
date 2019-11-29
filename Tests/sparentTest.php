@@ -131,7 +131,6 @@ class sparentTest extends TestCase
         $parentObj = new sparent();
         // 2	Joseph	ParentSurname2	pns2a@io.io	$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by	parent
         // 2	Vittorio	Di Leo	10	cf1b	1
-        $_SESSION['id'] = 2;
         $_SESSION['curChild'] = 2;
         perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-11-28', 'Yes', '4')");
         perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES (1, 1, '2019-11-29', 'No', '0')");
