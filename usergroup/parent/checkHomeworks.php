@@ -15,10 +15,7 @@ if (!$sparent->is_logged()) {
 	exit();
 }
 
-//$homework_info = $sparent->get_homeworks($sparent->get_current_child());
-/*foreach ($homework_info as $homework) {
-    var_dump($homework);
-}*/
+// TODO check if child was selected 
 
 # Declare the div where the calendar will be injected, include dependency and custom js script to handle calendar
 $content = '<div id="calendar"></div>
