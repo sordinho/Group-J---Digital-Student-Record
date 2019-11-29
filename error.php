@@ -21,7 +21,8 @@ $messages = array(
 	15 => 'Fill all the fields and insert at least one telephone number.',
 	17 => 'Activation successful!',
 	18 => 'Attempt to modify parameters.<br>That\'s not funny.',
-	19 => 'You\'re not authorized to view this resource.'
+	19 => 'You\'re not authorized to view this resource.',
+    20 => 'Please select a role.'
 );
 if(isset($_GET['errorID'])){
 	$message_script = $_GET['errorID'];

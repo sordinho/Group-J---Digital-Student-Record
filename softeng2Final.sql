@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Nov 29, 2019 alle 12:42
+-- Creato il: Nov 29, 2019 alle 16:47
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -146,7 +146,9 @@ INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (5, 4, 1),
 (7, 3, 45),
 (8, 3, 44),
-(10, 4, 2);
+(10, 4, 2),
+(11, 12, 55),
+(12, 13, 56);
 
 -- --------------------------------------------------------
 
@@ -199,7 +201,9 @@ INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `Spec
 (6, 'Riccardo', 'Mamone', 10, 'rf5', 1),
 (8, 'Antonio', 'Santoro', 10, 'cf6', 1),
 (9, 'Michael', 'Bing', 7, 'cf7', 2),
-(11, 'Mario', 'Rossi', 7, 'Fc11', 2);
+(11, 'Mario', 'Rossi', 7, 'Fc11', 2),
+(12, 'Javier', 'Lautaro', 10, 'LTRJVR97A01F839O', 2),
+(13, 'Dries', 'Mertens', 10, 'MRTDRS89L03F839J', 3);
 
 -- --------------------------------------------------------
 
@@ -296,7 +300,8 @@ CREATE TABLE `TopicTeacherClass` (
 INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`) VALUES
 (1, 1, 1, 1),
 (2, 2, 1, 2),
-(3, 3, 1, 3);
+(3, 3, 1, 3),
+(4, 7, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -326,12 +331,14 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 (6, 'Elen', 'Baralis', 'teach4@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (7, 'Mauro', 'Morisio', 'teach5@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (8, 'Bartolo', 'Montrucchio', 'teach6@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(9, 'Tony', 'Lioy', 'teach7@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(9, 'Tony', 'Lioy', 'tony.lioy@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (10, 'John', 'Price', 'off1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
 (11, 'Paul', 'MacMillan', 'off2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'officer'),
 (44, 'Jude', 'surname', 'd1226143@urhen.com', '$2y$12$30A4FAueTEgqlQBS8tFsbeRcqpB6MNvkEfSk5odHdJHoEJkF7Z4h2', 'parent'),
 (45, 'Elisabeth', 'surname', 'pns4@io.io', '$2y$12$30A4FAueTEgqlQBS8tFsbeRcqpB6MNvkEfSk5odHdJHoEJkF7Z4h2', 'parent'),
-(46, 'System', 'Administrator', 'sysadmin@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'admin');
+(46, 'System', 'Administrator', 'sysadmin@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'admin'),
+(55, 'Tony', 'Lioy', 'tony.lioy@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
+(56, 'Fei Fei', 'Li', 'lifeifei@gmail.com', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent');
 
 --
 -- Indici per le tabelle scaricate
@@ -453,7 +460,7 @@ ALTER TABLE `Officer`
 -- AUTO_INCREMENT per la tabella `Parent`
 --
 ALTER TABLE `Parent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT per la tabella `SpecificClass`
 --
@@ -463,7 +470,7 @@ ALTER TABLE `SpecificClass`
 -- AUTO_INCREMENT per la tabella `Student`
 --
 ALTER TABLE `Student`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
@@ -483,12 +490,12 @@ ALTER TABLE `TopicRecord`
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
 ALTER TABLE `TopicTeacherClass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- Limiti per le tabelle scaricate
 --

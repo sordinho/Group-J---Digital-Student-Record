@@ -170,12 +170,31 @@ echo '<!-- Modal Login -->
 							<input type="password" class="form-control" name="password" id="password" placeholder="Enter password">
 						</div>
 						
-						<div class="text-center"> <div class="checkbox">
-							<label><input type="checkbox" value="" checked>Remember me</label>
-						</div></div>
+						
+						
+						<div class="text-center">
+                            <div class="btn-group btn-group-toggle m-3" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary">
+                                    <input type="radio" name="usergroup" value="parent">Parent
+                                </label>
+                                <label class="btn btn-outline-secondary">
+                                    <input type="radio" name="usergroup" value="teacher">Teacher
+                                </label>
+                                <label class="btn btn-outline-secondary">
+                                    <input type="radio" name="usergroup" value="officer">Officer
+                                </label>
+                            </div>
+                                
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" checked>Remember me</label>
+                            </div>
+						</div>
 
 						
 					</div>
+					
+					 
+					
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
 						<button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>

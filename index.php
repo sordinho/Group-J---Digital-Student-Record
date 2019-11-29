@@ -10,6 +10,12 @@ $site->setPage($page);
 $content = "";
 
 if (!isset($_SESSION['id']) && isset($_POST['username'])) {
+	if (!isset($_POST['usergroup'])) {
+		$url = 'location: '.PLATFORM_PATH.' /error.php?errorID=20';
+		header($url);
+		exit();
+	}
+
 	$content .= '<div class="article-clean">
                     <div class="d-flex justify-content-center">
                         <div class="spinner-grow text-warning" style="width: 10rem; height: 10rem;" role="status">
@@ -23,6 +29,7 @@ if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 
 	$post_data["username"] = $_POST['username'];
 	$post_data["password"] = $_POST['password'];
+	$post_data["usergroup"] = $_POST['usergroup'];
 
 	//echo $_POST['username'] . $_POST['password'];
 

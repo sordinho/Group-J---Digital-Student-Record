@@ -49,7 +49,10 @@ class user {
 	function user_login($post_data) {
 		$username = $post_data["username"];
 		$password = $post_data["password"];
-		$retrievedUsergroup = "";
+		/*
+		 * before the usergroup was retrieved from the db, now it is specified at login time
+		 */
+		$retrievedUsergroup = $post_data["usergroup"] /*""*/;
 
 		$mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
 		if ($mysqli->connect_errno) {
@@ -59,8 +62,8 @@ class user {
 
 		//TODO: extend with name and surname (maybe save that in an array as user_info[] ?)
 		// Here using prepared statement to avoid SQLi
-		$query = $mysqli->prepare("SELECT ID, Name, Surname, Password, UserGroup FROM User WHERE Email = ?");
-		$query->bind_param('s', $username);
+		$query = $mysqli->prepare("SELECT ID, Name, Surname, Password/*, UserGroup*/ FROM User WHERE Email = ? AND UserGroup = ?");
+		$query->bind_param('ss', $username, $retrievedUsergroup);
 		$res = $query->execute();
 		if (!$res) {
 			printf("Error message: %s\n", $mysqli->error);
@@ -68,7 +71,7 @@ class user {
 		}
 
 		$query->store_result();
-		$query->bind_result($id, $name, $surname, $pass, $retrievedUsergroup);
+		$query->bind_result($id, $name, $surname, $pass/*, $retrievedUsergroup*/);
 		// In case of success there should be just 1 user for a given (username is also a primary key for its table)
 		if ($query->num_rows != 1) {
 			return false;
