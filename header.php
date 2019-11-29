@@ -160,7 +160,7 @@ echo '<!-- Modal Login -->
 						
 						<div class="form-group">
 							<label for="front_office"><span class="glyphicon glyphicon-user"></span> Email</label>
-							<input type="text" class="form-control" name="username" id="username" placeholder="Enter email">
+							<input type="email" class="form-control" name="username" id="username" placeholder="Enter email">
 						</div>
 						<div class="form-group">
 							<label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
