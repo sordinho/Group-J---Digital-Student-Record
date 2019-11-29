@@ -280,6 +280,102 @@ CREATE TABLE `TopicRecord` (
             return false;
         }
     }
+    /**
+     * this function register a student with given studentID as absent on date timestamp.
+     *
+     * @param $studentID
+     * @param $timestamp in the format "Y-m-d H:i:s"
+     *
+     * @return true|false on succes or not
+     */
+    public function register_absence($studentID,$timestamp){
+        $teacherID = $_SESSION['teacherID'];
+        if(!calendar::validate_date($timestamp))
+            return false;
+        $y_m_d = date("Y-m-d",strtotime($timestamp));
+        $classID = $this->is_teacher_of_the_student($studentID);
+        if($classID != false && $classID > 0 && $this->student_was_absent($y_m_d,$studentID) == false){
+            $conn = $this->connectMySQL();
+            $sql ="INSERT INTO notpresentrecord (ID,StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (null,?,?,?,0,0);";
+            $stmt = $conn->prepare($sql);
+            if($stmt){
+                $stmt->bind_param('iis',$studentID,$classID,$y_m_d);
+                return $stmt->execute();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * this function is used to check whether this teacher is actually a teacher of the student passed as parameter.
+     *
+     * @param $studentID --> id of the student
+     *
+     * @return bool|string --> ID of the class of the student if all operation are successful
+     *                     --> false if there are no classes in common between student and teacher
+     *                     --> 'err' if there was an error in the query
+     */
+    public function is_teacher_of_the_student($studentID){
+        $teacherID = $_SESSION['teacherID'];
+        $conn = $this->connectMySQL();
+        $sql1 = "   SELECT COUNT(*),TopicTeacherClass.SpecificClassID
+                    FROM TopicTeacherClass, Student
+                    WHERE TopicTeacherClass.TeacherID = $teacherID
+                    AND Student.ID = ?
+                    AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
+        $stmt = $conn->prepare($sql1);
+        if($stmt){
+            $stmt->bind_param('i',$studentID);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if($res->num_rows>0){
+                $row = $res->fetch_row();
+                if($row[0]>0){
+                    return $row[1]; //return the specific class ID, needed for registering a new absence
+                }
+            }else{
+                return false;
+            }
+        }
+        return 'err';
+    }
+
+    /**
+     * This function is used to check whether the student with given studentID was absent or not on a given date
+     *
+     *
+     * @param $Y_m_d                    --> date to check
+     * @param $studentID                --> student to check
+     *
+     *
+     * @return bool|string              --> true if student was absent in that date
+     *                                  --> false if he was present or late
+     *                                  --> 'err' if an error in the query occurred
+     */
+    public function student_was_absent($Y_m_d,$studentID){
+        $conn = $this->connectMySQL();
+        $sql2 = "   SELECT COUNT(*)
+                    FROM NotPresentRecord, Student
+                    WHERE NotPresentRecord.Date = ?
+                    AND NotPresentRecord.StudentID = ?
+                    AND Student.SpecificClassID = NotPresentRecord.SpecificClassID
+                    AND ExitHour = 0";
+        $stmt = $conn->prepare($sql2);
+        if($stmt){
+            $stmt->bind_param('si',$Y_m_d,$studentID);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if($res->num_rows>0) {
+                if ($res->fetch_row()[0] > 0) {
+                    return true;
+                }
+            }else{
+                return false;
+            }
+        }
+        return 'err';
+
+    }
 
     /**
      * the function is to be used only on previously-registered absences = [Late = 0, ExitHour = 0]
