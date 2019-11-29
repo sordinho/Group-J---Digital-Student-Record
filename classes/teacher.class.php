@@ -294,10 +294,12 @@ CREATE TABLE `TopicRecord` (
             return false;
         $y_m_d = date("Y-m-d",strtotime($timestamp));
         $classID = $this->is_teacher_of_the_student($studentID);
+        //$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
         if($classID != false && $classID > 0 && $this->student_was_absent($y_m_d,$studentID) == false){
             $conn = $this->connectMySQL();
             $sql ="INSERT INTO notpresentrecord (ID,StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (null,?,?,?,0,0);";
             $stmt = $conn->prepare($sql);
+            //$ret.=" - stmt : ".$stmt->sqlstate;
             if($stmt){
                 $stmt->bind_param('iis',$studentID,$classID,$y_m_d);
                 return $stmt->execute();
@@ -354,21 +356,18 @@ CREATE TABLE `TopicRecord` (
      */
     public function student_was_absent($Y_m_d,$studentID){
         $conn = $this->connectMySQL();
-        $sql2 = "   SELECT COUNT(*)
-                    FROM NotPresentRecord, Student
-                    WHERE NotPresentRecord.Date = ?
-                    AND NotPresentRecord.StudentID = ?
-                    AND Student.SpecificClassID = NotPresentRecord.SpecificClassID
-                    AND ExitHour = 0";
+        $sql2 = "SELECT *
+                 FROM notpresentrecord
+                 WHERE notpresentrecord.Date = ?
+                 AND notpresentrecord.StudentID = ?
+                 AND ExitHour = 0;";
         $stmt = $conn->prepare($sql2);
         if($stmt){
             $stmt->bind_param('si',$Y_m_d,$studentID);
             $stmt->execute();
             $res = $stmt->get_result();
             if($res->num_rows>0) {
-                if ($res->fetch_row()[0] > 0) {
-                    return true;
-                }
+                return true;
             }else{
                 return false;
             }
