@@ -372,10 +372,10 @@ CREATE TABLE `TopicRecord` (
     }
 
     /**
-     * the function is to be used only on previously-registered absences = [Late = 0, ExitHour = 0]
+     * the function both works if previously absent or not
      * @param $studentID
      * @param $timestamp in the format "Y-m-d H:i:s"
-     * @return true|false on succes or not
+     * @return true|false on success or not
      */
     public function register_late_arrival($studentID, $timestamp)
     {
@@ -385,6 +385,8 @@ CREATE TABLE `TopicRecord` (
 
         $y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
 
+        $hours_per_school_day = calendar::get_hours_per_school_day();
+
         $conn = $this->connectMySQL();
         $sql1 = "   SELECT COUNT(*)
                     FROM TopicTeacherClass, Student
@@ -393,11 +395,11 @@ CREATE TABLE `TopicRecord` (
                     AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
 
         $sql2 = "   SELECT COUNT(*)
-                    FROM NotPresentRecord, Student
+                    FROM NotPresentRecord
                     WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
                     AND NotPresentRecord.StudentID = '$studentID'
-                    AND Student.SpecificClassID = NotPresentRecord.SpecificClassID
                     AND ExitHour = 0";
+
 
         if ($result1 = $conn->query($sql1) and $result2 = $conn->query($sql2)) {
             $row = $result1->fetch_array();
@@ -405,14 +407,16 @@ CREATE TABLE `TopicRecord` (
             $result1->close();
 
             $row = $result2->fetch_array();
-            $student_was_absent = $row[0];
+            $absent = $row[0]; //it means multiple possibilities: late arrival, absent, early exit...
             $result2->close();
 
-            $exit_hour = calendar::get_hours_per_school_day();
-
-            if ($teach_in_that_class and $student_was_absent) {
-                $sql = $conn->prepare("UPDATE NotPresentRecord SET Late = 1, ExitHour = $exit_hour WHERE StudentID = ? AND Date = ?");
+            if ($teach_in_that_class and $absent) {
+                $sql = $conn->prepare("UPDATE NotPresentRecord SET Late = 1, ExitHour = $hours_per_school_day WHERE StudentID = ? AND Date = ?");
                 $sql->bind_param('is', $studentID, $y_m_d_timestamp);
+                return $sql->execute();
+            } else if ($teach_in_that_class and !$absent) {
+                $sql = $conn->prepare("UPDATE NotPresentRecord SET Late = 1 WHERE StudentID = ? AND Date = ?");
+                $sql->bind_param('i', $studentID);
                 return $sql->execute();
             } else {
                 return false;

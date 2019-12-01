@@ -36,7 +36,13 @@ if (isset($_GET['operation_result'])) {
         case -1:
             $content .= '
                 <div class="alert alert-danger" role="alert">
-                    A pasta ca sassa error<a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
+                    Error <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
+                </div>';
+            break;
+        case -2:
+            $content .= '
+                <div class="alert alert-danger" role="alert">
+                    No student selected. <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
                 </div>';
             break;
         default:
@@ -75,7 +81,7 @@ if (isset($_GET['operation_result'])) {
 
     } else if (isset($_GET['classID'])) {
         $students_info = $teacher->get_students_by_class_id($_GET['classID']);
-        //$subject_info = $teacher->get_topics($classID);// let's assume there is no need to assosiace subject to absences
+        // let's assume there is no need to associate subject to absences
         $select_content = "";
 
         $table_content = '<div class="card-body">
@@ -115,19 +121,25 @@ if (isset($_GET['operation_result'])) {
 OUT;
         }
         // Add date field
-        $table_content .= '<tr><th><div class="col-xs-12">
-                                <label for="date">Date</label>
-                                <input type="date" id="date" name="date">
-                            </div></th>
-                            <th>
-                            <small>Double-check the date to avoid any mistake.<br>As a teacher, you are responsible for any incorrect information.</small>
+        $table_content .= ' <tr>
+                                    <th>
+                                    <div class="col-xs-12">
+                                        <label for="date">Date</label>
+                                        <input type="date" id="date" name="date">
+                                    </div>
+                                    </th>
+                                    <th>
+                                        <small>Double-check the date to avoid any mistake.<br>As a teacher, you are responsible for any incorrect information.</small>
+                                    </th>
                             </tr>';
 
-        $table_content .= '</tbody>
+        $table_content .= '
+                        </tbody>
                         </table>
-                        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
-                    </form>
-                </div></div>';
+                            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
+                        </form>
+                        </div>
+                        </div>';
         $content = '
                 <div class="card text-center">
                     <div class="card-header">
@@ -176,12 +188,42 @@ OUT;
                 }
             }
         }
-        if($counter>0) {
+
+        for ($i = 0; $i < sizeof($students_info); $i++) {
+            $id = $students_info[$i]['ID'];
+            if (isset($_POST["late_$id"])) {
+                $absent = $_POST["late_$id"] == 'yes';
+
+                $date = $_POST['date'];
+                if(!$date){
+                    $date = date("Y-m-d H:i:s");
+                } else {
+                    $newD = date_create($date);
+                    date_time_set($newD,00,00,00);
+                    $date= date_format($newD,"Y-m-d H:i:s");
+                }
+                //$date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
+
+                if ($absent) {
+                    $res = $teacher->register_late_arrival($id, $date);
+                    if (!$res) {
+                        header("Location: addAbsence.php?operation_result=0");
+                        exit();
+                    }
+                    $counter++;
+                }
+            }
+        }
+        if ($counter > 0) {
             header("Location: addAbsence.php?operation_result=1");
             exit();
+        } else if ($counter == 0){
+            header("Location: addAbsence.php?operation_result=-2");
+            exit();
+        } else {
+            header("Location: addAbsence.php?operation_result=0");
+            exit();
         }
-        header("Location: addAbsence.php?operation_result=0");
-        exit();
     }
 }
 $page->setContent($content);
