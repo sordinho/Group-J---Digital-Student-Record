@@ -152,7 +152,14 @@ OUT;
                 $absent = $_POST["absence_$id"] == 'yes';
 
                 $date = $_POST['date'];
-                $date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
+                if(!$date){
+                    $date = date("Y-m-d H:i:s");
+                } else {
+                    $newD = date_create($date);
+                    date_time_set($newD,00,00,00);
+                    $date= date_format($newD,"Y-m-d H:i:s");
+                }
+                //$date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
 
                 if ($absent) {
                     $res = $teacher->register_absence($id, $date);
