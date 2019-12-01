@@ -87,7 +87,8 @@ if (isset($_GET['operation_result'])) {
                                 <th scope="col">#</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">First Name</th>
-                                <th scope="col">Insert Absence</th>
+                                <th scope="col">Absence</th>
+                                <th scope="col">Late Arrival</th>
                                 </tr>
                             </thead>
                             <tbody>';
@@ -104,7 +105,11 @@ if (isset($_GET['operation_result'])) {
                                     <td><div class="col-xs-2 m-2">$name</div></td>
                                     <td>
                                         <input type="checkbox" class="form-check-input" id="absence_$id" name="absence_$id" value="yes" >
-                                        <label class="form-check-label" id="absence_label_$id" for="exampleCheck1">Not Present</label>
+                                        <label class="form-check-label" id="absence_label_$id" for="exampleCheck1">Absent</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" id="late_$id" name="late_$id" value="yes" >
+                                        <label class="form-check-label" id="late_label_$id" for="exampleCheck1">Late</label>
                                     </td>
                             </tr>
 OUT;
@@ -115,7 +120,7 @@ OUT;
                                 <input type="date" id="date" name="date">
                             </div></th>
                             <th>
-                            <small>Doublecheck the date to avoid any mistakes.<br>You, as teacher, are responsible for any incorrect information.</small>
+                            <small>Double-check the date to avoid any mistake.<br>As a teacher, you are responsible for any incorrect information.</small>
                             </tr>';
 
         $table_content .= '</tbody>

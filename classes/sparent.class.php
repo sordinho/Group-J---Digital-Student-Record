@@ -96,14 +96,6 @@ class sparent extends user
         return $homework_info;
     }
 
-    //TODO: this is duplicated - it is used here and in teacher.class... needing some reformat
-    private function validate_date($date, $format = 'Y-m-d H:i:s')
-    {
-        $d = DateTime::createFromFormat($format, $date);
-        // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
-        return $d && $d->format($format) === $date;
-    }
-
     /**
      * @param int $childID
      * @param bool $from_date
@@ -115,8 +107,8 @@ class sparent extends user
         if (!isset($childID)) return false;
 
         $conn = $this->connectMySql();
-        $is_valid_from =  $this->validate_date($from_date);
-        $is_valid_to =  $this->validate_date($to_date);
+        $is_valid_from =  calendar::validate_date($from_date);
+        $is_valid_to =  calendar::validate_date($to_date);
         //TODO: change this code snippet by avoiding repetition in validate_date
         if ($is_valid_from and $is_valid_to and $from_date < $to_date) {
             /*there are two dates which are not false and in a valid format*/

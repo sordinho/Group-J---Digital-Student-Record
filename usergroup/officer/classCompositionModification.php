@@ -17,7 +17,7 @@ if(!$officer ->is_logged() ){
 if (isset($_GET['classID'])) {
     $content .= "<ul class=\"list-group\">";
 
-    $students = $officer->get_Students_By_Class_ID($_GET['classID']);
+    $students = $officer->get_students_by_class_ID($_GET['classID']);
     $_SESSION["classID"] = intval($_GET['classID']);
     if (count($students) == 0) {
         $content = "<div class=\"alert alert-danger\" role=\"alert\">
@@ -73,7 +73,7 @@ if (isset($_GET['classID'])) {
             </div>";
 
     // Print now the second table (to add student to class)
-    $ustudents = $officer->retrive_classless_students();
+    $ustudents = $officer->retrieve_classless_students();
     $content.="
             <div class=\"card\">
                 <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9)\">
@@ -148,7 +148,7 @@ function displayClass(elem){
                             <option selected>Choose The Class</option>";
 
 
-    $classes = $officer->get_Class_List();
+    $classes = $officer->get_class_list();
 
     //if no classes are in the DB, returns to the home
     if (count($classes) == 0) {

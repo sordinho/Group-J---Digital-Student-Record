@@ -281,7 +281,7 @@ CREATE TABLE `TopicRecord` (
      * @param $studentID
      * @param $timestamp in the format "Y-m-d H:i:s"
      *
-     * @return true|false on succes or not
+     * @return true|false on success or not
      */
     public function register_absence($studentID,$timestamp){
         $teacherID = $_SESSION['teacherID'];
