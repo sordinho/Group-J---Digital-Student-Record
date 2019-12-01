@@ -22,7 +22,7 @@ class administrator extends user {
 	 */
 
 	function register_new_user($user_first_name,$user_last_name,$user_email,$usergroup,$fcode) {
-		if($user_first_name==null || $user_last_name==null || $user_email==null || $usergroup==null || fcode == null)
+		if($user_first_name==null || $user_last_name==null || $user_email==null || $usergroup==null || $fcode == null)
 			return false;
 		$mysqli = $this->connectMySQL();
 		$password = $this->random_str(10);
