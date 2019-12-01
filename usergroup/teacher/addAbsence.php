@@ -83,7 +83,13 @@ if (isset($_GET['operation_result'])) {
         $students_info = $teacher->get_students_by_class_id($_GET['classID']);
         // let's assume there is no need to associate subject to absences
         $select_content = "";
-
+        $classID =  $_GET['classID'];
+        for ($i = 0; $i < sizeof($classes); $i++) {
+            $yearSection = $classes[$i]['YearClass'] . " " . $classes[$i]['Section'];
+            if ($classes[$i]['ClassID'] == $classID){
+                break;
+            }
+        }
         $table_content = '<div class="card-body">
                             <form method="post" class="form-inline" style="color:#757575" action="addAbsence.php">
                             
