@@ -182,4 +182,30 @@ class sparent extends user
         $cond = parent::is_logged() && $this->get_parent_ID() != -1;
         return $cond;
     }
+
+    public function get_child_stamp_by_id($childID)
+    {
+        if (!isset($childID)) {
+            return array();
+        }
+        $conn = $this->connectMySql();
+        $stmt = $conn->prepare("SELECT
+                                          Name,Surname
+                                        FROM
+                                          Student s
+                                        WHERE
+                                          s.ID = ?");
+        $stmt->bind_param('i', $childID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if (!$res) {
+            return false;
+        }
+        while ($row = $res->fetch_assoc()) {
+            $stamp=$row["Name"]." ".$row["Surname"];
+        }
+        return $stamp;
+    }
+
+
 }

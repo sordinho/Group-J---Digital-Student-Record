@@ -88,9 +88,14 @@ OUT;
 }else {
 // Should be moved to other page and just linked in the menu
 
-	$content = '
-  <table class="table">
-    <thead style="background-color:rgba(108,108,108,0.9);color:white">
+	$content = '<div class="card">
+                <h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+                    <strong>List of Lectures</strong>
+                </h5>
+                <div class=\"card-body\">
+                <form>
+  <table class="table table-striped">
+    <thead>
       <tr>
         <th scope="col">Description</th>
         <th scope="col">Subject</th>
@@ -104,15 +109,17 @@ OUT;
 		//ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription
 		$title = substr($row['TopicDescription'], 0, 30) . "..."; // tODO: remove if title added to db
 		$content .= '<tr>
-        <th class="border" scope="row"><a class="alert-link" href="listLectures.php?action=edit&lectureID='.$row['RecordID'].'">' . $title . '</a></th>
-        <td class="border" >' . $row['TopicName'] . '</td>
-        <td class="border" >' . $row['TimeStamps'] . '</td>
+        <th scope="row"><a class="alert-link" href="listLectures.php?action=edit&lectureID='.$row['RecordID'].'">' . $title . '</a></th>
+        <td>' . $row['TopicName'] . '</td>
+        <td>' . $row['TimeStamps'] . '</td>
       </tr>';
 	}
 
 	$content .= '
     </tbody>
-  </table>';
+  </table>
+  </form>
+  </div>';
 
 
 }
