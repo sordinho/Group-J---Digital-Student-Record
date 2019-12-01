@@ -180,7 +180,7 @@ OUT;
                         $laude = true;
                 }
                 if (isset($_POST["grade_$id"])) {
-                    $res = $teacher->insert_grade($id, $classID, $subID, $grade, $laude, $now);
+                    $res = $teacher->insert_grade($id, $subID, $grade, $laude, $now);
                     if (!$res) {
                         header("Location: insertGrades.php?operation_result=0");
                         die();

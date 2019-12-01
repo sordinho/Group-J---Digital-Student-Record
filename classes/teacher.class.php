@@ -239,15 +239,10 @@ CREATE TABLE `TopicRecord` (
      * @param string $timestamp (Y-m-d H:i:s)
      * @return true on success or false on failure
      */
-    public function insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp)
+    public function insert_grade($studentID, $subjectID, $mark, $laude, $timestamp)
     {
         if ($mark < 1 or $mark > 10) return false;
         if ($laude != 0 and $laude != 1) return false;
-
-        $found = false;
-        foreach ($this->get_assigned_classes() as $classes_info)
-            if (in_array($classID, $classes_info)) $found = true;
-        if (!$found) return false;
 
         if ($mark != 10 and $laude == true) return false;
         if (calendar::validate_date($timestamp) == false) return false;

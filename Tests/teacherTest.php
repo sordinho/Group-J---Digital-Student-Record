@@ -88,7 +88,6 @@ class teacherTest extends TestCase {
 		$_SESSION['teacherID'] = 1;
 		$teacherObject = new Teacher();
 		$studentID = 1;
-		$classID = 1;
 		$subjectID = 1;
 		$mark = -5;
 		$laude = false;
@@ -96,33 +95,29 @@ class teacherTest extends TestCase {
 //		$timestamp =time();
 
 		// wrong value for mark
-		$this->assertFalse($teacherObject->insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp));
+		$this->assertFalse($teacherObject->insert_grade($studentID, $subjectID, $mark, $laude, $timestamp));
 
 		$mark = 10;
 		$laude = 15;
 		//wrong value for laude
-		$this->assertFalse($teacherObject->insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp));
+		$this->assertFalse($teacherObject->insert_grade($studentID, $subjectID, $mark, $laude, $timestamp));
 
 		$mark = 4;
 		$laude = true;
 		// wrong combination of mark laude
-		$this->assertFalse($teacherObject->insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp));
-
-		$classID = -1;
-		// wrong classID
-		$this->assertFalse($teacherObject->insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp));
+		$this->assertFalse($teacherObject->insert_grade($studentID, $subjectID, $mark, $laude, $timestamp));
 
 		$timestamp = date('Y-m-d H:i:s',strtotime("2011-01-07"));
 		$mark = 9;
 		$laude = false;
-		$this->assertTrue($teacherObject->insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp));
+		$this->assertTrue($teacherObject->insert_grade($studentID, $subjectID, $mark, $laude, $timestamp));
 		$count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM MarksRecord WHERE StudentID =$studentID AND Timestamp='$timestamp'");
 		$this->assertEquals(1, $count, "Test non superato!");
 
         $timestamp = date('Y-m-d H:i:s',strtotime("2011-01-10"));
 		$mark = 10;
 		$laude = true;
-		$this->assertNotNull($teacherObject->insert_grade($studentID, $classID, $subjectID, $mark, $laude, $timestamp));
+		$this->assertNotNull($teacherObject->insert_grade($studentID, $subjectID, $mark, $laude, $timestamp));
 		$count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM MarksRecord WHERE StudentID =$studentID AND Timestamp='$timestamp'");
 		$this->assertEquals(1, $count, "Test non superato!");
 	}

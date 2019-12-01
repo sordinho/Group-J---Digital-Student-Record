@@ -17,7 +17,7 @@ $homework_info = $sparent->get_homeworks($sparent->get_current_child());
 //{"HomeworkID":1,"HomeworkDescription":"desc1","HomeworkDeadline":"2020-01-08","TopicName":"History"}
 
 # Create custom array that will be used for GUI
-# HP: max 10 subject per class (otherwise just add some colors)
+# HP: max 10 subjects per class (otherwise just add some colors)
 $color_list = ["red", "white", "silver", "olive", "navy", "purple", "green", "orange", "blue", "yellow"];
 $topic_color_assoc = array();
 $custom_array_homew = array();
