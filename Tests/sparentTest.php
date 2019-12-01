@@ -92,7 +92,7 @@ class sparentTest extends TestCase
 
     public function testGet_current_child()
     {
-        $_SESSION["parentID"] = 1;
+        $_SESSION["curChild"] = 2;
         $parentObj = new sparent();
         $this->assertEquals(2, $parentObj->get_current_child(), $this->printErrorMessage("testGet_current_child",""));
     }
