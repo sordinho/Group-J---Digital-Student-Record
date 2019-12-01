@@ -103,7 +103,8 @@ CREATE TABLE `TopicRecord` (
         // TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
         // Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
         $conn = $this->connectMySQL();
-        $teacherID = $this->get_teacher_ID();
+        //$teacherID = $this->get_teacher_ID();
+        $teacherID = $_SESSION['teacherID'];
 
         // todo manage class selection
         if ($selectedClass) {
@@ -127,8 +128,9 @@ CREATE TABLE `TopicRecord` (
             $dummy["TopicDescription"] = "No topic for this teacher";
             array_push($topics, $dummy);
         } else {
-            $row = $res->fetch_assoc();
-            array_push($topics, $row);
+            while( $row = $res->fetch_assoc()) {
+                array_push($topics, $row);
+            }
         }
         return $topics;
     }
@@ -139,9 +141,32 @@ CREATE TABLE `TopicRecord` (
         return isset($_SESSION['teacherID']) ? $_SESSION['teacherID'] : -1;
     }
 
+
+    public function get_assigned_classes_names(){
+        $classes = array();
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT DISTINCT ttc.SpecificClassID as ClassID, sc.YearClassID as YearClass, sc.Section as Section 
+                                      from TopicTeacherClass ttc, SpecificClass as sc 
+                                      WHERE sc.ID = ttc.SpecificClassID and TeacherID=?");
+        $teacherID = $this->get_teacher_ID();
+        $stmt->bind_param('i', $teacherID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->num_rows <= 0) {
+            return false;
+        } else {
+            while ($row = $res->fetch_assoc()) {
+                array_push($classes, $row);
+            }
+        }
+        return $classes;
+
+    }
+
     /*
      * get ClassID, TopicName, TopicDescription for a given teacherID
      */
+
     public function get_assigned_classes()
     {
         $classes = array();
@@ -156,8 +181,9 @@ CREATE TABLE `TopicRecord` (
         if ($res->num_rows <= 0) {
             return false;
         } else {
-            $row = $res->fetch_assoc();
-            array_push($classes, $row);
+            while ($row = $res->fetch_assoc()) {
+                array_push($classes, $row);
+            }
         }
         return $classes;
     }
