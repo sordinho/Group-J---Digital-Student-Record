@@ -131,11 +131,11 @@ OUT;
                                     <th>
                                     <div class="col-xs-12">
                                         <label for="date">Date</label>
-                                        <input type="date" id="date" name="date">
+                                        <input type="date" id="date" style="width: 110px;" name="date">
                                     </div>
                                     </th>
                                     <th>
-                                        <small>Double-check the date to avoid any mistake.<br>As a teacher, you are responsible for any incorrect information.</small>
+                                        <!--<small>Double-check the date to avoid any mistake.<br>As a teacher, you are responsible for any incorrect information.</small>-->
                                     </th>
                             </tr>';
 
