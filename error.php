@@ -37,12 +37,12 @@ if(array_key_exists($key, $messages)){
     <div class="alert alert-danger" role="warning">
         '.$messages[$key].' If you are in a hurry <a href="./index.php" class="alert-link">just click here!</a>
     </div> ';
-	$content .= "<meta http-equiv='refresh' content='105; url=" . PLATFORM_PATH . "' />";
+	$content .= "<meta http-equiv='refresh' content='5; url=" . PLATFORM_PATH . "' />";
 	$page->setContent($content);
 	$site->render();
 	exit();
 }
-if(isset($_SERVER['HTTP_REFERER']) && !isset($_GET['noref'])){//Se no ref è settato dopo l'errore non si torna alla pagina di referer
+if(isset($_SERVER['HTTP_REFERER']) && !isset($_GET['usergroup_redirect'])){//Se usergroup_redirect è settato dopo l'errore non si torna alla pagina di referer
 	$referer = $_SERVER['HTTP_REFERER'];
 }
 else{
