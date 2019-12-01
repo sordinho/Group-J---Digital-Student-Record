@@ -76,7 +76,7 @@ if (!isset($_POST["description"])) {
 						<textarea class="form-control" id="description" name="description" rows="3"></textarea>
 						</div>
 						<div class="form-group">
-						<label for="exampleFormControlTextarea1">Date</label>
+						<label for="exampleFormControlTextarea1">Deadline</label>
 						<input type="date" id="date" name="date">
 						</div>
 						<button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Confirm</button>	
