@@ -41,7 +41,7 @@ OUT;
 } else {
 
     //$classes = $teacher->get_assigned_classes();
-    $classes = $teacher->get_assigned_class_names();
+    $classes = $teacher->get_assigned_classes_names();
     $drop_down = "";
     for ($i = 0; $i < sizeof($classes); $i++) {
         $classID = $classes[$i]['ClassID'];
