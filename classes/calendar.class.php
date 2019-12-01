@@ -4,8 +4,6 @@
 class calendar
 {
 
-    private $hours_per_school_day = 6;
-
     public static function validate_date($date, $format = 'Y-m-d H:i:s'){
         $d = DateTime::createFromFormat($format, $date);
         // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
@@ -32,7 +30,7 @@ class calendar
         return true;
     }
 
-    public function get_hours_per_school_day() {
-        return $this->hours_per_school_day;
+    public static function get_hours_per_school_day() {
+        return 6; // aka hours_per_school_day
     }
 }

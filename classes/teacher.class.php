@@ -1,6 +1,7 @@
 <?php
 
 require_once 'user.class.php';
+require_once 'calendar.class.php';
 
 class teacher extends user
 {
@@ -250,28 +251,12 @@ CREATE TABLE `TopicRecord` (
         $teacherID = $_SESSION['teacherID'];
 
         $conn = $this->connectMySQL();
-        $sql = "    SELECT COUNT(*) 
-                    FROM TopicTeacherClass, Student
-                    WHERE TopicTeacherClass.TeacherID = $teacherID
-                    AND TopicTeacherClass.TopicID = $subjectID
-                    AND Student.ID = $studentID
-                    AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
 
-        if ($result = $conn->query($sql)) {
-            $row = $result->fetch_array();
-            $teachInThatClass = $row[0];
-
-            $result->close();
-
-            if ($teachInThatClass == 1) {
-                $sql = $conn->prepare("INSERT INTO MarksRecord (StudentID, Mark, TeacherID, TopicID, Timestamp, Laude) VALUES (?,?,?,?,?,?);");
-                $sql->bind_param('iiiisi', $studentID, $mark, $_SESSION['teacherID'], $subjectID, $timestamp, $laude);
-                return $sql->execute();
-            } else {
-                return false;
-            }
+        if ($this->is_teacher_of_the_student($studentID)) {
+            $sql = $conn->prepare("INSERT INTO MarksRecord (StudentID, Mark, TeacherID, TopicID, Timestamp, Laude) VALUES (?,?,?,?,?,?);");
+            $sql->bind_param('iiiisi', $studentID, $mark, $_SESSION['teacherID'], $subjectID, $timestamp, $laude);
+            return $sql->execute();
         } else {
-            printf("Error message: %s\n", $conn->error);
             return false;
         }
     }
@@ -290,7 +275,7 @@ CREATE TABLE `TopicRecord` (
         $y_m_d = date("Y-m-d",strtotime($timestamp));
         $classID = $this->is_teacher_of_the_student($studentID);
         //$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
-        if($classID != false && $classID > 0 && $this->student_was_absent($y_m_d,$studentID) == false){
+        if($classID != false and $classID > 0 and $this->student_was_absent($y_m_d,$studentID) == false){
             $conn = $this->connectMySQL();
             $sql ="INSERT INTO notpresentrecord (ID,StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (null,?,?,?,0,0);";
             $stmt = $conn->prepare($sql);
@@ -384,42 +369,30 @@ CREATE TABLE `TopicRecord` (
         if (!calendar::validate_date($timestamp)) return false;
 
         $y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
-
         $hours_per_school_day = calendar::get_hours_per_school_day();
 
         $conn = $this->connectMySQL();
-        $sql1 = "   SELECT COUNT(*)
-                    FROM TopicTeacherClass, Student
-                    WHERE TopicTeacherClass.TeacherID = $teacherID
-                    AND Student.ID = $studentID
-                    AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
 
-        $sql2 = "   SELECT COUNT(*)
+        $sql = "   SELECT COUNT(*)
                     FROM NotPresentRecord
                     WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
                     AND NotPresentRecord.StudentID = '$studentID'
                     AND ExitHour = 0";
 
+        if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
 
-        if ($result1 = $conn->query($sql1) and $result2 = $conn->query($sql2)) {
-            $row = $result1->fetch_array();
-            $teach_in_that_class = $row[0];
-            $result1->close();
-
-            $row = $result2->fetch_array();
+            $row = $result->fetch_array();
             $absent = $row[0]; //it means multiple possibilities: late arrival, absent, early exit...
-            $result2->close();
+            $result->close();
 
-            if ($teach_in_that_class and $absent) {
+            if ($absent) {
                 $sql = $conn->prepare("UPDATE NotPresentRecord SET Late = 1, ExitHour = $hours_per_school_day WHERE StudentID = ? AND Date = ?");
                 $sql->bind_param('is', $studentID, $y_m_d_timestamp);
                 return $sql->execute();
-            } else if ($teach_in_that_class and !$absent) {
-                $sql = $conn->prepare("UPDATE NotPresentRecord SET Late = 1 WHERE StudentID = ? AND Date = ?");
-                $sql->bind_param('i', $studentID);
-                return $sql->execute();
             } else {
-                return false;
+                $sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',1,$hours_per_school_day)");
+                $sql->bind_param('ii', $studentID, $classID);
+                return $sql->execute();
             }
         } else {
             printf("Error message: %s\n", $conn->error);
@@ -441,7 +414,6 @@ CREATE TABLE `TopicRecord` (
 
         if ($stmt == false)
             return false;
-
 
         $actual_date = strtotime(date("Y-m-d H:i:s"));
         // given unix timestamp
