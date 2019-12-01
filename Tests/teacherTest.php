@@ -76,12 +76,10 @@ class teacherTest extends TestCase {
 
 	public function testGet_students_by_class_id() {
         $this->assertTrue(true);
-
 	}
 
 	public function testGet_assigned_classes(){
         $this->assertTrue(true);
-
 	}
 
 	public function testInsert_grade() {

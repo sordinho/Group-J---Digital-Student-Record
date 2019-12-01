@@ -56,7 +56,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
             $child_info = array();
             $child_count = 0;
 
-        }elseif($child_n > 0){
+        } else if ($child_n > 0){
             if (sizeof($row) != 1)  # after a parent with N children there should be 5 record with their Fiscal code (no more no less)
                 die("You have an inconsistent csv file");
             $child_info['cf_'.$child_count] = $row[0];
@@ -65,7 +65,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
             // Check if we are at the last child, if so perform the parent inserts
             if($child_n == 0){
                 // If the insert of user was successful we now need to insert parent with linked FK
-                $res = $officer->add_new_parent($userID,$child_info,$child_N);
+                $res = $officer->add_new_parent($userID,$child_info,$child_n);
                 if(!$res){
                     // On failure use a workaround by trying to remove that user to avoid inconsistent status in the DB
                     if(!$officer->remove_user($userID)){
