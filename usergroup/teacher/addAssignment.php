@@ -58,10 +58,6 @@ if (!isset($_POST["description"])) {
         $content = '<div class="form-group">
 					<form method="POST">
 						<div class="form-group">
-						<label for="Title">Title of the Assignment</label>
-						<input type="text" class="form-control" name="title" id="title" placeholder="Exercises on Lagrangian Relaxation">
-						</div>
-						<div class="form-group">
 						<label for="exampleFormControlSelect2">Subject select</label>
 						<select class="custom-select" name="topicID" id="topicID">
 							' . $topic_list . '
