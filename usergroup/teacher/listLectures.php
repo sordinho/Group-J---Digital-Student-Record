@@ -88,9 +88,14 @@ OUT;
 }else {
 // Should be moved to other page and just linked in the menu
 
-	$content = '
+	$content = '<div class="card">
+                <h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+                    <strong>List of Lectures</strong>
+                </h5>
+                <div class=\"card-body\">
+                <form>
   <table class="table table-striped">
-    <thead style="background-color:rgba(108,108,108,0.9);color:white">
+    <thead>
       <tr>
         <th scope="col">Description</th>
         <th scope="col">Subject</th>
@@ -112,7 +117,9 @@ OUT;
 
 	$content .= '
     </tbody>
-  </table>';
+  </table>
+  </form>
+  </div>';
 
 
 }
