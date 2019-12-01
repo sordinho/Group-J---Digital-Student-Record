@@ -445,8 +445,8 @@ CREATE TABLE `TopicRecord` (
         // given unix timestamp
         $assignment_date = strtotime($timestamp);
         // secondi in una settimana
-        if ($assignment_date>$actual_date)
-            return false;
+        //if ($assignment_date>$actual_date)
+          //  return false;
 
         //$stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $assignmentDescription, $topicID, $classID);
         $stmt->bind_param('siisi', $assignmentDescription,$classID, $_SESSION['teacherID'], $timestamp,  $topicID );
