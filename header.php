@@ -183,6 +183,9 @@ echo '<!-- Modal Login -->
                                 <label class="btn btn-outline-secondary">
                                     <input type="radio" name="usergroup" value="officer">Officer
                                 </label>
+                                <label class="btn btn-outline-secondary">
+                                    <input type="radio" name="usergroup" value="admin">Admin
+                                </label>
                             </div>
                                 
                             <div class="checkbox">
