@@ -14,18 +14,24 @@ if (!$sparent->is_logged() ) {
 	exit();
 }
 # If user is correctly authenticated:
-$content = '
-<table class="table">
-  <thead style="background-color:rgba(108,108,108,0.9);color:white">
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Grade</th>
-      <th scope="col">Subject</th>
-      <th scope="col">Professor</th>
-    </tr>
-  </thead>
-  <tbody>';
 $cur_child = $sparent->get_current_child();
+$content = '<ul class="list-group">
+            <div class="card">
+                <h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+                    <strong>'.$sparent->get_child_stamp_by_id($cur_child).'</strong>
+                </h5>
+                <div class=\"card-body\">
+                <form>
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Grade</th>
+                          <th scope="col">Subject</th>
+                          <th scope="col">Professor</th>
+                        </tr>
+                      </thead>
+                      <tbody>';
 
 //Note: a warning message is already displayed in the index, so for now an ugly die is enough
 if ($cur_child == -1) {
@@ -46,7 +52,11 @@ if ($grades) {
   }
   $content .= '
     </tbody>
-  </table>';
+  </table>
+  </form>
+  </div>
+  </div>
+  </ul>';
 }
 
 

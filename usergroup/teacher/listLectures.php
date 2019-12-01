@@ -89,7 +89,7 @@ OUT;
 // Should be moved to other page and just linked in the menu
 
 	$content = '
-  <table class="table">
+  <table class="table table-striped">
     <thead style="background-color:rgba(108,108,108,0.9);color:white">
       <tr>
         <th scope="col">Description</th>
@@ -104,9 +104,9 @@ OUT;
 		//ttc.SpecificClassID as ClassID, tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription
 		$title = substr($row['TopicDescription'], 0, 30) . "..."; // tODO: remove if title added to db
 		$content .= '<tr>
-        <th class="border" scope="row"><a class="alert-link" href="listLectures.php?action=edit&lectureID='.$row['RecordID'].'">' . $title . '</a></th>
-        <td class="border" >' . $row['TopicName'] . '</td>
-        <td class="border" >' . $row['TimeStamps'] . '</td>
+        <th scope="row"><a class="alert-link" href="listLectures.php?action=edit&lectureID='.$row['RecordID'].'">' . $title . '</a></th>
+        <td>' . $row['TopicName'] . '</td>
+        <td>' . $row['TimeStamps'] . '</td>
       </tr>';
 	}
 
