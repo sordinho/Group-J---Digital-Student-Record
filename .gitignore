@@ -10,4 +10,5 @@ vendor/
 Tests/TestFoo.php
 
 Tests/.phpunit.result.cache
+.phpunit.result.cache
 phpinfo.php
