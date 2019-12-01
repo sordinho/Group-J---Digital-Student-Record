@@ -303,7 +303,7 @@ CREATE TABLE `TopicRecord` (
         //$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
         if($classID != false and $classID > 0 and $this->student_was_absent($y_m_d,$studentID) == false){
             $conn = $this->connectMySQL();
-            $sql ="INSERT INTO notpresentrecord (ID,StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (null,?,?,?,0,0);";
+            $sql ="INSERT INTO NotPresentRecord (ID,StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (null,?,?,?,0,0);";
             $stmt = $conn->prepare($sql);
             //$ret.=" - stmt : ".$stmt->sqlstate;
             if($stmt){
@@ -363,9 +363,9 @@ CREATE TABLE `TopicRecord` (
     public function student_was_absent($Y_m_d,$studentID){
         $conn = $this->connectMySQL();
         $sql2 = "SELECT *
-                 FROM notpresentrecord
-                 WHERE notpresentrecord.Date = ?
-                 AND notpresentrecord.StudentID = ?
+                 FROM NotPresentRecord
+                 WHERE NotPresentRecord.Date = ?
+                 AND NotPresentRecord.StudentID = ?
                  AND ExitHour = 0;";
         $stmt = $conn->prepare($sql2);
         if($stmt){
@@ -436,8 +436,8 @@ CREATE TABLE `TopicRecord` (
      */
     public function insert_new_assignment($assignmentDescription, $topicID, $timestamp, $classID) {
         $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("INSERT INTO Assignment (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?);");
-
+        //$stmt = $conn->prepare("INSERT INTO Homework (TeacherID, Deadline, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?);");
+        $stmt = $conn->prepare("INSERT INTO Homework (Description, SpecificClassID, TeacherID, Deadline, TopicID) VALUES (?,?,?,?,?);");
         if ($stmt == false)
             return false;
 
@@ -448,7 +448,8 @@ CREATE TABLE `TopicRecord` (
         if ($assignment_date>$actual_date)
             return false;
 
-        $stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $assignmentDescription, $topicID, $classID);
+        //$stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $assignmentDescription, $topicID, $classID);
+        $stmt->bind_param('siisi', $assignmentDescription,$classID, $_SESSION['teacherID'], $timestamp,  $topicID );
         return $stmt->execute();//True || False
     }
     // Override of parent method, also check if the id was sent correctly
