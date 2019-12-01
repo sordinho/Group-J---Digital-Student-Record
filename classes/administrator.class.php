@@ -104,10 +104,17 @@ class administrator extends user {
 		return true;
 
 	}
-	// verify user is administrator should *NOT* be used, was in user.class, where it should stay for sure
-	// but it should use, use instad admin->is_logged only. I hadn't deleted for possible compatible issues (could be called in the code)
+
+	// Check if user is an admin. Set at login with set_admin()
 	public function is_admin() {
-		return isset($_SESSION['usergroup']) ? $_SESSION['usergroup']=="admin" : ''; 
+		return isset($_SESSION['admin']) ? $_SESSION['admin'] : false ;
+	}
+
+	// Override of parent method, just check if was set admin in session
+	public function is_logged()
+	{
+		$cond = parent::is_logged() && $this->is_admin();
+		return $cond;
 	}
 	
 }

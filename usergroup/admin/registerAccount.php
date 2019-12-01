@@ -9,7 +9,7 @@ $site->setPage($page);
 
 $administrator = new administrator();
 
-if (!$administrator->is_logged() ) {
+if (!$administrator->is_logged()) {
 	header("location: /error.php?errorID=19");
 	exit();
 }else {
