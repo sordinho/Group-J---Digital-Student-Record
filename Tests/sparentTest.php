@@ -106,7 +106,8 @@ class sparentTest extends TestCase
 
     public function testRetrieve_and_register_childs()
     {
-        $_SESSION["parentID"] = 1;
+        $_SESSION['parentID'] = 1;
+        $_SESSION['id']=1;
         $parentObj = new sparent();
         $parentObj->retrieve_and_register_childs();
         $this->assertEquals(1,$_SESSION['childrenInfo']['ParentID'],$this->printErrorMessage("testRestrieve_and_register_childs","ERROR IN STUDENT ID"));

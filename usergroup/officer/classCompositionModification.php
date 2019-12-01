@@ -28,7 +28,7 @@ if (isset($_GET['classID'])) {
         $content.="
             <div class=\"card\">
                 <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9)\">
-                    <strong>Students List</strong>
+                    <strong>Students List of Class: ".$officer->get_class_stamp_by_id($_SESSION["classID"])."</strong>
                 </h5>
                 <div class=\"card-body\">
                 ";

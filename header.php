@@ -55,9 +55,9 @@ switch ($_SESSION["usergroup"]) {
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./listLectures.php"><i class="fas fa-bookmark mx-3"></i><span class="text-nowrap mx-2">List Lectures</span></a></li>';
 		$hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addAssignment.php"><i class="fas fa-user-clock mx-3"></i><span class="text-nowrap mx-2">Add Assignment</span></a></li>';
 		#Student specific actions
-		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Student actions</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+		$hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Student Actions</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 								<div class="dropdown-menu border-0 animated fadeIn" role="menu">
-								<a class="dropdown-item text-white" role="presentation" href="./insertGrades.php"><span>Assign grades</span></a>
+								<a class="dropdown-item text-white" role="presentation" href="./insertGrades.php"><span>Assign Grades</span></a>
 								<a class="dropdown-item text-white" role="presentation" href="./addAbsence.php"><span>Record Presence</span></a>';
 
         break;
