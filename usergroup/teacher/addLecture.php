@@ -52,7 +52,7 @@ if (!isset($_POST["description"])) {
             $topic_list .= "<option value='{$topic['TopicID']}'>" . $topic['TopicName'] . "</option>";
         }
 
-        $classes = $teacher->get_assigned_classes();
+        $classes = $teacher->get_assigned_classes_names();
         foreach ($classes as $class) {
             $class_str = $class['YearClass'] . $class['Section'];
             $class_list .= "<option value='{$class['ClassID']}'>" . $class_str . "</option>";
