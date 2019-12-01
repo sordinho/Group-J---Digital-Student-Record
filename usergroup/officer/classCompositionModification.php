@@ -27,8 +27,8 @@ if (isset($_GET['classID'])) {
     } else {
         $content.="
             <div class=\"card\">
-                <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9)\">
-                    <strong>Students List</strong>
+                <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
+                    <strong>Students List of Class: ".$officer->get_class_stamp_by_id($_SESSION["classID"])."</strong>
                 </h5>
                 <div class=\"card-body\">
                 ";
@@ -47,8 +47,8 @@ if (isset($_GET['classID'])) {
         --></script>";
         $content.="
                     <form>
-                    <table class=\"table table - sm\">
-                        <thead>
+                    <table class=\"table table-striped\">
+                        <thead >
                         <tr>
                             <th scope=\"col\">LastName</th>
                             <th scope=\"col\">Name</th>
@@ -76,14 +76,14 @@ if (isset($_GET['classID'])) {
     $ustudents = $officer->retrieve_classless_students();
     $content.="
             <div class=\"card\">
-                <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9)\">
+                <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
                     <strong>Students without class</strong>
                 </h5>
                 <div class=\"card-body\">
                 ";
     $content.="
                     <form>
-                    <table class=\"table table - sm\">
+                    <table class=\"table table-striped\">
                         <thead>
                         <tr>
                             <th scope=\"col\">LastName</th>

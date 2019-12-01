@@ -90,7 +90,7 @@ OUT;
 
 	$content = '
   <table class="table">
-    <thead style="background-color:rgba(108,108,108,0.9)">
+    <thead style="background-color:rgba(108,108,108,0.9);color:white">
       <tr>
         <th scope="col">Description</th>
         <th scope="col">Subject</th>
