@@ -40,7 +40,7 @@ OUT;
 } elseif ($_GET['action'] == "edit" && isset($_GET['lectureID'])) {// is_logged should extend the base in user
 	# Show form with default value equals to that in the DB for the given ID
 	$lecture_info = $teacher->get_lecture_by_id($_GET['lectureID']);
-	$lecture_info["Title"] = substr($lecture_info['TopicDescription'], 0, 16) . "...";
+	$lecture_info["Title"] = substr($lecture_info['TopicDescription'], 0, 16);// . "...";
 
 
 	$content = '
