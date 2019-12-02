@@ -303,7 +303,7 @@ CREATE TABLE `TopicRecord` (
         //$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
         if($classID != false and $classID > 0 and $this->student_was_absent($y_m_d,$studentID) == false){
             $conn = $this->connectMySQL();
-            $sql ="INSERT INTO NotPresentRecord (ID,StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (null,?,?,?,0,0);";
+            $sql ="INSERT INTO NotPresentRecord (ID,StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (NULL,?,?,?,0,0);";
             $stmt = $conn->prepare($sql);
             //$ret.=" - stmt : ".$stmt->sqlstate;
             if($stmt){
@@ -326,21 +326,20 @@ CREATE TABLE `TopicRecord` (
     public function is_teacher_of_the_student($studentID){
         $teacherID = $_SESSION['teacherID'];
         $conn = $this->connectMySQL();
-        $sql1 = "   SELECT COUNT(*),TopicTeacherClass.SpecificClassID
+        $sql1 = "   SELECT TopicTeacherClass.SpecificClassID
                     FROM TopicTeacherClass, Student
-                    WHERE TopicTeacherClass.TeacherID = $teacherID
+                    WHERE TopicTeacherClass.TeacherID = ? 
                     AND Student.ID = ?
                     AND TopicTeacherClass.SpecificClassID = Student.SpecificClassID";
         $stmt = $conn->prepare($sql1);
+
         if($stmt){
-            $stmt->bind_param('i',$studentID);
+            $stmt->bind_param('ii',$teacherID, $studentID);
             $stmt->execute();
             $res = $stmt->get_result();
             if($res->num_rows>0){
                 $row = $res->fetch_row();
-                if($row[0]>0){
-                    return $row[1]; //return the specific class ID, needed for registering a new absence
-                }
+                return $row[0];
             }else{
                 return false;
             }
