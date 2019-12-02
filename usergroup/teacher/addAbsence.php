@@ -128,10 +128,10 @@ OUT;
         }
         // Add date field
         $table_content .= ' <tr>
-                                    <th>
+                                    <th colspan="2">
                                     <div class="col-xs-12">
                                         <label for="date">Date</label>
-                                        <input type="date" id="date" style="width: 110px;" name="date">
+                                        <input type="date" id="date" class="form-control" style="width: 150px;" name="date">
                                     </div>
                                     </th>
                                     <th>
