@@ -14,6 +14,11 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 - 40 StoryPoints out of 43
 - [Retrospective](https://docs.google.com/presentation/d/1rePNnXa-uKxZ5X8VvkPPjaG4cFXc6gZvnldOUE48JQI/edit?usp=sharing)
 
+### 03/12/2019 - Release 1
+- [Docker Image](https://hub.docker.com/repository/docker/groupj/digital_student_record)
+- Docker command: 
+    - ``` docker run --rm -p 80:80 groupj/digital_student_record:r1 ```
+
 ## Use cases, Personas collection
 
 [Use cases](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/UseCases)
