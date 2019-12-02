@@ -71,6 +71,7 @@ mysql -uroot -e "CREATE USER 'softeng2'@'localhost' IDENTIFIED BY 'softeng2';"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'softeng2'@'localhost';"
 mysql -uroot -e "FLUSH PRIVILEGES;"
 curl http://softeng2.my.to/site_config2.txt -o site_config.php
+service postfix start
 
 # Run Apache:
 if [ $LOG_LEVEL == 'debug' ]; then
