@@ -165,11 +165,29 @@ class teacherTest extends TestCase {
 		// Student not in the class teached by teacher in object
 		$this->assertFalse($teacherObject->register_absence(11, $dateActualDate));
 
-		
+
 
 
 
 
 	}
 
+    public function test_register_late_arrival(){
+	    /*INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `Late`, `ExitHour`) VALUES
+(1, 1, 1, '2019-11-28', 1, 4),
+(2, 2, 1, '2019-11-28', 0, 0),
+(3, 3, 1, '2019-11-28', 0, 4),
+(4, 2, 1, '2020-01-08', 0, 0),
+(5, 2, 1, '2020-01-09', 1, 5);
+*/
+        $_SESSION["teacherID"] = 1;
+	    $studentID = 2;
+	    $teacher = new teacher();
+	    $timestamp = date("Y-m-d H:i:s",mktime(9,00,00,11,28,2019));
+	    $this->assertTrue($teacher->register_late_arrival($studentID,$timestamp));
+	    $timestamp = date("Y-m-d H:i:s",mktime(9,00,00,11,30,2019));
+        $this->assertTrue($teacher->register_late_arrival($studentID,$timestamp));
+        $this->assertFalse($teacher->register_late_arrival($studentID,null));
+        $this->assertFalse($teacher->register_late_arrival(null,$timestamp));
+    }
 }
