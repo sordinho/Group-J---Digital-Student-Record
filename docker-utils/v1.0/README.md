@@ -79,7 +79,7 @@ docker push yourhubusername/repository
 docker push sordinho/digital_student_record
 ```
 
-## Usefull commands
+## Useful commands
 
 - List containers
 

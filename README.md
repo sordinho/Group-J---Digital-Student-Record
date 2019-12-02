@@ -18,6 +18,7 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 - [Docker Image](https://hub.docker.com/repository/docker/groupj/digital_student_record)
 - Docker command: 
     - ``` docker run --rm -p 80:80 groupj/digital_student_record:r1 ```
+    - More details [HERE](/docker-utils/v2.0/README.md)
 
 ## Use cases, Personas collection
 
