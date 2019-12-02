@@ -150,4 +150,26 @@ class teacherTest extends TestCase {
 
     }
 
+    public function testRegister_absence(){
+		$_SESSION["teacherID"] = 1;
+		$teacherObject = new Teacher();
+		$dateActualDate = date("Y-m-d H:i:s");
+		$studentID = 1;
+
+		// Wrong date
+		$this->assertFalse($teacherObject->register_absence($studentID, -1));
+
+		// Wrong studentID
+		$this->assertFalse($teacherObject->register_absence(-1, $dateActualDate));
+
+		// Student not in the class teached by teacher in object
+		$this->assertFalse($teacherObject->register_absence(11, $dateActualDate));
+
+		
+
+
+
+
+	}
+
 }
