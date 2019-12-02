@@ -13,7 +13,7 @@ if(!$officer ->is_logged() ){
 	exit();
 }
 
-//if a class has been selected loads the list of students of the class so that officer can modify it
+//if a class has been selected loads the list of students of the class so that the officer can modify it
 if (isset($_GET['classID'])) {
     $content .= "<ul class=\"list-group\">";
 
@@ -27,10 +27,10 @@ if (isset($_GET['classID'])) {
     } else {
         $content.="
             <div class=\"card\">
-                <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
+                <h2 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
                     <strong>Students List of Class: ".$officer->get_class_stamp_by_id($_SESSION["classID"])."</strong>
-                </h5>
-                <div class=\"card-body\">
+                </h2>
+                <div class=\"card-body  px-lg-5 pt-0 mt-md-5\">
                 ";
         // two js function to add and remove
         $content .=
@@ -75,11 +75,11 @@ if (isset($_GET['classID'])) {
     // Print now the second table (to add student to class)
     $ustudents = $officer->retrieve_classless_students();
     $content.="
-            <div class=\"card\">
-                <h5 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
+            <div class=\"card mt-md-5\">
+                <h2 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
                     <strong>Students without class</strong>
-                </h5>
-                <div class=\"card-body\">
+                </h2>
+                <div class=\"card-body  px-lg-5 pt-0 mt-md-5\">
                 ";
     $content.="
                     <form>
@@ -130,7 +130,7 @@ if (isset($_GET['classID'])) {
 
 }else {
     $content = "<div class=\"card\">
-                <div class=\"card-body \">";
+                <div class=\"card-body  px-lg-5 pt-0 mt-md-5 \">";
     $content .=
 
         "<script type=\"text/javascript\"><!--
@@ -158,7 +158,7 @@ function displayClass(elem){
                         </div>
 OUT;
     } else {
-        //for every student, creates the option so that officer can select which class wants to modify
+        //for every student, creates the option so that the officer can select which class wants to modify
         foreach ($classes as $class) {
             if($class['ID']!=-1)
                 $content .= "<option value=".$class['ID'].">".$class['YearClassID']." ".$class['Section']."</option>";
@@ -176,4 +176,3 @@ OUT;
 
 $page->setContent($content);
 $site->render();
-//add_student_to_class($studentID, $classID)

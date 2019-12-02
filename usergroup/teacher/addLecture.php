@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Add lecture");
+$page = new cpage("");
 $site->setPage($page);
 $teacher = new teacher();
 
@@ -58,38 +58,49 @@ if (!isset($_POST["description"])) {
             $class_list .= "<option value='{$class['ClassID']}'>" . $class_str . "</option>";
         }
 
-        $content = '<div class="form-group">
-					<form method="POST">
-						<div class="form-group">
-                            <label for="Title">Title of the lecture</label>
-                            <input type="text" class="form-control" name="title" id="title" placeholder="Course Introduction">
-						</div>
-						<div class="form-group">
-                            <label for="exampleFormControlSelect2">Subject select</label>
-                            <select multiple class="form-control" name="topicID" id="topicID">
-                                ' . $topic_list . '
-                            </select>
-						</div>
-				
-						<div class="form-group">
-                            <label for="exampleFormControlSelect3">Class select</label>
-                            <select multiple class="form-control" name="classID" id="classID">
-                                ' . $class_list . '
-                            </select>
-						</div>
-				
-						<div class="form-group">
-                            <label for="exampleFormControlTextarea1">Description of the lecture</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-						</div>
-						<div class="form-group">
-                            <label for="exampleFormControlTextarea1">Date</label>
-                            <input type="date" id="date" name="date">
+        $content = '
+
+                    <div class="card">
+                        <h2 style="background-color:rgba(108,108,108,0.9);color:white" class="card-header info-color white-text text-center py-4">
+                            <strong>Add lecture</strong>
+                        </h2>
+                        
+                        <div class="card-body px-lg-5 pt-0 mt-md-5">
+                            <div class="form-group">
+                                <form method="POST">
+                                    <div class="form-group">
+                                        <label for="Title">Title of the lecture</label>
+                                        <input type="text" class="form-control" name="title" id="title" placeholder="Course Introduction">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect2">Subject select</label>
+                                        <select class="form-control" name="topicID" id="topicID">
+                                            ' . $topic_list . '
+                                        </select>
+                                    </div>
+                            
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect3">Class select</label>
+                                        <select  class="form-control" name="classID" id="classID">
+                                            ' . $class_list . '
+                                        </select>
+                                    </div>
+                            
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Description of the lecture</label>
+                                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Date</label>
+                                        <input type="date" id="date" name="date">
+                                        </div>
+                                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Record</button>	
+                                    
+                                </form>
                             </div>
-						<button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Record</button>	
-						
-					</form>
-					</div>';
+                        </div>
+                    </div>
+                            ';
     }
 } else {
     //print("Now we should insert the topic");

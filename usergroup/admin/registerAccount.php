@@ -42,8 +42,7 @@ if (!$administrator->is_logged()) {
         <strong>Enter Master Data of User</strong>
     </h5>
     
-    <div class=\"card-body px-lg-5 pt-0\">
-        <p class=\"card-body info-color white-text text-center py-4\"></p>
+    <div class=\"card-body   px-lg-5 pt-0 mt-md-5 \">
         <form action='registerAccount.php' method='post'>
         
           <div class=\"form-row\">

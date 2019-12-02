@@ -64,7 +64,7 @@ if (isset($_GET['operation_result'])) {
     if (!isset($_GET['classID']) && empty($_POST)) {
         $content = '
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header" style="background-color:rgba(108,108,108,0.9);color:white">
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Choose a class
@@ -148,7 +148,7 @@ OUT;
                         </div>';
         $content = '
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header" style="background-color:rgba(108,108,108,0.9);color:white">
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             '.$yearSection.'

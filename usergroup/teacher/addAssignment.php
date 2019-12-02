@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Add Assignment");
+$page = new cpage("");
 $site->setPage($page);
 $teacher = new teacher();
 
@@ -55,7 +55,13 @@ if (!isset($_POST["description"])) {
             $class_list .= "<option value='{$class['ClassID']}'>" . $class_str . "</option>";
         }
 
-        $content = '<div class="form-group">
+
+        $content = '
+<div class="card">
+					<h2 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+						<strong>Add Assignment</strong>
+					</h2>
+					<div class="card-body  px-lg-5 pt-0 mt-md-5">
 					<form method="POST">
 						<div class="form-group">
 						<label for="exampleFormControlSelect2">Subject select</label>
@@ -82,7 +88,9 @@ if (!isset($_POST["description"])) {
 						<button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Confirm</button>	
 						
 					</form>
-					</div>';
+					</div>
+					</div>
+					';
     }
 } else {
 

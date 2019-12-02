@@ -5,7 +5,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Teacher list recorded topics");
+$page = new cpage("");
 $site->setPage($page);
 $teacher = new teacher();
 
@@ -42,31 +42,41 @@ OUT;
 	$lecture_info = $teacher->get_lecture_by_id($_GET['lectureID']);
 	$lecture_info["Title"] = substr($lecture_info['TopicDescription'], 0, 16) . "...";
 
-	$content = '<div class="form-group">
-                <form method="POST" action="listLectures.php?action=submit">
-                  <div class="form-group">
-                  <label for="Title">Title</label>
-                  <input type="text" class="form-control" value = "' . $lecture_info["Title"] . '" name="title" id="title" placeholder="Course Introduction">
-                  </div>
-                  <div class="form-group" hidden>
-                  <input type="text" class="form-control" value = "' . $lecture_info["TopicRecordID"] . '" name="ID" id="ID" placeholder="Course Introduction">
-                  </div>
-                  <div class="form-group">
-                  <label for="exampleFormControlSelect2">Subject</label>
-                  <input type="text" class="form-control" value = "' . $lecture_info["TopicName"] . '" name="TopicName" id="subject" disabled>
-                  </div>
-                  <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Description</label>
-                  <textarea class="form-control " id="description" name="CourseDescription" placeholder="CourseDescription" rows="3">'. $lecture_info["TopicDescription"] . '</textarea>
-                  </div>
-                  <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Date</label>
-                  <input type="text" class="form-control" id="date" value = "'.$lecture_info["TimeStamp"].'" name="date" disabled>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Confirm</button>
-                  
-                </form>
-                </div>';
+
+	$content = '
+				<div class="card">
+					<h2 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+						<strong>Lecture Modification</strong>
+					</h2>
+					<div class="card-body  px-lg-5 pt-0 mt-md-5">
+						<div class="form-group">
+							<form method="POST" action="listLectures.php?action=submit">
+							  <div class="form-group">
+							  <label for="Title">Title</label>
+							  <input type="text" class="form-control" value = "' . $lecture_info["Title"] . '" name="title" id="title" placeholder="Course Introduction">
+							  </div>
+							  <div class="form-group" hidden>
+							  <input type="text" class="form-control" value = "' . $lecture_info["TopicRecordID"] . '" name="ID" id="ID" placeholder="Course Introduction">
+							  </div>
+							  <div class="form-group">
+							  <label for="exampleFormControlSelect2">Subject</label>
+							  <input type="text" class="form-control" value = "' . $lecture_info["TopicName"] . '" name="TopicName" id="subject" disabled>
+							  </div>
+							  <div class="form-group">
+							  <label for="exampleFormControlTextarea1">Description</label>
+							  <textarea class="form-control " id="description" name="CourseDescription" placeholder="CourseDescription" rows="3">'. $lecture_info["TopicDescription"] . '</textarea>
+							  </div>
+							  <div class="form-group">
+							  <label for="exampleFormControlTextarea1">Date</label>
+							  <input type="text" class="form-control" id="date" value = "'.$lecture_info["TimeStamp"].'" name="date" disabled>
+							  </div>
+							  <button type="submit" class="btn btn-primary">Confirm</button>
+							  
+							</form>
+						</div>
+					</div>
+                </div>
+                ';
 
 } /*elseif ($_POST["description"]) {
 	# call function to edit editLecture(lectID, title, description, topicID?)
@@ -89,10 +99,10 @@ OUT;
 // Should be moved to other page and just linked in the menu
 
 	$content = '<div class="card">
-                <h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+                <h2 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
                     <strong>List of Lectures</strong>
-                </h5>
-                <div class=\"card-body\">
+                </h2>
+                <div class="card-body  px-lg-5 pt-0 mt-md-5">
                 <form>
   <table class="table table-striped">
     <thead>
