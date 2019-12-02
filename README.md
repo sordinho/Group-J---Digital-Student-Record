@@ -22,9 +22,9 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 
 ## Use cases, Personas collection
 
-[Use cases](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/UseCases)
+[Use cases](/UseCases/)
 
-[Personas](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/Personas)
+[Personas](Personas/)
 
 ## Trello Board :memo: :pushpin:
 
@@ -33,20 +33,6 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 ## Demo :computer:
 
 [You can see a demo by clicking here](http://softeng2.my.to)
-
-## Docker
-
-### Files
-
-- [Docker compose](docker-utils/v1.0/docker-compose.yml)
-
-### How to run
-
-```
-docker pull -a groupj/digital_student_record
-
-docker-compose up
-```
 
 ## The Team :busts_in_silhouette:
 
