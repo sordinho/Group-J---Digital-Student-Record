@@ -70,7 +70,7 @@ class administrator extends user {
 			case "teacher":
 				$queryInsert = 'INSERT INTO Teacher (MeetingHourID,UserID,FiscalCode) VALUES (?,?,?)';
                 $queryInsertSpecificTable = $mysqli->prepare($queryInsert);
-                echo "ID User: ".$IDinsertedUser." Fcode: ".$fcode;
+                //echo "ID User: ".$IDinsertedUser." Fcode: ".$fcode;
                 $queryInsertSpecificTable->bind_param("iis", $tempzero,$IDinsertedUser,$fcode);
 				break;
 			case "officer":
