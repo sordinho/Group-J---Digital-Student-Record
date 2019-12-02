@@ -59,15 +59,16 @@ ENV DATE_TIMEZONE UTC
 ENV TERM dumb
 
 # Copy path of src files to /var/www/html
-# COPY Documents\GitHub\Group-J---Digital-Student-Record /var/www/html
+COPY Group-J---Digital-Student-Record/ /var/www/html
+COPY main.cf /etc/postfix/
 COPY run-lamp.sh /usr/sbin/
 
 RUN a2enmod rewrite
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN chmod +x /usr/sbin/run-lamp.sh
-RUN chown -R www-data:www-data /var/www/html
+# RUN chown -R www-data:www-data /var/www/html
 
-VOLUME /var/www/html
+# VOLUME /var/www/html
 VOLUME /var/log/httpd
 VOLUME /var/lib/mysql
 VOLUME /var/log/mysql
@@ -81,3 +82,4 @@ CMD ["/usr/sbin/run-lamp.sh"]
 
 # Run command
 # docker run --rm -p 80:80 -e LOG_STDOUT=true -e LOG_STDERR=true -e LOG_LEVEL=debug -v C:\Users\david\Documents\GitHub\Group-J---Digital-Student-Record:/var/www/html dsr:test2
+# docker run --network="host" --rm  -p 80:80 -e LOG_STDOUT=true -e LOG_STDERR=true -e LOG_LEVEL=debug -v C:\Users\david\Documents\GitHub\Group-J---Digital-Student-Record:/var/www/html dsr:test2

@@ -32,12 +32,11 @@ fi
 if [ ! $LOG_STDOUT ]; then
 cat << EOB
     
-    **********************************************
-    *                                            *
-    *    Docker image: fauria/lamp               *
-    *    https://github.com/fauria/docker-lamp   *
-    *                                            *
-    **********************************************
+    ******************************************************
+    *                                                    *
+    *    Docker image: groupJ/digital_student_record     *
+    *                                                    *
+    ******************************************************
 
     SERVER SETTINGS
     ---------------
@@ -62,8 +61,9 @@ fi
 /usr/bin/mysqld_safe --timezone=${DATE_TIMEZONE}&
 
 # Our commands
-curl http://softeng2.my.to/main.cf.txt -o /etc/postfix/main.cf
-hostname --fqdn > /etc/mailname
+# curl http://softeng2.my.to/main.cf.txt -o /etc/postfix/main.cf
+# hostname --fqdn > /etc/mailname
+rm /var/www/html/index.html
 postfix reload
 mysql -uroot -e "CREATE DATABASE softeng2Final;"
 mysql -uroot softeng2Final < /var/www/html/softeng2Final.sql
@@ -71,6 +71,7 @@ mysql -uroot -e "CREATE USER 'softeng2'@'localhost' IDENTIFIED BY 'softeng2';"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'softeng2'@'localhost';"
 mysql -uroot -e "FLUSH PRIVILEGES;"
 curl http://softeng2.my.to/site_config2.txt -o site_config.php
+service postfix start
 
 # Run Apache:
 if [ $LOG_LEVEL == 'debug' ]; then
