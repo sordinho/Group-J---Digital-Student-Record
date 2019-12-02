@@ -160,7 +160,8 @@ OUT;
     } else {
         //for every student, creates the option so that officer can select which class wants to modify
         foreach ($classes as $class) {
-            $content .= "<option value=".$class['ID'].">".$class['YearClassID']." ".$class['Section']."</option>";
+            if($class['ID']!=-1)
+                $content .= "<option value=".$class['ID'].">".$class['YearClassID']." ".$class['Section']."</option>";
         }
     }
 
