@@ -5,7 +5,7 @@ $teacher = new teacher();
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Teacher");
+$page = new cpage("Insert grades for selected class");
 $site->setPage($page);
 
 if (!$teacher->is_logged() ) {
@@ -54,7 +54,7 @@ OUT;
 
         $content = <<<OUT
                 <div class="card text-center">
-                  <div class="card-header">
+                  <div class="card-header" style="background-color:rgba(108,108,108,0.9);color:white">
                     <div class="btn-group">
                   <button type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Choose a class
@@ -148,7 +148,7 @@ OUT;
                         </div>';
         $content = <<<OUT
                 <div class="card text-center">
-                  <div class="card-header">
+                  <div class="card-header" style="background-color:rgba(108,108,108,0.9);color:white">
                     <div class="btn-group">
                       <button type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         $yearSection

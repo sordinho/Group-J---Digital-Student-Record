@@ -37,12 +37,11 @@ if (!empty($_POST)) {
 	$content = "
 
 <div class=\"card\">
-    <h5 style=\"background-color:rgba(108,108,108,0.9);color:white\" class=\"card-header info-color white-text text-center py-4\">
+    <h2 style=\"background-color:rgba(108,108,108,0.9);color:white\" class=\"card-header info-color white-text text-center py-4\">
         <strong>Enter Student Master Data</strong>
-    </h5>
+    </h2>
     
-    <div class=\"card-body px-lg-5 pt-0\">
-        <p class=\"card-body info-color white-text text-center py-4\">Student</p>
+    <div class=\"card-body   px-lg-5 pt-0 mt-md-5\">
         <form action='studentEnrollment.php' method='post'>
           <div class=\"form-row\">
             <div class=\"form-group col-md-6\">
@@ -67,7 +66,7 @@ if (!empty($_POST)) {
             <div class=\"form-group col-md-6\">
               <!--<label for=\"gender\">Gender</label>-->
               <div class='form-check form-check-inline'>
-                <input class='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1'>
+                <input class='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1' checked>
                 <label class='form-check-label' for='inlineRadio1'>F</label>
               </div>
               <div class='form-check form-check-inline'>

@@ -288,7 +288,7 @@ class officer extends user
         $IDs = array();
         for ($i = 0; $i < $res->num_rows; $i++) {
             $row = $res->fetch_assoc();
-            $stamp=$row["YearClassID"]." ".$row["Section"];
+            $stamp=$row["YearClassID"]."°".$row["Section"];
             array_push($IDs, $row);
         }
         $res->close();

@@ -20,7 +20,7 @@ $content = '<ul class="list-group">
                 <h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
                     <strong>'.$sparent->get_child_stamp_by_id($cur_child).'</strong>
                 </h5>
-                <div class=\"card-body\">
+                <div class="card-body  px-lg-5 pt-0 mt-md-5">
                 <form>
                     <table class="table table-striped">
                       <thead>

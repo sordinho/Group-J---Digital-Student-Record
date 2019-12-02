@@ -84,7 +84,6 @@ OUT;
             $num = $_GET['childN'];
         $content .= <<<OUT
 <!-- Material form register -->
-<div class="card">
     <script type="text/javascript"><!--
     function displayChildrenForm(elem){
         let childNumber = parseInt(elem.value);
@@ -96,16 +95,21 @@ OUT;
         }
     }
     --></script>
-    <h5 style="background-color:rgba(108,108,108,0.9);color:white" class="card-header info-color white-text text-center py-4">
-        <strong>Enter parent master data</strong>
-    </h5>
 
-    <!--Card content-->
-    <div class="card-body px-lg-5 pt-0">
 
         <!-- Form -->
         <form class="text-center" style="color: #757575;" action="uploadParentCredentials.php" method="post">
-            <p class="card-body info-color white-text text-center py-4">Parent</p>
+        
+        
+        
+        
+        
+        
+        <div class="card mt-md-5">
+					<h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+						<strong>Parent</strong>
+					</h5>
+		<div class="card-body  px-lg-5 pt-0 mt-md-5">
             <div class="form-row">
                 <div class="col">
                     <!-- First name -->
@@ -134,18 +138,27 @@ OUT;
                 <label for="materialRegisterFormEmail">Number of children</label>
                 <input type="number" id="materialRegisterFormChildNumber" name="children" class="form-control" onchange="displayChildrenForm(this)" value="$num" min="1">
             </div>
+            </div>
+            </div>
+
 OUT;
 
         for ($i = 0; $i < $num; $i++) {
             $stud_num = $i+1;
             $content .= <<<OUT
-            <hr>
-            <p class="card-body info-color white-text text-center py-4">Student $stud_num</p>
+            <div class="card mt-md-5">
+					<h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+						<strong>Student $stud_num</strong>
+					</h5>
+		<div class="card-body  px-lg-5 pt-0 mt-md-5">
             <!-- CF -->
             <div class="md-form mt-0">
                 <label for="materialRegisterFormCF$i">Student fiscal code</label>
                 <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
             </div>
+</div>
+</div>
+
 OUT;
         }
         $content .= '
