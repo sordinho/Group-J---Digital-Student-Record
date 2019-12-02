@@ -300,7 +300,6 @@ CREATE TABLE `TopicRecord` (
             return false;
         $y_m_d = date("Y-m-d",strtotime($timestamp));
         $classID = $this->is_teacher_of_the_student($studentID);
-        print($classID);
         //$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
         if($classID != false and $classID > 0 and $this->student_was_absent($y_m_d,$studentID) == false){
             $conn = $this->connectMySQL();
