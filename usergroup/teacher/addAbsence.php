@@ -127,21 +127,16 @@ if (isset($_GET['operation_result'])) {
 OUT;
         }
         // Add date field
-        $table_content .= ' <tr>
-                                    <th colspan="2">
-                                    <div class="col-xs-12">
-                                        <label for="date">Date</label>
-                                        <input type="date" id="date" class="form-control" style="width: 150px;" name="date">
-                                    </div>
-                                    </th>
-                                    <th>
-                                        <!--<small>Double-check the date to avoid any mistake.<br>As a teacher, you are responsible for any incorrect information.</small>-->
-                                    </th>
-                            </tr>';
+        $table_content .= '
+                                    
+                                    </tbody>
+                                    </table>';
 
         $table_content .= '
-                        </tbody>
-                        </table>
+                            <div class="col-sm-12">
+                                        <label for="date">Date</label>
+                                        <input type="date" id="date" class="form-control" name="date">
+                            </div>
                             <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
                         </form>
                         </div>

@@ -100,7 +100,7 @@ OUT;
 
 	$content = '<div class="card">
                 <h2 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
-                    <strong>List of Lectures</strong>
+                    List of Lectures
                 </h2>
                 <div class="card-body  px-lg-5 pt-0 mt-md-5">
                 <form>
