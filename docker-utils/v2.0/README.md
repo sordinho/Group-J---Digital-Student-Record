@@ -4,7 +4,7 @@
 
 ## Running 
 0. First it is recommended to pull the image ``` docker pull groupj/digital_student_record:r1 ```
-1. Run in terminal ``` docker run --rm -p 80:80 groupj/digital_student_record:r1 ``` 
+1. Run in terminal ``` docker run --hostname docker-desktop --rm -p 80:80 groupj/digital_student_record:r1 ``` 
 2. Cross your fingers
 3. Go to [localhost](http://localhost)
 
