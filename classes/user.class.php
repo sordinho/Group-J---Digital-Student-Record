@@ -223,9 +223,9 @@ class user {
 	/* Error handling */
 	// Redirect to error.php (Error handler)
 	public function get_error($id, $noref = null) {
-		$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?message=$id' />";
+		$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?errorID=$id' />";
 		if (!empty($noref)) {
-			$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?message=$id&noref=1' />";
+			$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?errorID=$id&noref=1' />";
 		}
 		print $html;
 		//echo "url=".$this->base_url."/error.php?message=$id";
