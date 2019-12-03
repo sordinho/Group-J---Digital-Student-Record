@@ -69,10 +69,6 @@ if (!isset($_POST["description"])) {
                             <div class="form-group">
                                 <form method="POST">
                                     <div class="form-group">
-                                        <label for="Title">Title of the lecture</label>
-                                        <input type="text" class="form-control" name="title" id="title" placeholder="Course Introduction">
-                                    </div>
-                                    <div class="form-group">
                                         <label for="exampleFormControlSelect2">Subject select</label>
                                         <select class="form-control" name="topicID" id="topicID">
                                             ' . $topic_list . '
