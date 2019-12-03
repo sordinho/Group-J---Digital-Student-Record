@@ -47,9 +47,10 @@ OUT;
 				$message = wordwrap($message, 70, "\n");
 				// try to send mail
 				if (!defined('MAIL_DISABLE') || MAIL_DISABLE == FALSE){
-					if (mail($parent['Email'], "Access Credentials (DSR)", $message)) {
-						$succes = true;
-					}
+					$succes = mail($parent['Email'], "Access Credentials (DSR)", $message);
+				}
+				else{// if skip mail, let's assume it was sent 
+					$succes = true;
 				}
 			}
 		}
