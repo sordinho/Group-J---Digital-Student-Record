@@ -20,6 +20,9 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
     - ``` docker run --hostname docker-desktop --rm -p 80:80 groupj/digital_student_record ```
     - More details [HERE](/docker-utils/v2.0/README.md)
 
+## Usernames and password
+Usernames and passwords for testing purposes can be found [HERE](USERNAMES.md)
+
 ## Use cases, Personas collection
 
 [Use cases](/UseCases/)
