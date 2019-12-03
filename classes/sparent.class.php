@@ -23,7 +23,8 @@ class sparent extends user
         $stmt = $conn->prepare("SELECT t.Name, Mark, Timestamp, u.Surname 
                 FROM  Topic t, MarksRecord M, Teacher Te,User u
                 WHERE M.TeacherID = Te.ID AND Te.UserID=u.ID AND t.ID=M.TopicID
-                    AND M.StudentID = ?");
+                    AND M.StudentID = ?
+                ORDER BY Timestamp ");
         $stmt->bind_param('s', $childID);
         $stmt->execute();
         $res = $stmt->get_result();
