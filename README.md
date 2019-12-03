@@ -19,11 +19,12 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 - Docker command: 
     - ``` docker run --hostname docker-desktop --rm -p 80:80 groupj/digital_student_record ```
     - More details [HERE](/docker-utils/v2.0/README.md)
+- [Retrospective](https://docs.google.com/presentation/d/1NI0G7q5EtTMxp0J2yLQ2h8HVPYKR-rp4ryxRS_Cq3Sg/edit?usp=sharing)
 
-## Usernames and password
+## Usernames and password :e-mail: :paperclip:
 Usernames and passwords for testing purposes can be found [HERE](USERNAMES.md)
 
-## Use cases, Personas collection
+## Use cases, Personas collection :memo:
 
 [Use cases](/UseCases/)
 
@@ -37,7 +38,7 @@ Usernames and passwords for testing purposes can be found [HERE](USERNAMES.md)
 
 [You can see a demo by clicking here](http://softeng2.my.to)
 
-## The Team :busts_in_silhouette:
+## The Team :busts_in_silhouette: :trollface:
 
 - [Vittorio Di Leo](https://github.com/VittorioDiLeo)
 - [Riccardo Mamone](https://github.com/mmrichi)
