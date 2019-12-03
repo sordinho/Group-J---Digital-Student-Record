@@ -241,48 +241,6 @@ class user {
 	}
 
 
-	/*
-	public function sendEmail($to, $subject, $content, $name){
-		//Modifico php.ini per far si da utilizzare il protocollo smtp senza autenticazione.
-		ini_set('SMTP', 'smtp.mydomain.it');
-		ini_set('smtp_port', 25);
-		ini_set('sendmail_from', "info@mydomain.it");
-		//Controllo che l'email sia sintassicamente corretta.
-		if(!$this->is_email($to)) {
-			return false;
-		}
-		$subject = htmlspecialchars($subject);
-		// message
-		$message = '
-		<html>
-		<head>
-			<title>Grazie '.$name.'</title>
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		</head>
-		<body>'.
-			$content
-		.'</body><br><br>
-		<small>
-			Questa email è stata generata dal sito <a href=http://mydomain.it>colosi.it</a><br>
-			Per ogni altra informazione o per l\'eliminazione del proprio account andare sul sito o scrivere a<br>
-			info@mydomain.it</small>
-		</html>
-		';
-		// Modifico il Content-type poichè è una mail in formato html.
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-		// Aggiungo header per non mandarla in SPAM.
-		$headers .= 'To: '.htmlspecialchars($name).' <'.$to.'>' . "\r\n";
-		$headers .= 'From: Digital Student Recorder<info@mydomain.it>' . "\r\n";
-		// Uso la funzione mail per inviare.
-		if(mail($to, $subject, $message, $headers)){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}*/
-
 	/**
 	 * Generate a random string, using a cryptographically secure
 	 * pseudorandom number generator (random_int)
