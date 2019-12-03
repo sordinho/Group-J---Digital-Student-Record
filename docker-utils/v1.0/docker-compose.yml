@@ -9,10 +9,10 @@ services:
       - .:/application
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=3;ftBE>72h
+      - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=softeng2Final
       - MYSQL_USER=softeng2
-      - MYSQL_PASSWORD=3;ftBE>72h
+      - MYSQL_PASSWORD=
     ports:
       - "8082:3306"
   website:

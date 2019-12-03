@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Student Enrollment Page");
+$page = new cpage("");
 $site->setPage($page);
 $officer = new officer();
 
@@ -28,7 +28,7 @@ if (!empty($_POST)) {
 	} else {
 		$content = '
 			<div class="alert alert-danger" role="warning">
-			There was a problem enrollin the student <a href="./studentEnrollment.php" class="alert-link">just click here!</a>
+			There was a problem enrolling the student <a href="./studentEnrollment.php" class="alert-link">just click here!</a>
     		</div> ';
 		$content .= "<meta http-equiv='refresh' content='2' />";
 	}
@@ -38,7 +38,7 @@ if (!empty($_POST)) {
 
 <div class=\"card\">
     <h2 style=\"background-color:rgba(108,108,108,0.9);color:white\" class=\"card-header info-color white-text text-center py-4\">
-        <strong>Enter Student Master Data</strong>
+        Enroll a student
     </h2>
     
     <div class=\"card-body   px-lg-5 pt-0 mt-md-5\">

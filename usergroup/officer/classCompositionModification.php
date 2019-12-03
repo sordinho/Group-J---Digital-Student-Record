@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Class Composition Modification Page");
+$page = new cpage("");
 $site->setPage($page);
 
 $officer = new officer();
@@ -28,7 +28,7 @@ if (isset($_GET['classID'])) {
         $content.="
             <div class=\"card\">
                 <h2 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
-                    <strong>Students List of Class: ".$officer->get_class_stamp_by_id($_SESSION["classID"])."</strong>
+                    Students List of Class: ".$officer->get_class_stamp_by_id($_SESSION["classID"])."
                 </h2>
                 <div class=\"card-body  px-lg-5 pt-0 mt-md-5\">
                 ";
@@ -130,6 +130,10 @@ if (isset($_GET['classID'])) {
 
 }else {
     $content = "<div class=\"card\">
+
+                <h2 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
+                    Change class composition for:
+                </h2>
                 <div class=\"card-body  px-lg-5 pt-0 mt-md-5 \">";
     $content .=
 
@@ -141,11 +145,8 @@ function displayClass(elem){
     $content.="
                     <form>
                         <div class=\"input-group \">
-                            <div class=\"input-group-prepend\">
-                            <label class=\"input-group-text\" for=\"inputGroupSelect01\">Select The Class</label>
-                            </div>
                             <select class=\"custom-select\" id=\"inputGroupSelect01\" onchange='displayClass(value);'>
-                            <option selected>Choose The Class</option>";
+                            <option selected>Choose a class</option>";
 
 
     $classes = $officer->get_class_list();

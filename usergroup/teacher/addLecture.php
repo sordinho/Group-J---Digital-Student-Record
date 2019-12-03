@@ -62,16 +62,12 @@ if (!isset($_POST["description"])) {
 
                     <div class="card">
                         <h2 style="background-color:rgba(108,108,108,0.9);color:white" class="card-header info-color white-text text-center py-4">
-                            <strong>Add lecture</strong>
+                            Add lecture
                         </h2>
                         
                         <div class="card-body px-lg-5 pt-0 mt-md-5">
                             <div class="form-group">
                                 <form method="POST">
-                                    <div class="form-group">
-                                        <label for="Title">Title of the lecture</label>
-                                        <input type="text" class="form-control" name="title" id="title" placeholder="Course Introduction">
-                                    </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect2">Subject select</label>
                                         <select class="form-control" name="topicID" id="topicID">

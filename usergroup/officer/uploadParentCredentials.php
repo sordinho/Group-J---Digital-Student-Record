@@ -106,9 +106,9 @@ OUT;
         
         
         <div class="card mt-md-5">
-					<h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
-						<strong>Parent</strong>
-					</h5>
+					<h4 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+						Parent
+					</h4>
 		<div class="card-body  px-lg-5 pt-0 mt-md-5">
             <div class="form-row">
                 <div class="col">
@@ -147,9 +147,9 @@ OUT;
             $stud_num = $i+1;
             $content .= <<<OUT
             <div class="card mt-md-5">
-					<h5 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
-						<strong>Student $stud_num</strong>
-					</h5>
+					<h4 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+						#$stud_num Student 
+					</h4>
 		<div class="card-body  px-lg-5 pt-0 mt-md-5">
             <!-- CF -->
             <div class="md-form mt-0">

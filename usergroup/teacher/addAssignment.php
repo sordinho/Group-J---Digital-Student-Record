@@ -59,7 +59,7 @@ if (!isset($_POST["description"])) {
         $content = '
 <div class="card">
 					<h2 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
-						<strong>Add Assignment</strong>
+						Add Assignment
 					</h2>
 					<div class="card-body  px-lg-5 pt-0 mt-md-5">
 					<form method="POST">
@@ -83,7 +83,7 @@ if (!isset($_POST["description"])) {
 						</div>
 						<div class="form-group">
 						<label for="exampleFormControlTextarea1">Deadline</label>
-						<input type="date" id="date" name="date">
+						<input type="date" id="date" name="date" class="form-control">
 						</div>
 						<button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Confirm</button>	
 						
