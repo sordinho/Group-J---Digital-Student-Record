@@ -98,10 +98,10 @@ function createTables() {
 function dropTestDatabase() {
     $mysqli = TestsConnectMySQL();
 
-    if ($mysqli->query("DROP DATABASE " . TDBName) === TRUE)
-        echo "Database " . TDBName . " dropped successfully";
+    if ($mysqli->query("DROP DATABASE " . DBName) === TRUE)
+        echo "Database " . DBName . " dropped successfully";
     else
-        echo "Unable to drop database " . TDBName . ". ERROR: " . $mysqli->error;
+        echo "Unable to drop database " . DBName . ". ERROR: " . $mysqli->error;
 }
 
 function dropTables() {

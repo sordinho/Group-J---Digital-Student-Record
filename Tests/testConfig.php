@@ -1,6 +1,6 @@
 <?php
 
 /*This is a PHP Config file */
-define('TDBName', 'testsofteng2');
+define('DBName', 'testsofteng2');
 
 ?>
