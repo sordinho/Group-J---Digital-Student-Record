@@ -62,9 +62,10 @@ fi
 
 # Our commands
 # curl http://softeng2.my.to/main.cf.txt -o /etc/postfix/main.cf
-# hostname --fqdn > /etc/mailname
+hostname --fqdn > /etc/mailname
 rm /var/www/html/index.html
 postfix reload
+sleep 5
 mysql -uroot -e "CREATE DATABASE softeng2Final;"
 mysql -uroot softeng2Final < /var/www/html/softeng2Final.sql
 mysql -uroot -e "CREATE USER 'softeng2'@'localhost' IDENTIFIED BY 'softeng2';"
