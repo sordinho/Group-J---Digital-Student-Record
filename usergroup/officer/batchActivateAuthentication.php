@@ -45,9 +45,11 @@ OUT;
 				$message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: " . $parent['Email'] . "\nPassword: " . $pwd . "\nFor your security, please delete this message ASAP.";
 				$message .= "\nBest Regards\nThe school administration.";
 				$message = wordwrap($message, 70, "\n");
-				// try yo send
-				if (mail($parent['Email'], "Access Credentials (DSR)", $message)) {
-					$succes = true;
+				// try to send mail
+				if (!defined('MAIL_DISABLE') || MAIL_DISABLE == FALSE){
+					if (mail($parent['Email'], "Access Credentials (DSR)", $message)) {
+						$succes = true;
+					}
 				}
 			}
 		}
