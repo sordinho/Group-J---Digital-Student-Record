@@ -19,7 +19,7 @@ if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 	$content .= '<div class="article-clean">
                     <div class="d-flex justify-content-center">
                         <div class="spinner-grow text-warning" style="width: 10rem; height: 10rem;" role="status">
-                        <span class="sr-only">Loading...</span>
+                        	<span class="sr-only">Loading...</span>
                         </div>
                     </div>
             

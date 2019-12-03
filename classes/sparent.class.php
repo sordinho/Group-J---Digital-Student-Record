@@ -23,7 +23,8 @@ class sparent extends user
         $stmt = $conn->prepare("SELECT t.Name, Mark, Timestamp, u.Surname 
                 FROM  Topic t, MarksRecord M, Teacher Te,User u
                 WHERE M.TeacherID = Te.ID AND Te.UserID=u.ID AND t.ID=M.TopicID
-                    AND M.StudentID = ?");
+                    AND M.StudentID = ?
+                ORDER BY Timestamp ");
         $stmt->bind_param('s', $childID);
         $stmt->execute();
         $res = $stmt->get_result();
@@ -108,8 +109,8 @@ class sparent extends user
         if (!isset($childID)) return false;
 
         $conn = $this->connectMySql();
-        $is_valid_from =  calendar::validate_date($from_date);
-        $is_valid_to =  calendar::validate_date($to_date);
+        $is_valid_from =  calendar::validate_date($from_date, 'Y-m-d');
+        $is_valid_to =  calendar::validate_date($to_date, 'Y-m-d');
         //TODO: change this code snippet by avoiding repetition in validate_date
         if ($is_valid_from and $is_valid_to and $from_date < $to_date) {
             /*there are two dates which are not false and in a valid format*/

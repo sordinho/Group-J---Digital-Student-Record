@@ -28,8 +28,9 @@ class officer extends user
         $actual_year = strtotime(date("Y"));
         $conn = $this->connectMySQL();
         //(`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`)
-        $stmt = $conn->prepare("INSERT INTO Student(Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES (?,?,?,?,?)");
-        $stmt->bind_param('ssdsi', $student_info["name"], $student_info["surname"], $student_info["avgLastSchool"], $student_info["CF"], $classID);
+        //INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
+        $stmt = $conn->prepare("INSERT INTO Student (ID, Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES (NULL,?,?,?,?,?);");
+        $stmt->bind_param('ssdsi', $student_info["name"], $student_info["surname"], $student_info['avgLastSchool'], $student_info["CF"], $classID);
         return $stmt->execute();
     }
 
@@ -288,7 +289,7 @@ class officer extends user
         $IDs = array();
         for ($i = 0; $i < $res->num_rows; $i++) {
             $row = $res->fetch_assoc();
-            $stamp=$row["YearClassID"]." ".$row["Section"];
+            $stamp=$row["YearClassID"]."°".$row["Section"];
             array_push($IDs, $row);
         }
         $res->close();

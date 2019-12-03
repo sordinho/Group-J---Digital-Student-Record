@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 01, 2019 alle 19:33
+-- Creato il: Dic 02, 2019 alle 13:00
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -48,7 +48,9 @@ INSERT INTO `Homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `De
 (9, 'desc9', 3, 3, '2019-11-28', 1),
 (11, 'Exercise in class', 2, 7, '2019-12-01', 3),
 (12, 'Elephant carpaccio', 2, 7, '2019-11-26', 4),
-(13, 'Scrum', 1, 1, '2019-11-28', 1);
+(13, 'Scrum', 1, 1, '2019-11-28', 1),
+(14, 'prova prova', 1, 1, '2019-11-27', 2),
+(15, 'Study everything', 1, 1, '2019-12-04', 2);
 
 -- --------------------------------------------------------
 
@@ -177,6 +179,7 @@ CREATE TABLE `SpecificClass` (
 --
 
 INSERT INTO `SpecificClass` (`ID`, `YearClassID`, `Section`, `UploadedPath`, `CoordinatorTeacherID`) VALUES
+(-1, -1, 'noC', '', 1),
 (1, 1, 'A', 'uploadedPath1', 1),
 (2, 1, 'B', 'uploadedPath2', 2),
 (3, 1, 'C', 'uploadedPath3', 3);
@@ -211,7 +214,8 @@ INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `Spec
 (9, 'Michael', 'Bing', 7, 'cf7', 2),
 (11, 'Mario', 'Rossi', 7, 'Fc11', 2),
 (12, 'Javier', 'Lautaro', 10, 'LTRJVR97A01F839O', 2),
-(13, 'Dries', 'Mertens', 10, 'MRTDRS89L03F839J', 3);
+(13, 'Dries', 'Mertens', 10, 'MRTDRS89L03F839J', 3),
+(18, 'Francesco', 'Riba', 9, 'aaaaaaaaaaaaaaaa', 1);
 
 -- --------------------------------------------------------
 
@@ -287,7 +291,8 @@ CREATE TABLE `TopicRecord` (
 INSERT INTO `TopicRecord` (`ID`, `TeacherID`, `Timestamp`, `Description`, `TopicID`, `SpecificClassID`) VALUES
 (3, 1, '2019-11-17 17:19:22', 'TopicLectureDescription for classID=3', 1, 3),
 (5, 1, '2019-11-18 23:00:00', 'description1', 1, 3),
-(6, 1, '2019-11-17 23:00:00', 'test description', 1, 3);
+(6, 1, '2019-11-17 23:00:00', 'test description', 1, 3),
+(9, 2, '2019-12-01 23:00:00', 'Italy enters the first world war', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -336,7 +341,7 @@ CREATE TABLE `User` (
 INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
 (1, 'Mary', 'ParentSurname1', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (2, 'Joseph', 'ParentSurname2', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
-(3, 'Marco', 'Torchiano', 'teach1@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(3, 'Marco', 'Torchiano', 'marco.torchiano@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (4, 'Paolo', 'Montuschi', 'teach2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (5, 'Renato', 'Ferrero', 'teach3@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (6, 'Elen', 'Baralis', 'teach4@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
@@ -452,7 +457,7 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT per la tabella `Homework`
 --
 ALTER TABLE `Homework`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT per la tabella `MarksRecord`
 --
@@ -482,7 +487,7 @@ ALTER TABLE `SpecificClass`
 -- AUTO_INCREMENT per la tabella `Student`
 --
 ALTER TABLE `Student`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
@@ -497,7 +502,7 @@ ALTER TABLE `Topic`
 -- AUTO_INCREMENT per la tabella `TopicRecord`
 --
 ALTER TABLE `TopicRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --

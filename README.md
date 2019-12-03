@@ -14,11 +14,17 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 - 40 StoryPoints out of 43
 - [Retrospective](https://docs.google.com/presentation/d/1rePNnXa-uKxZ5X8VvkPPjaG4cFXc6gZvnldOUE48JQI/edit?usp=sharing)
 
+### 03/12/2019 - Release 1
+- [Docker Image](https://hub.docker.com/repository/docker/groupj/digital_student_record)
+- Docker command: 
+    - ``` docker run --hostname docker-desktop --rm -p 80:80 groupj/digital_student_record ```
+    - More details [HERE](/docker-utils/v2.0/README.md)
+
 ## Use cases, Personas collection
 
-[Use cases](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/UseCases)
+[Use cases](/UseCases/)
 
-[Personas](https://github.com/sordinho/Group-J---Digital-Student-Record/tree/master/Personas)
+[Personas](Personas/)
 
 ## Trello Board :memo: :pushpin:
 
@@ -27,20 +33,6 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 ## Demo :computer:
 
 [You can see a demo by clicking here](http://softeng2.my.to)
-
-## Docker
-
-### Files
-
-- [Docker compose](docker-utils/v1.0/docker-compose.yml)
-
-### How to run
-
-```
-docker pull -a groupj/digital_student_record
-
-docker-compose up
-```
 
 ## The Team :busts_in_silhouette:
 
