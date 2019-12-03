@@ -92,17 +92,16 @@ class administrator extends user {
             echo "Unable to add data to the specific user Table in the DB";
 			return false;
 		}
-		
+		$query->close();
+		$mysqli->close();
+
 		$message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: " . $user_email . "\nPassword: " . $password . "\nFor your security, please delete this message ASAP.";
 		$message .= "\nBest Regards\nThe school administration.";
 		$message = wordwrap($message, 70, "\n");
-		//TODO comment in local
-		if (!mail($user_email, "Access Credentials (DSR)", $message))
-			return false;
-		$query->close();
-		$mysqli->close();
+		if (!defined('MAIL_DISABLE')  || MAIL_DISABLE == FALSE){
+			return mail($user_email, "Access Credentials (DSR)", $message);
+		}
 		return true;
-
 	}
 
 	// Check if user is an admin. Set at login with set_admin()
