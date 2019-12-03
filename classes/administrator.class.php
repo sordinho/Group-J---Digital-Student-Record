@@ -98,7 +98,7 @@ class administrator extends user {
 		$message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: " . $user_email . "\nPassword: " . $password . "\nFor your security, please delete this message ASAP.";
 		$message .= "\nBest Regards\nThe school administration.";
 		$message = wordwrap($message, 70, "\n");
-		if (!defined('MAIL_DISABLE')){
+		if (!defined('MAIL_DISABLE')  || MAIL_DISABLE == FALSE){
 			return mail($user_email, "Access Credentials (DSR)", $message);
 		}
 		return true;
