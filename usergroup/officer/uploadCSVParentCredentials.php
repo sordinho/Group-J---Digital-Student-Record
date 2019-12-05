@@ -116,9 +116,9 @@ if ( isset($_POST) && isset($_FILES["file"])) {
         $content .= '
         <!-- Material form register -->
         <div class="card">
-            <h5 style="background-color:rgba(108,108,108,0.9);color:white" class="card-header info-color white-text text-center py-4">
-                <strong>Upload list of parent master data</strong>
-            </h5>
+            <h4 style="background-color:rgba(108,108,108,0.9);color:white" class="card-header info-color white-text text-center py-4">
+                Upload list of parent master data
+            </h4>
 
             <!--Card content-->
             <div class="card-body px-lg-5 pt-0">

@@ -77,7 +77,7 @@ if (isset($_GET['classID'])) {
     $content.="
             <div class=\"card mt-md-5\">
                 <h2 class=\"card-header info-color white-text text-center py-4\" style=\"background-color:rgba(108,108,108,0.9);color:white\">
-                    <strong>Students without class</strong>
+                    Students without class
                 </h2>
                 <div class=\"card-body  px-lg-5 pt-0 mt-md-5\">
                 ";
