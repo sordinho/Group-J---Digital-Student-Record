@@ -1,0 +1,53 @@
+<?php
+require_once("../../config.php");
+
+$teacher = new teacher();
+
+$site = new csite();
+initialize_site($site);
+$page = new cpage("");
+$site->setPage($page);
+
+if (!$teacher->is_logged()) {
+	header("location: /error.php?errorID=19");
+	exit();
+}
+
+$content = '<div class="card">
+                <h2 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
+                    Uploaded Material
+                </h2>
+                <div class="card-body  px-lg-5 pt-0 mt-md-5">
+                <form>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Filename</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Class</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>';
+
+// todo get list of uploaded files
+$uploadedMaterial = $teacher->get_uploaded_material();
+foreach ($uploadedMaterial as $i => $row) {
+	$content .= '<tr>
+        <td>' . $row['Filename'] . '</td>
+        <td>' . $row['Subject'] . '</td>
+        <td>' . $row['Class'] . '</td>
+        <td>' . $row['Timestamp'] . '</td>
+      </tr>';
+}
+
+$content .= '
+    </tbody>
+  </table>
+  </form>
+  </div>';
+
+
+$page->setContent($content);
+$site->render();
+?>

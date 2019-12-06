@@ -458,4 +458,15 @@ CREATE TABLE `TopicRecord` (
         return $cond;
     }
 
+
+	public function get_uploaded_material() {
+
+    	$uploaded['Filename'] = "File1";
+    	$uploaded['Class'] = "1A";
+    	$uploaded['Subject'] = "Science";
+    	$uploaded['Timestamp'] = date("Y-m-d H:i:s");
+
+    	return array($uploaded);
+	}
+
 }
