@@ -46,17 +46,17 @@ if (!empty($_POST)) {
           <div class=\"form-row\">
             <div class=\"form-group col-md-6\">
               <label for=\"inputName\">First Name</label>
-              <input type=\"text\" id=\"materialRegisterFormFirstName\" name=\"student_first_name\" class=\"form-control\" placeholder=\"Insert Name\">
+              <input type=\"text\" id=\"materialRegisterFormFirstName\" name=\"student_first_name\" class=\"form-control\" placeholder=\"Insert Name\" required=\"required\">
             </div>
             <div class=\"form-group col-md-6\">
               <label for=\"inputSurname\">Last Name</label>
-              <input type=\"text\" id=\"materialRegisterFormLastName\" name=\"student_last_name\" class=\"form-control\"  placeholder=\"Insert Last Name\">
+              <input type=\"text\" id=\"materialRegisterFormLastName\" name=\"student_last_name\" class=\"form-control\"  placeholder=\"Insert Last Name\" required=\"required\">
             </div>
           </div>
           <div class=\"form-row\">
           	<div class=\"form-group col-md-6\">
             	<label for=\"inputFC\">Fiscal Code</label>
-            	<input type=\"text\" class=\"form-control\" id=\"inputFC\" name=\"fiscal_code\" placeholder=\"Insert Fiscal Code\">
+            	<input type=\"text\" class=\"form-control\" id=\"inputFC\" name=\"fiscal_code\" placeholder=\"Insert Fiscal Code\" pattern=\"^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$\" required=\"required\">
             	<small id=\"passwordHelpBlock\" class=\"form-text text-muted\">Must be 16 digits.</small>
           	</div>
           	<div class=\"form-group col-md-6\">

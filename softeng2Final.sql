@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 03, 2019 alle 11:35
+-- Creato il: Dic 06, 2019 alle 11:51
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -54,7 +54,8 @@ INSERT INTO `Homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `De
 (16, 'Demo + release. End of 2nd sprint', 1, 1, '2019-12-03', 2),
 (17, 'Retrospective', 1, 1, '2019-12-04', 1),
 (18, 'E2E testing', 1, 1, '2019-12-02', 2),
-(19, 'assignment 1', 1, 1, '2019-12-04', 1);
+(19, 'assignment 1', 1, 1, '2019-12-04', 1),
+(20, 'Code refactoring', 1, 1, '2019-12-05', 1);
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,9 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (30, 4, 7, 4, 4, '2019-12-02 09:00:00', 0),
 (31, 4, 6, 5, 5, '2019-12-03 09:00:00', 0),
 (32, 4, 6, 6, 6, '2019-12-03 10:00:00', 0),
-(33, 4, 10, 7, 7, '2019-12-03 11:00:00', 0);
+(33, 4, 10, 7, 7, '2019-12-03 11:00:00', 0),
+(34, 2, 10, 1, 2, '2019-12-03 10:43:54', 1),
+(35, 4, 10, 1, 1, '2019-12-03 10:43:54', 0);
 
 -- --------------------------------------------------------
 
@@ -226,18 +229,18 @@ CREATE TABLE `Student` (
 --
 
 INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
-(1, 'Hirving', 'Lozano', 10, 'cf1', 1),
-(2, 'Vittorio', 'Di Leo', 10, 'cf1b', 1),
-(3, 'Emanuele', 'Munafo', 10, 'cf2', 1),
-(4, 'Davide', 'Sordi', 10, 'cf3', 1),
-(5, 'Francesco', 'Riba', 10, 'cf4', 1),
-(6, 'Riccardo', 'Mamone', 10, 'rf5', 1),
-(8, 'Antonio', 'Santoro', 10, 'cf6', 1),
-(9, 'Michael', 'Bing', 7, 'cf7', 2),
-(11, 'Mario', 'Rossi', 7, 'Fc11', 2),
+(1, 'Hirving', 'Lozano', 10, 'LGGLPM50L71Z356X', 1),
+(2, 'Vittorio', 'Di Leo', 10, 'PHGKRF55P70E908R', 1),
+(3, 'Emanuele', 'Munafo', 10, 'DLGLYL71H30E159S', 1),
+(4, 'Davide', 'Sordi', 10, 'HYFWMS36B11A963E', 1),
+(5, 'Francesco', 'Riba', 10, 'JFVYMM92P59A229O', 1),
+(6, 'Riccardo', 'Mamone', 10, 'ZGSQPD62P61F443K', 1),
+(8, 'Antonio', 'Santoro', 10, 'GHFNDJ51S10L730U', 1),
+(9, 'Michael', 'Bing', 7, 'RRQDWW41C60G670Z', 2),
+(11, 'Mario', 'Rossi', 7, 'LVMLVS80T70L552B', 2),
 (12, 'Javier', 'Lautaro', 10, 'LTRJVR97A01F839O', 2),
 (13, 'Dries', 'Mertens', 10, 'MRTDRS89L03F839J', 3),
-(18, 'Francesco', 'Riba', 9, 'aaaaaaaaaaaaaaaa', 1),
+(18, 'Francesco', 'Riba', 9, 'WTCPGG93M51H398P', 1),
 (23, 'Ross', 'Trebbiani', 9.25, 'TRBRSS80A01F839Q', -1);
 
 -- --------------------------------------------------------
@@ -483,17 +486,17 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT per la tabella `Homework`
 --
 ALTER TABLE `Homework`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT per la tabella `MarksRecord`
 --
 ALTER TABLE `MarksRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT per la tabella `Officer`
 --
@@ -503,7 +506,7 @@ ALTER TABLE `Officer`
 -- AUTO_INCREMENT per la tabella `Parent`
 --
 ALTER TABLE `Parent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT per la tabella `SpecificClass`
 --
@@ -518,7 +521,7 @@ ALTER TABLE `Student`
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
 ALTER TABLE `Teacher`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --
@@ -538,7 +541,7 @@ ALTER TABLE `TopicTeacherClass`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- Limiti per le tabelle scaricate
 --

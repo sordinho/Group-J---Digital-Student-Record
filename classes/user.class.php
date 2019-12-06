@@ -279,6 +279,16 @@ class user {
 			return FALSE;
 		}
 	}
+
+	/**
+	 * Check validity of ITALIAN fiscal code
+	 * @param $fcode
+	 * @return false|int
+	 */
+	public function check_fiscal_code($fcode){
+		$regex = '/^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$/';
+		return preg_match($regex,$fcode);
+	}
 }
 
 ?>

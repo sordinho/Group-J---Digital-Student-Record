@@ -115,14 +115,14 @@ OUT;
                     <!-- First name -->
                     <div class="md-form">
                         <label for="materialRegisterFormFirstName">First name</label>
-                        <input type="text" id="materialRegisterFormFirstName" name="parent_first_name" class="form-control">
+                        <input type="text" id="materialRegisterFormFirstName" name="parent_first_name" class="form-control" required="required">
                     </div>
                 </div>
                 <div class="col">
                     <!-- Last name -->
                     <div class="md-form">
                         <label for="materialRegisterFormLastName">Last name</label>
-                        <input type="text" id="materialRegisterFormLastName" name="parent_last_name" class="form-control">
+                        <input type="text" id="materialRegisterFormLastName" name="parent_last_name" class="form-control" required="required">
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@ OUT;
             <!-- E-mail -->
             <div class="md-form mt-0">
                 <label for="materialRegisterFormEmail">E-mail</label>
-                <input type="email" id="materialRegisterFormEmail" name="parent_email" class="form-control">
+                <input type="email" id="materialRegisterFormEmail" name="parent_email" class="form-control" required="required">
             </div>
             
             <!-- Children number-->
@@ -154,7 +154,7 @@ OUT;
             <!-- CF -->
             <div class="md-form mt-0">
                 <label for="materialRegisterFormCF$i">Student fiscal code</label>
-                <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control">
+                <input type="text" id="materialRegisterFormCF$i" name="cf_$i" class="form-control" pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$" required="required">
             </div>
 </div>
 </div>
