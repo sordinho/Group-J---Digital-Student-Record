@@ -298,6 +298,7 @@ CREATE TABLE `TopicRecord` (
         $teacherID = $_SESSION['teacherID'];
         if(!calendar::validate_date($timestamp))
             return false;
+        if(!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($timestamp))) return false;
         $y_m_d = date("Y-m-d",strtotime($timestamp));
         $classID = $this->is_teacher_of_the_student($studentID);
         //$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
@@ -392,6 +393,8 @@ CREATE TABLE `TopicRecord` (
         $teacherID = $_SESSION['teacherID'];
 
         if (!calendar::validate_date($timestamp)) return false;
+
+        if(!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($timestamp))) return false;
 
         $y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
         $hours_per_school_day = calendar::get_hours_per_school_day();
