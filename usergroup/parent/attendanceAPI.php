@@ -12,8 +12,8 @@ if (!$sparent->is_logged() || $sparent->get_current_child() == -1) {
     echo json_encode(array('status' => 'error','message'=> 'Not authorized'));
     exit();
 }
-$attendance_info = $sparent->get_absences($sparent->get_current_child());
-
+//$attendance_info = $sparent->get_absences($sparent->get_current_child());
+$attendance_info = $sparent->get_absences_and_delays($sparent->get_current_child());
 if ($attendance_info === False) {
     echo json_encode(array('status' => 'error','message'=> 'No absence/Parsing error'));// TODO: distinguisch between them
     exit();
@@ -29,6 +29,8 @@ foreach ($attendance_info as $key => $value) {
     //$elem["eventName"] = $value["Exithour"];
     $elem["eventName"] = "Not present";
     $elem["full_date"] = $value["Date"];
+    //TODO : ADAPT THIS TO THE NEW FUNCTION
+    // AT THIS MOMENT IS SHOWS EVERYTHING AS NOT PRESENT
     $elem["calendar"] =  "Not present";
     # If a color wasnt assigned until now
     if (!array_key_exists($elem["calendar"], $topic_color_assoc)){

@@ -429,6 +429,54 @@ CREATE TABLE `TopicRecord` (
     }
 
     /**
+     * the function both works if previously absent or not
+     * @param $studentID
+     * @param $timestamp in the format "Y-m-d H:i:s"
+     * @param $newExitHour in the range 0-6
+     * @return true|false on success or not
+     */
+    public function register_early_exit($studentID, $timestamp, $newExitHour)
+    {
+        //todo check if the format of newExitHour need to be changed
+        $teacherID = $_SESSION['teacherID'];
+
+        if (!calendar::validate_date($timestamp)) return false;
+
+        if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($timestamp))) return false;
+
+        $y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
+        $hours_per_school_day = calendar::get_hours_per_school_day();
+
+        $conn = $this->connectMySQL();
+
+        $sql = "   SELECT COUNT(*)
+                    FROM NotPresentRecord
+                    WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
+                    AND NotPresentRecord.StudentID = '$studentID'
+                    AND ExitHour = 0";
+
+        if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
+
+            $row = $result->fetch_array();
+            $absent = $row[0]; //it means multiple possibilities: late arrival, absent, early exit...
+            $result->close();
+
+            if ($absent) {
+                $sql = $conn->prepare("UPDATE NotPresentRecord SET ExitHour = ? WHERE StudentID = ? AND Date = ?;");
+                $sql->bind_param('is', $studentID, $y_m_d_timestamp);
+                return $sql->execute();
+            } else {
+                $sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',0,?);");
+                $sql->bind_param('iii', $studentID, $classID,$newExitHour);
+                return $sql->execute();
+            }
+        } else {
+            printf("Error message: %s\n", $conn->error);
+            return false;
+        }
+    }
+
+    /**
      * @param $assignmentDescription
      * @param $topicID
      * @param $timestamp

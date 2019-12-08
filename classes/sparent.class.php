@@ -104,6 +104,57 @@ class sparent extends user
      * @param bool $to_date
      * @return array|bool - array of all absences selected or false on failure
      */
+    public function get_absences_and_delays($childID, $from_date = false, $to_date = false)
+    {
+        if (!isset($childID)) return false;
+
+        $conn = $this->connectMySql();
+        $is_valid_from =  calendar::validate_date($from_date, 'Y-m-d');
+        $is_valid_to =  calendar::validate_date($to_date, 'Y-m-d');
+        //TODO: change this code snippet by avoiding repetition in validate_date
+        if ($is_valid_from and $is_valid_to and $from_date < $to_date) {
+            /*there are two dates which are not false and in a valid format*/
+            $sql = $conn->prepare("    SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date >= ? AND Date < ?");
+            $sql->bind_param('iss', $childID, $from_date, $to_date);
+
+        } else if ($is_valid_from) {
+            /*only from_date is set, the other one is set at false or not in a valid form*/
+            $sql = $conn->prepare("    SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date >= ?");
+            $sql->bind_param('is', $childID, $from_date);
+
+        } else if ($is_valid_to) {
+            /*only to_date is set, the other one is set at false or not in a valid form*/
+            $sql = $conn->prepare("    SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date < ?");
+            $sql->bind_param('is', $childID, $to_date);
+
+        } else if ($from_date == false and $to_date == false) {
+            /*both dates are set to false or the value has not been inserted*/
+            $sql = $conn->prepare("SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ?");
+            $sql->bind_param('i', $childID);
+        } else {
+            /*all the other cases are not valid*/
+            return false;
+
+        }
+        $absences = array();
+        $sql->execute();
+        $res = $sql->get_result();
+        if (!$res){
+            return false;
+        }
+        while ($row = $res->fetch_assoc())
+            array_push($absences, $row);
+
+        return $absences;
+    }
+
+
+    /**
+     * @param int $childID
+     * @param bool $from_date
+     * @param bool $to_date
+     * @return array|bool - array of all absences selected or false on failure
+     */
     public function get_absences($childID, $from_date = false, $to_date = false)
     {
         if (!isset($childID)) return false;
