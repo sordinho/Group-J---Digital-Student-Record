@@ -213,7 +213,26 @@ CREATE TABLE `TopicRecord` (
         }
         return $topicRecords;
     }
-
+    public function get_daily_absences($date,$specificClassID){
+        if (calendar::validate_date($date) == false) return false;
+        //if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($date))) return false;
+        $absences = array();
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT StudentID, Late, ExitHour
+                                      FROM NotPresentRecord
+                                      WHERE Date = ? 
+                                        AND SpecificClassID = ?;");
+        if(!$stmt) return $absences;
+        $stmt->bind_param("si",$date,$specificClassID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            while ($row = $res->fetch_assoc()) {
+                array_push($absences, $row);
+            }
+        }
+        return $absences;
+    }
     public function get_students_by_class_id($classID)
     {
         $students = array();
