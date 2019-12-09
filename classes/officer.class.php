@@ -301,4 +301,20 @@ class officer extends user
         return $stamp;
     }
 
+    public function publish_communication($title, $description)
+    {
+        $officerID = $this->get_officer_ID();
+        if ($officerID != -1) {
+            $conn = $this->connectMySql();
+            $stmt = $conn->prepare("INSERT INTO Communication (Title, Description) VALUES (?, ?)");
+            $stmt->bind_param('ss', $title, $description);
+            if (!$stmt->execute()) {
+                return false;
+            }
+            return true;
+        }
+
+        return -1;
+    }
+
 }
