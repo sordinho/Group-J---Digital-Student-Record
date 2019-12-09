@@ -5,15 +5,13 @@ $teacher = new teacher();
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Student Presence Verification");
+$page = new cpage("Disciplinary Note Verification");
 $site->setPage($page);
 
-if (!$teacher->is_logged()) {
-	header("location: /error.php?errorID=19");
-	exit();
-}
-
-// If this page was called after performing an operation, the result is shown to the user
+/*if (!$teacher->is_logged()) {
+    header("location: /error.php?errorID=19");
+    exit();
+}*/
 if (isset($_GET['operation_result'])) {
     /*$print = $_GET['operation_result'];
     $content .= '
@@ -31,7 +29,7 @@ if (isset($_GET['operation_result'])) {
             $content .= '
                 <div class="alert alert-danger" role="alert">
                     Error in uploading students\' absence. <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
-                </div>'; 
+                </div>';
             break;
         case -1:
             $content .= '
@@ -58,7 +56,7 @@ if (isset($_GET['operation_result'])) {
     for ($i = 0; $i < sizeof($classes); $i++) {
         $classID = $classes[$i]['ClassID'];
         $yearSection = $classes[$i]['YearClass'] . " " . $classes[$i]['Section'];
-        $drop_down .= '<a class="dropdown-item" href="addAbsence.php?classID='.$classID.'">'.$yearSection.'</a>';
+        $drop_down .= '<a class="dropdown-item" href="registerNote.php?classID='.$classID.'">'.$yearSection.'</a>';
     }
 
     if (!isset($_GET['classID']) && empty($_POST)) {
@@ -70,12 +68,12 @@ if (isset($_GET['operation_result'])) {
                                 Choose a class
                             </button>
                             <div class="dropdown-menu">'.
-                                $drop_down.
-                            '</div>
+            $drop_down.
+            '</div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Select a class to insert a new absence record.</p>
+                        <p class="card-text">Select a class to register a new note.</p>
                     </div>
                 </div>';
 
@@ -100,8 +98,7 @@ if (isset($_GET['operation_result'])) {
                                 <th scope="col">#</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">First Name</th>
-                                <th scope="col">Absence</th>
-                                <th scope="col">Late Arrival</th>
+                                <th scope="col">Select</th>
                                 </tr>
                             </thead>
                             <tbody>';
@@ -117,12 +114,8 @@ if (isset($_GET['operation_result'])) {
                                     <td><div class="col-xs-2 m-2">$surname</div></td>
                                     <td><div class="col-xs-2 m-2">$name</div></td>
                                     <td>
-                                        <input type="checkbox" class="form-check-input" id="absence_$id" name="absence_$id" value="yes" >
-                                        <label class="form-check-label" id="absence_label_$id" for="exampleCheck1">Absent</label>
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" class="form-check-input" id="late_$id" name="late_$id" value="yes" >
-                                        <label class="form-check-label" id="late_label_$id" for="exampleCheck1">Late</label>
+                                        <input type="checkbox" class="form-check-input" id="select_$id" name="select_$id" value="yes" >
+                                        <label class="form-check-label" id="select_label_$id" for="exampleCheck1">Choose</label>
                                     </td>
                             </tr>
 OUT;
@@ -138,6 +131,13 @@ OUT;
                                         <label for="date">Date</label>
                                         <input type="date" id="date" class="form-control" name="date">
                             </div>
+                                <div class="col-lg-12">
+                                    <div class="input-group input-group-lg">
+                                        <label for="note"><strong>Disciplinary note</strong></label>
+                                        <textarea class="form-control" name="note" id="note" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            
                             <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
                         </form>
                         </div>
@@ -155,20 +155,25 @@ OUT;
                         </div>
                     </div>
                 <div class="card-body">'.
-                $table_content;
+            $table_content;
 
-    // If a form was just sent, elaborate its data and perform operation on backend
+        // If a form was just sent, elaborate its data and perform operation on backend
     } else if (!empty($_POST)) {
         $students_info = $teacher->get_students_by_class_id($classID);
         if (sizeof($students_info) == 0) {
-            header("Location: addAbsence.php?operation_result=-1");
+            header("Location: registerNote.php?operation_result=-1");
             exit();
         }
         $counter = 0;
+        $note = $_POST['note'];
+        if(!$note){
+            header("Location: registerNote.php?operation_result=-1");
+            exit();
+        }
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
-            if (isset($_POST["absence_$id"])) {
-                $absent = $_POST["absence_$id"] == 'yes';
+            if (isset($_POST["select_$id"])) {
+                $selected = $_POST["select_$id"] == 'yes';
 
                 $date = $_POST['date'];
                 if(!$date){
@@ -180,42 +185,17 @@ OUT;
                 }
                 //$date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
 
-                if ($absent) {
-                    $res = $teacher->register_absence($id, $date);
+                if ($selected) {
+                    /*$res = $teacher->register_absence($id, $date);
                     if (!$res) {
-                        header("Location: addAbsence.php?operation_result=0");
+                        header("Location: registerNote.php?operation_result=0");
                         exit();
-                    }
+                    }*/
                     $counter++;
                 }
             }
         }
 
-        for ($i = 0; $i < sizeof($students_info); $i++) {
-            $id = $students_info[$i]['ID'];
-            if (isset($_POST["late_$id"])) {
-                $absent = $_POST["late_$id"] == 'yes';
-
-                $date = $_POST['date'];
-                if(!$date){
-                    $date = date("Y-m-d H:i:s");
-                } else {
-                    $newD = date_create($date);
-                    date_time_set($newD,00,00,00);
-                    $date= date_format($newD,"Y-m-d H:i:s");
-                }
-                //$date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
-
-                if ($absent) {
-                    $res = $teacher->register_late_arrival($id, $date);
-                    if (!$res) {
-                        header("Location: addAbsence.php?operation_result=0");
-                        exit();
-                    }
-                    $counter++;
-                }
-            }
-        }
         if ($counter > 0) {
             header("Location: addAbsence.php?operation_result=1");
             exit();
