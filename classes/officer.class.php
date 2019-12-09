@@ -306,8 +306,8 @@ class officer extends user
         $officerID = $this->get_officer_ID();
         if ($officerID != -1) {
             $conn = $this->connectMySql();
-            $stmt = $conn->prepare("INSERT INTO Communication (Title, Description) VALUES (?, ?)");
-            $stmt->bind_param('ss', $title, $description);
+            $stmt = $conn->prepare("INSERT INTO Communication (Title, Description, OfficerID) VALUES (?, ?, ?)");
+            $stmt->bind_param('ssi', $title, $description, $officerID);
             if (!$stmt->execute()) {
                 return false;
             }
