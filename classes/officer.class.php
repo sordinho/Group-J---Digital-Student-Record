@@ -314,7 +314,7 @@ class officer extends user
             return true;
         }
 
-        return -1;
+        return false;
     }
 
 }
