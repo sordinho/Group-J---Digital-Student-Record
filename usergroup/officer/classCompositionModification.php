@@ -86,7 +86,7 @@ if (isset($_GET['classID'])) {
                     <table class=\"table table-striped\">
                         <thead>
                         <tr>
-                            <th scope=\"coPul\">LastName</th>
+                            <th scope=\"col\">LastName</th>
                             <th scope=\"col\">Name</th>
                             <th scope=\"col\"></th>
                         </tr>
