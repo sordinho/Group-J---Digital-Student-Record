@@ -65,7 +65,7 @@ if (!isset($_POST["description"]) and !isset($_POST["title"])) {
                                         <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                                     </div>
                                     
-                                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Record</button>	
+                                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Send</button>	
                                     
                                 </form>
                             </div>
