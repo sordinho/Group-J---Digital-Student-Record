@@ -5,7 +5,7 @@ $teacher = new teacher();
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Disciplinary Note Verification");
+$page = new cpage("Disciplinary Note Registration");
 $site->setPage($page);
 
 /*if (!$teacher->is_logged()) {
@@ -22,25 +22,25 @@ if (isset($_GET['operation_result'])) {
         case 1:
             $content .= '
                 <div class="alert alert-success" role="alert">
-                    Absences successfully registered. <a href="addAbsence.php" class="alert-link">Keep registering absence</a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
+                    Absences successfully registered. <a href="registerNote.php" class="alert-link">Keep registering absence</a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
                 </div>';
             break;
         case 0:
             $content .= '
                 <div class="alert alert-danger" role="alert">
-                    Error in uploading students\' absence. <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
+                    Error in uploading students\' absence. <a href="registerNote.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
                 </div>';
             break;
         case -1:
             $content .= '
                 <div class="alert alert-danger" role="alert">
-                    Error <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
+                    Error <a href="registerNote.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
                 </div>';
             break;
         case -2:
             $content .= '
                 <div class="alert alert-danger" role="alert">
-                    No student selected. <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
+                    PORCODDIO. <a href="registerNote.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
                 </div>';
             break;
         default:
@@ -91,7 +91,7 @@ if (isset($_GET['operation_result'])) {
             }
         }
         $table_content = '<div class="card-body">
-                            <form method="post" class="form-inline" style="color:#757575" action="addAbsence.php">
+                            <form method="post" class="form-inline" style="color:#757575" action="registerNote.php">
                             <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -161,49 +161,55 @@ OUT;
     } else if (!empty($_POST)) {
         $students_info = $teacher->get_students_by_class_id($classID);
         if (sizeof($students_info) == 0) {
-            header("Location: registerNote.php?operation_result=-1");
+            header("Location: registerNote.php?operation_result=-200");
             exit();
         }
         $counter = 0;
         $note = $_POST['note'];
         if(!$note){
-            header("Location: registerNote.php?operation_result=-1");
+            header("Location: registerNote.php?operation_result=-150");
+            exit();
+        }
+        $date = $_POST['date'];
+        if(!$date){
+            $date = date("Y-m-d H:i:s");
+        } else {
+            $newD = date_create($date);
+            date_time_set($newD,00,00,00);
+            $date= date_format($newD,"Y-m-d H:i:s");
+        }
+
+        $noteId = $teacher->register_new_note($date,$classID,$note);
+        if($noteId < 0){
+            header("Location: registerNote.php?operation_result=".$noteId);
             exit();
         }
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
             if (isset($_POST["select_$id"])) {
                 $selected = $_POST["select_$id"] == 'yes';
-
-                $date = $_POST['date'];
-                if(!$date){
-                    $date = date("Y-m-d H:i:s");
-                } else {
-                    $newD = date_create($date);
-                    date_time_set($newD,00,00,00);
-                    $date= date_format($newD,"Y-m-d H:i:s");
-                }
                 //$date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
 
                 if ($selected) {
-                    /*$res = $teacher->register_absence($id, $date);
+                    $res = $teacher->register_note_record($id,$noteId);
+
                     if (!$res) {
                         header("Location: registerNote.php?operation_result=0");
                         exit();
-                    }*/
+                    }
                     $counter++;
                 }
             }
         }
 
         if ($counter > 0) {
-            header("Location: addAbsence.php?operation_result=1");
+            header("Location: registerNote.php?operation_result=1");
             exit();
         } else if ($counter == 0){
-            header("Location: addAbsence.php?operation_result=-2");
+            header("Location: registerNote.php?operation_result=-10000000");
             exit();
         } else {
-            header("Location: addAbsence.php?operation_result=0");
+            header("Location: registerNote.php?operation_result=0");
             exit();
         }
     }
