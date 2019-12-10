@@ -15,10 +15,6 @@ if (!$sparent->is_logged()) {
     exit();
 }
 
-// TODO check if child was selected
-
-# Declare the div where the calendar will be injected, include dependency and custom js script to handle calendar
-
 if ($handle = opendir('../../files/')) {
     while (false !== ($entry = readdir($handle))) {
         if ($entry != "." && $entry != "..") {
