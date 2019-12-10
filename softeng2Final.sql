@@ -143,6 +143,7 @@ CREATE TABLE `Note` (
   `ID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `SpecificClassID` int(11) NOT NULL,
+  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
