@@ -22,14 +22,14 @@ if (!isset($_POST["description"]) and !isset($_POST["title"])) {
             case 1:
                 $content .= '
 								<div class="alert alert-success" role="alert">
-									Communication successfully registered. <a href="addCommunication.php" class="alert-link">Add another Communication</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+									Communication successfully registered. <a href="addCommunications.php" class="alert-link">Add another Communication</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
 								</div>
 							';
                 break;
             case 0:
                 $content .= '
 								<div class="alert alert-danger" role="alert">
-									Error in registering a new communication. <a href="addCommunication.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+									Error in registering a new communication. <a href="addCommunications.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
 								</div>
 							';
 
@@ -78,21 +78,21 @@ if (!isset($_POST["description"]) and !isset($_POST["title"])) {
 } elseif (!isset($_POST['description']) and isset($_POST['title'])) {
     $content = ' 
                     <div class="alert alert-danger" role="alert">
-                        Please insert a description. <a href="addCommunication.php" class="alert-link">Retry</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+                        Please insert a description. <a href="addCommunications.php" class="alert-link">Retry</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
                     </div>
                     ';
 } elseif (!isset($_POST['title']) and isset($_POST['description'])) {
     $content = ' 
                     <div class="alert alert-danger" role="alert">
-                        Please insert a title. <a href="addCommunication.php" class="alert-link">Retry</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+                        Please insert a title. <a href="addCommunications.php" class="alert-link">Retry</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
                     </div>
                     ';
 } else {
     if ($officer->publish_communication($_POST['title'], $_POST['description'])) {
-        header("Location: addCommunication.php?operation_result=1");
+        header("Location: addCommunications.php?operation_result=1");
         die();
     } else {
-        header("Location: addCommunication.php?operation_result=0");
+        header("Location: addCommunications.php?operation_result=0");
         die();
     }
 }
