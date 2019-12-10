@@ -71,6 +71,7 @@ if(!isset($_POST) || !isset($_FILES["file"])){
                     </div>';
 }
 else{
+    # more security docs:https://stackoverflow.com/questions/10464948/getimagesize-not-returning-false-when-it-should/10464964#10464964
     if(!isset($_POST["classID"]) || !isset($_POST["topicID"])){
         header("location: /error.php?errorID=21");
         exit();
