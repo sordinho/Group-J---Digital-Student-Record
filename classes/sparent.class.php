@@ -199,6 +199,25 @@ class sparent extends user
         return $absences;
     }
 
+    // Return the announcement as array of array (the last 4 news are returned by default)
+    public function get_announcements($last_n=4)
+    {
+        $anouncements= array();
+        $conn = $this->connectMySql();
+        $stmt = $conn->prepare("SELECT * FROM Communication ORDER BY Timestamp DESC LIMIT ?;");
+        $stmt->bind_param('i', $last_n);
+        if(!$stmt)
+            die("DB Error while parsing communication. Contact admin");
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if (!$res) {
+            return false;
+        }
+        while ($row = $res->fetch_assoc()) {
+            array_push($anouncements, $row);
+        }
+        return $anouncements;
+    }
     // Register a child as the current to view and analyze by saving the studentID into the session
     public function set_current_child($childID)
     {
