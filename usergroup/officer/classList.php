@@ -15,7 +15,7 @@ if(!$officer ->is_logged() ){
 $content = <<<OUT
 <div class="card">
     <h5 class="card-header info-color white-text text-center py-4">
-        <strong>Class selection for enrollment </strong>
+        Class selection for enrollment
     </h5>
 
     <!--Card content-->
@@ -24,7 +24,7 @@ $content = <<<OUT
             <div class="row mx-md-n5">
                 <div class="col-md px-md-5">
                     <h5 class="card-body info-color white-text text-center py-4">
-                        <strong>Select a class</strong>
+                        Select a class
                     </h5>
                 </div>
                 <div class="col-md px-md-5">

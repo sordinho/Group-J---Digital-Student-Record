@@ -238,7 +238,7 @@ class officer extends user
      * Function that given the studentID removes it from the class it is actually assighed to (sets specificClassID=-1)
      * returns the id of the class the student was in, to be able to redirect to that class composition modification
      */
-    public function remove_Student_From_Class($studentID)
+    public function remove_student_from_class($studentID)
     {
         $conn = $this->connectMySQL();
 
