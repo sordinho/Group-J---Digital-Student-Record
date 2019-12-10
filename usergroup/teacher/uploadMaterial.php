@@ -75,6 +75,7 @@ else{
         header("location: /error.php?errorID=21");
         exit();
     }
+    
     # Check if fields are set TODO:
     if ($_FILES["file"]["error"] > 0 ||  $_FILES["file"]["type"] == 'text/php') {
         echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
@@ -91,6 +92,10 @@ else{
     $server_filename = $hash ."_". $realname;
     $uploadfile = $uploaddir . $server_filename;
 
+    if(!check_file_uploaded_name($realname) || !check_file_uploaded_length($realname)){
+        die("Security risk error");
+    }
+    
     if (!move_uploaded_file($tmpname, $uploadfile)) {
         # Note: Permission set as: dont write this in production
         #root@vps483509:/var/www/softeng2/public_html# sudo chown -R www-data:www-data uploads/
@@ -109,4 +114,26 @@ else{
 
 $page->setContent($content);
 $site->render();
+
+
+/**
+* Check $_FILES[][name]
+*
+* @param (string) $filename - Uploaded file name.
+*/
+function check_file_uploaded_name ($filename)
+{
+    (bool) ((preg_match("`^[-0-9A-Z_\.]+$`i",$filename)) ? true : false);
+}
+
+/**
+* Check $_FILES[][name] length.
+*
+* @param (string) $filename - Uploaded file name.
+*/
+function check_file_uploaded_length ($filename)
+{
+    return (bool) ((mb_strlen($filename,"UTF-8") > 225) ? true : false);
+}
+
 ?>
