@@ -77,7 +77,6 @@ switch ($_SESSION["usergroup"]) {
 								<div class="dropdown-menu border-0 animated fadeIn" role="menu">
 								<a class="dropdown-item text-white" role="presentation" href="./uploadParentCredentials.php"><span>Manual Insert</span></a>
 								<a class="dropdown-item text-white" role="presentation" href="./uploadCSVParentCredentials.php"><span>CSV Upload</span></a>';
-        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./publishCommunication.php"><i class="fas fa-bullhorn mx-3"></i><span class="text-nowrap mx-2">Publish Communication</span></a></li>';
         break;
     case "admin":
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./registerAccount.php"><i class="fas fa-user-plus mx-3"></i><span class="text-nowrap mx-2">Register Account</span></a></li>';

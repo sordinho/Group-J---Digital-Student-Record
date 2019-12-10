@@ -75,11 +75,20 @@ if (!isset($_POST["description"]) and !isset($_POST["title"])) {
 
     }
 
+} elseif (!isset($_POST['description']) and isset($_POST['title'])) {
+    $content = ' 
+                    <div class="alert alert-danger" role="alert">
+                        Please insert a description. <a href="addCommunication.php" class="alert-link">Retry</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+                    </div>
+                    ';
+} elseif (!isset($_POST['title']) and isset($_POST['description'])) {
+    $content = ' 
+                    <div class="alert alert-danger" role="alert">
+                        Please insert a title. <a href="addCommunication.php" class="alert-link">Retry</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+                    </div>
+                    ';
 } else {
-    if (true) {
-        //TODO: insert add communication function - post fields are: "title" and "description"
-        //TODO: use a function for retrieving the daily date to be used in the add communication function
-        //TODO: please, delete once done
+    if ($officer->publish_communication($_POST['title'], $_POST['description'])) {
         header("Location: addCommunication.php?operation_result=1");
         die();
     } else {
