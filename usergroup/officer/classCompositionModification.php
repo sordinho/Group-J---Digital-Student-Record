@@ -86,7 +86,7 @@ if (isset($_GET['classID'])) {
                     <table class=\"table table-striped\">
                         <thead>
                         <tr>
-                            <th scope=\"col\">LastName</th>
+                            <th scope=\"coPul\">LastName</th>
                             <th scope=\"col\">Name</th>
                             <th scope=\"col\"></th>
                         </tr>
@@ -115,7 +115,7 @@ if (isset($_GET['classID'])) {
 ";
 
 }else if (isset($_GET['studentID']) && $_GET["action"] == "remove"){
-    $classIDReturned = $officer->remove_Student_From_Class($_GET['studentID']);
+    $classIDReturned = $officer->remove_student_from_class($_GET['studentID']);
     if($classIDReturned!=-1) {
         header("refresh:0.01;url=classCompositionModification.php?classID=" . $classIDReturned);
     }
