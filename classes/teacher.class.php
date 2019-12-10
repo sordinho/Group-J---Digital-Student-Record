@@ -569,4 +569,42 @@ CREATE TABLE `TopicRecord` (
         #}
     }
 
+	public function register_note_record($studentID,$noteID){
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("INSERT INTO NoteRecord VALUES (?,?);");
+        if(!$stmt)
+            return false;
+        $stmt->bind_param("ii",$studentID,$noteID);
+        return $stmt->execute();
+    }
+
+	public function register_new_note($date,$classID,$note){
+        $conn = $this->connectMySQL();
+        /*`ID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL,
+  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Description` text NOT NULL*/
+        $stmt = $conn->prepare("INSERT INTO Note (ID,TeacherID,SpecificClassID,Date,Description) VALUES (NULL,?,?,?,?);");
+        if(!$stmt)
+            return -1;
+        $stmt->bind_param("iiss",$this->get_teacher_ID(),$classID,$date,$note);
+
+        if(!$stmt->execute())
+            return -2;
+        $stmt = $conn->prepare("SELECT ID 
+                                      FROM Note
+                                      WHERE TeacherID = ?
+                                        AND SpecificClassID = ?
+                                        AND Date = ?
+                                        AND Description = ?;");
+        if(!$stmt)
+            return -3;
+        $stmt->bind_param("iiss",$this->get_teacher_ID(),$classID,$date,$note);
+        if(!$stmt->execute())
+            return -4;
+        $res = $stmt->get_result();
+
+        return $res->fetch_row()[0];
+    }
 }
