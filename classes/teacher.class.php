@@ -537,6 +537,36 @@ CREATE TABLE `TopicRecord` (
     	$uploaded['Timestamp'] = date("Y-m-d H:i:s");
 
     	return array($uploaded);
-	}
+    }
+    
+     /**
+     * @param int $subjectID
+     * @param int $classID
+     * @param string $fname
+     * @param string $servername: the name of file as it is on the server in upload folder
+     * @param string $description
+     * @return true on success or false on failure
+     */
+    public function insert_material($fname, $servername,$specificClassID, $description,  $subjectID )
+    {
+        # TODO:
+        # Missing: checks on (class, subject) (is learned by this teacher?)
+        # Should the teacher be warned if a file was already uploaded with this name ?
+        $teacherID = $_SESSION['teacherID'];
+
+        $conn = $this->connectMySQL();
+
+        #INSERT INTO `UploadedClassDocuments` (`ID`, `FileName`, `DiskFileName`, `SpecificClassID`, `Description`, `Date`, `SubjectID`) VALUES (NULL, 'aaa', 'aa', '1', 'aaaa', CURRENT_TIMESTAMP, '3')
+        #if ($this->is_teacher_of_the_class($studentID)) {
+        $sql = $conn->prepare("INSERT INTO UploadedClassDocuments(FileName, DiskFileName, SpecificClassID, Description, SubjectID) VALUES (?,?,?,?,?);");
+        if (!$sql){
+            return false;
+        }
+        $sql->bind_param('ssisi', $fname, $servername, $specificClassID, $description, $subjectID);
+        return $sql->execute();
+        #} else {
+        #    return false;
+        #}
+    }
 
 }
