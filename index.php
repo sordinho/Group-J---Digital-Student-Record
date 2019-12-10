@@ -31,10 +31,7 @@ if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 	$post_data["password"] = $_POST['password'];
 	$post_data["usergroup"] = $_POST['usergroup'];
 
-	//echo $_POST['username'] . $_POST['password'];
-
 	if ($result = $usr->user_login($post_data)) {
-		//$url = "/index.php";
 		$url = $usr->get_base_url() . "index.php";
 		if ($usr->get_usergroup() == 'parent') {
 			$sparent = new sparent();

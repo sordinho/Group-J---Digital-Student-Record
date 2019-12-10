@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 02, 2019 alle 13:00
+-- Creato il: Dic 06, 2019 alle 11:51
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -50,7 +50,12 @@ INSERT INTO `Homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `De
 (12, 'Elephant carpaccio', 2, 7, '2019-11-26', 4),
 (13, 'Scrum', 1, 1, '2019-11-28', 1),
 (14, 'prova prova', 1, 1, '2019-11-27', 2),
-(15, 'Study everything', 1, 1, '2019-12-04', 2);
+(15, 'Study everything', 1, 1, '2019-12-04', 2),
+(16, 'Demo + release. End of 2nd sprint', 1, 1, '2019-12-03', 2),
+(17, 'Retrospective', 1, 1, '2019-12-04', 1),
+(18, 'E2E testing', 1, 1, '2019-12-02', 2),
+(19, 'assignment 1', 1, 1, '2019-12-04', 1),
+(20, 'Code refactoring', 1, 1, '2019-12-05', 1);
 
 -- --------------------------------------------------------
 
@@ -81,13 +86,29 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (10, 1, 1, 1, 1, '2019-11-26 14:02:30', 0),
 (11, 5, 8, 1, 1, '2019-12-01 16:31:43', 0),
 (12, 1, 3, 1, 1, '2019-12-01 16:32:05', 0),
-(13, 4, 10, 1, 1, '2019-12-01 16:32:05', 0),
+(13, 4, 10, 1, 1, '2019-12-02 08:00:00', 0),
 (14, 6, 7, 1, 1, '2019-12-01 16:32:09', 0),
 (15, 3, 7, 1, 1, '2019-12-01 16:32:09', 0),
 (16, 2, 10, 1, 1, '2019-12-01 16:32:16', 1),
 (17, 8, 8, 1, 1, '2019-12-01 16:36:53', 0),
 (18, 2, 5, 1, 2, '2019-12-01 17:58:06', 0),
-(19, 6, 10, 1, 1, '2019-12-01 17:58:06', 1);
+(19, 6, 10, 1, 1, '2019-12-01 17:58:06', 1),
+(20, 3, 8, 1, 2, '2019-12-02 12:10:40', 0),
+(21, 5, 3, 1, 2, '2019-12-02 16:23:56', 0),
+(22, 2, 8, 1, 1, '2019-12-03 08:49:11', 0),
+(23, 12, 9, 1, 2, '2019-12-03 08:00:00', 0),
+(24, 12, 4, 2, 1, '2019-12-03 09:00:00', 0),
+(25, 12, 6, 3, 3, '2019-12-03 10:00:00', 0),
+(26, 12, 10, 4, 4, '2019-12-03 11:00:00', 0),
+(27, 12, 9, 5, 5, '2019-11-26 09:00:00', 0),
+(28, 12, 2, 6, 6, '2019-11-28 09:00:00', 0),
+(29, 4, 5, 2, 2, '2019-12-02 07:00:00', 0),
+(30, 4, 7, 4, 4, '2019-12-02 09:00:00', 0),
+(31, 4, 6, 5, 5, '2019-12-03 09:00:00', 0),
+(32, 4, 6, 6, 6, '2019-12-03 10:00:00', 0),
+(33, 4, 10, 7, 7, '2019-12-03 11:00:00', 0),
+(34, 2, 10, 1, 2, '2019-12-03 10:43:54', 1),
+(35, 4, 10, 1, 1, '2019-12-03 10:43:54', 0);
 
 -- --------------------------------------------------------
 
@@ -112,8 +133,11 @@ INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `L
 (1, 1, 1, '2019-11-28', 1, 4),
 (2, 2, 1, '2019-11-28', 0, 0),
 (3, 3, 1, '2019-11-28', 0, 4),
-(4, 2, 1, '2020-01-08', 0, 0),
-(5, 2, 1, '2020-01-09', 1, 5);
+(12, 6, 1, '2019-12-02', 0, 0),
+(13, 3, 1, '2019-12-02', 1, 6),
+(14, 2, 1, '2019-12-02', 1, 6),
+(15, 5, 1, '2019-12-02', 0, 0),
+(16, 4, 1, '2019-12-02', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -158,7 +182,8 @@ INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (8, 3, 44),
 (10, 4, 2),
 (11, 12, 55),
-(12, 13, 56);
+(12, 13, 56),
+(14, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -204,18 +229,19 @@ CREATE TABLE `Student` (
 --
 
 INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
-(1, 'Hirving', 'Lozano', 10, 'cf1', 1),
-(2, 'Vittorio', 'Di Leo', 10, 'cf1b', 1),
-(3, 'Emanuele', 'Munafo', 10, 'cf2', 1),
-(4, 'Davide', 'Sordi', 10, 'cf3', 1),
-(5, 'Francesco', 'Riba', 10, 'cf4', 1),
-(6, 'Riccardo', 'Mamone', 10, 'rf5', 1),
-(8, 'Antonio', 'Santoro', 10, 'cf6', 1),
-(9, 'Michael', 'Bing', 7, 'cf7', 2),
-(11, 'Mario', 'Rossi', 7, 'Fc11', 2),
+(1, 'Hirving', 'Lozano', 10, 'LGGLPM50L71Z356X', 1),
+(2, 'Vittorio', 'Di Leo', 10, 'PHGKRF55P70E908R', 1),
+(3, 'Emanuele', 'Munafo', 10, 'DLGLYL71H30E159S', 1),
+(4, 'Davide', 'Sordi', 10, 'HYFWMS36B11A963E', 1),
+(5, 'Francesco', 'Riba', 10, 'JFVYMM92P59A229O', 1),
+(6, 'Riccardo', 'Mamone', 10, 'ZGSQPD62P61F443K', 1),
+(8, 'Antonio', 'Santoro', 10, 'GHFNDJ51S10L730U', 1),
+(9, 'Michael', 'Bing', 7, 'RRQDWW41C60G670Z', 2),
+(11, 'Mario', 'Rossi', 7, 'LVMLVS80T70L552B', 2),
 (12, 'Javier', 'Lautaro', 10, 'LTRJVR97A01F839O', 2),
 (13, 'Dries', 'Mertens', 10, 'MRTDRS89L03F839J', 3),
-(18, 'Francesco', 'Riba', 9, 'aaaaaaaaaaaaaaaa', 1);
+(18, 'Francesco', 'Riba', 9, 'WTCPGG93M51H398P', 1),
+(23, 'Ross', 'Trebbiani', 9.25, 'TRBRSS80A01F839Q', -1);
 
 -- --------------------------------------------------------
 
@@ -235,7 +261,7 @@ CREATE TABLE `Teacher` (
 --
 
 INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
-(1, 0, 3, 'fc1'),
+(1, 0, 3, 'MTFiscalCode'),
 (2, 0, 4, 'fc2'),
 (3, 0, 5, 'fc3'),
 (4, 0, 6, 'fc4'),
@@ -289,10 +315,13 @@ CREATE TABLE `TopicRecord` (
 --
 
 INSERT INTO `TopicRecord` (`ID`, `TeacherID`, `Timestamp`, `Description`, `TopicID`, `SpecificClassID`) VALUES
-(3, 1, '2019-11-17 17:19:22', 'TopicLectureDescription for classID=3', 1, 3),
-(5, 1, '2019-11-18 23:00:00', 'description1', 1, 3),
-(6, 1, '2019-11-17 23:00:00', 'test description', 1, 3),
-(9, 2, '2019-12-01 23:00:00', 'Italy enters the first world war', 1, 2);
+(3, 1, '2019-12-02 07:00:00', 'Italy enters the first world war ', 1, 3),
+(5, 1, '2019-12-02 11:00:00', 'The Scientific Revolution ', 1, 3),
+(9, 2, '2019-12-01 23:00:00', 'Italy enters the first world war', 1, 2),
+(10, 1, '2019-12-02 10:00:00', 'Fluid dynamics', 2, 1),
+(12, 1, '2019-12-03 09:00:00', 'angular momentum', 2, 1),
+(13, 7, '2019-12-01 23:00:00', 'Atoms', 4, 3),
+(14, 7, '2019-12-01 23:00:00', 'Lagrangean Relaxation', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -339,7 +368,7 @@ CREATE TABLE `User` (
 --
 
 INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
-(1, 'Mary', 'ParentSurname1', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
+(1, 'Mary', 'Smith', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (2, 'Joseph', 'ParentSurname2', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (3, 'Marco', 'Torchiano', 'marco.torchiano@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (4, 'Paolo', 'Montuschi', 'teach2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
@@ -457,27 +486,27 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT per la tabella `Homework`
 --
 ALTER TABLE `Homework`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT per la tabella `MarksRecord`
 --
 ALTER TABLE `MarksRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT per la tabella `Officer`
 --
 ALTER TABLE `Officer`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT per la tabella `Parent`
 --
 ALTER TABLE `Parent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT per la tabella `SpecificClass`
 --
@@ -487,12 +516,12 @@ ALTER TABLE `SpecificClass`
 -- AUTO_INCREMENT per la tabella `Student`
 --
 ALTER TABLE `Student`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
 ALTER TABLE `Teacher`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --
@@ -502,7 +531,7 @@ ALTER TABLE `Topic`
 -- AUTO_INCREMENT per la tabella `TopicRecord`
 --
 ALTER TABLE `TopicRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
@@ -512,7 +541,7 @@ ALTER TABLE `TopicTeacherClass`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- Limiti per le tabelle scaricate
 --

@@ -184,5 +184,5 @@ function TestsConnectMySQL() {
 }
 
 function get_serviceID_by_service_name($service_name) {
-    return perform_SELECT_return_single_value("SELECT ID FROM Service WHERE Name = '{$service_name}'");
+    // return perform_SELECT_return_single_value("SELECT ID FROM Service WHERE Name = '{$service_name}'");
 }

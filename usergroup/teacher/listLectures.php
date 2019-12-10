@@ -51,10 +51,6 @@ OUT;
 					<div class="card-body  px-lg-5 pt-0 mt-md-5">
 						<div class="form-group">
 							<form method="POST" action="listLectures.php?action=submit">
-							  <div class="form-group">
-							  <label for="Title">Title</label>
-							  <input type="text" class="form-control" value = "' . $lecture_info["Title"] . '" name="title" id="title" placeholder="Course Introduction">
-							  </div>
 							  <div class="form-group" hidden>
 							  <input type="text" class="form-control" value = "' . $lecture_info["TopicRecordID"] . '" name="ID" id="ID" placeholder="Course Introduction">
 							  </div>

@@ -23,6 +23,11 @@ class officer extends user
         if (!(isset($si["name"]) && isset($si["surname"]) && isset($si["avgLastSchool"]) && isset($si["CF"]))) {
             return false;
         }
+
+        //check fiscal code
+        if(!$this->check_fiscal_code($si['CF']))
+        	return false;
+
         $classID = -1;
         // immetricolation info inserted also now?
         $actual_year = strtotime(date("Y"));

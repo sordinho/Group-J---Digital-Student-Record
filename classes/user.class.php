@@ -223,9 +223,9 @@ class user {
 	/* Error handling */
 	// Redirect to error.php (Error handler)
 	public function get_error($id, $noref = null) {
-		$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?message=$id' />";
+		$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?errorID=$id' />";
 		if (!empty($noref)) {
-			$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?message=$id&noref=1' />";
+			$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?errorID=$id&noref=1' />";
 		}
 		print $html;
 		//echo "url=".$this->base_url."/error.php?message=$id";
@@ -240,48 +240,6 @@ class user {
 			return '';
 	}
 
-
-	/*
-	public function sendEmail($to, $subject, $content, $name){
-		//Modifico php.ini per far si da utilizzare il protocollo smtp senza autenticazione.
-		ini_set('SMTP', 'smtp.mydomain.it');
-		ini_set('smtp_port', 25);
-		ini_set('sendmail_from', "info@mydomain.it");
-		//Controllo che l'email sia sintassicamente corretta.
-		if(!$this->is_email($to)) {
-			return false;
-		}
-		$subject = htmlspecialchars($subject);
-		// message
-		$message = '
-		<html>
-		<head>
-			<title>Grazie '.$name.'</title>
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		</head>
-		<body>'.
-			$content
-		.'</body><br><br>
-		<small>
-			Questa email è stata generata dal sito <a href=http://mydomain.it>colosi.it</a><br>
-			Per ogni altra informazione o per l\'eliminazione del proprio account andare sul sito o scrivere a<br>
-			info@mydomain.it</small>
-		</html>
-		';
-		// Modifico il Content-type poichè è una mail in formato html.
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-		// Aggiungo header per non mandarla in SPAM.
-		$headers .= 'To: '.htmlspecialchars($name).' <'.$to.'>' . "\r\n";
-		$headers .= 'From: Digital Student Recorder<info@mydomain.it>' . "\r\n";
-		// Uso la funzione mail per inviare.
-		if(mail($to, $subject, $message, $headers)){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}*/
 
 	/**
 	 * Generate a random string, using a cryptographically secure
@@ -320,6 +278,16 @@ class user {
 		} else {
 			return FALSE;
 		}
+	}
+
+	/**
+	 * Check validity of ITALIAN fiscal code
+	 * @param $fcode
+	 * @return false|int
+	 */
+	public function check_fiscal_code($fcode){
+		$regex = '/^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$/';
+		return preg_match($regex,$fcode);
 	}
 }
 

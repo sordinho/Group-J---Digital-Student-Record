@@ -213,7 +213,26 @@ CREATE TABLE `TopicRecord` (
         }
         return $topicRecords;
     }
-
+    public function get_daily_absences($date,$specificClassID){
+        if (calendar::validate_date($date) == false) return false;
+        //if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($date))) return false;
+        $absences = array();
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT StudentID, Late, ExitHour
+                                      FROM NotPresentRecord
+                                      WHERE Date = ? 
+                                        AND SpecificClassID = ?;");
+        if(!$stmt) return $absences;
+        $stmt->bind_param("si",$date,$specificClassID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            while ($row = $res->fetch_assoc()) {
+                array_push($absences, $row);
+            }
+        }
+        return $absences;
+    }
     public function get_students_by_class_id($classID)
     {
         $students = array();
@@ -298,6 +317,7 @@ CREATE TABLE `TopicRecord` (
         $teacherID = $_SESSION['teacherID'];
         if(!calendar::validate_date($timestamp))
             return false;
+        if(!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($timestamp))) return false;
         $y_m_d = date("Y-m-d",strtotime($timestamp));
         $classID = $this->is_teacher_of_the_student($studentID);
         //$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
@@ -393,6 +413,8 @@ CREATE TABLE `TopicRecord` (
 
         if (!calendar::validate_date($timestamp)) return false;
 
+        if(!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($timestamp))) return false;
+
         $y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
         $hours_per_school_day = calendar::get_hours_per_school_day();
 
@@ -417,6 +439,54 @@ CREATE TABLE `TopicRecord` (
             } else {
                 $sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',1,$hours_per_school_day)");
                 $sql->bind_param('ii', $studentID, $classID);
+                return $sql->execute();
+            }
+        } else {
+            printf("Error message: %s\n", $conn->error);
+            return false;
+        }
+    }
+
+    /**
+     * the function both works if previously absent or not
+     * @param $studentID
+     * @param $timestamp in the format "Y-m-d H:i:s"
+     * @param $newExitHour in the range 0-6
+     * @return true|false on success or not
+     */
+    public function register_early_exit($studentID, $timestamp, $newExitHour)
+    {
+        //todo check if the format of newExitHour need to be changed
+        $teacherID = $_SESSION['teacherID'];
+
+        if (!calendar::validate_date($timestamp)) return false;
+
+        if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($timestamp))) return false;
+
+        $y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
+        $hours_per_school_day = calendar::get_hours_per_school_day();
+
+        $conn = $this->connectMySQL();
+
+        $sql = "   SELECT COUNT(*)
+                    FROM NotPresentRecord
+                    WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
+                    AND NotPresentRecord.StudentID = '$studentID'
+                    AND ExitHour = 0";
+
+        if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
+
+            $row = $result->fetch_array();
+            $absent = $row[0]; //it means multiple possibilities: late arrival, absent, early exit...
+            $result->close();
+
+            if ($absent) {
+                $sql = $conn->prepare("UPDATE NotPresentRecord SET ExitHour = ? WHERE StudentID = ? AND Date = ?;");
+                $sql->bind_param('is', $studentID, $y_m_d_timestamp);
+                return $sql->execute();
+            } else {
+                $sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',0,?);");
+                $sql->bind_param('iii', $studentID, $classID,$newExitHour);
                 return $sql->execute();
             }
         } else {
@@ -457,5 +527,16 @@ CREATE TABLE `TopicRecord` (
         $cond = parent::is_logged() && $this->get_teacher_ID() != -1;
         return $cond;
     }
+
+
+	public function get_uploaded_material() {
+
+    	$uploaded['Filename'] = "File1";
+    	$uploaded['Class'] = "1A";
+    	$uploaded['Subject'] = "Science";
+    	$uploaded['Timestamp'] = date("Y-m-d H:i:s");
+
+    	return array($uploaded);
+	}
 
 }
