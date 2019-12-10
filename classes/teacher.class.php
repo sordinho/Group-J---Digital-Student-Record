@@ -537,11 +537,41 @@ CREATE TABLE `TopicRecord` (
     	$uploaded['Timestamp'] = date("Y-m-d H:i:s");
 
     	return array($uploaded);
-	}
+    }
+    
+     /**
+     * @param int $subjectID
+     * @param int $classID
+     * @param string $fname
+     * @param string $servername: the name of file as it is on the server in upload folder
+     * @param string $description
+     * @return true on success or false on failure
+     */
+    public function insert_material($fname, $servername,$specificClassID, $description,  $subjectID )
+    {
+        # TODO:
+        # Missing: checks on (class, subject) (is learned by this teacher?)
+        # Should the teacher be warned if a file was already uploaded with this name ?
+        $teacherID = $_SESSION['teacherID'];
+
+        $conn = $this->connectMySQL();
+
+        #INSERT INTO `UploadedClassDocuments` (`ID`, `FileName`, `DiskFileName`, `SpecificClassID`, `Description`, `Date`, `SubjectID`) VALUES (NULL, 'aaa', 'aa', '1', 'aaaa', CURRENT_TIMESTAMP, '3')
+        #if ($this->is_teacher_of_the_class($studentID)) {
+        $sql = $conn->prepare("INSERT INTO UploadedClassDocuments(FileName, DiskFileName, SpecificClassID, Description, SubjectID) VALUES (?,?,?,?,?);");
+        if (!$sql){
+            return false;
+        }
+        $sql->bind_param('ssisi', $fname, $servername, $specificClassID, $description, $subjectID);
+        return $sql->execute();
+        #} else {
+        #    return false;
+        #}
+    }
 
 	public function register_note_record($studentID,$noteID){
         $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("INSERT INTO NoteRecord VALUES (?,?);");
+        $stmt = $conn->prepare("INSERT INTO NoteRecord (ID,StudentID,NoteID) VALUES (NULL,?,?);");
         if(!$stmt)
             return false;
         $stmt->bind_param("ii",$studentID,$noteID);
@@ -549,12 +579,12 @@ CREATE TABLE `TopicRecord` (
     }
 
 	public function register_new_note($date,$classID,$note){
+        if(!calendar::validate_date($date)) return false;
+
+        if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($date))) return false;
+
         $conn = $this->connectMySQL();
-        /*`ID` int(11) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
-  `SpecificClassID` int(11) NOT NULL,
-  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Description` text NOT NULL*/
+
         $stmt = $conn->prepare("INSERT INTO Note (ID,TeacherID,SpecificClassID,Date,Description) VALUES (NULL,?,?,?,?);");
         if(!$stmt)
             return -1;
@@ -562,7 +592,7 @@ CREATE TABLE `TopicRecord` (
 
         if(!$stmt->execute())
             return -2;
-        $stmt = $conn->prepare("SELECT ID 
+        $stmt = $conn->prepare("SELECT Max(ID) 
                                       FROM Note
                                       WHERE TeacherID = ?
                                         AND SpecificClassID = ?

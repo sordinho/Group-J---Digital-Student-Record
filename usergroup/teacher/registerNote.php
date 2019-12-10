@@ -8,46 +8,17 @@ initialize_site($site);
 $page = new cpage("Disciplinary Note Registration");
 $site->setPage($page);
 
-/*if (!$teacher->is_logged()) {
-    header("location: /error.php?errorID=19");
-    exit();
-}*/
+if (!$teacher->is_logged()) {
+    $teacher->get_error(14);
+}
 if (isset($_GET['operation_result'])) {
-    /*$print = $_GET['operation_result'];
-    $content .= '
-                <div class="alert alert-danger" role="alert">'.
-                $print.
-                '</div>';*/
-    switch ($_GET['operation_result']) {
-        case 1:
-            $content .= '
+    if ($_GET['operation_result'] == 1){
+        $content .= '
                 <div class="alert alert-success" role="alert">
                     Absences successfully registered. <a href="registerNote.php" class="alert-link">Keep registering absence</a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
                 </div>';
-            break;
-        case 0:
-            $content .= '
-                <div class="alert alert-danger" role="alert">
-                    Error in uploading students\' absence. <a href="registerNote.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
-                </div>';
-            break;
-        case -1:
-            $content .= '
-                <div class="alert alert-danger" role="alert">
-                    Error <a href="registerNote.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
-                </div>';
-            break;
-        case -2:
-            $content .= '
-                <div class="alert alert-danger" role="alert">
-                    PORCODDIO. <a href="registerNote.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
-                </div>';
-            break;
-        default:
-            $content .= '
-                <div class="alert alert-dark" role="alert">
-                    Operation not allowed.
-                </div>';
+    } else {
+        $teacher->get_error(25);
     }
 
 } else {
@@ -161,14 +132,16 @@ OUT;
     } else if (!empty($_POST)) {
         $students_info = $teacher->get_students_by_class_id($classID);
         if (sizeof($students_info) == 0) {
-            header("Location: registerNote.php?operation_result=-200");
-            exit();
+            $teacher->get_error(24);
+            //header("Location: registerNote.php?operation_result=-2");
+            //exit();
         }
         $counter = 0;
         $note = $_POST['note'];
         if(!$note){
-            header("Location: registerNote.php?operation_result=-150");
-            exit();
+            $teacher->get_error(23);
+            //header("Location: registerNote.php?operation_result=-1");
+            //exit();
         }
         $date = $_POST['date'];
         if(!$date){
@@ -180,22 +153,21 @@ OUT;
         }
 
         $noteId = $teacher->register_new_note($date,$classID,$note);
-        if($noteId < 0){
-            header("Location: registerNote.php?operation_result=".$noteId);
-            exit();
+        if($noteId <= 0){
+            $teacher->get_error(22);
+            //header("Location: registerNote.php?operation_result=".$noteId);
+            //exit();
         }
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
             if (isset($_POST["select_$id"])) {
                 $selected = $_POST["select_$id"] == 'yes';
-                //$date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
 
                 if ($selected) {
                     $res = $teacher->register_note_record($id,$noteId);
 
                     if (!$res) {
-                        header("Location: registerNote.php?operation_result=0");
-                        exit();
+                        $teacher->get_error(22);
                     }
                     $counter++;
                 }
@@ -206,11 +178,13 @@ OUT;
             header("Location: registerNote.php?operation_result=1");
             exit();
         } else if ($counter == 0){
-            header("Location: registerNote.php?operation_result=-10000000");
-            exit();
+            $teacher->get_error(21);
+            //header("Location: registerNote.php?operation_result=-1");
+            //exit();
         } else {
-            header("Location: registerNote.php?operation_result=0");
-            exit();
+            $teacher->get_error(22);
+            //header("Location: registerNote.php?operation_result=0");
+            //exit();
         }
     }
 }
