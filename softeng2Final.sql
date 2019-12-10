@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 09, 2019 alle 20:04
+-- Creato il: Dic 10, 2019 alle 14:54
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -132,6 +132,31 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (33, 4, 10, 7, 7, '2019-12-03 11:00:00', 0),
 (34, 2, 10, 1, 2, '2019-12-03 10:43:54', 1),
 (35, 4, 10, 1, 1, '2019-12-03 10:43:54', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Note`
+--
+
+CREATE TABLE `Note` (
+  `ID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL,
+  `Description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `NoteRecord`
+--
+
+CREATE TABLE `NoteRecord` (
+  `ID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `NoteID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -374,6 +399,19 @@ INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `UploadedClassDocuments`
+--
+
+CREATE TABLE `UploadedClassDocuments` (
+  `ID` int(11) NOT NULL,
+  `FileName` varchar(255) NOT NULL,
+  `DiskFileName` varchar(255) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `User`
 --
 
@@ -436,6 +474,18 @@ ALTER TABLE `MarksRecord`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `TopicID` (`TopicID`);
+
+--
+-- Indici per le tabelle `Note`
+--
+ALTER TABLE `Note`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indici per le tabelle `NoteRecord`
+--
+ALTER TABLE `NoteRecord`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indici per le tabelle `NotPresentRecord`
@@ -503,6 +553,12 @@ ALTER TABLE `TopicTeacherClass`
   ADD KEY `SpecificClassID` (`SpecificClassID`);
 
 --
+-- Indici per le tabelle `UploadedClassDocuments`
+--
+ALTER TABLE `UploadedClassDocuments`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indici per le tabelle `User`
 --
 ALTER TABLE `User`
@@ -528,6 +584,16 @@ ALTER TABLE `Homework`
 ALTER TABLE `MarksRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
+-- AUTO_INCREMENT per la tabella `Note`
+--
+ALTER TABLE `Note`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT per la tabella `NoteRecord`
+--
+ALTER TABLE `NoteRecord`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
@@ -551,7 +617,7 @@ ALTER TABLE `SpecificClass`
 -- AUTO_INCREMENT per la tabella `Student`
 --
 ALTER TABLE `Student`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
@@ -572,6 +638,11 @@ ALTER TABLE `TopicRecord`
 --
 ALTER TABLE `TopicTeacherClass`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT per la tabella `UploadedClassDocuments`
+--
+ALTER TABLE `UploadedClassDocuments`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT per la tabella `User`
 --
