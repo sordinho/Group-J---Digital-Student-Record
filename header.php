@@ -74,6 +74,7 @@ switch ($_SESSION["usergroup"]) {
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./addCommunications.php"><i class="fas fa-mail-bulk mx-3"></i><span class="text-nowrap mx-2">Add Communication</span></a></li>';
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./studentEnrollment.php"><i class="fas fa-graduation-cap mx-3"></i><span class="text-nowrap mx-2">Enroll Student</span></a></li>';
         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./classCompositionModification.php"><i class="fas fa-users mx-3"></i><span class="text-nowrap mx-2">Handle Classes</span></a></li>';
+        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./setClassTimetable.php"><i class="fas fa-users mx-3"></i><span class="text-nowrap mx-2">Set Timetable</span></a></li>';
         $hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Parent Info</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 								<div class="dropdown-menu border-0 animated fadeIn" role="menu">
 								<a class="dropdown-item text-white" role="presentation" href="./uploadParentCredentials.php"><span>Manual Insert</span></a>

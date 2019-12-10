@@ -317,4 +317,47 @@ class officer extends user
         return false;
     }
 
+    public function get_teacher_topic(){
+
+        $conn = $this->connectMySQL();
+
+        $res = $conn->query("SELECT user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
+                                    FROM topicteacherclass, topic, teacher, user
+                                    WHERE topicteacherclass.TeacherID=teacher.ID AND topicteacherclass.TopicID=topic.ID AND teacher.UserID=user.ID
+                                    GROUP BY user.Name, user.Surname, topic.Name, topic.ID, teacher.ID");
+        if ($res->num_rows <= 0)
+            return array();
+        $IDs = array();
+        for ($i = 0; $i < $res->num_rows; $i++) {
+            $row = $res->fetch_array();
+            array_push($IDs, $row);
+        }
+        $res->close();
+        return $IDs;
+    }
+
+    public function setTimeTableClass($data){
+        $tt = $data;
+        if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
+            return false;
+        }
+
+        $conn = $this->connectMySQL();
+        //user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
+        $i=0;
+        $j=0;
+        for($i=0;$i<6;$i++){
+            for($j=0;$j<5;$j++){
+                $pieces = explode("_", $tt["hours"][$i][$j]);
+                $stmt = $conn->prepare("INSERT INTO topicteacherclass (TeacherID, TopicID, SpecificClassID,hourSlot,dayOfWeek) VALUES (?,?,?,?,?);");
+                $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $tt["classID"], $i, $j);
+                if(!$stmt->execute())
+                    return false;
+            }
+            $j=0;
+        }
+        return true;
+
+    }
+
 }
