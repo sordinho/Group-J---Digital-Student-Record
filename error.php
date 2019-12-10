@@ -22,7 +22,12 @@ $messages = array(
 	17 => 'Activation successful!',
 	18 => 'Attempt to modify parameters.<br>That\'s not funny.',
 	19 => 'You\'re not authorized to view this resource.',
-    20 => 'Please select a role.'
+    20 => 'Please select a role.',
+    21 => 'You should select at least one field',
+    22 => 'Failed at registering a new record',
+    23 => 'Text area is mandatory. <br> It must be filled.',
+    24 => 'The selected class has no students.',
+    25 => 'Operation not allowed.'
 );
 if(isset($_GET['errorID'])){
 	$message_script = $_GET['errorID'];

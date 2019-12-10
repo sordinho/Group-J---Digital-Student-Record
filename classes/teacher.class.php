@@ -571,7 +571,7 @@ CREATE TABLE `TopicRecord` (
 
 	public function register_note_record($studentID,$noteID){
         $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("INSERT INTO NoteRecord VALUES (?,?);");
+        $stmt = $conn->prepare("INSERT INTO NoteRecord (ID,StudentID,NoteID) VALUES (NULL,?,?);");
         if(!$stmt)
             return false;
         $stmt->bind_param("ii",$studentID,$noteID);
@@ -579,12 +579,12 @@ CREATE TABLE `TopicRecord` (
     }
 
 	public function register_new_note($date,$classID,$note){
+        if(!calendar::validate_date($date)) return false;
+
+        if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($date))) return false;
+
         $conn = $this->connectMySQL();
-        /*`ID` int(11) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
-  `SpecificClassID` int(11) NOT NULL,
-  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Description` text NOT NULL*/
+
         $stmt = $conn->prepare("INSERT INTO Note (ID,TeacherID,SpecificClassID,Date,Description) VALUES (NULL,?,?,?,?);");
         if(!$stmt)
             return -1;
@@ -592,7 +592,7 @@ CREATE TABLE `TopicRecord` (
 
         if(!$stmt->execute())
             return -2;
-        $stmt = $conn->prepare("SELECT ID 
+        $stmt = $conn->prepare("SELECT Max(ID) 
                                       FROM Note
                                       WHERE TeacherID = ?
                                         AND SpecificClassID = ?
