@@ -9,7 +9,8 @@ $page = new cpage("Student Presence Verification");
 $site->setPage($page);
 
 if (!$teacher->is_logged()) {
-	header("location: /error.php?errorID=19");
+	// header("location: /error.php?errorID=19");
+	$teacher->get_error(19);
 	exit();
 }
 
@@ -102,6 +103,7 @@ if (isset($_GET['operation_result'])) {
                                 <th scope="col">First Name</th>
                                 <th scope="col">Absence</th>
                                 <th scope="col">Late Arrival</th>
+                                <th scope="col">Exit Hour</th>
                                 </tr>
                             </thead>
                             <tbody>';
@@ -123,6 +125,17 @@ if (isset($_GET['operation_result'])) {
                                     <td>
                                         <input type="checkbox" class="form-check-input" id="late_$id" name="late_$id" value="yes" >
                                         <label class="form-check-label" id="late_label_$id" for="exampleCheck1">Late</label>
+                                    </td>
+                                    <td>
+                                        <div class="form-group justify-content-center">
+                                            <select class="form-control text-center" name="early_exit_hour_$id">
+                                              <option value="5">13</option>
+                                              <option value="4">12</option>
+                                              <option value="3">11</option>
+                                              <option value="2">10</option>
+                                              <option value="1">9</option>
+                                            </select>
+                                        </div>
                                     </td>
                             </tr>
 OUT;
