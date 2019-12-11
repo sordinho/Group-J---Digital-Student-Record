@@ -309,12 +309,20 @@ class officer extends user
             $stmt = $conn->prepare("INSERT INTO Communication (Title, Description, OfficerID) VALUES (?, ?, ?)");
             $stmt->bind_param('ssi', $title, $description, $officerID);
             if (!$stmt->execute()) {
-                return false;
+                return -2; // failed insertion
             }
-            return true;
+            return 1; // successfully insertion
         }
 
-        return false;
+        if ($title==="" && $description==="") {
+            return 0; // empty communication
+        } elseif ($title==="") {
+            return -3; // empty title
+        } elseif ($description==="") {
+            return -4; // empty description
+        }
+
+        return -1; // not logged in
     }
 
     public function get_teacher_topic(){
