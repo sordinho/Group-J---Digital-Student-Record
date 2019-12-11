@@ -328,7 +328,7 @@ class officer extends user
         $conn = $this->connectMySQL();
 
         $res = $conn->query("SELECT User.Name, User.Surname, Topic.Name, Topic.ID, Teacher.ID
-                                    FROM TopicTeacherClass, Topic, Teacher, user
+                                    FROM TopicTeacherClass, Topic, Teacher, User
                                     WHERE TopicTeacherClass.TeacherID=Teacher.ID AND TopicTeacherClass.TopicID=Topic.ID AND Teacher.UserID=user.ID AND TopicTeacherClass.SpecificClassID=$classID
                                     GROUP BY User.Name, User.Surname, Topic.Name, Topic.ID, Teacher.ID");
 
