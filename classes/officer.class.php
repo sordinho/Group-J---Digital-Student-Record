@@ -304,7 +304,13 @@ class officer extends user
     public function publish_communication($title, $description)
     {
         $officerID = $this->get_officer_ID();
-        if ($officerID != -1) {
+        if ($title==="" && $description==="") {
+            return 0; // empty communication
+        } elseif ($title==="") {
+            return -3; // empty title
+        } elseif ($description==="") {
+            return -4; // empty description
+        } elseif ($officerID != -1) {
             $conn = $this->connectMySql();
             $stmt = $conn->prepare("INSERT INTO Communication (Title, Description, OfficerID) VALUES (?, ?, ?)");
             $stmt->bind_param('ssi', $title, $description, $officerID);
@@ -312,14 +318,6 @@ class officer extends user
                 return -2; // failed insertion
             }
             return 1; // successfully insertion
-        }
-
-        if ($title==="" && $description==="") {
-            return 0; // empty communication
-        } elseif ($title==="") {
-            return -3; // empty title
-        } elseif ($description==="") {
-            return -4; // empty description
         }
 
         return -1; // not logged in
