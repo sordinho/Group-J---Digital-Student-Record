@@ -14,12 +14,6 @@ if (!$teacher->is_logged() ) {
 
 if (!isset($_POST["description"])) {
 
-    /*	TODO This is the confirm page, operation result should be:
-                0 if unsuccessful
-                1 if successful
-                any other number won't be accepted (see default option)
-    uncomment if it is ok
-*/
     if (isset($_GET['operation_result'])) {
         $content = "";
         switch ($_GET['operation_result']) {
@@ -88,8 +82,8 @@ if (!isset($_POST["description"])) {
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Date</label>
-                                        <input type="date" id="date" name="date">
-                                        </div>
+                                        <input type="date" id="date" name="date" class="form-control">
+                                    </div>
                                     <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Record</button>	
                                     
                                 </form>

@@ -52,7 +52,6 @@ if ($_GET['action'] == "switchChild") {
 	}
 	$content = '
 				
-		
 		<div class="card">
 			<h2 style="background-color:rgba(108,108,108,0.9);color:white" class="card-header info-color white-text text-center py-4">
 				Logged as: parent - '.$sparent->get_name().' '.$sparent->get_surname().'
@@ -94,8 +93,33 @@ if ($_GET['action'] == "switchChild") {
 				</div>
 			</div>
 		</div>';
+	// Get last announcement
+	//var_dump($sparent->get_announcements());
+	$announcements_block = "";
+	$announcements = $sparent->get_announcements();
+	foreach ($announcements as $announcement) {
+		$format_timestamp = strtotime($announcement["Timestamp"]);
+    	$format_date = calendar::timestamp_to_date($format_timestamp);
+		$announcements_block .= '
+		<div class="cd-timeline-block">
+			<div class="cd-timeline-img cd-location">
+				<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg" alt="Location">
+			</div> <!-- cd-timeline-img -->
+		
+			<div class="cd-timeline-content">
+				<h2>'.$announcement["Title"].'</h2>
+				<p>'.$announcement["Description"].'</p>
+				<!--<a href="#0" class="cd-read-more">Read more</a>-->
+			
+				<span class="cd-date">'.$format_date["month"]." ".$format_date["day"].'</span>
+			</div> <!-- cd-timeline-content -->
+		</div> <!-- cd-timeline-block -->';
+	}
+	// print timeline
+	
+$content .= '<section id="cd-timeline" class="cd-container">'.$announcements_block.'</section> ';
+$content .= '  <script  src="'.PLATFORM_PATH.'/js/timeline.js"></script>';
 }
-
 $page->setContent($content);
 $site->render();
 ?>

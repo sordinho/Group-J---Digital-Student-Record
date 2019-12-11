@@ -6,14 +6,14 @@ body {
 
 @media (min-width: 992px) {
   body {
-    padding-left: 14rem;
+    padding-left: 15rem;
   }
 }
 
 /* Sidebar Styles */
 
 .sidebar {
-  max-width: 14rem !important;
+  max-width: 15rem !important;
   width: 100%;
   min-height: 100vh;
   background-color: #6c6c6c;

@@ -99,6 +99,9 @@ class administrator extends user {
             echo "Unable to add data to the specific user Table in the DB";
 			return false;
 		}
+
+		//TODO:if usergroup=teacher -> add record in topicteacherclass (specificclassid=-1)
+        //TODO:decide about topic ID
 		$query->close();
 		$mysqli->close();
 

@@ -238,7 +238,7 @@ class officer extends user
      * Function that given the studentID removes it from the class it is actually assighed to (sets specificClassID=-1)
      * returns the id of the class the student was in, to be able to redirect to that class composition modification
      */
-    public function remove_Student_From_Class($studentID)
+    public function remove_student_from_class($studentID)
     {
         $conn = $this->connectMySQL();
 
@@ -299,6 +299,65 @@ class officer extends user
         }
         $res->close();
         return $stamp;
+    }
+
+    public function publish_communication($title, $description)
+    {
+        $officerID = $this->get_officer_ID();
+        if ($officerID != -1) {
+            $conn = $this->connectMySql();
+            $stmt = $conn->prepare("INSERT INTO Communication (Title, Description, OfficerID) VALUES (?, ?, ?)");
+            $stmt->bind_param('ssi', $title, $description, $officerID);
+            if (!$stmt->execute()) {
+                return false;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    public function get_teacher_topic(){
+
+        $conn = $this->connectMySQL();
+
+        $res = $conn->query("SELECT user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
+                                    FROM topicteacherclass, topic, teacher, user
+                                    WHERE topicteacherclass.TeacherID=teacher.ID AND topicteacherclass.TopicID=topic.ID AND teacher.UserID=user.ID AND topicteacherclass.SpecificClassID=-1
+                                    GROUP BY user.Name, user.Surname, topic.Name, topic.ID, teacher.ID");
+        if ($res->num_rows <= 0)
+            return array();
+        $IDs = array();
+        for ($i = 0; $i < $res->num_rows; $i++) {
+            $row = $res->fetch_array();
+            array_push($IDs, $row);
+        }
+        $res->close();
+        return $IDs;
+    }
+
+    public function setTimeTableClass($data){
+        $tt = $data;
+        if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
+            echo "Ciao";
+            return false;
+        }
+
+        $conn = $this->connectMySQL();
+        //user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
+        for($i=0;$i<5;$i++){
+            for($j=0;$j<6;$j++){
+                $pieces = explode("_", $tt["hours"][$i][$j]);
+                $stmt = $conn->prepare("INSERT INTO topicteacherclass (TeacherID, TopicID, SpecificClassID,hourSlot,dayOfWeek) VALUES (?,?,?,?,?);");
+                $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $tt["classID"], $j, $i);
+                if(!$stmt->execute()){
+                    echo "Ciao1";
+                    return false;
+                }
+            }
+            $j=0;
+        }
+        return true;
     }
 
 }

@@ -30,7 +30,23 @@ class calendar
         return true;
     }
 
+    // Note: i think is better to use the site_config for such a costant, a change in this should will cause various changes.
     public static function get_hours_per_school_day() {
         return 6; // aka hours_per_school_day
     }
+
+    /**
+     * Convert a timestamp into a defined array
+     *
+     * @param int $nerr
+     *
+     * @return array[] Returns an array of string that represents a date
+     */
+    public static function timestamp_to_date($timestamp) {
+        $date['month'] = date("M", $timestamp);
+        $date['day'] = date("d", $timestamp);
+        $date['time'] = date("H:i", $timestamp);
+        return $date;
+    }
+
 }
