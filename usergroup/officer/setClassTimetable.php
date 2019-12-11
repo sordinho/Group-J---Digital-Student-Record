@@ -87,7 +87,7 @@ if (!empty($_POST)) {
 //if a class has been selected loads the list of students of the class so that the officer can modify it
 else if (isset($_GET['classID'])) {
 
-    $professorsTopics=$officer->get_teacher_topic();
+    $professorsTopics=$officer->get_teacher_topic($_GET['classID']);
     $optionList="<option selected>Choose a topic</option>";
     foreach ($professorsTopics as $professorTopic) {
             $optionList .= "<option value=" . $professorTopic[3] . "_". $professorTopic[4].">" . $professorTopic[2] . " - ". $professorTopic[1] ."</option>";
