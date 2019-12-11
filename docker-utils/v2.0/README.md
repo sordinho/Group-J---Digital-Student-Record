@@ -4,8 +4,8 @@
 
 ## Running
 
-0. First it is recommended to pull the image `docker pull groupj/digital_student_record:r1`
-1. Run in terminal `docker run --hostname docker-desktop --rm -p 80:80 groupj/digital_student_record`
+0. First it is recommended to pull the image `docker pull se2polito/team-j:latest`
+1. Run in terminal `docker run --hostname docker-desktop --rm -p 80:80 se2polito/team-j`
 1. Cross your fingers
 1. Go to [localhost](http://localhost)
 
@@ -17,7 +17,7 @@ For building the image you need the [Dockerfile](Dockerfile)
 
 1. Place all the content of this directory at the same level of the github repository directory.
 2. Open terminal and go to directory containing repo, Dockerfile and other files.
-3. Run `docker build -t groupj/digital_student_record:rXXX` where `XXX` is the TAG (release number)
+3. Run `docker build -t se2polito/team-j:rXXX` where `XXX` is the TAG (release number)
 4. Take a coffee
 
 ## Notes
