@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2.1
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Creato il: Dic 11, 2019 alle 11:07
--- Versione del server: 10.4.8-MariaDB
--- Versione PHP: 7.3.11
+-- Host: localhost
+-- Creato il: Dic 11, 2019 alle 16:53
+-- Versione del server: 5.7.28-0ubuntu0.16.04.2
+-- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,28 +17,28 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `softeng2final`
+-- Database: `softeng2Final`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `communication`
+-- Struttura della tabella `Communication`
 --
 
-CREATE TABLE `communication` (
+CREATE TABLE `Communication` (
   `ID` int(11) NOT NULL,
   `Title` varchar(535) NOT NULL,
   `Description` text NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `OfficerID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `communication`
+-- Dump dei dati per la tabella `Communication`
 --
 
-INSERT INTO `communication` (`ID`, `Title`, `Description`, `Timestamp`, `OfficerID`) VALUES
+INSERT INTO `Communication` (`ID`, `Title`, `Description`, `Timestamp`, `OfficerID`) VALUES
 (1, 'Christmas holidays', 'All lectures are suspended from 20/12/2019 until 07/01/2020', '2019-12-09 16:34:14', 1),
 (2, 'All labs will be closed', 'The access to all laboratories will be restored on 10/01/2020', '2019-12-09 17:34:14', 2),
 (3, 'Lecture suspended', 'All lectures are suspended on 11/12/2019', '2019-12-09 16:35:07', 1);
@@ -48,10 +46,10 @@ INSERT INTO `communication` (`ID`, `Title`, `Description`, `Timestamp`, `Officer
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `homework`
+-- Struttura della tabella `Homework`
 --
 
-CREATE TABLE `homework` (
+CREATE TABLE `Homework` (
   `ID` int(11) NOT NULL,
   `Description` text NOT NULL,
   `SpecificClassID` int(11) NOT NULL,
@@ -61,10 +59,10 @@ CREATE TABLE `homework` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `homework`
+-- Dump dei dati per la tabella `Homework`
 --
 
-INSERT INTO `homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `Deadline`, `TopicID`) VALUES
+INSERT INTO `Homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `Deadline`, `TopicID`) VALUES
 (1, 'desc1', 1, 1, '2020-01-08', 1),
 (2, 'desc2', 1, 1, '2020-01-09', 2),
 (4, 'desc4', 1, 1, '2019-11-26', 1),
@@ -85,24 +83,24 @@ INSERT INTO `homework` (`ID`, `Description`, `SpecificClassID`, `TeacherID`, `De
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `marksrecord`
+-- Struttura della tabella `MarksRecord`
 --
 
-CREATE TABLE `marksrecord` (
+CREATE TABLE `MarksRecord` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `Mark` float NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `TopicID` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Laude` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `marksrecord`
+-- Dump dei dati per la tabella `MarksRecord`
 --
 
-INSERT INTO `marksrecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `Timestamp`, `Laude`) VALUES
+INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `Timestamp`, `Laude`) VALUES
 (1, 2, 7, 1, 1, '2019-11-09 07:00:00', 0),
 (2, 2, 7, 2, 2, '2019-11-09 08:00:00', 0),
 (3, 3, 4, 3, 3, '2019-11-09 09:00:00', 0),
@@ -138,24 +136,23 @@ INSERT INTO `marksrecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `note`
+-- Struttura della tabella `Note`
 --
 
-CREATE TABLE `note` (
+CREATE TABLE `Note` (
   `ID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `SpecificClassID` int(11) NOT NULL,
-  `Date` timestamp NOT NULL DEFAULT current_timestamp(),
   `Description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `noterecord`
+-- Struttura della tabella `NoteRecord`
 --
 
-CREATE TABLE `noterecord` (
+CREATE TABLE `NoteRecord` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `NoteID` int(11) NOT NULL
@@ -164,23 +161,23 @@ CREATE TABLE `noterecord` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `notpresentrecord`
+-- Struttura della tabella `NotPresentRecord`
 --
 
-CREATE TABLE `notpresentrecord` (
+CREATE TABLE `NotPresentRecord` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `SpecificClassID` int(11) NOT NULL,
   `Date` date NOT NULL,
-  `Late` tinyint(1) NOT NULL DEFAULT 0,
-  `ExitHour` int(11) NOT NULL DEFAULT 0
+  `Late` tinyint(1) NOT NULL DEFAULT '0',
+  `ExitHour` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `notpresentrecord`
+-- Dump dei dati per la tabella `NotPresentRecord`
 --
 
-INSERT INTO `notpresentrecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `Late`, `ExitHour`) VALUES
+INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `Late`, `ExitHour`) VALUES
 (1, 1, 1, '2019-11-28', 1, 4),
 (2, 2, 1, '2019-11-28', 0, 0),
 (3, 3, 1, '2019-11-28', 0, 4),
@@ -193,40 +190,40 @@ INSERT INTO `notpresentrecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `L
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `officer`
+-- Struttura della tabella `Officer`
 --
 
-CREATE TABLE `officer` (
+CREATE TABLE `Officer` (
   `ID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
   `FiscalCode` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `officer`
+-- Dump dei dati per la tabella `Officer`
 --
 
-INSERT INTO `officer` (`ID`, `UserID`, `FiscalCode`) VALUES
+INSERT INTO `Officer` (`ID`, `UserID`, `FiscalCode`) VALUES
 (1, 10, 'FSCOFFICER1'),
 (2, 11, 'FSCOFFICER2');
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `parent`
+-- Struttura della tabella `Parent`
 --
 
-CREATE TABLE `parent` (
+CREATE TABLE `Parent` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `parent`
+-- Dump dei dati per la tabella `Parent`
 --
 
-INSERT INTO `parent` (`ID`, `StudentID`, `UserID`) VALUES
+INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
 (2, 2, 2),
 (5, 4, 1),
 (7, 3, 45),
@@ -239,10 +236,10 @@ INSERT INTO `parent` (`ID`, `StudentID`, `UserID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `specificclass`
+-- Struttura della tabella `SpecificClass`
 --
 
-CREATE TABLE `specificclass` (
+CREATE TABLE `SpecificClass` (
   `ID` int(11) NOT NULL,
   `YearClassID` int(11) NOT NULL,
   `Section` varchar(5) NOT NULL,
@@ -251,10 +248,10 @@ CREATE TABLE `specificclass` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `specificclass`
+-- Dump dei dati per la tabella `SpecificClass`
 --
 
-INSERT INTO `specificclass` (`ID`, `YearClassID`, `Section`, `UploadedPath`, `CoordinatorTeacherID`) VALUES
+INSERT INTO `SpecificClass` (`ID`, `YearClassID`, `Section`, `UploadedPath`, `CoordinatorTeacherID`) VALUES
 (-1, -1, 'noC', '', 1),
 (1, 1, 'A', 'uploadedPath1', 1),
 (2, 1, 'B', 'uploadedPath2', 2),
@@ -263,10 +260,10 @@ INSERT INTO `specificclass` (`ID`, `YearClassID`, `Section`, `UploadedPath`, `Co
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `student`
+-- Struttura della tabella `Student`
 --
 
-CREATE TABLE `student` (
+CREATE TABLE `Student` (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) NOT NULL,
   `Surname` varchar(50) NOT NULL,
@@ -276,10 +273,10 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `student`
+-- Dump dei dati per la tabella `Student`
 --
 
-INSERT INTO `student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
+INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
 (1, 'Hirving', 'Lozano', 10, 'LGGLPM50L71Z356X', 1),
 (2, 'Vittorio', 'Di Leo', 10, 'PHGKRF55P70E908R', 1),
 (3, 'Emanuele', 'Munafo', 10, 'DLGLYL71H30E159S', 1),
@@ -297,10 +294,10 @@ INSERT INTO `student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `Spec
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `teacher`
+-- Struttura della tabella `Teacher`
 --
 
-CREATE TABLE `teacher` (
+CREATE TABLE `Teacher` (
   `ID` int(11) NOT NULL,
   `MeetingHourID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
@@ -308,10 +305,10 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `teacher`
+-- Dump dei dati per la tabella `Teacher`
 --
 
-INSERT INTO `teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
+INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 (1, 0, 3, 'MTFiscalCode'),
 (2, 0, 4, 'fc2'),
 (3, 0, 5, 'fc3'),
@@ -324,20 +321,71 @@ INSERT INTO `teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `topic`
+-- Struttura della tabella `Timetables`
 --
 
-CREATE TABLE `topic` (
+CREATE TABLE `Timetables` (
+  `ID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `TopicID` int(11) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL,
+  `DayOfWeek` int(11) NOT NULL,
+  `HourSlot` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `Timetables`
+--
+
+INSERT INTO `Timetables` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`, `DayOfWeek`, `HourSlot`) VALUES
+(61, 1, 1, 1, 0, 0),
+(62, 1, 1, 1, 0, 1),
+(63, 1, 1, 1, 0, 2),
+(64, 1, 1, 1, 0, 3),
+(65, 1, 1, 1, 0, 4),
+(66, 1, 1, 1, 0, 5),
+(67, 1, 1, 1, 1, 0),
+(68, 1, 1, 1, 1, 1),
+(69, 1, 1, 1, 1, 2),
+(70, 1, 1, 1, 1, 3),
+(71, 1, 1, 1, 1, 4),
+(72, 1, 1, 1, 1, 5),
+(73, 1, 1, 1, 2, 0),
+(74, 1, 1, 1, 2, 1),
+(75, 1, 1, 1, 2, 2),
+(76, 1, 1, 1, 2, 3),
+(77, 1, 1, 1, 2, 4),
+(78, 1, 1, 1, 2, 5),
+(79, 1, 1, 1, 3, 0),
+(80, 1, 1, 1, 3, 1),
+(81, 1, 1, 1, 3, 2),
+(82, 1, 1, 1, 3, 3),
+(83, 1, 1, 1, 3, 4),
+(84, 1, 1, 1, 3, 5),
+(85, 1, 1, 1, 4, 0),
+(86, 1, 1, 1, 4, 1),
+(87, 1, 1, 1, 4, 2),
+(88, 1, 1, 1, 4, 3),
+(89, 1, 1, 1, 4, 4),
+(90, 1, 1, 1, 4, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Topic`
+--
+
+CREATE TABLE `Topic` (
   `ID` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `topic`
+-- Dump dei dati per la tabella `Topic`
 --
 
-INSERT INTO `topic` (`ID`, `Name`, `Description`) VALUES
+INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
 (1, 'History', 'Subject Description 1'),
 (2, 'Physics', 'Subject Description 2'),
 (3, 'Maths', 'Subject Description 3'),
@@ -349,23 +397,23 @@ INSERT INTO `topic` (`ID`, `Name`, `Description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `topicrecord`
+-- Struttura della tabella `TopicRecord`
 --
 
-CREATE TABLE `topicrecord` (
+CREATE TABLE `TopicRecord` (
   `ID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Description` varchar(512) NOT NULL,
   `TopicID` int(11) NOT NULL,
   `SpecificClassID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dump dei dati per la tabella `topicrecord`
+-- Dump dei dati per la tabella `TopicRecord`
 --
 
-INSERT INTO `topicrecord` (`ID`, `TeacherID`, `Timestamp`, `Description`, `TopicID`, `SpecificClassID`) VALUES
+INSERT INTO `TopicRecord` (`ID`, `TeacherID`, `Timestamp`, `Description`, `TopicID`, `SpecificClassID`) VALUES
 (3, 1, '2019-12-02 07:00:00', 'Italy enters the first world war ', 1, 3),
 (5, 1, '2019-12-02 11:00:00', 'The Scientific Revolution ', 1, 3),
 (9, 2, '2019-12-01 23:00:00', 'Italy enters the first world war', 1, 2),
@@ -377,82 +425,58 @@ INSERT INTO `topicrecord` (`ID`, `TeacherID`, `Timestamp`, `Description`, `Topic
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `topicteacherclass`
+-- Struttura della tabella `TopicTeacherClass`
 --
 
-CREATE TABLE `topicteacherclass` (
+CREATE TABLE `TopicTeacherClass` (
   `ID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `TopicID` int(11) NOT NULL,
-  `SpecificClassID` int(11) NOT NULL,
-  `hourSlot` int(11) NOT NULL,
-  `dayOfWeek` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dump dei dati per la tabella `topicteacherclass`
---
-
-INSERT INTO `topicteacherclass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`, `hourSlot`, `dayOfWeek`) VALUES
-(139, 1, 1, -1, 0, 0),
-(140, 2, 2, -1, 0, 0),
-(141, 3, 3, -1, 0, 0),
-(142, 4, 4, -1, 0, 0),
-(143, 5, 5, -1, 0, 0),
-(144, 6, 6, -1, 0, 0),
-(145, 7, 7, -1, 0, 0),
-(146, 8, 7, -1, 0, 0),
-(229, 8, 7, 1, 0, 0),
-(230, 8, 7, 1, 1, 0),
-(231, 8, 7, 1, 2, 0),
-(232, 8, 7, 1, 3, 0),
-(233, 8, 7, 1, 4, 0),
-(234, 8, 7, 1, 5, 0),
-(235, 6, 6, 1, 0, 1),
-(236, 6, 6, 1, 1, 1),
-(237, 6, 6, 1, 2, 1),
-(238, 6, 6, 1, 3, 1),
-(239, 6, 6, 1, 4, 1),
-(240, 6, 6, 1, 5, 1),
-(241, 4, 4, 1, 0, 2),
-(242, 4, 4, 1, 1, 2),
-(243, 4, 4, 1, 2, 2),
-(244, 4, 4, 1, 3, 2),
-(245, 4, 4, 1, 4, 2),
-(246, 4, 4, 1, 5, 2),
-(247, 1, 1, 1, 0, 3),
-(248, 1, 1, 1, 1, 3),
-(249, 1, 1, 1, 2, 3),
-(250, 1, 1, 1, 3, 3),
-(251, 1, 1, 1, 4, 3),
-(252, 1, 1, 1, 5, 3),
-(253, 2, 2, 1, 0, 4),
-(254, 2, 2, 1, 1, 4),
-(255, 2, 2, 1, 2, 4),
-(256, 2, 2, 1, 3, 4),
-(257, 2, 2, 1, 4, 4),
-(258, 2, 2, 1, 5, 4);
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `uploadedclassdocuments`
---
-
-CREATE TABLE `uploadedclassdocuments` (
-  `ID` int(11) NOT NULL,
-  `FileName` varchar(255) NOT NULL,
-  `DiskFileName` varchar(255) NOT NULL,
   `SpecificClassID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dump dei dati per la tabella `TopicTeacherClass`
+--
+
+INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`) VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 2),
+(3, 3, 1, 3),
+(4, 7, 4, 3),
+(5, 1, 2, 1),
+(6, 7, 3, 2);
+
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `user`
+-- Struttura della tabella `UploadedClassDocuments`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `UploadedClassDocuments` (
+  `ID` int(11) NOT NULL,
+  `FileName` varchar(255) NOT NULL,
+  `DiskFileName` varchar(255) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL,
+  `Description` text NOT NULL,
+  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `SubjectID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `UploadedClassDocuments`
+--
+
+INSERT INTO `UploadedClassDocuments` (`ID`, `FileName`, `DiskFileName`, `SpecificClassID`, `Description`, `Date`, `SubjectID`) VALUES
+(2, 'LaTazza.pdf', '86329158974b8aee362961df76c41e26_LaTazza.pdf', 1, 'TestDB1', '2019-12-10 15:50:09', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `User`
+--
+
+CREATE TABLE `User` (
   `ID` int(11) NOT NULL,
   `Name` varchar(200) NOT NULL,
   `Surname` varchar(200) NOT NULL,
@@ -462,10 +486,10 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dump dei dati per la tabella `user`
+-- Dump dei dati per la tabella `User`
 --
 
-INSERT INTO `user` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
+INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
 (1, 'Mary', 'Smith', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (2, 'Joseph', 'ParentSurname2', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (3, 'Marco', 'Torchiano', 'marco.torchiano@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
@@ -489,116 +513,127 @@ INSERT INTO `user` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 --
 
 --
--- Indici per le tabelle `communication`
+-- Indici per le tabelle `Communication`
 --
-ALTER TABLE `communication`
+ALTER TABLE `Communication`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `OfficerID` (`OfficerID`);
 
 --
--- Indici per le tabelle `homework`
+-- Indici per le tabelle `Homework`
 --
-ALTER TABLE `homework`
+ALTER TABLE `Homework`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `SpecificClassID` (`SpecificClassID`),
   ADD KEY `TeacherID` (`TeacherID`),
   ADD KEY `HOMEWORK_TOPIC_INDEX` (`TopicID`);
 
 --
--- Indici per le tabelle `marksrecord`
+-- Indici per le tabelle `MarksRecord`
 --
-ALTER TABLE `marksrecord`
+ALTER TABLE `MarksRecord`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `TopicID` (`TopicID`);
 
 --
--- Indici per le tabelle `note`
+-- Indici per le tabelle `Note`
 --
-ALTER TABLE `note`
+ALTER TABLE `Note`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indici per le tabelle `noterecord`
+-- Indici per le tabelle `NoteRecord`
 --
-ALTER TABLE `noterecord`
+ALTER TABLE `NoteRecord`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indici per le tabelle `notpresentrecord`
+-- Indici per le tabelle `NotPresentRecord`
 --
-ALTER TABLE `notpresentrecord`
+ALTER TABLE `NotPresentRecord`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `SpecificClassID` (`SpecificClassID`);
 
 --
--- Indici per le tabelle `officer`
+-- Indici per le tabelle `Officer`
 --
-ALTER TABLE `officer`
+ALTER TABLE `Officer`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indici per le tabelle `parent`
+-- Indici per le tabelle `Parent`
 --
-ALTER TABLE `parent`
+ALTER TABLE `Parent`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indici per le tabelle `specificclass`
+-- Indici per le tabelle `SpecificClass`
 --
-ALTER TABLE `specificclass`
+ALTER TABLE `SpecificClass`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `CoordinatorTeacherID` (`CoordinatorTeacherID`);
 
 --
--- Indici per le tabelle `student`
+-- Indici per le tabelle `Student`
 --
-ALTER TABLE `student`
+ALTER TABLE `Student`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `SpecificClassID` (`SpecificClassID`);
 
 --
--- Indici per le tabelle `teacher`
+-- Indici per le tabelle `Teacher`
 --
-ALTER TABLE `teacher`
+ALTER TABLE `Teacher`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indici per le tabelle `topic`
+-- Indici per le tabelle `Timetables`
 --
-ALTER TABLE `topic`
+ALTER TABLE `Timetables`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `TeacherID_2` (`TeacherID`,`DayOfWeek`,`HourSlot`),
+  ADD UNIQUE KEY `TeacherID_3` (`TeacherID`,`DayOfWeek`,`HourSlot`),
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `TopicID` (`TopicID`),
+  ADD KEY `SpecificClassID` (`SpecificClassID`);
+
+--
+-- Indici per le tabelle `Topic`
+--
+ALTER TABLE `Topic`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indici per le tabelle `topicrecord`
+-- Indici per le tabelle `TopicRecord`
 --
-ALTER TABLE `topicrecord`
+ALTER TABLE `TopicRecord`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indici per le tabelle `topicteacherclass`
+-- Indici per le tabelle `TopicTeacherClass`
 --
-ALTER TABLE `topicteacherclass`
+ALTER TABLE `TopicTeacherClass`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `TeacherID` (`TeacherID`),
   ADD KEY `TopicID` (`TopicID`),
   ADD KEY `SpecificClassID` (`SpecificClassID`);
 
 --
--- Indici per le tabelle `uploadedclassdocuments`
+-- Indici per le tabelle `UploadedClassDocuments`
 --
-ALTER TABLE `uploadedclassdocuments`
+ALTER TABLE `UploadedClassDocuments`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indici per le tabelle `user`
+-- Indici per le tabelle `User`
 --
-ALTER TABLE `user`
+ALTER TABLE `User`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -606,172 +641,168 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT per la tabella `communication`
+-- AUTO_INCREMENT per la tabella `Communication`
 --
-ALTER TABLE `communication`
+ALTER TABLE `Communication`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
--- AUTO_INCREMENT per la tabella `homework`
+-- AUTO_INCREMENT per la tabella `Homework`
 --
-ALTER TABLE `homework`
+ALTER TABLE `Homework`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
 --
--- AUTO_INCREMENT per la tabella `marksrecord`
+-- AUTO_INCREMENT per la tabella `MarksRecord`
 --
-ALTER TABLE `marksrecord`
+ALTER TABLE `MarksRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
 --
--- AUTO_INCREMENT per la tabella `note`
+-- AUTO_INCREMENT per la tabella `Note`
 --
-ALTER TABLE `note`
+ALTER TABLE `Note`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT per la tabella `noterecord`
+-- AUTO_INCREMENT per la tabella `NoteRecord`
 --
-ALTER TABLE `noterecord`
+ALTER TABLE `NoteRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
 --
--- AUTO_INCREMENT per la tabella `notpresentrecord`
+-- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
-ALTER TABLE `notpresentrecord`
+ALTER TABLE `NotPresentRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
 --
--- AUTO_INCREMENT per la tabella `officer`
+-- AUTO_INCREMENT per la tabella `Officer`
 --
-ALTER TABLE `officer`
+ALTER TABLE `Officer`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
--- AUTO_INCREMENT per la tabella `parent`
+-- AUTO_INCREMENT per la tabella `Parent`
 --
-ALTER TABLE `parent`
+ALTER TABLE `Parent`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
 --
--- AUTO_INCREMENT per la tabella `specificclass`
+-- AUTO_INCREMENT per la tabella `SpecificClass`
 --
-ALTER TABLE `specificclass`
+ALTER TABLE `SpecificClass`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
--- AUTO_INCREMENT per la tabella `student`
+-- AUTO_INCREMENT per la tabella `Student`
 --
-ALTER TABLE `student`
+ALTER TABLE `Student`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
 --
--- AUTO_INCREMENT per la tabella `teacher`
+-- AUTO_INCREMENT per la tabella `Teacher`
 --
-ALTER TABLE `teacher`
+ALTER TABLE `Teacher`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
--- AUTO_INCREMENT per la tabella `topic`
+-- AUTO_INCREMENT per la tabella `Timetables`
 --
-ALTER TABLE `topic`
+ALTER TABLE `Timetables`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+--
+-- AUTO_INCREMENT per la tabella `Topic`
+--
+ALTER TABLE `Topic`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
--- AUTO_INCREMENT per la tabella `topicrecord`
+-- AUTO_INCREMENT per la tabella `TopicRecord`
 --
-ALTER TABLE `topicrecord`
+ALTER TABLE `TopicRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
--- AUTO_INCREMENT per la tabella `topicteacherclass`
+-- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
-ALTER TABLE `topicteacherclass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
-
+ALTER TABLE `TopicTeacherClass`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT per la tabella `uploadedclassdocuments`
+-- AUTO_INCREMENT per la tabella `UploadedClassDocuments`
 --
-ALTER TABLE `uploadedclassdocuments`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
+ALTER TABLE `UploadedClassDocuments`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT per la tabella `user`
+-- AUTO_INCREMENT per la tabella `User`
 --
-ALTER TABLE `user`
+ALTER TABLE `User`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
-
 --
 -- Limiti per le tabelle scaricate
 --
 
 --
--- Limiti per la tabella `communication`
+-- Limiti per la tabella `Communication`
 --
-ALTER TABLE `communication`
-  ADD CONSTRAINT `fk_officerID2` FOREIGN KEY (`OfficerID`) REFERENCES `officer` (`ID`);
+ALTER TABLE `Communication`
+  ADD CONSTRAINT `fk_officerID2` FOREIGN KEY (`OfficerID`) REFERENCES `Officer` (`ID`);
 
 --
--- Limiti per la tabella `homework`
+-- Limiti per la tabella `Homework`
 --
-ALTER TABLE `homework`
-  ADD CONSTRAINT `FK_HOMEWORK_TOPIC` FOREIGN KEY (`TopicID`) REFERENCES `topic` (`ID`),
-  ADD CONSTRAINT `fk_specificClassID2` FOREIGN KEY (`SpecificClassID`) REFERENCES `specificclass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_teacherID3` FOREIGN KEY (`TeacherID`) REFERENCES `teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Homework`
+  ADD CONSTRAINT `FK_HOMEWORK_TOPIC` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`),
+  ADD CONSTRAINT `fk_specificClassID2` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_teacherID3` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `marksrecord`
+-- Limiti per la tabella `MarksRecord`
 --
-ALTER TABLE `marksrecord`
-  ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_topic` FOREIGN KEY (`TopicID`) REFERENCES `topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `MarksRecord`
+  ADD CONSTRAINT `fk_student` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_topic` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `notpresentrecord`
+-- Limiti per la tabella `NotPresentRecord`
 --
-ALTER TABLE `notpresentrecord`
-  ADD CONSTRAINT `fk_specificClassID5` FOREIGN KEY (`SpecificClassID`) REFERENCES `specificclass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_studentID3` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `NotPresentRecord`
+  ADD CONSTRAINT `fk_specificClassID5` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_studentID3` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `officer`
+-- Limiti per la tabella `Officer`
 --
-ALTER TABLE `officer`
-  ADD CONSTRAINT `fk_officerID` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Officer`
+  ADD CONSTRAINT `fk_officerID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `parent`
+-- Limiti per la tabella `Parent`
 --
-ALTER TABLE `parent`
-  ADD CONSTRAINT `fk_parentID` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Parent`
+  ADD CONSTRAINT `fk_parentID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_studentID` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `specificclass`
+-- Limiti per la tabella `SpecificClass`
 --
-ALTER TABLE `specificclass`
-  ADD CONSTRAINT `fk_coordTeacherID` FOREIGN KEY (`CoordinatorTeacherID`) REFERENCES `teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `SpecificClass`
+  ADD CONSTRAINT `fk_coordTeacherID` FOREIGN KEY (`CoordinatorTeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `student`
+-- Limiti per la tabella `Student`
 --
-ALTER TABLE `student`
-  ADD CONSTRAINT `fk_specificClassID3` FOREIGN KEY (`SpecificClassID`) REFERENCES `specificclass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Student`
+  ADD CONSTRAINT `fk_specificClassID3` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `teacher`
+-- Limiti per la tabella `Teacher`
 --
-ALTER TABLE `teacher`
-  ADD CONSTRAINT `fk_teacherID` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Teacher`
+  ADD CONSTRAINT `fk_teacherID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `topicteacherclass`
+-- Limiti per la tabella `Timetables`
 --
-ALTER TABLE `topicteacherclass`
-  ADD CONSTRAINT `fk_specificclassID` FOREIGN KEY (`SpecificClassID`) REFERENCES `specificclass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_teacherID2` FOREIGN KEY (`TeacherID`) REFERENCES `teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_topicID` FOREIGN KEY (`TopicID`) REFERENCES `topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
+ALTER TABLE `Timetables`
+  ADD CONSTRAINT `fk_timetables_specificclass` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_timetables_teacher` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_timetables_topic` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE;
+
+--
+-- Limiti per la tabella `TopicTeacherClass`
+--
+ALTER TABLE `TopicTeacherClass`
+  ADD CONSTRAINT `fk_specificclassID` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_teacherID2` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_topicID` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

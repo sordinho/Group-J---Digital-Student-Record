@@ -323,14 +323,15 @@ class officer extends user
         return -1; // not logged in
     }
 
-    public function get_teacher_topic(){
+    public function get_teacher_topic($classID){
 
         $conn = $this->connectMySQL();
 
-        $res = $conn->query("SELECT user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
-                                    FROM topicteacherclass, topic, teacher, user
-                                    WHERE topicteacherclass.TeacherID=teacher.ID AND topicteacherclass.TopicID=topic.ID AND teacher.UserID=user.ID AND topicteacherclass.SpecificClassID=-1
-                                    GROUP BY user.Name, user.Surname, topic.Name, topic.ID, teacher.ID");
+        $res = $conn->query("SELECT User.Name, User.Surname, Topic.Name, Topic.ID, Teacher.ID
+                                    FROM TopicTeacherClass, Topic, Teacher, user
+                                    WHERE TopicTeacherClass.TeacherID=Teacher.ID AND TopicTeacherClass.TopicID=Topic.ID AND Teacher.UserID=user.ID AND TopicTeacherClass.SpecificClassID=$classID
+                                    GROUP BY User.Name, User.Surname, Topic.Name, Topic.ID, Teacher.ID");
+
         if ($res->num_rows <= 0)
             return array();
         $IDs = array();
@@ -345,7 +346,6 @@ class officer extends user
     public function setTimeTableClass($data){
         $tt = $data;
         if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
-            echo "Ciao";
             return false;
         }
 
@@ -354,10 +354,9 @@ class officer extends user
         for($i=0;$i<5;$i++){
             for($j=0;$j<6;$j++){
                 $pieces = explode("_", $tt["hours"][$i][$j]);
-                $stmt = $conn->prepare("INSERT INTO topicteacherclass (TeacherID, TopicID, SpecificClassID,hourSlot,dayOfWeek) VALUES (?,?,?,?,?);");
+                $stmt = $conn->prepare("INSERT INTO Timetables (TeacherID, TopicID, SpecificClassID,HourSlot,DayOfWeek) VALUES (?,?,?,?,?);");
                 $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $tt["classID"], $j, $i);
                 if(!$stmt->execute()){
-                    echo "Ciao1";
                     return false;
                 }
             }
@@ -365,5 +364,6 @@ class officer extends user
         }
         return true;
     }
+
 
 }
