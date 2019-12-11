@@ -15,9 +15,8 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 - [Retrospective](https://docs.google.com/presentation/d/1rePNnXa-uKxZ5X8VvkPPjaG4cFXc6gZvnldOUE48JQI/edit?usp=sharing)
 
 ### 03/12/2019 - Release 1
-- [Docker Image](https://hub.docker.com/repository/docker/groupj/digital_student_record)
-- Docker command: 
-    - ``` docker run --hostname docker-desktop --rm -p 80:80 groupj/digital_student_record ```
+- [Docker Image](https://hub.docker.com/repository/docker/se2polito/team-j)
+- Docker Utils: 
     - More details [HERE](/docker-utils/v2.0/README.md)
 - [Retrospective](https://docs.google.com/presentation/d/1NI0G7q5EtTMxp0J2yLQ2h8HVPYKR-rp4ryxRS_Cq3Sg/edit?usp=sharing)
 
