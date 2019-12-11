@@ -3,13 +3,18 @@
 
 class calendar
 {
+    //todo creare file csv o tabella nel db con le date delle vacanze
+    private $holidays = array();
 
     public static function validate_date($date, $format = 'Y-m-d H:i:s'){
         $d = DateTime::createFromFormat($format, $date);
         // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
         return $d && $d->format($format) === $date;
     }
-
+    //todo funzione da completare non appena si ha il file con le vacanze
+    public static function is_holiday($date){
+        return false;
+    }
     public static function by_the_end_of_the_week($actual_date, $lecture_date) {
         // secondi in una settimana
         $week = 60 * 60 * 24 * 7;

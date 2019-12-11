@@ -56,10 +56,15 @@ if (isset($_GET['operation_result'])) {
 } else {
     $classes = $teacher->get_assigned_classes_names();
     $drop_down = "";
+    if(isset($_GET['date']))
+        $today = $_GET['date'];
+    else
+        $today = date("Y-m-d");
+
     for ($i = 0; $i < sizeof($classes); $i++) {
         $classID = $classes[$i]['ClassID'];
         $yearSection = $classes[$i]['YearClass'] . " " . $classes[$i]['Section'];
-        $drop_down .= '<a class="dropdown-item" href="addAbsence.php?classID='.$classID.'">'.$yearSection.'</a>';
+        $drop_down .= '<a class="dropdown-item" href="addAbsence.php?classID='.$classID.'&date='.$today.'">'.$yearSection.'</a>';
     }
 
     if (!isset($_GET['classID']) && empty($_POST)) {
@@ -77,21 +82,41 @@ if (isset($_GET['operation_result'])) {
                     </div>
                     <div class="card-body">
                         <p class="card-text">Select a class to insert a new absence record.</p>
+                        
                     </div>
                 </div>';
 
     } else if (isset($_GET['classID'])) {
         $students_info = $teacher->get_students_by_class_id($_GET['classID']);
         // let's assume there is no need to associate subject to absences
-        //if(isset())
-        //$absences_info = $teacher->get_daily_absences()
+
         $select_content = "";
         $classID =  $_GET['classID'];
+        if(isset($_GET['date']))
+            $today = $_GET['date'];
+        else
+            $today = date("Y-m-d");
+        $absences_info = $teacher->get_daily_absences($today,$classID);
         for ($i = 0; $i < sizeof($classes); $i++) {
             $yearSection = $classes[$i]['YearClass'] . " " . $classes[$i]['Section'];
             if ($classes[$i]['ClassID'] == $classID){
                 break;
             }
+        }
+        $id_status = array();
+        //printf("%d",sizeof($absences_info));
+        for ($i = 0; $i < sizeof($absences_info); $i++){
+            $late = $absences_info[$i]['Late'];
+            $exitHour = $absences_info[$i]['ExitHour'];
+            if($exitHour == 0)
+                $id_status[$absences_info[$i]['StudentID']] = "Absent";
+            else if ($late==1 and $exitHour == 6)
+                $id_status[$absences_info[$i]['StudentID']] = "Late";
+            else if ($late==0 and $exitHour < 6)
+                $id_status[$absences_info[$i]['StudentID']] = "EarlyExit";
+            else if ($late==1 and $exitHour < 6)
+                $id_status[$absences_info[$i]['StudentID']] ="LateAndEarlyExit";
+            //$id_status[$absences_info[$i]['StudentID']] = "todo";
         }
         $table_content = '<div class="card-body">
                             <form method="post" class="form-inline" style="color:#757575" action="addAbsence.php">
@@ -113,17 +138,31 @@ if (isset($_GET['operation_result'])) {
             $surname = $students_info[$i]['Surname'];
             $id = $students_info[$i]['ID'];
             $stud_num =$i+1;
+            $status = $id_status[$id];
+            $inputAbsent = "<input type=\"checkbox\" class=\"form-check-input\" id=\"absence_$id\" name=\"absence_$id\" value=\"yes\">";
+            $inputLate = "<input type=\"checkbox\" class=\"form-check-input\" id=\"late_$id\" name=\"late_$id\" value=\"yes\" >";
+            if(!$status)
+                $status="none";
+            else if($status == "Absent")
+                $inputAbsent ="<input type=\"checkbox\" class=\"form-check-input\" id=\"absence_$id\" name=\"absence_$id\" value=\"yes\" checked>";
+            else if($status == "Late")
+                $inputLate = "<input type=\"checkbox\" class=\"form-check-input\" id=\"late_$id\" name=\"late_$id\" value=\"yes\" checked>";
+            //else if($status == "EarlyExit")
+            //todo
+            //else if($status == "LateAndEarlyExit")
+            //todo
             $table_content .= <<<OUT
                             <tr>
                                 <th scope="row">$stud_num</th>
                                     <td><div class="col-xs-2 m-2">$surname</div></td>
                                     <td><div class="col-xs-2 m-2">$name</div></td>
                                     <td>
-                                        <input type="checkbox" class="form-check-input" id="absence_$id" name="absence_$id" value="yes" >
+                                        $inputAbsent
                                         <label class="form-check-label" id="absence_label_$id" for="exampleCheck1">Absent</label>
+                                        <input type="text" class="form-check-input" id="status_$id" name="status_$id" value="$status" hidden>
                                     </td>
                                     <td>
-                                        <input type="checkbox" class="form-check-input" id="late_$id" name="late_$id" value="yes" >
+                                        $inputLate
                                         <label class="form-check-label" id="late_label_$id" for="exampleCheck1">Late</label>
                                     </td>
                                     <td>
@@ -149,14 +188,23 @@ OUT;
         $table_content .= '
                             <div class="col-sm-12">
                                         <label for="date">Date</label>
-                                        <input type="date" id="date" class="form-control" name="date">
+                                        <input type="date" id="date" class="form-control" name="date" onchange="changedDate(this)" value="'.$today.'">
                             </div>
                             <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
                         </form>
                         </div>
                         </div>';
+        $classID=$_GET['classID'];
         $content = '
                 <div class="card text-center">
+                <script type="text/javascript"><!--
+                function changedDate(elem){
+                    let date = elem.value;
+                    let id = window.location.search.substr(1).split("&")[0].split("=")[1];
+                    
+                    window.location.replace("addAbsence.php?classID="+id+"&date="+date);
+                }
+                --></script>
                     <div class="card-header" style="background-color:rgba(108,108,108,0.9);color:white">
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -180,9 +228,13 @@ OUT;
         $counter = 0;
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
-            if (isset($_POST["absence_$id"])) {
+            if (isset($_POST["absence_$id"])&&isset($_POST["status_$id"])) {
                 $absent = $_POST["absence_$id"] == 'yes';
+                $status = $_POST["status_$id"] != 'Absent';
 
+                //todo in questo momento status permette di evitare di inserire 2 volte una assenza per una stessa persona
+                // se si vuole limitare l'inserimento di una assenza solo a chi è in status "none" (nè assente nè in ritardo nè in early exit
+                // modificare la riga precedente
                 $date = $_POST['date'];
                 if(!$date){
                     $date = date("Y-m-d H:i:s");
@@ -191,9 +243,8 @@ OUT;
                     date_time_set($newD,00,00,00);
                     $date= date_format($newD,"Y-m-d H:i:s");
                 }
-                //$date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
 
-                if ($absent) {
+                if ($absent and $status) {
                     $res = $teacher->register_absence($id, $date);
                     if (!$res) {
                         header("Location: addAbsence.php?operation_result=0");
@@ -208,7 +259,9 @@ OUT;
             $id = $students_info[$i]['ID'];
             if (isset($_POST["late_$id"])) {
                 $absent = $_POST["late_$id"] == 'yes';
-
+                $status = $_POST["status_$id"] != 'Late';
+                //todo in questo momento status permette di evitare di inserire 2 volte un ritardo per una stessa persona
+                // se si vuole limitare l'inserimento di un ritardo solo a chi è assente o è in status "none" modificare la riga precedente
                 $date = $_POST['date'];
                 if(!$date){
                     $date = date("Y-m-d H:i:s");
@@ -217,9 +270,8 @@ OUT;
                     date_time_set($newD,00,00,00);
                     $date= date_format($newD,"Y-m-d H:i:s");
                 }
-                //$date = $date ? $date : date("Y-m-d H:i:s");// If no data was set, set it as of now
 
-                if ($absent) {
+                if ($absent and $status) {
                     $res = $teacher->register_late_arrival($id, $date);
                     if (!$res) {
                         header("Location: addAbsence.php?operation_result=0");

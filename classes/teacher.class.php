@@ -207,9 +207,8 @@ CREATE TABLE `TopicRecord` (
 	}
 
 	public function get_daily_absences($date, $specificClassID) {
-		if (calendar::validate_date($date) == false) return false;
-		//if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")),strtotime($date))) return false;
 		$absences = array();
+        if (calendar::validate_date($date,"Y-m-d") == false) return $absences;
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT StudentID, Late, ExitHour
                                       FROM NotPresentRecord
