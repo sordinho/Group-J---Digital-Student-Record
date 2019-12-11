@@ -17,6 +17,16 @@ if (!$officer->is_logged()) {
 if (!empty($_POST)) {
     $teacher_hour_day['hours'] = array();
 
+    /*
+     *  Select name guide
+     *  00  10  20  30  40
+     *  01  11  21  31  41
+     *  02  12  22  32  42
+     *  03  13  23  33  43
+     *  04  14  24  34  44
+     *  05  15  25  35  45
+     */
+
     $teacher_hour_day['hours'][0] = array();
     $teacher_hour_day['hours'][0][0]= $_POST['select00'];
     $teacher_hour_day['hours'][0][1]= $_POST['select01'];
@@ -75,7 +85,7 @@ if (!empty($_POST)) {
 }
 
 //if a class has been selected loads the list of students of the class so that the officer can modify it
-if (isset($_GET['classID'])) {
+else if (isset($_GET['classID'])) {
 
     $professorsTopics=$officer->get_teacher_topic();
     $optionList="<option selected>Choose a topic</option>";

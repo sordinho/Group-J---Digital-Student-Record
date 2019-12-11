@@ -323,7 +323,7 @@ class officer extends user
 
         $res = $conn->query("SELECT user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
                                     FROM topicteacherclass, topic, teacher, user
-                                    WHERE topicteacherclass.TeacherID=teacher.ID AND topicteacherclass.TopicID=topic.ID AND teacher.UserID=user.ID
+                                    WHERE topicteacherclass.TeacherID=teacher.ID AND topicteacherclass.TopicID=topic.ID AND teacher.UserID=user.ID AND topicteacherclass.SpecificClassID=-1
                                     GROUP BY user.Name, user.Surname, topic.Name, topic.ID, teacher.ID");
         if ($res->num_rows <= 0)
             return array();
@@ -339,25 +339,25 @@ class officer extends user
     public function setTimeTableClass($data){
         $tt = $data;
         if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
+            echo "Ciao";
             return false;
         }
 
         $conn = $this->connectMySQL();
         //user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
-        $i=0;
-        $j=0;
-        for($i=0;$i<6;$i++){
-            for($j=0;$j<5;$j++){
+        for($i=0;$i<5;$i++){
+            for($j=0;$j<6;$j++){
                 $pieces = explode("_", $tt["hours"][$i][$j]);
                 $stmt = $conn->prepare("INSERT INTO topicteacherclass (TeacherID, TopicID, SpecificClassID,hourSlot,dayOfWeek) VALUES (?,?,?,?,?);");
-                $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $tt["classID"], $i, $j);
-                if(!$stmt->execute())
+                $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $tt["classID"], $j, $i);
+                if(!$stmt->execute()){
+                    echo "Ciao1";
                     return false;
+                }
             }
             $j=0;
         }
         return true;
-
     }
 
 }
