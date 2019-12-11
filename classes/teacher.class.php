@@ -538,16 +538,16 @@ CREATE TABLE `TopicRecord` (
 
     	return array($uploaded);
     }
-    
-     /**
-     * @param int $subjectID
-     * @param int $classID
+
+    /**
      * @param string $fname
-     * @param string $servername: the name of file as it is on the server in upload folder
+     * @param string $servername : the name of file as it is on the server in upload folder
+     * @param $specificClassID
      * @param string $description
+     * @param int $subjectID
      * @return true on success or false on failure
      */
-    public function insert_material($fname, $servername,$specificClassID, $description,  $subjectID )
+    public function insert_material($fname, $servername, $specificClassID, $description,  $subjectID)
     {
         # TODO:
         # Missing: checks on (class, subject) (is learned by this teacher?)

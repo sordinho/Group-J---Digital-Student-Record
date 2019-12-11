@@ -278,5 +278,29 @@ class sparent extends user
         return $stamp;
     }
 
+    #not sure about the parameter to pass
+    public function get_material_info($servername, $childID)
+    {
+        if (!isset($childID)) {
+            return array();
+        }
 
+        $material_info = array();
+        $conn = $this->connectMySql();
+        $stmt = $conn->prepare("    SELECT UploadedClassDocuments.FileName, UploadedClassDocuments.Description, UploadedClassDocuments.SubjectID, UploadedClassDocuments.Date  
+                                            FROM UploadedClassDocuments, Student
+                                            WHERE UploadedClassDocuments.SpecificClassID = Student.SpecificClassID 
+                                            AND Student.ID = ?");
+        $stmt->bind_param('i', $childID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if (!$res) {
+            return false;
+        }
+        while ($row = $res->fetch_assoc()) {
+            array_push($material_info, $row);
+        }
+        return $material_info;
+    }
 }
