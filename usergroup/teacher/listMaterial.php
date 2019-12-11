@@ -23,8 +23,9 @@ $content = '<div class="card">
     <thead>
       <tr>
         <th scope="col">Filename</th>
-        <th scope="col">Subject</th>
+        <th scope="col">Description</th>
         <th scope="col">Class</th>
+        <th scope="col">Subject</th>
         <th scope="col">Date</th>
       </tr>
     </thead>
@@ -34,10 +35,11 @@ $content = '<div class="card">
 $uploadedMaterial = $teacher->get_uploaded_material();
 foreach ($uploadedMaterial as $i => $row) {
 	$content .= '<tr>
-        <td>' . $row['Filename'] . '</td>
-        <td>' . $row['Subject'] . '</td>
-        <td>' . $row['Class'] . '</td>
-        <td>' . $row['Timestamp'] . '</td>
+        <td>' . $row['FileName'] . '</td>
+        <td>' . $row['Description'] . '</td>
+        <td>' . $row['YearClassID'] ." ". $row['Section'] .'</td>
+        <td>' . $row['Name'] . '</td>
+        <td>' . $row['Date'] . '</td>
       </tr>';
 }
 
