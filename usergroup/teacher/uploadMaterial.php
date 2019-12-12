@@ -82,21 +82,37 @@ else{
         echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
         exit();
     }
-    $description = $_POST["description"];
-    $specificClassID = $_POST["classID"];
-    $subjectID = $_POST["topicID"];
-    $uptwo= dirname(__DIR__, 2);
+
+    //Given a string containing the path of a file or directory, this function will return the parent directory's path that is *levels* (2) up from the current directory
+    $uptwo = dirname(__DIR__, 2);
     $uploaddir = $uptwo.'/uploads/';
-    $tmpname = $_FILES['file']['tmp_name'];
+    //Given a string containing the path to a file or directory, this function will return the trailing name component ex: 'echo basename("etc/sudoers.d") >> sudoers.d'
     $realname = basename($_FILES['file']['name']);
     $hash = md5($realname.strval(rand(100, 99999)));
     $server_filename = $hash ."_". $realname;
     $uploadfile = $uploaddir . $server_filename;
 
+    /*
+     * =================================================================================================
+     * '''uptwo'''  >
+     * -------------------------------------------------------------------------------------------------
+     *              > *parent* (usergroup ?)    >
+     *                                          >'''__DIR__''' alias *current_directory* (teacher (?))
+     * -------------------------------------------------------------------------------------------------
+     *              >
+     *              >  uploads                  >
+     *                                          >> [hash + '_' + filename]
+     *                                          > njflajksbnflaskflafal_esempio.txt
+     *                                          > dfflaksfnskjnsdflafff_file2.txt
+     * -------------------------------------------------------------------------------------------------
+     * =================================================================================================
+     */
+
     if(!check_file_uploaded_name($realname) || !check_file_uploaded_length($realname)){
         die("Security risk error");
     }
-    
+
+    $tmpname = $_FILES['file']['tmp_name'];
     if (!move_uploaded_file($tmpname, $uploadfile)) {
         # Note: Permission set as: dont write this in production
         #root@vps483509:/var/www/softeng2/public_html# sudo chown -R www-data:www-data uploads/
@@ -106,6 +122,10 @@ else{
 	    //exit();
     }
     //var_dump($_POST);
+
+    $specificClassID = $_POST["classID"];
+    $description = $_POST["description"];
+    $subjectID = $_POST["topicID"];
     intval($teacher->insert_material($realname, $server_filename, $specificClassID, $description, $subjectID));
     $content = '<div class="alert alert-success" role="alert">
                     Assignment successfully registered. <a href="uploadMaterial.php" class="alert-link">Upload others files</a> or <a href="index.php" class="alert-link">back to your homepage.</a>

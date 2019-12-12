@@ -99,7 +99,7 @@ if ($_GET['action'] == "switchChild") {
 	$announcements = $sparent->get_announcements();
 	foreach ($announcements as $announcement) {
 		$format_timestamp = strtotime($announcement["Timestamp"]);
-    	$format_date = calendar::timestamp_to_date($format_timestamp);
+		$format_date = calendar::timestamp_to_date($format_timestamp);
 		$announcements_block .= '
 		<div class="cd-timeline-block">
 			<div class="cd-timeline-img cd-location">
