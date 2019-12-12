@@ -3,7 +3,7 @@ include 'config.php';
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Your Digital Record System");
+$page = new cpage("DIGITAL RECORD SYSTEM");
 $site->setPage($page);
 
 

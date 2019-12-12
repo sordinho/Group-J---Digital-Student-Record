@@ -103,8 +103,8 @@ OUT;
                                         <input type="date" id="date" class="form-control" name="date">
                             </div>
                                 <div class="col-lg-12">
+                                    <label for="note"><strong>Disciplinary note</strong></label>
                                     <div class="input-group input-group-lg">
-                                        <label for="note"><strong>Disciplinary note</strong></label>
                                         <textarea class="form-control" name="note" id="note" rows="3"></textarea>
                                     </div>
                                 </div>

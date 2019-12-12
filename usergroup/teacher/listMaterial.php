@@ -38,7 +38,7 @@ foreach ($uploadedMaterial as $i => $row) {
         <td>' . $row['Description'] . '</td>
         <td>' . $row['YearClassID'] ." ". $row['Section'] .'</td>
         <td>' . $row['Name'] . '</td>
-        <td>' . $row['Date'] . '</td>
+        <td>' . date("Y-m-d", strtotime($row['Date'])) . '</td>
       </tr>';
 }
 
