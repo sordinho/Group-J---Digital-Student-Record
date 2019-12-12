@@ -49,15 +49,39 @@ if ($cur_child == -1) {
                       </thead>
                       <tbody>';
 
-    $grades = $sparent->get_material_info($cur_child);
-    if ($grades) {
-        foreach ($grades as $i => $row) {
-            $content .= ' <tr>
-                            <td><button type="button" class="btn btn-warning text-white"><i class="fas fa-file-download  pr-4"></i>' . $row['FileName'] . '</button></td>
-                            <td>' . $row['Description'] . '</td>
-                            <td>' . $row['SubjectName'] . '</td>
-                            <td>' . date("Y-m-d", strtotime($row['Date'])) . '</td>
-                          </tr>';
+    $all_materials = $sparent->get_material_info($cur_child);
+    if ($all_materials) {
+        foreach ($all_materials as $i => $material) {
+            //Given a string containing the path of a file or directory, this function will return the parent directory's path that is *levels* (2) up from the current directory
+            $uptwo = dirname(__DIR__, 2);
+            $uploaddir = $uptwo.'/uploads/';
+
+            /*Local host testing - different behavior on server*/
+            $actual_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            if($actual_url == 'http://localhost/Group-J---Digital-Student-Record//usergroup/parent/downloadMaterial.php') {
+                $uploaddir = '../../files/';
+            }
+            /*End of local host behavior*/
+
+            if ($handle = opendir($uploaddir)) {
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry != "." and $entry != ".." /*and can get that file*/ ) {
+                        $content .= ' <tr>';
+                        $content .= '   <td>
+                                            <a href="download.php?file=' . $entry . '">
+                                                <button type="button" class="btn btn-warning text-white">
+                                                    <i class="fas fa-file-download  pr-4"></i>' . $material['FileName'] . '
+                                                </button>
+                                            </a>
+                                        </td>';
+                        $content .= '   <td>' . $material['Description'] . '</td>
+                                        <td>' . $material['SubjectName'] . '</td>
+                                        <td>' . date("Y-m-d", strtotime($material['Date'])) . '</td>
+                                      </tr>';
+                    }
+                }
+                closedir($handle);
+            }
         }
         $content .= ' </tbody>
                       </table>
@@ -65,15 +89,6 @@ if ($cur_child == -1) {
                       </div>
                       </div>
                       </ul>';
-    }
-
-    if ($handle = opendir('../../files/')) {
-        while (false !== ($entry = readdir($handle))) {
-            if ($entry != "." and $entry != "..") {
-                $content .= "<a href=\"download.php?file=" . $entry . "\">$entry</a><br>";
-            }
-        }
-        closedir($handle);
     }
 }
 
