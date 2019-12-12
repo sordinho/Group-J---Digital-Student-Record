@@ -136,20 +136,28 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Note`
+-- Table structure for table `note`
 --
 
 CREATE TABLE `Note` (
   `ID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `SpecificClassID` int(11) NOT NULL,
+  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `note`
+--
+
+INSERT INTO `Note` (`ID`, `TeacherID`, `SpecificClassID`, `Date`, `Description`) VALUES
+(1, 1, 1, '2019-12-09 23:00:00', 'note1'),
+(4, 1, 1, '2019-12-09 23:00:00', 'Di Leo and Riba talk during lesson');
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `NoteRecord`
+-- Table structure for table `noterecord`
 --
 
 CREATE TABLE `NoteRecord` (
@@ -158,6 +166,15 @@ CREATE TABLE `NoteRecord` (
   `NoteID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `noterecord`
+--
+
+INSERT INTO `NoteRecord` (`ID`, `StudentID`, `NoteID`) VALUES
+(1, 2, 1),
+(2, 6, 1),
+(3, 2, 4),
+(4, 5, 4);
 -- --------------------------------------------------------
 
 --
@@ -536,17 +553,6 @@ ALTER TABLE `MarksRecord`
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `TopicID` (`TopicID`);
 
---
--- Indici per le tabelle `Note`
---
-ALTER TABLE `Note`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indici per le tabelle `NoteRecord`
---
-ALTER TABLE `NoteRecord`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indici per le tabelle `NotPresentRecord`
@@ -608,6 +614,16 @@ ALTER TABLE `Timetables`
 --
 ALTER TABLE `Topic`
   ADD PRIMARY KEY (`ID`);
+--
+-- Indexes for table `Note`
+--
+ALTER TABLE `Note`
+  ADD PRIMARY KEY (`ID`);
+--
+-- Indexes for table `NoteRecord`
+--
+ALTER TABLE `NoteRecord`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indici per le tabelle `TopicRecord`
@@ -659,13 +675,14 @@ ALTER TABLE `MarksRecord`
 -- AUTO_INCREMENT per la tabella `Note`
 --
 ALTER TABLE `Note`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
 --
--- AUTO_INCREMENT per la tabella `NoteRecord`
+-- AUTO_INCREMENT for table `noterecord`
 --
 ALTER TABLE `NoteRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
---
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
