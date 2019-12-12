@@ -553,17 +553,6 @@ ALTER TABLE `MarksRecord`
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `TopicID` (`TopicID`);
 
---
--- Indici per le tabelle `Note`
---
-ALTER TABLE `Note`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indici per le tabelle `NoteRecord`
---
-ALTER TABLE `NoteRecord`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indici per le tabelle `NotPresentRecord`
@@ -626,12 +615,12 @@ ALTER TABLE `Timetables`
 ALTER TABLE `Topic`
   ADD PRIMARY KEY (`ID`);
 --
--- Indexes for table `note`
+-- Indexes for table `Note`
 --
 ALTER TABLE `Note`
   ADD PRIMARY KEY (`ID`);
 --
--- Indexes for table `noterecord`
+-- Indexes for table `NoteRecord`
 --
 ALTER TABLE `NoteRecord`
   ADD PRIMARY KEY (`ID`);

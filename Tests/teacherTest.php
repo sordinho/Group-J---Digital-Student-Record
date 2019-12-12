@@ -36,7 +36,7 @@ class teacherTest extends TestCase {
         $classID = 1;
 
         $this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $date1, $classID));
-        perform_INSERT_or_DELETE("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (1,$date1,$description,1,1);");
+       // perform_INSERT_or_DELETE("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (1,$date1,$description,1,1);");
         $topicRecordID = perform_SELECT_return_single_value("SELECT ID FROM TopicRecord WHERE Timestamp ='$date1'");
 
         $res = $teacherObject->modify_lecture_topic($modifiedDescription, $topicRecordID);
@@ -399,10 +399,29 @@ class teacherTest extends TestCase {
         $this->assertFalse($teacher->is_logged(),$this->printErrorMessage("testIs_logged","teacher should not be logged"));
     }
     public function testGet_uploaded_material(){
-        $this->fail("Mancano le tabelle");
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $res = $teacher->get_uploaded_material();
+        if(!$res)
+            $this->fail("Returned value should be an array , not a boolean value equals to false");
+        $this->assertTrue(sizeof($res)>0,$this->printErrorMessage("testGet_uploaded_material","size of the returned array should be > than 0"));
+
+        $_SESSION['teacherID'] = -2;
+        $teacher = new teacher();
+        $res = $teacher->get_uploaded_material();
+        $this->assertTrue(sizeof($res) == 0,$this->printErrorMessage("testGet_uploaded_material","size of returned array should be == 0"));
+
     }
     public function testInsert_material(){
-        $this->fail("Mancano le tabelle");
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $fname= "testfile.txt";
+        $serverName = "testservname";
+        $class = 1;
+        $descr = "test Description";
+        $subject = 1;
+        $res = $teacher->insert_material($fname,$serverName,$class,$descr,$subject);
+        $this->assertTrue($res,$this->printErrorMessage("testInsert_material","operation should have returned true"));
     }
     public function testRegister_note_record(){
         $noteID = 16;
