@@ -31,7 +31,6 @@ $content = '<div class="card">
     </thead>
     <tbody>';
 
-// todo get list of uploaded files
 $uploadedMaterial = $teacher->get_uploaded_material();
 foreach ($uploadedMaterial as $i => $row) {
 	$content .= '<tr>
