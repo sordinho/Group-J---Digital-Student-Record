@@ -108,9 +108,9 @@ else{
      * =================================================================================================
      */
 
-    if(!check_file_uploaded_name($realname) || !check_file_uploaded_length($realname)){
-        die("Security risk error");
-    }
+    //if(!check_file_uploaded_name($realname) || !check_file_uploaded_length($realname)){
+    //    die("Security risk error");
+    //}
 
     $tmpname = $_FILES['file']['tmp_name'];
     if (!move_uploaded_file($tmpname, $uploadfile)) {
