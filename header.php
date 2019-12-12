@@ -1,30 +1,5 @@
 <?php
 require_once("config.php");
-// Handle hidden menu and navbar render (note that is related to the user status (loggedin/typeOfUser))
-
-/*
-if (is_admin()) {
-    //$navbar_edit .= '<li class="nav-item"><a class="nav-link" data-toggle="modal" href="#registerModal"> Register new clerk</a></li>';
-    //$navbar_edit .= '<li class="nav-item"><a class="nav-link" data-toggle="modal" href="#newServiceModal"> Register new service</a></li>';
-    $hidden_menu .= '
-	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin actions</a>
-		<div class="dropdown-menu" aria-labelledby="dropdown01">
-		<a class="dropdown-item" data-toggle="modal" href="#registerModal">Register new clerk</a>
-		<a class="dropdown-item" href="#newServiceModal">Register new service</a>
-		</div>
-	</li>
-';
-} elseif (is_logged()) {// if not admin and logged => clerk
-    $hidden_menu .= '
-	<li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clerk actions</a>
-		<div class="dropdown-menu" aria-labelledby="dropdown01">
-		<a class="dropdown-item" href="./clerkAction.php?action=nextTicket">Next customer</a>
-		</div>
-	</li>
-';
-}*/
 
 print '<!DOCTYPE html>
 <html lang="en">
@@ -59,8 +34,6 @@ print '<!DOCTYPE html>
 	</head>
 	
 	<body>
-	
-	'. $content .'
 	
 ';
 /* Render the 2 modal view: Login and Register */
