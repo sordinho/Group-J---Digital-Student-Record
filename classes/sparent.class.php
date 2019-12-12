@@ -279,7 +279,7 @@ class sparent extends user
     }
 
     #not sure about the parameter to pass
-    public function get_material_info($servername, $childID)
+    public function get_material_info($childID)
     {
         if (!isset($childID)) {
             return array();
@@ -287,10 +287,11 @@ class sparent extends user
 
         $material_info = array();
         $conn = $this->connectMySql();
-        $stmt = $conn->prepare("    SELECT UploadedClassDocuments.FileName, UploadedClassDocuments.Description, UploadedClassDocuments.SubjectID, UploadedClassDocuments.Date  
-                                            FROM UploadedClassDocuments, Student
-                                            WHERE UploadedClassDocuments.SpecificClassID = Student.SpecificClassID 
-                                            AND Student.ID = ?");
+        $stmt = $conn->prepare("    SELECT UCD.FileName AS FileName, UCD.DiskFileName AS DiskFileName, UCD.Description AS Description, Topic.Name AS SubjectName, UCD.Date AS Date
+                                            FROM UploadedClassDocuments UCD, Student S, Topic
+                                            WHERE UCD.SpecificClassID = S.SpecificClassID 
+                                            AND Topic.ID = UCD.SubjectID
+                                            AND S.ID = ?");
         $stmt->bind_param('i', $childID);
         $stmt->execute();
         $res = $stmt->get_result();
