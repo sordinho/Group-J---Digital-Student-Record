@@ -88,7 +88,7 @@ CREATE TABLE `TopicRecord` (
 	}
 
 	/*
-	 * Get the topics information for which the teacher is current in charge of
+	 * Get the topics information for which the teacher is currently in charge of
 	 *
 	 * return               empty            if successful
 	 *                      array of array   otherwise
@@ -447,6 +447,9 @@ CREATE TABLE `TopicRecord` (
 	public function register_early_exit($studentID, $timestamp, $newExitHour) {
 		//todo check if the format of newExitHour need to be changed
 		$teacherID = $_SESSION['teacherID'];
+        if(!isset($studentID) || !isset($timestamp) || !isset($newExitHour)) return false;
+
+        if($newExitHour > calendar::get_hours_per_school_day()) return false;
 
 		if (!calendar::validate_date($timestamp)) return false;
 
@@ -495,6 +498,7 @@ CREATE TABLE `TopicRecord` (
 	public function insert_new_assignment($assignmentDescription, $topicID, $timestamp, $classID) {
 		$conn = $this->connectMySQL();
 		//$stmt = $conn->prepare("INSERT INTO Homework (TeacherID, Deadline, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?);");
+
 		$stmt = $conn->prepare("INSERT INTO Homework (Description, SpecificClassID, TeacherID, Deadline, TopicID) VALUES (?,?,?,?,?);");
 		if ($stmt == false)
 			return false;
@@ -505,9 +509,9 @@ CREATE TABLE `TopicRecord` (
 		// secondi in una settimana
 		//if ($assignment_date>$actual_date)
 		//  return false;
-
+        $teacherID = $this->get_teacher_ID();
 		//$stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $assignmentDescription, $topicID, $classID);
-		$stmt->bind_param('siisi', $assignmentDescription, $classID, $_SESSION['teacherID'], $timestamp, $topicID);
+		$stmt->bind_param('siisi', $assignmentDescription, $classID, $teacherID, $timestamp, $topicID);
 		return $stmt->execute();//True || False
 	}
 
@@ -584,6 +588,8 @@ CREATE TABLE `TopicRecord` (
 	}
 
 	public function register_note_record($studentID, $noteID) {
+	    if(!isset($studentID) || !isset($noteID))
+	        return false;
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("INSERT INTO NoteRecord (ID,StudentID,NoteID) VALUES (NULL,?,?);");
 		if (!$stmt)
@@ -593,12 +599,13 @@ CREATE TABLE `TopicRecord` (
 	}
 
 	public function register_new_note($date, $classID, $note) {
+	    if (!isset($date)||!isset($classID)||!isset($note)) return false;
 		if (!calendar::validate_date($date)) return false;
 
 		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($date))) return false;
 
 		$conn = $this->connectMySQL();
-
+        $teacherID = $this->get_teacher_ID();
 		$stmt = $conn->prepare("INSERT INTO Note (ID,TeacherID,SpecificClassID,Date,Description) VALUES (NULL,?,?,?,?);");
 		if (!$stmt)
 			return -1;

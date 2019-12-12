@@ -35,6 +35,54 @@ CREATE TABLE `Homework` (
   `TopicID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `note`
+--
+
+CREATE TABLE `Note` (
+  `ID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `SpecificClassID` int(11) NOT NULL,
+  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `note`
+--
+
+INSERT INTO `Note` (`ID`, `TeacherID`, `SpecificClassID`, `Date`, `Description`) VALUES
+(1, 1, 1, '2019-12-09 23:00:00', 'note1'),
+(4, 1, 1, '2019-12-09 23:00:00', 'Di Leo and Riba talk during lesson');
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `noterecord`
+--
+
+CREATE TABLE `NoteRecord` (
+  `ID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `NoteID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `noterecord`
+--
+
+INSERT INTO `NoteRecord` (`ID`, `StudentID`, `NoteID`) VALUES
+(1, 2, 1),
+(2, 6, 1),
+(3, 2, 4),
+(4, 5, 4);
+
+
+
 --
 -- Dump dei dati per la tabella `Homework`
 --
@@ -405,6 +453,12 @@ ALTER TABLE `MarksRecord`
   ADD KEY `TopicID` (`TopicID`);
 
 --
+-- Indexes for table `note`
+--
+ALTER TABLE `note`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indici per le tabelle `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
@@ -418,6 +472,13 @@ ALTER TABLE `NotPresentRecord`
 ALTER TABLE `Officer`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
+
+
+--
+-- Indexes for table `noterecord`
+--
+ALTER TABLE `noterecord`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indici per le tabelle `Parent`
@@ -494,6 +555,18 @@ ALTER TABLE `MarksRecord`
 --
 ALTER TABLE `NotPresentRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `note`
+--
+ALTER TABLE `note`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
+--
+-- AUTO_INCREMENT for table `noterecord`
+--
+ALTER TABLE `noterecord`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
 --
 -- AUTO_INCREMENT per la tabella `Officer`
 --
