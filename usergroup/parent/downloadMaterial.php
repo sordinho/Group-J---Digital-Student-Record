@@ -53,19 +53,19 @@ if ($cur_child == -1) {
     if ($all_materials) {
         foreach ($all_materials as $i => $material) {
             //Given a string containing the path of a file or directory, this function will return the parent directory's path that is *levels* (2) up from the current directory
-            $uptwo = dirname(__DIR__, 2);
-            $uploaddir = $uptwo.'/uploads/';
+            $up_two = dirname(__DIR__, 2);
+            $upload_dir = $up_two.'/uploads/';
 
             /*Local host testing - different behavior on server*/
             $actual_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             if($actual_url == 'http://localhost/Group-J---Digital-Student-Record//usergroup/parent/downloadMaterial.php') {
-                $uploaddir = '../../files/';
+                $upload_dir = '../../uploads/';
             }
             /*End of local host behavior*/
 
-            if ($handle = opendir($uploaddir)) {
+            if ($handle = opendir($upload_dir)) {
                 while (false !== ($entry = readdir($handle))) {
-                    if ($entry != "." and $entry != ".." /*and can get that file*/ ) {
+                    if ($entry === $material['DiskFileName']) {
                         $content .= ' <tr>';
                         $content .= '   <td>
                                             <a href="download.php?file=' . $entry . '">

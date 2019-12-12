@@ -11,7 +11,7 @@ $actual_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" 
 $local_host_url = 'http://localhost/Group-J---Digital-Student-Record//usergroup/parent/download.php';
 
 if(substr($actual_url, 0, strlen($local_host_url)) === $local_host_url) {
-    $uploaddir = '../../files/';
+    $uploaddir = '../../uploads/';
 }
 /*End of local host behavior*/
 
