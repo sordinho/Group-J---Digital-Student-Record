@@ -62,9 +62,9 @@ class cpage {
                         $note = $par->get_num_unseen_notes($par->get_current_child());
                         $hidden_menu_notes_entry = "";
                         if($note> 0)
-                            $hidden_menu_notes_entry = '       <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-bell mx-3"></i><span class="text-nowrap mx-2">Check Notes <i class="fas fa-exclamation-circle mx-2" style="color:firebrick">'.$note.'</i></span></a>';
+                            $hidden_menu_notes_entry = '       <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./listNotes.php"><i class="fas fa-bell mx-3"></i><span class="text-nowrap mx-2">Check Notes <i class="fas fa-exclamation-circle mx-2" style="color:firebrick">'.$note.'</i></span></a>';
                         else if($note == 0)
-                            $hidden_menu_notes_entry = '       <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-bell mx-3"></i><span class="text-nowrap mx-2">Check Notes</span></a>';
+                            $hidden_menu_notes_entry = '       <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./listNotes.php"><i class="fas fa-bell mx-3"></i><span class="text-nowrap mx-2">Check Notes</span></a>';
 
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="' . $ulp . 'checkMarks.php"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkHomeworks.php"><i class="fas fa-book mx-3"></i><span class="text-nowrap mx-2">Check Homeworks</span></a></li>';
