@@ -163,18 +163,19 @@ INSERT INTO `Note` (`ID`, `TeacherID`, `SpecificClassID`, `Date`, `Description`)
 CREATE TABLE `NoteRecord` (
   `ID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
-  `NoteID` int(11) NOT NULL
+  `NoteID` int(11) NOT NULL,
+  `Seen` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `noterecord`
 --
 
-INSERT INTO `NoteRecord` (`ID`, `StudentID`, `NoteID`) VALUES
-(1, 2, 1),
-(2, 6, 1),
-(3, 2, 4),
-(4, 5, 4);
+INSERT INTO `NoteRecord` (`ID`, `StudentID`, `NoteID`,`Seen`) VALUES
+(1, 2, 1, 0),
+(2, 6, 1, 0),
+(3, 2, 4, 0),
+(4, 5, 4, 0);
 -- --------------------------------------------------------
 
 --

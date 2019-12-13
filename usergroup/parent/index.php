@@ -13,11 +13,17 @@ if (!$sparent->is_logged() ) {
 	header("location: /error.php?errorID=19");
 	exit();
 }
+$linkNotes = "";
+$notes = $sparent->get_unseen_notes(-1);
+if($notes && sizeof($notes)>=0){
+	$_SESSION['unseenNotes'] = sizeof($notes);
+}
 
 
 if ($_GET['action'] == "switchChild") {
 	$new_childID = intval($_GET["childID"]);
 	$sparent->set_current_child($new_childID);
+	$sparent->set_current_num_unseen_notes($new_childID);
 	$content = '
 			<div class="col justify-content-lg-center">
 				<div class="article-clean">

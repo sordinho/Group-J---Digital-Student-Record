@@ -292,6 +292,60 @@ class sparent extends user {
 		return $material_info;
 	}
 
+    public function get_num_unseen_notes($childID){
+        if($childID == -1)
+            return isset($_SESSION['unseenNotes']) ? $_SESSION['unseenNotes'] : 0;
+        else
+            return isset($_SESSION['unseenNotes_'.$childID]) ? $_SESSION['unseenNotes_'.$childID] : 0;
+    }
+	public function set_current_num_unseen_notes($childID){
+	    if(!isset($childID)) return;
+	    $res = $this->get_unseen_notes($childID);
+	    if(!$res)
+	        $_SESSION['unseenNotes_'.$childID] = 0;
+	    else
+	        $_SESSION['unseenNotes_'.$childID] = sizeof($res);
+    }
+    public function get_unseen_notes($childID){
+	    $notes = array();
+	    if(!isset($childID)) return $notes;
+	    $conn = $this->connectMySQL();
+	    if($childID==-1) {
+            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.NoteID as NoteID
+						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
+						WHERE n.TeacherID=t.ID
+						AND nr.NoteID=n.ID
+						AND nr.StudentID=s.ID
+						AND t.UserID=u.ID
+						AND nr.Seen = 0
+						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ?);";
+        } else if($childID > 0){
+            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.NoteID as NoteID
+						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
+						WHERE n.TeacherID=t.ID
+						AND nr.NoteID=n.ID
+						AND nr.StudentID=s.ID
+						AND t.UserID=u.ID
+						AND nr.Seen = 0
+						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ? AND StudentID = ?);";
+        } else
+            return $notes;
+	    $stmt = $conn->prepare($sql);
+	    if(!$stmt)
+	        return $notes;
+	    if($childID == -1)
+	        $stmt->bind_param('i',$this->get_parent_ID());
+	    else
+            $stmt->bind_param('ii',$this->get_parent_ID(),$childID);
+	    $stmt->execute();
+	    $res = $stmt->get_result();
+	    if(!$res)
+	        return false;
+	    while($row = $res->fetch_assoc()){
+	        array_push($notes,$row);
+        }
+        return $notes;
+    }
 
 	public function get_notes() {
 		$conn = $this->connectMySql();
