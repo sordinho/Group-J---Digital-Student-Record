@@ -292,12 +292,22 @@ class sparent extends user {
 		return $material_info;
 	}
 
+	/**
+	 * Get count of unseen notes
+	 * @param $childID valid childID or -1 for all children
+	 * @return int|mixed
+	 */
     public function get_num_unseen_notes($childID){
         if($childID == -1)
             return isset($_SESSION['unseenNotes']) ? $_SESSION['unseenNotes'] : 0;
         else
             return isset($_SESSION['unseenNotes_'.$childID]) ? $_SESSION['unseenNotes_'.$childID] : 0;
     }
+
+	/**
+	 * Set current count of unseen notes
+	 * @param $childID valid childID or -1 for all children
+	 */
 	public function set_current_num_unseen_notes($childID){
 	    if(!isset($childID)) return;
 	    $res = $this->get_unseen_notes($childID);
@@ -306,6 +316,12 @@ class sparent extends user {
 	    else
 	        $_SESSION['unseenNotes_'.$childID] = sizeof($res);
     }
+
+	/**
+	 * Get array with unseen notes
+	 * @param $childID valid childID or -1 for all children
+	 * @return array|bool
+	 */
     public function get_unseen_notes($childID){
 	    $notes = array();
 	    if(!isset($childID)) return $notes;
@@ -332,7 +348,7 @@ class sparent extends user {
             return $notes;
 	    $stmt = $conn->prepare($sql);
 	    if(!$stmt)
-	        return $notes;
+	        return false;
 	    if($childID == -1)
 	        $stmt->bind_param('i',$this->get_parent_ID());
 	    else
@@ -394,7 +410,7 @@ class sparent extends user {
 			$stmt->bind_param('i', $noteID);
 			$stmt->execute();
 		}
-		$_SESSION['unseenNotes_'.$this->get_current_child()] = 0;
+		$this->set_current_num_unseen_notes($this->get_current_child());
 		return true;
 	}
 }
