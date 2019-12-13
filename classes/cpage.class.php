@@ -47,9 +47,9 @@ class cpage {
                         $note = $par->get_num_unseen_notes(-1);
                         $hidden_menu_notes_entry = "";
                         if($note> 0)
-                            $hidden_menu_notes_entry = '       <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-bell mx-3"></i><span class="text-nowrap mx-2">Check Notes <i class="fas fa-exclamation-circle mx-2" style="color:firebrick">'.$note.'</i></span></a>';
+                            $hidden_menu_notes_entry = '       <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./listNotes.php"><i class="fas fa-bell mx-3"></i><span class="text-nowrap mx-2">Check Notes <i class="fas fa-exclamation-circle mx-2" style="color:firebrick">'.$note.'</i></span></a>';
                         else if($note == 0)
-                            $hidden_menu_notes_entry = '       <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-bell mx-3"></i><span class="text-nowrap mx-2">Check Notes</span></a>';
+                            $hidden_menu_notes_entry = '       <li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./listNotes.php"><i class="fas fa-bell mx-3"></i><span class="text-nowrap mx-2">Check Notes</span></a>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-bullseye mx-3"></i><span class="text-nowrap mx-2">Check Marks</span></a></li>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-book mx-3"></i><span class="text-nowrap mx-2">Check Homeworks</span></a></li>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0"><i class="fas fa-user mx-3"></i><span class="text-nowrap mx-2">Check Attendance</span></a></li>';

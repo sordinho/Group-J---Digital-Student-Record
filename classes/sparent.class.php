@@ -311,7 +311,7 @@ class sparent extends user {
 	    if(!isset($childID)) return $notes;
 	    $conn = $this->connectMySQL();
 	    if($childID==-1) {
-            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.NoteID as NoteID
+            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.ID as NoteID
 						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
 						WHERE n.TeacherID=t.ID
 						AND nr.NoteID=n.ID
@@ -320,14 +320,14 @@ class sparent extends user {
 						AND nr.Seen = 0
 						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ?);";
         } else if($childID > 0){
-            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.NoteID as NoteID
+            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.ID as NoteID
 						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
 						WHERE n.TeacherID=t.ID
 						AND nr.NoteID=n.ID
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
 						AND nr.Seen = 0
-						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ? AND StudentID = ?);";
+						and s.ID=?;";
         } else
             return $notes;
 	    $stmt = $conn->prepare($sql);
@@ -336,7 +336,7 @@ class sparent extends user {
 	    if($childID == -1)
 	        $stmt->bind_param('i',$this->get_parent_ID());
 	    else
-            $stmt->bind_param('ii',$this->get_parent_ID(),$childID);
+            $stmt->bind_param('i',$childID);
 	    $stmt->execute();
 	    $res = $stmt->get_result();
 	    if(!$res)
@@ -347,7 +347,11 @@ class sparent extends user {
         return $notes;
     }
 
-	public function get_notes() {
+	/**
+	 * Get all the notes of a child
+	 * @return array|bool
+	 */
+	public function get_notes($childID) {
 		$conn = $this->connectMySql();
 		$notes = array();
 
@@ -358,10 +362,10 @@ class sparent extends user {
 						AND nr.NoteID=n.ID
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
-						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ?);";
+						and s.ID =?;";
 		$stmt = $conn->prepare($query);
 
-		$stmt->bind_param('i', $this->get_parent_ID());
+		$stmt->bind_param('i', $childID);
 		$stmt->execute();
 		$res = $stmt->get_result();
 
@@ -372,5 +376,25 @@ class sparent extends user {
 			array_push($notes, $row);
 		}
 		return $notes;
+	}
+
+	/**
+	 * @param $notesID array containing ID of notes to set seen in DB
+	 * @return bool
+	 */
+	public function set_notes_seen($notesID){
+		if(!is_array($notesID))
+			return false;
+
+		$conn = $this->connectMySql();
+		$query = "UPDATE NoteRecord SET Seen=1 WHERE ID=?";
+		$stmt = $conn->prepare($query);
+
+		foreach ($notesID as $noteID) {
+			$stmt->bind_param('i', $noteID);
+			$stmt->execute();
+		}
+		$_SESSION['unseenNotes_'.$this->get_current_child()] = 0;
+		return true;
 	}
 }
