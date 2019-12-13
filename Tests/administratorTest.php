@@ -24,29 +24,9 @@ class administratorTest extends TestCase
         dropTestDatabase();
     }
 
-    /*public function test_register_new_user_parent(){
-        $admin = new administrator();
-        $user_info = array();
-        $user_info['name'] = "Jon";
-        $user_info['surname'] = "Snow";
-        $user_info['usergroup'] = "parent";
-        $user_info['email'] = "king@inthe.north";
-        $res = $admin->register_new_user($user_info);
-        $this->assertTrue($res,$this->printErrorMessage("test_register_new_user_parent","wrong returned value"));
-
-
-        $conn = TestsConnectMySQL();
-        $query = "SELECT * 
-                  FROM Parent p, User u 
-                  WHERE p.UserID = u.ID AND u.Name = 'Jon' AND u.Surname = 'Snow' AND u.Email = 'king@inthe.north';";
-        $res = $conn->query($query);
-        $this->assertEquals(1,$res->fetch_row(),$this->printErrorMessage("test_register_new_user_parent","there are no new entries in the parent table."));
-        $res->close();
-    }*/
-
     public function test_register_new_user_officer(){
         $admin = new administrator();
-        $user_cf = "ned1";
+        $user_cf = "VSHXMG88R28D865H";
         $user_name = "Ned";
         $user_surname = "Stark";
         $user_usergroup = "officer";
@@ -66,7 +46,7 @@ class administratorTest extends TestCase
 
     public function test_register_new_user_teacher(){
         $admin = new administrator();
-        $user_cf = "jam1";
+        $user_cf = "YPBDDN86C62G482B";
         $user_name = "Jamie";
         $user_surname = "Lannister";
         $user_usergroup = "teacher";
@@ -86,7 +66,7 @@ class administratorTest extends TestCase
 
     public function test_register_new_user_BOUNDARY(){
         $admin = new administrator();
-        $user_cf = "jon1";
+        $user_cf = "GPYFWK45H15B778Y";
         $user_name = "Jon";
         $user_surname = "Snow";
         $user_usergroup = "parent";
