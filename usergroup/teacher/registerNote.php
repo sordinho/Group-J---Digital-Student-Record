@@ -24,6 +24,10 @@ if (isset($_GET['operation_result'])) {
 } else {
     $classes = $teacher->get_assigned_classes_names();
     $drop_down = "";
+    if(isset($_GET['date']))
+        $today = $_GET['date'];
+    else
+        $today = date("Y-m-d");
     for ($i = 0; $i < sizeof($classes); $i++) {
         $classID = $classes[$i]['ClassID'];
         $yearSection = $classes[$i]['YearClass'] . " " . $classes[$i]['Section'];
@@ -100,7 +104,7 @@ OUT;
         $table_content .= '
                             <div class="col-sm-12">
                                         <label for="date">Date</label>
-                                        <input type="date" id="date" class="form-control" name="date">
+                                        <input type="date" id="date" class="form-control" name="date" value="'.$today.'">
                             </div>
                                 <div class="col-lg-12">
                                     <label for="note"><strong>Disciplinary note</strong></label>
