@@ -1,6 +1,7 @@
 
 .idea/
 /site_config.php
+site_config.php
  # Others
 composer.phar
 composer.json

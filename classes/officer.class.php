@@ -365,5 +365,92 @@ class officer extends user
         return true;
     }
 
+    public function get_timetable_by_class($classID) {
+        $officerID = $this->get_officer_ID();
+        $timetable = array();
+        if (!isset($classID)||$classID==-1) {
+            return 0; // no class
+        } elseif ($officerID != -1) {
+            $conn = $this->connectMySql();
+            /*
+             * take the full timetable for a given class
+             */
+            $stmt = $conn->prepare("SELECT *
+                                            FROM Timetables
+                                            WHERE SpecificClassID=?");
+            $stmt->bind_param('i', $classID);
+            if (!$stmt->execute()) {
+                return -1; // failed
+            }
+
+            $res = $stmt->get_result();
+            if ($res->num_rows>0) {
+                while ($row = $res->fetch_assoc()) {
+                    /*
+                     * append to each hour slot teacher surname and topic name
+                     */
+                    $stmt1 = $conn->prepare("SELECT u.Name as TeacherName, u.Surname as TeacherSurname, tc.Name as TopicName
+                                                    FROM User u, Teacher t, Topic tc, SpecificClass sc
+                                                    WHERE t.UserID=u.ID
+                                                    AND sc.ID=?
+                                                    AND t.ID=?
+                                                    AND tc.ID=?
+                                                    ");
+                    $stmt1->bind_param('iii', $classID,$row['TeacherID'],$row['TopicID']);
+
+                    /*
+                     * get the remaining topics not present in that hour slot
+                     */
+                    $stmt2 = $conn->prepare("SELECT u.Name as TeacherName, u.Surname as TeacherSurname, tc.Name as TopicName
+                                                    FROM User u, Teacher t, TopicTeacherClass ttc, Topic tc
+                                                    WHERE u.ID=t.UserID
+                                                    AND t.ID=ttc.TeacherID
+                                                    AND tc.ID=ttc.TopicID
+                                                    AND ttc.SpecificClassID = ?
+                                                    AND tc.ID NOT IN (
+                                                        SELECT TopicID
+                                                        FROM Timetables
+                                                        WHERE SpecificClassID = ?
+                                                        AND TopicID = ?
+                                                        AND HourSlot = ?
+                                                        AND DayOfWeek = ?
+                                                    )");
+                    $stmt2->bind_param("iiiii",$classID,$classID,$row['TopicID'],$row['HourSlot'],$row['DayOfWeek']);
+                    if (!$stmt1->execute()) {
+                        return -1; // failed
+                    }
+                    $res1 = $stmt1->get_result();
+                    if (!$stmt2->execute()) {
+                        return -1; // failed
+                    }
+                    $res2 = $stmt2->get_result();
+                    /*
+                     * teacher and topic information must be stored in a single row
+                     * every class must have more than one topic
+                     */
+                    if ($res1->num_rows==1 && $res2->num_rows>0) {
+                        $info = $res1->fetch_assoc();
+                        $row['TeacherName'] = $info['TeacherName'];
+                        $row['TeacherSurname'] = $info['TeacherSurname'];
+                        $row['TopicName'] = $info['TopicName'];
+                        /*
+                         *  on top of each hour slot must be the already inserted topic
+                         */
+                        $timetable[$row['HourSlot']][$row['DayOfWeek']][] = $row;
+                        while ($row2 = $res2->fetch_assoc()) {
+                            $timetable[$row['HourSlot']][$row['DayOfWeek']][] = $row2;
+                        }
+                    } else {
+                        return -3; // queries fail
+                    }
+                }
+            }
+
+            return $timetable;
+        }
+
+        return -2; // not logged in
+    }
+
 
 }
