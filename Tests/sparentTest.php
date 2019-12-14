@@ -165,4 +165,6 @@ class sparentTest extends TestCase
         $this->assertFalse($parentObj->get_absences(intval($childID), "20"));
         $this->assertFalse($parentObj->get_absences(intval($childID), "2020-01-01"));
     }
+
+
 }
