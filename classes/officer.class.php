@@ -401,7 +401,7 @@ class officer extends user
                     /*
                      * get the remaining topics not present in that hour slot
                      */
-                    $stmt2 = $conn->prepare("SELECT u.Name as TeacherName, u.Surname as TeacherSurname, tc.Name as TopicName
+                    $stmt2 = $conn->prepare("SELECT u.Name as TeacherName, u.Surname as TeacherSurname, tc.Name as TopicName, tc.ID as TopicID, t.ID as TeacherID
                                                     FROM User u, Teacher t, TopicTeacherClass ttc, Topic tc
                                                     WHERE u.ID=t.UserID
                                                     AND t.ID=ttc.TeacherID
@@ -433,11 +433,13 @@ class officer extends user
                         $row['TeacherName'] = $info['TeacherName'];
                         $row['TeacherSurname'] = $info['TeacherSurname'];
                         $row['TopicName'] = $info['TopicName'];
+                        $row['action'] = 'update';
                         /*
                          *  on top of each hour slot must be the already inserted topic
                          */
                         $timetable[$row['HourSlot']][$row['DayOfWeek']][] = $row;
                         while ($row2 = $res2->fetch_assoc()) {
+                            $row2['action'] = 'insert';
                             $timetable[$row['HourSlot']][$row['DayOfWeek']][] = $row2;
                         }
                     } else {
