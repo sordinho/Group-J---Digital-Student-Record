@@ -88,16 +88,46 @@ if (!empty($_POST)) {
 else if (isset($_GET['classID'])) {
 
     $current_timetable = $officer->get_timetable_by_class($_GET['classID']);
-
-    $professorsTopics=$officer->get_teacher_topic($_GET['classID']);
-    $optionList="<option selected>Choose a topic</option>";
-    foreach ($professorsTopics as $professorTopic) {
-            $optionList .= "<option value=" . $professorTopic[3] . "_". $professorTopic[4].">" . $professorTopic[2] . " - ". $professorTopic[1] ."</option>";
-    }
-
+    define('DAYS', 5);
+    define('HOUR_SLOTS', 6);
     $table_content = "";
 
-    foreach ($current_timetable as $hour => $hour_slot) {
+    for ($hour = 0; $hour < HOUR_SLOTS; $hour++) {
+        $time_hour = $hour+8;
+        $table_content .= "<tr><th class=\"text-center\" scope=\"row\">$time_hour:00</th>";
+        for ($day = 0; $day < DAYS; $day++) {
+            $optionList = "";
+            if (is_array($current_timetable[$hour][$day])) {
+                foreach ($current_timetable[$hour][$day] as $key => $topic) {
+                    $topicID = $topic['TopicID'];
+                    $topicName = $topic['TopicName'];
+                    $teacherID = $topic['TeacherID'];
+                    $teacherSurname = $topic['TeacherSurname'];
+                    $action = $topic['action'];
+                    $optionList .= "<option value=\"$topicID|$teacherID|$action\">$topicName - $teacherSurname</option>";
+                }
+            } else {
+                $optionList .= "<option selected>Choose a topic</option>";
+                $topics = $officer->get_teacher_topic($_GET['classID']);
+                foreach ($topics as $topic) {
+                    $topicID = $topic['TopicID'];
+                    $topicName = $topic['TopicName'];
+                    $teacherID = $topic['TeacherID'];
+                    $teacherSurname = $topic['TeacherSurname'];
+                    $action = $topic['action'];
+                    $optionList .= "<option value=\"$topicID|$teacherID|insert\">$topicName - $teacherSurname</option>";
+                }
+            }
+
+            $table_content .= "<td>
+                                   <select class=\"custom-select\" id=\"inputGroupSelect$hour$day\" name=\"select$hour$day\">
+                                    $optionList
+                                   </select>
+                                </td>";
+        }
+    }
+
+    /*foreach ($current_timetable as $hour => $hour_slot) {
         $time_hour = $hour+8;
         $table_content .= "<tr><th class=\"text-center\" scope=\"row\">$time_hour:00</th>";
         if (is_array($hour_slot)) {
@@ -121,7 +151,17 @@ else if (isset($_GET['classID'])) {
             }
         }
         $table_content .= "</tr>";
-    }
+    }*/
+
+    /*$professorsTopics=$officer->get_teacher_topic($_GET['classID']);
+    $optionList="<option selected>Choose a topic</option>";
+    foreach ($professorsTopics as $professorTopic) {
+            $optionList .= "<option value=" . $professorTopic[3] . "_". $professorTopic[4].">" . $professorTopic[2] . " - ". $professorTopic[1] ."</option>";
+    }*/
+
+
+
+
 
     $_SESSION['classID']=$_GET['classID'];
     $content .= '
