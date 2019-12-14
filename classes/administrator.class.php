@@ -1,6 +1,7 @@
 <?php
 
 require_once 'user.class.php';
+
 /* A signle admin is assumed for now (no getter, no check og get_id on is_logged) */
 
 class administrator extends user {
@@ -21,15 +22,15 @@ class administrator extends user {
 	 * @throws Exception
 	 */
 
-	function register_new_user($user_first_name,$user_last_name,$user_email,$usergroup,$fcode) {
+	function register_new_user($user_first_name, $user_last_name, $user_email, $usergroup, $fcode) {
 		$fields = func_get_args();
-		foreach ($fields as $f){
-			if ($f==null || $f=='')
+		foreach ($fields as $f) {
+			if ($f == null || $f == '')
 				return false;
 		}
 
 		// Check fiscal code validity. Function from user class
-		if(!$this->check_fiscal_code($fcode)){
+		if (!$this->check_fiscal_code($fcode)) {
 			return false;
 		}
 
@@ -40,7 +41,7 @@ class administrator extends user {
 
 		//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
 		// default is 10, better have a little more security
-        //echo "Name: ".$user_first_name." Surname: ".$user_last_name." Email: ".$user_email." Usergroup: ".$usergroup." Password: ".$password." Fcode: ".$fcode;
+		//echo "Name: ".$user_first_name." Surname: ".$user_last_name." Email: ".$user_email." Usergroup: ".$usergroup." Password: ".$password." Fcode: ".$fcode;
 		$options = ['cost' => 12];
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
 
@@ -52,63 +53,63 @@ class administrator extends user {
 		if (!$res) {
 			printf("Error message: %s\n", $mysqli->error);
 
-            echo "Error in inserting the new User";
+			echo "Error in inserting the new User";
 			return false;
 		}
 
-		$stmt=$mysqli->prepare("SELECT ID FROM User WHERE Email=? AND UserGroup=?");
-		$stmt->bind_param('ss',$user_email,$usergroup);
+		$stmt = $mysqli->prepare("SELECT ID FROM User WHERE Email=? AND UserGroup=?");
+		$stmt->bind_param('ss', $user_email, $usergroup);
 
 		//TODO: first retrieve ID from user table of the inserted user
 		//echo $selectID;
-		$IDinsertedUser=-1;
+		$IDinsertedUser = -1;
 		if ($stmt->execute()) {
-		    $res=$stmt->get_result();
-            $row = $res->fetch_assoc();
+			$res = $stmt->get_result();
+			$row = $res->fetch_assoc();
 			$IDinsertedUser = $row['ID'];
 			//echo "ID after Insert: ".$IDinsertedUser;
 		} else {
-		    echo "Unable to retrieve User ID";
-		    return false;
-        }
-        $tempzero=0;
+			echo "Unable to retrieve User ID";
+			return false;
+		}
+		$tempzero = 0;
 		//TODO before sending email with credentials, insert data in officer/teacher tables.
 		switch ($usergroup) {
 			case "teacher":
 				$queryInsert = 'INSERT INTO Teacher (MeetingHourID,UserID,FiscalCode) VALUES (?,?,?)';
-                $queryInsertSpecificTable = $mysqli->prepare($queryInsert);
-                //echo "ID User: ".$IDinsertedUser." Fcode: ".$fcode;
-                $queryInsertSpecificTable->bind_param("iis", $tempzero,$IDinsertedUser,$fcode);
+				$queryInsertSpecificTable = $mysqli->prepare($queryInsert);
+				$queryInsertSpecificTable->bind_param("iis", $tempzero, $IDinsertedUser, $fcode);
 				break;
 			case "officer":
 				$queryInsert = 'INSERT INTO Officer (UserID,FiscalCode) VALUES (?,?)';
-                $queryInsertSpecificTable = $mysqli->prepare($queryInsert);
-                $queryInsertSpecificTable->bind_param("is", $IDinsertedUser,$fcode);
+				$queryInsertSpecificTable = $mysqli->prepare($queryInsert);
+				$queryInsertSpecificTable->bind_param("is", $IDinsertedUser, $fcode);
 				break;
 			default:
-                $queryInsert = '';
-                $queryInsertSpecificTable = $mysqli->prepare($queryInsert);
+				$queryInsert = '';
+				$queryInsertSpecificTable = $mysqli->prepare($queryInsert);
 				break;
 		}
 
-
+		if ($queryInsertSpecificTable == '')
+			return false;
 		$result = $queryInsertSpecificTable->execute();
 		if (!$result) {
 			printf("Error message: %s\n", $mysqli->error);
 
-            echo "Unable to add data to the specific user Table in the DB";
+			echo "Unable to add data to the specific user Table in the DB";
 			return false;
 		}
 
 		//TODO:if usergroup=teacher -> add record in topicteacherclass (specificclassid=-1)
-        //TODO:decide about topic ID
+		//TODO:decide about topic ID
 		$query->close();
 		$mysqli->close();
 
 		$message = "You are now officially registered in the Digital Student Record System.\nYour login data will follow.\nUsername: " . $user_email . "\nPassword: " . $password . "\nFor your security, please delete this message ASAP.";
 		$message .= "\nBest Regards\nThe school administration.";
 		$message = wordwrap($message, 70, "\n");
-		if (!defined('MAIL_DISABLE')  || MAIL_DISABLE == FALSE){
+		if (!defined('MAIL_DISABLE') || MAIL_DISABLE == FALSE) {
 			return mail($user_email, "Access Credentials (DSR)", $message);
 		}
 		return true;
@@ -116,14 +117,13 @@ class administrator extends user {
 
 	// Check if user is an admin. Set at login with set_admin()
 	public function is_admin() {
-		return isset($_SESSION['admin']) ? $_SESSION['admin'] : false ;
+		return isset($_SESSION['admin']) ? $_SESSION['admin'] : false;
 	}
 
 	// Override of parent method, just check if was set admin in session
-	public function is_logged()
-	{
+	public function is_logged() {
 		$cond = parent::is_logged() && $this->is_admin();
 		return $cond;
 	}
-	
+
 }

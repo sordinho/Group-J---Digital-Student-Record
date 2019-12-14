@@ -35,7 +35,7 @@ class officerTest extends TestCase
         $student_info['name'] = 'Jon';
         $student_info['surname'] = 'Snow';
         $student_info['avgLastSchool'] = 7.55;
-        $student_info['CF'] = 'King_in_the_north';
+        $student_info['CF'] = 'VSHXMG88R28D865H';
         $officer = new officer();
         $res = $officer->enroll_student($student_info);
 
@@ -84,20 +84,20 @@ class officerTest extends TestCase
         $officer = new officer();
         $usr_id = 5;
         $child_info = array();
-        $child_info['cf_0'] = 'cf1';
+        $child_info['cf_0'] = 'YPBDDN86C62G482B';
         $childN = 1;
-        $res = $officer->add_new_parent($usr_id,$child_info,$childN);
+        $res = $officer->add_new_parent($usr_id,$child_info);
         $this->assertTrue($res,$this->printErrorMessage('testAddNewParent','returned value should be true'));
-        $child_info['cf_1'] = 'cf2';
+        $child_info['cf_1'] = 'YPBDDN86C62G482B';
         $childN++;
-        $res = $officer->add_new_parent($usr_id,$child_info,$childN);
+        $res = $officer->add_new_parent($usr_id,$child_info);
         $this->assertTrue($res,$this->printErrorMessage('testAddNewParent','returned value should be true'));
         $childN++;
-        $res = $officer->add_new_parent($usr_id,$child_info,$childN);
+        $res = $officer->add_new_parent($usr_id,$child_info);
         $this->assertFalse($res,$this->printErrorMessage('testAddNewParent','returned value should be false'));
         unset($child_info);
         $child_info = array();
-        $res = $officer->add_new_parent($usr_id,$child_info,$childN);
+        $res = $officer->add_new_parent($usr_id,$child_info);
         $this->assertFalse($res,$this->printErrorMessage('testAddNewParent','returned value should be false'));
     }
     public function testRemoveUser(){

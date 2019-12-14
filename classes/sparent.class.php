@@ -33,7 +33,6 @@ class sparent extends user {
 		}
 		return $grades_info;
 	}
-
 	// Register the childs in a session
 	public function retrieve_and_register_childs() {
 		$childs = array();
@@ -292,12 +291,22 @@ class sparent extends user {
 		return $material_info;
 	}
 
+	/**
+	 * Get count of unseen notes
+	 * @param $childID valid childID or -1 for all children
+	 * @return int|mixed
+	 */
     public function get_num_unseen_notes($childID){
         if($childID == -1)
             return isset($_SESSION['unseenNotes']) ? $_SESSION['unseenNotes'] : 0;
         else
             return isset($_SESSION['unseenNotes_'.$childID]) ? $_SESSION['unseenNotes_'.$childID] : 0;
     }
+
+	/**
+	 * Set current count of unseen notes
+	 * @param $childID valid childID or -1 for all children
+	 */
 	public function set_current_num_unseen_notes($childID){
 	    if(!isset($childID)) return;
 	    $res = $this->get_unseen_notes($childID);
@@ -306,37 +315,43 @@ class sparent extends user {
 	    else
 	        $_SESSION['unseenNotes_'.$childID] = sizeof($res);
     }
+
+	/**
+	 * Get array with unseen notes
+	 * @param $childID int valid childID or -1 for all children
+	 * @return array|bool
+	 */
     public function get_unseen_notes($childID){
 	    $notes = array();
 	    if(!isset($childID)) return $notes;
 	    $conn = $this->connectMySQL();
 	    if($childID==-1) {
-            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.NoteID as NoteID
+            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.ID as NoteID
 						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
 						WHERE n.TeacherID=t.ID
 						AND nr.NoteID=n.ID
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
 						AND nr.Seen = 0
-						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ?);";
+						and s.ID IN (SELECT StudentID FROM parent WHERE UserID = ?);";
         } else if($childID > 0){
-            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.NoteID as NoteID
+            $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.ID as NoteID
 						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
 						WHERE n.TeacherID=t.ID
 						AND nr.NoteID=n.ID
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
 						AND nr.Seen = 0
-						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ? AND StudentID = ?);";
+						and s.ID=?;";
         } else
             return $notes;
 	    $stmt = $conn->prepare($sql);
 	    if(!$stmt)
-	        return $notes;
+	        return false;
 	    if($childID == -1)
-	        $stmt->bind_param('i',$this->get_parent_ID());
+	        $stmt->bind_param('i',$this->get_id());
 	    else
-            $stmt->bind_param('ii',$this->get_parent_ID(),$childID);
+            $stmt->bind_param('i',$childID);
 	    $stmt->execute();
 	    $res = $stmt->get_result();
 	    if(!$res)
@@ -347,21 +362,38 @@ class sparent extends user {
         return $notes;
     }
 
-	public function get_notes() {
+	/**
+	 * Get all the notes of a child
+	 * @return array|bool
+	 */
+	public function get_notes($childID) {
+
 		$conn = $this->connectMySql();
 		$notes = array();
-
+        if(!isset($childID)) return $notes;
 		// Get notes
-		$query = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname
+        if($childID > 0 ) {
+            $query = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname
 						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
 						WHERE n.TeacherID=t.ID
 						AND nr.NoteID=n.ID
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
-						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ?);";
+						and s.ID =?;";
+        }else if( $childID == -1){
+            $query = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.ID as NoteID
+						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
+						WHERE n.TeacherID=t.ID
+						AND nr.NoteID=n.ID
+						AND nr.StudentID=s.ID
+						AND t.UserID=u.ID
+						and s.ID IN (SELECT StudentID FROM parent WHERE UserID = ?);";
+        }
 		$stmt = $conn->prepare($query);
-
-		$stmt->bind_param('i', $this->get_parent_ID());
+        if($childID > 0)
+		    $stmt->bind_param('i', $childID);
+        else if( $childID == -1)
+            $stmt->bind_param('i', $this->get_id());
 		$stmt->execute();
 		$res = $stmt->get_result();
 
@@ -372,5 +404,25 @@ class sparent extends user {
 			array_push($notes, $row);
 		}
 		return $notes;
+	}
+
+	/**
+	 * @param $notesID array containing ID of notes to set seen in DB
+	 * @return bool
+	 */
+	public function set_notes_seen($notesID){
+		if(!is_array($notesID))
+			return false;
+
+		$conn = $this->connectMySql();
+		$query = "UPDATE NoteRecord SET Seen=1 WHERE ID=?";
+		$stmt = $conn->prepare($query);
+
+		foreach ($notesID as $noteID) {
+			$stmt->bind_param('i', $noteID);
+			$stmt->execute();
+		}
+		$this->set_current_num_unseen_notes($this->get_current_child());
+		return true;
 	}
 }
