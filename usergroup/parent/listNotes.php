@@ -16,8 +16,8 @@ if (!$sparent->is_logged()) {
 
 // Check if there are new notes
 $unseen_notes = $sparent->get_unseen_notes($sparent->get_current_child());
-if($unseen_notes && sizeof($unseen_notes)>0){
-	$seenNotesID =array();
+if ($unseen_notes && sizeof($unseen_notes) > 0) {
+	$seenNotesID = array();
 	$content = '<ul class="list-group">
             <div class="card">
                 <h3 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">New Notes</h3>
@@ -35,7 +35,7 @@ if($unseen_notes && sizeof($unseen_notes)>0){
                       <tbody>';
 
 	foreach ($unseen_notes as $i => $row) {
-		array_push($seenNotesID,$row['NoteID']);
+		array_push($seenNotesID, $row['NoteID']);
 		$content .= '<tr>
         <th scope="row">' . $row['studentName'] . ' ' . $row['studentSurname'] . '</th>
         <td>' . $row['Description'] . '</td>
@@ -88,6 +88,7 @@ $content .= ' </tbody>
                       </div>
                       </div>
                       </ul>';
+
 $page->setContent($content);
 $site->render();
 ?>

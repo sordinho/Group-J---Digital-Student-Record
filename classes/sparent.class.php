@@ -33,7 +33,6 @@ class sparent extends user {
 		}
 		return $grades_info;
 	}
-
 	// Register the childs in a session
 	public function retrieve_and_register_childs() {
 		$childs = array();
@@ -319,7 +318,7 @@ class sparent extends user {
 
 	/**
 	 * Get array with unseen notes
-	 * @param $childID valid childID or -1 for all children
+	 * @param $childID int valid childID or -1 for all children
 	 * @return array|bool
 	 */
     public function get_unseen_notes($childID){
@@ -334,7 +333,7 @@ class sparent extends user {
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
 						AND nr.Seen = 0
-						and s.ID IN (SELECT StudentID FROM parent WHERE ID = ?);";
+						and s.ID IN (SELECT StudentID FROM parent WHERE UserID = ?);";
         } else if($childID > 0){
             $sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.ID as NoteID
 						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
@@ -350,7 +349,7 @@ class sparent extends user {
 	    if(!$stmt)
 	        return false;
 	    if($childID == -1)
-	        $stmt->bind_param('i',$this->get_parent_ID());
+	        $stmt->bind_param('i',$this->get_id());
 	    else
             $stmt->bind_param('i',$childID);
 	    $stmt->execute();
@@ -368,20 +367,33 @@ class sparent extends user {
 	 * @return array|bool
 	 */
 	public function get_notes($childID) {
+
 		$conn = $this->connectMySql();
 		$notes = array();
-
+        if(!isset($childID)) return $notes;
 		// Get notes
-		$query = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname
+        if($childID > 0 ) {
+            $query = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname
 						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
 						WHERE n.TeacherID=t.ID
 						AND nr.NoteID=n.ID
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
 						and s.ID =?;";
+        }else if( $childID == -1){
+            $query = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.ID as NoteID
+						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
+						WHERE n.TeacherID=t.ID
+						AND nr.NoteID=n.ID
+						AND nr.StudentID=s.ID
+						AND t.UserID=u.ID
+						and s.ID IN (SELECT StudentID FROM parent WHERE UserID = ?);";
+        }
 		$stmt = $conn->prepare($query);
-
-		$stmt->bind_param('i', $childID);
+        if($childID > 0)
+		    $stmt->bind_param('i', $childID);
+        else if( $childID == -1)
+            $stmt->bind_param('i', $this->get_id());
 		$stmt->execute();
 		$res = $stmt->get_result();
 

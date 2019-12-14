@@ -15,7 +15,7 @@ if (isset($_GET['operation_result'])) {
     if ($_GET['operation_result'] == 1){
         $content .= '
                 <div class="alert alert-success" role="alert">
-                    Absences successfully registered. <a href="registerNote.php" class="alert-link">Keep registering absence</a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
+                    Absences successfully registered. <a href="registerNote.php" class="alert-link">Keep registering notes</a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
                 </div>';
     } else {
         $teacher->get_error(25);
