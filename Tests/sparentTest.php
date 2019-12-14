@@ -5,6 +5,7 @@ require_once 'testUtility.php';
 require_once "../classes/user.class.php";
 require_once "../classes/sparent.class.php";
 require_once "../classes/calendar.class.php";
+require_once "../classes/teacher.class.php";
 
 class sparentTest extends TestCase
 {
@@ -22,12 +23,6 @@ class sparentTest extends TestCase
     {
         dropTestDatabase();
     }
-
-    /*protected function setUp(): void
-    {
-        createTables();
-    }*/
-
 
     public function testGet_grades_NULL()
     {
@@ -71,7 +66,7 @@ class sparentTest extends TestCase
         $parent = new sparent();
         //parent_id 1 ----> child_id 1
         $grades = $parent->get_grades(2);
-        $this->assertEquals(4,count($grades),$this->printErrorMessage("testGet_grades","grades[] should have length == 4"));
+        $this->assertTrue(count($grades)>=2,$this->printErrorMessage("testGet_grades","grades[] should have length == 4"));
         $this->assertEquals("History",$grades[0]['Name'],$this->printErrorMessage("testGet_grades","line 68"));
         $this->assertEquals(7,$grades[0]['Mark'],$this->printErrorMessage("testGet_grades","line 69"));
         $this->assertEquals('2019-11-09 08:00:00',$grades[0]['Timestamp'],$this->printErrorMessage("testGet_grades","line 70"));
@@ -81,7 +76,6 @@ class sparentTest extends TestCase
         $this->assertEquals('2019-11-09 09:00:00',$grades[1]['Timestamp'],$this->printErrorMessage("testGet_grades","line 74"));
         $this->assertEquals("Montuschi",$grades[1]["Surname"],$this->printErrorMessage("testGet_grades","line 75"));
     }
-
     public function testSet_current_child()
     {
         $_SESSION["parentID"] = 1;
@@ -89,36 +83,56 @@ class sparentTest extends TestCase
         $parentObj->set_current_child(2);
         $this->assertEquals(2, $_SESSION["curChild"],$this->printErrorMessage("testSet_current_child",""));
     }
-
     public function testGet_current_child()
     {
         $_SESSION["curChild"] = 2;
         $parentObj = new sparent();
         $this->assertEquals(2, $parentObj->get_current_child(), $this->printErrorMessage("testGet_current_child",""));
     }
-
     public function test__construct()
     {
         $_SESSION["parentID"] = 1;
         $parentObj = new sparent();
         $this->assertEquals(1, $parentObj->get_parent_ID(), $this->printErrorMessage("test__construct","parent object ID not equals to session ID"));
     }
-
     public function testRetrieve_and_register_childs()
     {
         $_SESSION['parentID'] = 1;
         $_SESSION['id']=1;
         $parentObj = new sparent();
-        $parentObj->retrieve_and_register_childs();
-        $this->assertEquals(1,$_SESSION['childrenInfo']['ParentID'],$this->printErrorMessage("testRestrieve_and_register_childs","ERROR IN STUDENT ID"));
-        /*
-         * $this->assertEquals( 1 ,$_SESSION['childrenInfo'][1],"ERROR IN PARENT ID");
-         *  TODO
-         *
-         *
-         * */
-    }
+        $res = $parentObj->retrieve_and_register_childs();
+        if(!$res)
+            $this->fail($this->printErrorMessage("testRetrieve_and_register_childs","res should be an array"));
+        /*INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `SpecificClassID`) VALUES
+(1, 'Hirving', 'Lozano', 10, 'LGGLPM50L71Z356X', 1),
+(2, 'Vittorio', 'Di Leo', 10, 'PHGKRF55P70E908R', 1),
+(3, 'Emanuele', 'Munafo', 10, 'DLGLYL71H30E159S', 1),
+(4, 'Davide', 'Sordi', 10, 'HYFWMS36B11A963E', 1),
+(5, 'Francesco', 'Riba', 10, 'JFVYMM92P59A229O', 1),
+(6, 'Riccardo', 'Mamone', 10, 'ZGSQPD62P61F443K', 1),
+(8, 'Antonio', 'Santoro', 10, 'GHFNDJ51S10L730U', 1),
+(9, 'Michael', 'Bing', 7, 'RRQDWW41C60G670Z', 2),
+(11, 'Mario', 'Rossi', 7, 'LVMLVS80T70L552B', 2),
+(12, 'Javier', 'Lautaro', 10, 'LTRJVR97A01F839O', 2),
+(13, 'Dries', 'Mertens', 10, 'MRTDRS89L03F839J', 3),
+(18, 'Francesco', 'Riba', 9, 'WTCPGG93M51H398P', 1),
+(23, 'Ross', 'Trebbiani', 9.25, 'TRBRSS80A01F839Q', -1);
 
+        INSERT INTO `Parent` (`ID`, `StudentID`, `UserID`) VALUES
+(2, 2, 2),
+(5, 4, 1),
+(7, 3, 45),
+(8, 3, 44),
+(10, 4, 2),
+(11, 12, 55),
+(12, 13, 56),
+(14, 12, 1);*/
+
+        $this->assertEquals($res->num_rows,sizeof($_SESSION['childrenInfo']),$this->printErrorMessage("testRetrieve_and_register_childs","sizes of returned value and value in session should be equals"));
+        $this->assertEquals("Davide",$_SESSION['childrenInfo'][0]['Name'],$this->printErrorMessage("testRetrieve_and_register_childs","wrong student name"));
+        $this->assertEquals("Sordi",$_SESSION['childrenInfo'][0]['Surname'],$this->printErrorMessage("testRetrieve_and_register_childs","wrong student surname"));
+        $this->assertEquals(4,$_SESSION['childrenInfo'][0]['StudentID'],$this->printErrorMessage("testRetrieve_and_register_childs","wrong student id"));
+    }
     public function testGet_homeworks() {
         $parentObj = new sparent();
         perform_INSERT_or_DELETE("DELETE FROM Homework");
@@ -133,36 +147,229 @@ class sparentTest extends TestCase
         $this->assertEquals('2020-01-08', $homework_info[0]['HomeworkDeadline'], $this->printErrorMessage('testGet_homeworks'));
         $this->assertTrue($homework_info[0]['HomeworkID'] != null, $this->printErrorMessage('testGet_homeworks'));
     }
+    public function testGet_absences_and_delays(){
+        $parentObj = new sparent();
 
+        perform_INSERT_or_DELETE("INSERT INTO Student (Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES ('testName', 'testSurname', 10, 'testCF', 1)");
+        $childID = perform_SELECT_return_single_value("SELECT ID FROM Student WHERE Name = 'testName' AND Surname = 'testSurname'");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-11-29', 1, 4)");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-03', 0, 0)");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-04', 1, 6)");
+        $this->assertEmpty($parentObj->get_absences_and_delays(99));
+        $absences = $parentObj->get_absences_and_delays(intval($childID));
+        $this->assertEquals("2019-11-29", $absences[0]['Date']);
+        $this->assertEquals(1, $absences[0]['Late']);
+        $this->assertEquals(4, $absences[0]['ExitHour']);
+        $this->assertEquals("2019-12-03", $absences[1]['Date']);
+        $this->assertEquals(0, $absences[1]['Late']);
+        $this->assertEquals(0, $absences[1]['ExitHour']);
+        $this->assertEquals("2019-12-04", $absences[2]['Date']);
+        $this->assertEquals(1, $absences[2]['Late']);
+        $this->assertEquals(6, $absences[2]['ExitHour']);
+
+        perform_INSERT_or_DELETE("INSERT INTO Student (Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES ('testName2', 'testSurname2', 10, 'testCF2', 1)");
+        $childID = perform_SELECT_return_single_value("SELECT ID FROM Student WHERE Name = 'testName2' AND Surname = 'testSurname2'");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-10', 0, 3)");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-11', 0, 2)");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-12', 1, 6)");
+        $absences = $parentObj->get_absences_and_delays(intval($childID), "2019-12-01", "2019-12-20");
+        $this->assertEquals("2019-12-10", $absences[0]['Date']);
+        $this->assertEquals(0, $absences[0]['Late']);
+        $this->assertEquals(3, $absences[0]['ExitHour']);
+        $this->assertEquals("2019-12-11", $absences[1]['Date']);
+        $this->assertEquals(0, $absences[1]['Late']);
+        $this->assertEquals(2, $absences[1]['ExitHour']);
+        $this->assertEquals("2019-12-12", $absences[2]['Date']);
+        $this->assertEquals(1, $absences[2]['Late']);
+        $this->assertEquals(6, $absences[2]['ExitHour']);
+        $absences = $parentObj->get_absences_and_delays(intval($childID), "2019-12-10", "2019-12-13");
+        $this->assertEquals("2019-12-10", $absences[0]['Date']);
+        $this->assertEquals(0, $absences[0]['Late']);
+        $this->assertEquals(3, $absences[0]['ExitHour']);
+        $this->assertEquals("2019-12-11", $absences[1]['Date']);
+        $this->assertEquals(0, $absences[1]['Late']);
+        $this->assertEquals(2, $absences[1]['ExitHour']);
+        $this->assertEquals("2019-12-12", $absences[2]['Date']);
+        $this->assertEquals(1, $absences[2]['Late']);
+        $this->assertEquals(6, $absences[2]['ExitHour']);
+        $absences = $parentObj->get_absences_and_delays(intval($childID), "2019-12-01", "2019-12-02");
+        $this->assertEmpty($absences);
+        $this->assertFalse($parentObj->get_absences_and_delays(intval($childID), "20"));
+    }
     public function testGet_absences() {
         $parentObj = new sparent();
 
         perform_INSERT_or_DELETE("INSERT INTO Student (Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES ('testName', 'testSurname', 10, 'testCF', 1)");
         $childID = perform_SELECT_return_single_value("SELECT ID FROM Student WHERE Name = 'testName' AND Surname = 'testSurname'");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-11-29', 'Yes', '4')");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-03', 'No', '0')");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-04', 'No', '0')");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-11-29', 1, 4)");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-03', 0, 0)");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-04', 0, 0)");
         $this->assertEmpty($parentObj->get_absences(99));
         $absences = $parentObj->get_absences(intval($childID));
         $this->assertEquals("2019-12-03", $absences[0]['Date']);
-        $this->assertEquals("2019-12-04", $absences[1]['Date']);
+        $this->assertEquals("2019-12-03", $absences[1]['Date']);
 
         perform_INSERT_or_DELETE("INSERT INTO Student (Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES ('testName2', 'testSurname2', 10, 'testCF2', 1)");
         $childID = perform_SELECT_return_single_value("SELECT ID FROM Student WHERE Name = 'testName2' AND Surname = 'testSurname2'");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-10', 'No', '0')");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-11', 'No', '0')");
-        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-12', 'No', '0')");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-10', 0, 0)");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-11', 0, 0)");
+        perform_INSERT_or_DELETE("INSERT INTO NotPresentRecord (StudentID, SpecificClassID, Date, Late, ExitHour) VALUES ($childID, 1, '2019-12-12', 0, 0)");
         $absences = $parentObj->get_absences(intval($childID), "2019-12-01", "2019-12-20");
         $this->assertEquals("2019-12-10", $absences[0]['Date']);
         $this->assertEquals("2019-12-11", $absences[1]['Date']);
         $this->assertEquals("2019-12-12", $absences[2]['Date']);
-        $absences = $parentObj->get_absences(intval($childID), "2019-12-10", "2019-12-12");
+        $absences = $parentObj->get_absences(intval($childID), "2019-12-10", "2019-12-13");
         $this->assertEquals("2019-12-10", $absences[0]['Date']);
         $this->assertEquals("2019-12-11", $absences[1]['Date']);
         $this->assertEquals("2019-12-12", $absences[2]['Date']);
         $absences = $parentObj->get_absences(intval($childID), "2019-12-01", "2019-12-02");
         $this->assertEmpty($absences);
         $this->assertFalse($parentObj->get_absences(intval($childID), "20"));
-        $this->assertFalse($parentObj->get_absences(intval($childID), "2020-01-01"));
+        //$this->assertFalse($parentObj->get_absences(intval($childID), "2020-01-01"));
     }
+    public function testGet_announcements(){
+        /*INSERT INTO `Communication` (`ID`, `Title`, `Description`, `Timestamp`, `OfficerID`) VALUES
+(1, 'Christmas holidays', 'All lectures are suspended from 20/12/2019 until 07/01/2020', '2019-12-09 16:34:14', 1),
+(2, 'All labs will be closed', 'The access to all laboratories will be restored on 10/01/2020', '2019-12-09 17:34:14', 2),
+(3, 'Lecture suspended', 'All lectures are suspended on 11/12/2019', '2019-12-09 16:35:07', 1);*/
+        $_SESSION["parentID"] = 1;
+        $parentObj = new sparent();
+        $res = $parentObj->get_announcements(2);
+        if(!$res)
+            $this->fail($this->printErrorMessage("testGet_announcements","returned value should be an array"));
+        $this->assertEquals(2,sizeof($res),$this->printErrorMessage("testGet_announcements","wrong size of returned array"));
+        $res = $parentObj->get_announcements();
+        if(!$res)
+            $this->fail($this->printErrorMessage("testGet_announcements","returned value should be an array"));
+        $this->assertTrue(sizeof($res)<=4,$this->printErrorMessage("testGet_announcements","wrong size of returned array"));
+    }
+    public function testGet_parent_ID(){
+        $_SESSION['parentID'] = 2;
+        $parent = new sparent();
+        $this->assertEquals(2,$parent->get_parent_ID(),$this->printErrorMessage("testGet_parent_ID","wrong returned value"));
+        unset($_SESSION['parentID']);
+        $this->assertEquals(-1,$parent->get_parent_ID(),$this->printErrorMessage("testGet_parent_ID","wrong returned value"));
+    }
+    public function testGet_children_info(){
+        $tmp = array();
+        $childInfo = array();
+        $childInfo['Name'] = "testNam";
+        $childInfo['Surname'] = "TestSurn";
+        $childInfo['StudentID'] = 1;
+        $tmp[0] = $childInfo;
+        $_SESSION['childrenInfo'] = $tmp;
+        $_SESSION['parentID'] = 1;
+        $parent = new sparent();
+        $res = $parent->get_children_info();
+        $this->assertEquals(1, sizeof($res),$this->printErrorMessage("testGet_children_info","wrong size of returned array"));
+        $this->assertEquals("testNam",$res[0]['Name'],$this->printErrorMessage("testGet_children_info","wrong returned name"));
+        $this->assertEquals("TestSurn",$res[0]['Surname'],$this->printErrorMessage("testGet_children_info","wrong returned surname"));
+        $this->assertEquals(1,$res[0]['StudentID'],$this->printErrorMessage("testGet_children_info","wrong returned ID"));
+
+        unset($_SESSION['childrenInfo']);
+        $res = $parent->get_children_info();
+        $this->assertEquals(1, sizeof($res),$this->printErrorMessage("testGet_children_info","wrong size of returned array"));
+        $this->assertEquals("No children",$res[0]['Name'],$this->printErrorMessage("testGet_children_info","wrong returned name"));
+        $this->assertEquals("Registered",$res[0]['Surname'],$this->printErrorMessage("testGet_children_info","wrong returned surname"));
+        $this->assertEquals(-1,$res[0]['StudentID'],$this->printErrorMessage("testGet_children_info","wrong returned ID"));
+    }
+    public function testIs_logged(){
+        $_SESSION['parentID'] = 1;
+        $_SESSION['id'] = 1;
+        $parent = new sparent();
+        $this->assertTrue($parent->is_logged(),$this->printErrorMessage("testIs_logged","parent should be logged"));
+        unset($_SESSION['parentID']);
+        $this->assertFalse($parent->is_logged(),$this->printErrorMessage("testIs_logged","parent should not be logged"));
+        $_SESSION['parentID'] = -1;
+        $this->assertFalse($parent->is_logged(),$this->printErrorMessage("testIs_logged","parent should not be logged"));
+        unset($_SESSION['id']);
+        $this->assertFalse($parent->is_logged(),$this->printErrorMessage("testIs_logged","parent should not be logged"));
+        $_SESSION['parentID'] = 1;
+        $this->assertFalse($parent->is_logged(),$this->printErrorMessage("testIs_logged","parent should not be logged"));
+    }
+    public function testGet_child_stamp_by_id(){
+        $_SESSION['parentID'] = 1;
+        $parent = new sparent();
+        $this->assertEquals(0, sizeof($parent->get_child_stamp_by_id(null)));
+        $this->assertEquals("Vittorio Di Leo", $parent->get_child_stamp_by_id(2));
+    }
+    public function testGet_material_info(){
+        $_SESSION['parentID'] = 1;
+        $parent = new sparent();
+        $res = $parent->get_material_info(1);
+        if(!$res)
+            $this->fail($this->printErrorMessage("testGet_material_info","returned value should be an array"));
+        $this->assertTrue(sizeof($res)>0);
+        $res = $parent->get_material_info(null);
+        //if(!$res)
+          //  $this->fail($this->printErrorMessage("testGet_material_info","returned value should be an array"));
+        $this->assertTrue(sizeof($res)==0);
+        $res = $parent->get_material_info(-3);
+        $this->assertTrue(sizeof($res)==0);
+    }
+    public function testGet_num_unseen_notes(){
+        $_SESSION['parentID'] = 2;
+        $parent = new sparent();
+        $_SESSION['unseenNotes'] = 2;
+        $this->assertEquals(2,$parent->get_num_unseen_notes(-1));
+        unset($_SESSION['unseenNotes']);
+        $this->assertEquals(0,$parent->get_num_unseen_notes(-1));
+
+        $_SESSION['unseenNotes_2'] = 3;
+        $this->assertEquals(3,$parent->get_num_unseen_notes(2));
+        unset($_SESSION['unseenNotes_2']);
+        $this->assertEquals(0,$parent->get_num_unseen_notes(2));
+    }
+    public function testSet_current_num_unseen_notes(){
+        $teacher = new teacher();
+        $_SESSION['teacherID'] = 1;
+        $teacher->register_note_record(2,1);
+        $teacher->register_note_record(2,2);
+        $_SESSION['parentID'] = 2;
+        $parent = new sparent();
+        $parent->set_current_num_unseen_notes(-1);
+        $this->assertEquals(0,$_SESSION['unseenNotes_-1']);
+        $parent->set_current_num_unseen_notes(2);
+        $this->assertTrue($_SESSION['unseenNotes_2']>=2);
+    }
+    public function testGet_unseen_notes(){
+        $_SESSION['parentID'] = 2;
+        $_SESSION['id'] = 2;
+        $parent = new sparent();
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $teacher->register_note_record(4,1);
+        $res = $parent->get_unseen_notes(-1);
+        $this->assertTrue(sizeof($res)>=3);
+        $res = $parent->get_unseen_notes(2);
+        $this->assertTrue(sizeof($res)>=2);
+        $res = $parent->get_unseen_notes(4);
+        $this->assertTrue(sizeof($res)>=1);
+        $res = $parent->get_unseen_notes(null);
+        $this->assertTrue(sizeof($res)==0);
+    }
+    public function testGet_notes(){
+        $_SESSION['parentID'] = 2;
+        $_SESSION['id'] = 2;
+        $parent = new sparent();
+        $res = $parent->get_notes(-1);
+        $this->assertTrue(sizeof($res)>=3);
+        $res = $parent->get_notes(2);
+        $this->assertTrue(sizeof($res)>=2);
+        $res = $parent->get_notes(4);
+        $this->assertTrue(sizeof($res)>=1);
+        $res = $parent->get_notes(null);
+        $this->assertTrue(sizeof($res)==0);
+    }
+    public function testSet_notes_seen(){
+        $noteID = 1; // see testGet_unseen_notes
+        $notes = array();
+        $notes[0] = $noteID;
+        $_SESSION['parentID']=2;
+        $parent = new sparent();
+        $this->assertFalse($parent->set_notes_seen(null));
+        $this->assertTrue($parent->set_notes_seen($notes));
+    }
+
+
 }
