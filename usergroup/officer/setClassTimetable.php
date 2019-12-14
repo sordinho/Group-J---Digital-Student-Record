@@ -87,10 +87,40 @@ if (!empty($_POST)) {
 //if a class has been selected loads the list of students of the class so that the officer can modify it
 else if (isset($_GET['classID'])) {
 
+    $current_timetable = $officer->get_timetable_by_class($_GET['classID']);
+
     $professorsTopics=$officer->get_teacher_topic($_GET['classID']);
     $optionList="<option selected>Choose a topic</option>";
     foreach ($professorsTopics as $professorTopic) {
             $optionList .= "<option value=" . $professorTopic[3] . "_". $professorTopic[4].">" . $professorTopic[2] . " - ". $professorTopic[1] ."</option>";
+    }
+
+    $table_content = "";
+
+    foreach ($current_timetable as $hour => $hour_slot) {
+        $time_hour = $hour+8;
+        $table_content .= "<tr><th class=\"text-center\" scope=\"row\">$time_hour:00</th>";
+        if (is_array($hour_slot)) {
+            foreach ($hour_slot as $day => $topics) {
+                if (is_array($topics)) {
+                    $optionList = "";
+                    foreach ($topics as $key => $topic) {
+                        $topicID = $topic['TopicID'];
+                        $topicName = $topic['TopicName'];
+                        $teacherID = $topic['TeacherID'];
+                        $teacherSurname = $topic['TeacherSurname'];
+                        $action = $topic['action'];
+                        $optionList .= "<option value=\"$topicID|$teacherID|$action\">$topicName - $teacherSurname</option>";
+                    }
+                    $table_content .= "<td>
+                                           <select class=\"custom-select\" id=\"inputGroupSelect$hour$day\" name=\"select$hour$day\">
+                                            $optionList
+                                           </select>
+                                        </td>";
+                }
+            }
+        }
+        $table_content .= "</tr>";
     }
 
     $_SESSION['classID']=$_GET['classID'];
@@ -118,6 +148,9 @@ else if (isset($_GET['classID'])) {
                                         </tr>
                                       </thead>
                                       <tbody>
+                                        
+                                        '.$table_content.'
+                                      <!--
                                         <tr>
                                           <th class="text-center" scope="row">8:00</th>
                                           <td>
@@ -286,6 +319,7 @@ else if (isset($_GET['classID'])) {
                                               </select>
                                           </td>
                                         </tr>
+                                        -->
                                       </tbody>
                                     </table>
                                     </div>
