@@ -327,7 +327,7 @@ class officer extends user
 
         $conn = $this->connectMySQL();
 
-        $res = $conn->query("SELECT User.Name, User.Surname, Topic.Name, Topic.ID, Teacher.ID
+        $res = $conn->query("SELECT User.Name as TeacherName, User.Surname as TeacherSurname, Topic.Name as TopicName, Topic.ID as TopicID, Teacher.ID as TeacherID
                                     FROM TopicTeacherClass, Topic, Teacher, User
                                     WHERE TopicTeacherClass.TeacherID=Teacher.ID AND TopicTeacherClass.TopicID=Topic.ID AND Teacher.UserID=user.ID AND TopicTeacherClass.SpecificClassID=$classID
                                     GROUP BY User.Name, User.Surname, Topic.Name, Topic.ID, Teacher.ID");
@@ -336,7 +336,7 @@ class officer extends user
             return array();
         $IDs = array();
         for ($i = 0; $i < $res->num_rows; $i++) {
-            $row = $res->fetch_array();
+            $row = $res->fetch_assoc();
             array_push($IDs, $row);
         }
         $res->close();
@@ -384,6 +384,10 @@ class officer extends user
             }
 
             $res = $stmt->get_result();
+
+            /*
+             * there are already some occupied hour slots for the given class
+             */
             if ($res->num_rows>0) {
                 while ($row = $res->fetch_assoc()) {
                     /*
