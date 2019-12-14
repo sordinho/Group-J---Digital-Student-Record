@@ -301,29 +301,7 @@ class officer extends user
         return $stamp;
     }
 
-    public function publish_communication($title, $description)
-    {
-        $officerID = $this->get_officer_ID();
-        if ($title==="" && $description==="") {
-            return 0; // empty communication
-        } elseif ($title==="") {
-            return -3; // empty title
-        } elseif ($description==="") {
-            return -4; // empty description
-        } elseif ($officerID != -1) {
-            $conn = $this->connectMySql();
-            $stmt = $conn->prepare("INSERT INTO Communication (Title, Description, OfficerID) VALUES (?, ?, ?)");
-            $stmt->bind_param('ssi', $title, $description, $officerID);
-            if (!$stmt->execute()) {
-                return -2; // failed insertion
-            }
-            return 1; // successfully insertion
-        }
-
-        return -1; // not logged in
-    }
-
-    public function get_teacher_topic($classID){
+	public function get_teacher_topic($classID){
 
         $conn = $this->connectMySQL();
 
@@ -343,7 +321,7 @@ class officer extends user
         return $IDs;
     }
 
-    public function setTimeTableClass($data){
+	public function setTimeTableClass($data){
         $tt = $data;
         if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
             return false;
@@ -364,6 +342,38 @@ class officer extends user
         }
         return true;
     }
+
+	/**
+	 * @param $title : title of the communication
+	 * @param $description : body of the communication
+	 * @return int :	-4 -> empty description
+	 * 					-3 -> empty title
+	 * 					-2 -> error in query
+	 * 					-1 -> not logged in
+	 * 					0  -> empty communication
+	 * 					1  -> success
+	 */
+	public function publish_communication($title, $description)
+	{
+		$officerID = $this->get_officer_ID();
+		if ($title==="" && $description==="") {
+			return 0; // empty communication
+		} elseif ($title==="") {
+			return -3; // empty title
+		} elseif ($description==="") {
+			return -4; // empty description
+		} elseif ($officerID != -1) {
+			$conn = $this->connectMySql();
+			$stmt = $conn->prepare("INSERT INTO Communication (Title, Description, OfficerID) VALUES (?, ?, ?)");
+			$stmt->bind_param('ssi', $title, $description, $officerID);
+			if (!$stmt->execute()) {
+				return -2; // failed insertion
+			}
+			return 1; // successfully insertion
+		}
+
+		return -1; // not logged in
+	}
 
 
 }
