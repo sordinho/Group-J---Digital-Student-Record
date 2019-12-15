@@ -87,6 +87,7 @@ if (isset($_GET['operation_result'])) {
                 </div>';
 
     } else if (isset($_GET['classID'])) {
+        $_SESSION['classID'] = $_GET['classID'];
         $students_info = $teacher->get_students_by_class_id($_GET['classID']);
         // let's assume there is no need to associate subject to absences
 
@@ -245,6 +246,7 @@ OUT;
 
     // If a form was just sent, elaborate its data and perform operation on backend
     } else if (!empty($_POST)) {
+        $classID = $_SESSION['classID'];
         $students_info = $teacher->get_students_by_class_id($classID);
         if (sizeof($students_info) == 0) {
             header("Location: addAbsence.php?operation_result=-1");
