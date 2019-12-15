@@ -3,7 +3,7 @@
 
 class calendar
 {
-
+    //private static $filename="../files/holidays.csv";
     public static function validate_date($date, $format = 'Y-m-d H:i:s')
     {
         $d = DateTime::createFromFormat($format, $date);
@@ -13,27 +13,35 @@ class calendar
 
     public static function is_holiday($date, $format = "Y-m-d", $filename = "../files/holidays.csv")
     {
-        //todo check correctness
-        $d = DateTime::createFromFormat($format, $date);
-
+        try {
+            $d = new DateTime($date);
+            //TODO HANDLE EXCEPTIONS
+            if($d == false)
+                return false;
+        }catch (Exception $e){
+            return false;
+        }
+        $toCheck = $d->format($format);
         // Check if Sunday
-        if (date("N", strtotime($d)) == 7) {
+        if (date("N", strtotime($toCheck)) == 7) {
             // N: 1 (for Monday) through 7 (for Sunday)
             return true;
         }
 
         // todo: handle behavior - not handled
-        $file = fopen(self::$filename, "r");
+        $file = fopen($filename, "r");
         if (!$file) {
-            return true;
+            return false;
         }
-        while (($line = fgetcsv($file, 1)) !== false) {
-            if ($d->format($format) === $date) {
+
+        while (!feof($file)){
+            $line = fgets($file);
+            $line = trim($line);
+            if($line == $toCheck){
                 fclose($file);
                 return true;
             }
         }
-
         fclose($file);
         return false;
     }
