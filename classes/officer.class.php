@@ -1,6 +1,9 @@
 <?php
 require_once "user.class.php";
 
+define('DAYS', 5);
+define('HOUR_SLOTS', 6);
+
 class officer extends user
 {
 
@@ -323,7 +326,7 @@ class officer extends user
 
     public function setTimeTableClass($data){
         $tt = $data;
-        if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
+        /*if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
             return false;
         }
 
@@ -339,7 +342,7 @@ class officer extends user
                 }
             }
             $j=0;
-        }
+        }*/
         return true;
     }
 

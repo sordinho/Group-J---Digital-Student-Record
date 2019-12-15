@@ -15,19 +15,17 @@ if (!$officer->is_logged()) {
 }
 
 if (!empty($_POST)) {
-    $teacher_hour_day['hours'] = array();
 
-    /*
-     *  Select name guide
-     *  00  10  20  30  40
-     *  01  11  21  31  41
-     *  02  12  22  32  42
-     *  03  13  23  33  43
-     *  04  14  24  34  44
-     *  05  15  25  35  45
-     */
+    for ($hour = 0; $hour<HOUR_SLOTS; $day++) {
+        $teacher_hour_day[$hour] = array();
+        for ($day = 0; $day<DAYS; $day++) {
+            $idx = 'select'.$day.$hour;
+            $teacher_hour_day[$hour][$day] = $_POST[$idx];
+        }
 
-    $teacher_hour_day['hours'][0] = array();
+    }
+
+    /*$teacher_hour_day['hours'][0] = array();
     $teacher_hour_day['hours'][0][0]= $_POST['select00'];
     $teacher_hour_day['hours'][0][1]= $_POST['select01'];
     $teacher_hour_day['hours'][0][2]= $_POST['select02'];
@@ -65,7 +63,7 @@ if (!empty($_POST)) {
     $teacher_hour_day['hours'][4][2]= $_POST['select42'];
     $teacher_hour_day['hours'][4][3]= $_POST['select43'];
     $teacher_hour_day['hours'][4][4]= $_POST['select44'];
-    $teacher_hour_day['hours'][4][5]= $_POST['select45'];
+    $teacher_hour_day['hours'][4][5]= $_POST['select45'];*/
 
     $teacher_hour_day['classID']=$_SESSION['classID'];
 
@@ -88,8 +86,6 @@ if (!empty($_POST)) {
 else if (isset($_GET['classID'])) {
 
     $current_timetable = $officer->get_timetable_by_class($_GET['classID']);
-    define('DAYS', 5);
-    define('HOUR_SLOTS', 6);
     $table_content = "";
 
     for ($hour = 0; $hour < HOUR_SLOTS; $hour++) {
