@@ -16,10 +16,11 @@ if (!$officer->is_logged()) {
 
 if (!empty($_POST)) {
 
-    for ($hour = 0; $hour<HOUR_SLOTS; $day++) {
+    $teacher_hour_day[] = array();
+    for ($hour = 0; $hour<HOUR_SLOTS; $hour++) {
         $teacher_hour_day[$hour] = array();
         for ($day = 0; $day<DAYS; $day++) {
-            $idx = 'select'.$day.$hour;
+            $idx = 'select'.$hour.$day;
             $teacher_hour_day[$hour][$day] = $_POST[$idx];
         }
 
@@ -65,7 +66,7 @@ if (!empty($_POST)) {
     $teacher_hour_day['hours'][4][4]= $_POST['select44'];
     $teacher_hour_day['hours'][4][5]= $_POST['select45'];*/
 
-    $teacher_hour_day['classID']=$_SESSION['classID'];
+    //$teacher_hour_day['classID']=$_SESSION['classID'];
 
     if ($officer->setTimeTableClass($teacher_hour_day)) {
         $content = '
