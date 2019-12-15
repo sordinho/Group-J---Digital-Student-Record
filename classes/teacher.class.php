@@ -27,7 +27,7 @@ class teacher extends user {
 		// given unix timestamp
 		$lecture_date = strtotime($timestamp);
 		// secondi in una settimana
-		if (!calendar::by_the_end_of_the_week($actual_date, $lecture_date))
+		if (!calendar::by_the_end_of_the_week($actual_date, $lecture_date) || calendar::is_holiday($timestamp))
 			return false;
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?);");
@@ -308,7 +308,7 @@ CREATE TABLE `TopicRecord` (
 		$teacherID = $_SESSION['teacherID'];
 		if (!calendar::validate_date($timestamp))
 			return false;
-		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))) return false;
+		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp)) || calendar::is_holiday($timestamp)) return false;
 		$y_m_d = date("Y-m-d", strtotime($timestamp));
 		$classID = $this->is_teacher_of_the_student($studentID);
 		//$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
@@ -403,7 +403,7 @@ CREATE TABLE `TopicRecord` (
 
 		if (!calendar::validate_date($timestamp)) return false;
 
-		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))) return false;
+		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))||calendar::is_holiday($timestamp)) return false;
 
 		$y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
 		$hours_per_school_day = calendar::get_hours_per_school_day();
@@ -453,7 +453,7 @@ CREATE TABLE `TopicRecord` (
 
 		if (!calendar::validate_date($timestamp)) return false;
 
-		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))) return false;
+		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))||calendar::is_holiday($timestamp)) return false;
 
 		$y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
 		$hours_per_school_day = calendar::get_hours_per_school_day();
@@ -602,7 +602,7 @@ CREATE TABLE `TopicRecord` (
 	    if (!isset($date)||!isset($classID)||!isset($note)) return false;
 		if (!calendar::validate_date($date)) return false;
 
-		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($date))) return false;
+		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($date))||calendar::is_holiday($date)) return false;
 
 		$conn = $this->connectMySQL();
         $teacherID = $this->get_teacher_ID();
