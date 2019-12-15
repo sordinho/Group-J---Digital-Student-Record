@@ -396,7 +396,7 @@ class sparent extends user {
 						AND nr.NoteID=n.ID
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
-						and s.ID IN (SELECT StudentID FROM parent WHERE UserID = ?);";
+						and s.ID IN (SELECT StudentID FROM Parent WHERE UserID = ?);";
 		}
 		$stmt = $conn->prepare($query);
 		if ($childID > 0)
