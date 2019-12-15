@@ -10,7 +10,7 @@ $site->setPage($page);
 $officer = new officer();
 
 if (!$officer->is_logged()) {
-    header("location: /error.php?errorID=19");
+    $officer->get_error(19);
     exit();
 }
 
@@ -94,7 +94,8 @@ else if (isset($_GET['classID'])) {
 
     for ($hour = 0; $hour < HOUR_SLOTS; $hour++) {
         $time_hour = $hour+8;
-        $table_content .= "<tr><th class=\"text-center\" scope=\"row\">$time_hour:00</th>";
+        $time_hour2 = $hour+9;
+        $table_content .= "<tr><th class=\"text-center\" scope=\"row\">$time_hour:00<br>$time_hour2:00</th>";
         for ($day = 0; $day < DAYS; $day++) {
             $optionList = "";
             if (is_array($current_timetable[$hour][$day])) {

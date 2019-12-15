@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 11, 2019 alle 16:53
+-- Creato il: Dic 15, 2019 alle 13:15
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -136,7 +136,7 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 -- --------------------------------------------------------
 
 --
--- Table structure for table `note`
+-- Struttura della tabella `Note`
 --
 
 CREATE TABLE `Note` (
@@ -148,16 +148,17 @@ CREATE TABLE `Note` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `note`
+-- Dump dei dati per la tabella `Note`
 --
 
 INSERT INTO `Note` (`ID`, `TeacherID`, `SpecificClassID`, `Date`, `Description`) VALUES
 (1, 1, 1, '2019-12-09 23:00:00', 'note1'),
 (4, 1, 1, '2019-12-09 23:00:00', 'Di Leo and Riba talk during lesson');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `noterecord`
+-- Struttura della tabella `NoteRecord`
 --
 
 CREATE TABLE `NoteRecord` (
@@ -168,14 +169,15 @@ CREATE TABLE `NoteRecord` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `noterecord`
+-- Dump dei dati per la tabella `NoteRecord`
 --
 
-INSERT INTO `NoteRecord` (`ID`, `StudentID`, `NoteID`,`Seen`) VALUES
+INSERT INTO `NoteRecord` (`ID`, `StudentID`, `NoteID`, `Seen`) VALUES
 (1, 2, 1, 0),
 (2, 6, 1, 0),
 (3, 2, 4, 0),
 (4, 5, 4, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -410,7 +412,8 @@ INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
 (4, 'Science', 'Subject Description 4'),
 (5, 'Geography', 'Subject Description 5'),
 (6, 'Art', 'Subject Description 6'),
-(7, 'Music', 'Subject Description 7');
+(7, 'Music', 'Subject Description 7'),
+(8, 'Literature', 'Subject Description 8');
 
 -- --------------------------------------------------------
 
@@ -526,6 +529,70 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 (56, 'Fei Fei', 'Li', 'lifeifei@gmail.com', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (57, 'Antonio', 'Vetro', 'antonio.vetro@io.io', '$2y$12$wh/CWpnhPY/pQ2xzNLZMIemWcJ62UnNJv0omRDt5.Px8gFUp8rfim', 'teacher');
 
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `YearClass`
+--
+
+CREATE TABLE `YearClass` (
+  `ID` int(11) NOT NULL,
+  `Year` int(11) NOT NULL,
+  `TotHours` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `YearClass`
+--
+
+INSERT INTO `YearClass` (`ID`, `Year`, `TotHours`) VALUES
+(1, 1, 25),
+(2, 2, 27),
+(3, 3, 30);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `YearTopicHour`
+--
+
+CREATE TABLE `YearTopicHour` (
+  `ID` int(11) NOT NULL,
+  `YearClassID` int(11) NOT NULL,
+  `TopicID` int(11) NOT NULL,
+  `Hours` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `YearTopicHour`
+--
+
+INSERT INTO `YearTopicHour` (`ID`, `YearClassID`, `TopicID`, `Hours`) VALUES
+(1, 1, 1, 2),
+(2, 1, 2, 2),
+(3, 1, 3, 7),
+(4, 1, 4, 2),
+(5, 1, 5, 2),
+(6, 1, 6, 2),
+(7, 1, 7, 2),
+(8, 1, 8, 6),
+(9, 2, 1, 2),
+(10, 2, 2, 3),
+(11, 2, 3, 8),
+(12, 2, 4, 2),
+(13, 2, 5, 2),
+(14, 2, 6, 2),
+(15, 2, 7, 2),
+(16, 2, 8, 6),
+(17, 3, 1, 2),
+(18, 3, 2, 3),
+(19, 3, 3, 10),
+(20, 3, 4, 3),
+(21, 3, 5, 2),
+(22, 3, 6, 2),
+(23, 3, 7, 2),
+(24, 3, 8, 6);
+
 --
 -- Indici per le tabelle scaricate
 --
@@ -554,6 +621,17 @@ ALTER TABLE `MarksRecord`
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `TopicID` (`TopicID`);
 
+--
+-- Indici per le tabelle `Note`
+--
+ALTER TABLE `Note`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indici per le tabelle `NoteRecord`
+--
+ALTER TABLE `NoteRecord`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indici per le tabelle `NotPresentRecord`
@@ -615,16 +693,6 @@ ALTER TABLE `Timetables`
 --
 ALTER TABLE `Topic`
   ADD PRIMARY KEY (`ID`);
---
--- Indexes for table `Note`
---
-ALTER TABLE `Note`
-  ADD PRIMARY KEY (`ID`);
---
--- Indexes for table `NoteRecord`
---
-ALTER TABLE `NoteRecord`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indici per le tabelle `TopicRecord`
@@ -654,6 +722,20 @@ ALTER TABLE `User`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indici per le tabelle `YearClass`
+--
+ALTER TABLE `YearClass`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indici per le tabelle `YearTopicHour`
+--
+ALTER TABLE `YearTopicHour`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `YearClassID` (`YearClassID`),
+  ADD KEY `TopicID` (`TopicID`);
+
+--
 -- AUTO_INCREMENT per le tabelle scaricate
 --
 
@@ -677,13 +759,12 @@ ALTER TABLE `MarksRecord`
 --
 ALTER TABLE `Note`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-COMMIT;
 --
--- AUTO_INCREMENT for table `noterecord`
+-- AUTO_INCREMENT per la tabella `NoteRecord`
 --
 ALTER TABLE `NoteRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-COMMIT;
+--
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
@@ -722,7 +803,7 @@ ALTER TABLE `Timetables`
 -- AUTO_INCREMENT per la tabella `Topic`
 --
 ALTER TABLE `Topic`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT per la tabella `TopicRecord`
 --
@@ -743,6 +824,16 @@ ALTER TABLE `UploadedClassDocuments`
 --
 ALTER TABLE `User`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+--
+-- AUTO_INCREMENT per la tabella `YearClass`
+--
+ALTER TABLE `YearClass`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT per la tabella `YearTopicHour`
+--
+ALTER TABLE `YearTopicHour`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- Limiti per le tabelle scaricate
 --
@@ -821,6 +912,13 @@ ALTER TABLE `TopicTeacherClass`
   ADD CONSTRAINT `fk_specificclassID` FOREIGN KEY (`SpecificClassID`) REFERENCES `SpecificClass` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_teacherID2` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_topicID` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `YearTopicHour`
+--
+ALTER TABLE `YearTopicHour`
+  ADD CONSTRAINT `fk_TopicID_YTH` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`),
+  ADD CONSTRAINT `fk_YearClassID_YTH` FOREIGN KEY (`YearClassID`) REFERENCES `YearClass` (`ID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
