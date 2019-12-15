@@ -23,7 +23,8 @@ class calendar
         }
         $toCheck = $d->format($format);
         // Check if Sunday
-        if (date("N", strtotime($toCheck)) == 7) {
+        $numDay =date("N", strtotime($toCheck));
+        if ($numDay == 7 || $numDay == 6) {
             // N: 1 (for Monday) through 7 (for Sunday)
             return true;
         }

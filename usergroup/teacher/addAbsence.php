@@ -104,19 +104,21 @@ if (isset($_GET['operation_result'])) {
             }
         }
         $id_status = array();
-        //printf("%d",sizeof($absences_info));
-        for ($i = 0; $i < sizeof($absences_info); $i++){
+        $exitHours = array();
+        for ($i = 0; $i < sizeof($absences_info); $i++) {
             $late = $absences_info[$i]['Late'];
             $exitHour = $absences_info[$i]['ExitHour'];
-            if($exitHour == 0)
+            if ($exitHour == 0)
                 $id_status[$absences_info[$i]['StudentID']] = "Absent";
-            else if ($late==1 and $exitHour == 6)
+            else if ($late == 1 and $exitHour == 6)
                 $id_status[$absences_info[$i]['StudentID']] = "Late";
-            else if ($late==0 and $exitHour < 6)
+            else if ($late == 0 and $exitHour < 6) {
                 $id_status[$absences_info[$i]['StudentID']] = "EarlyExit";
-            else if ($late==1 and $exitHour < 6)
-                $id_status[$absences_info[$i]['StudentID']] ="LateAndEarlyExit";
-            //$id_status[$absences_info[$i]['StudentID']] = "todo";
+                $exitHours[$absences_info[$i]['StudentID']] = $exitHour;
+            } else if ($late == 1 and $exitHour < 6) {
+                $id_status[$absences_info[$i]['StudentID']] = "LateAndEarlyExit";
+                $exitHours[$absences_info[$i]['StudentID']] = $exitHour;
+            }
         }
         $table_content = '<div class="card-body">
                             <form method="post" class="form-inline" style="color:#757575" action="addAbsence.php">
@@ -141,16 +143,45 @@ if (isset($_GET['operation_result'])) {
             $status = $id_status[$id];
             $inputAbsent = "<input type=\"checkbox\" class=\"form-check-input\" id=\"absence_$id\" name=\"absence_$id\" value=\"yes\">";
             $inputLate = "<input type=\"checkbox\" class=\"form-check-input\" id=\"late_$id\" name=\"late_$id\" value=\"yes\" >";
+            $inputEarlyExit = "<select class=\"form-control text-center\" name=\"early_exit_hour_$id\">
+                                              <option value=\"6\">14</option>
+                                              <option value=\"5\">13</option>
+                                              <option value=\"4\">12</option>
+                                              <option value=\"3\">11</option>
+                                              <option value=\"2\">10</option>
+                                              <option value=\"1\">9</option>
+                                            </select>";
             if(!$status)
                 $status="none";
             else if($status == "Absent")
                 $inputAbsent ="<input type=\"checkbox\" class=\"form-check-input\" id=\"absence_$id\" name=\"absence_$id\" value=\"yes\" checked>";
             else if($status == "Late")
                 $inputLate = "<input type=\"checkbox\" class=\"form-check-input\" id=\"late_$id\" name=\"late_$id\" value=\"yes\" checked>";
-            //else if($status == "EarlyExit")
-            //todo
-            //else if($status == "LateAndEarlyExit")
-            //todo
+            else if($status == "EarlyExit") {
+                $inputEarlyExit = "<select class=\"form-control text-center\" name=\"early_exit_hour_$id\">
+                                              <option value=\"6\">14</option>";
+                for($j = 0; $j < 5; $j++){
+                    $selected = "";
+                    if(($exitHours[$id] - ($j+1)) == 0){
+                        $selected= "selected";
+                    }
+                    $inputEarlyExit.= "<option value=\"".($j+1)."\" $selected>".(8+$j+1)."</option>";
+                }
+                $inputEarlyExit.="</select>";
+            }
+            else if($status == "LateAndEarlyExit"){
+                $inputLate = "<input type=\"checkbox\" class=\"form-check-input\" id=\"late_$id\" name=\"late_$id\" value=\"yes\" checked>";
+                $inputEarlyExit = "<select class=\"form-control text-center\" name=\"early_exit_hour_$id\">
+                                              <option value=\"6\">14</option>";
+                for($j = 0; $j < 5; $j++){
+                    $selected = "";
+                    if(($exitHours[$id] - ($j+1)) == 0){
+                        $selected= "selected";
+                    }
+                    $inputEarlyExit.= "<option value=\"".($j+1)."\" $selected>".(8+$j+1)."</option>";
+                }
+                $inputEarlyExit.="</select>";
+            }
             $table_content .= <<<OUT
                             <tr>
                                 <th scope="row">$stud_num</th>
@@ -167,13 +198,7 @@ if (isset($_GET['operation_result'])) {
                                     </td>
                                     <td>
                                         <div class="form-group justify-content-center">
-                                            <select class="form-control text-center" name="early_exit_hour_$id">
-                                              <option value="5">13</option>
-                                              <option value="4">12</option>
-                                              <option value="3">11</option>
-                                              <option value="2">10</option>
-                                              <option value="1">9</option>
-                                            </select>
+                                            $inputEarlyExit
                                         </div>
                                     </td>
                             </tr>
