@@ -12,11 +12,12 @@ class administrator extends user {
 
 	/**
 	 *  Function used by administrator to register new users. Password is randomly generated.
+	 * TEACHER/OFFICER only
 	 *
 	 * @param $user_first_name
 	 * @param $user_last_name
 	 * @param $user_email
-	 * @param $usergroup
+	 * @param $usergroup: ONLY teacher OR officer !!!
 	 * @param $fcode
 	 * @return bool
 	 * @throws Exception
@@ -52,8 +53,6 @@ class administrator extends user {
 		$res = $query->execute();
 		if (!$res) {
 			printf("Error message: %s\n", $mysqli->error);
-
-			echo "Error in inserting the new User";
 			return false;
 		}
 
@@ -69,7 +68,6 @@ class administrator extends user {
 			$IDinsertedUser = $row['ID'];
 			//echo "ID after Insert: ".$IDinsertedUser;
 		} else {
-			echo "Unable to retrieve User ID";
 			return false;
 		}
 		$tempzero = 0;

@@ -34,14 +34,16 @@ class administratorTest extends TestCase
         $res = $admin->register_new_user($user_name,$user_surname,$user_email,$user_usergroup,$user_cf);
         $this->assertTrue($res,$this->printErrorMessage("test_register_new_user_officer","wrong returned value"));
 
+        $query = "SELECT u.ID 
+                  FROM Officer p, User u 
+                  WHERE p.UserID = u.ID AND u.Name = 'Ned' AND u.Surname = 'Stak' AND u.Email = 'king@inthe.grave';";
 
-        $conn = TestsConnectMySQL();
-        $query = "SELECT * 
-                  FROM Offier p, User u 
-                  WHERE p.UserID = u.ID AND u.Name = 'Ned' AND u.Surname = 'Stark' AND u.Email = 'king@inthe.grave';";
-        $res = $conn->query($query);
-        $this->assertEquals(1,$res->fetch_row(),$this->printErrorMessage("test_register_new_user_officer","there are no new entries in the teacher table."));
-        $res->close();
+        $ID = perform_SELECT_return_single_value($query);
+
+        printf($ID);
+
+        $this->assertNotNull($ID,$this->printErrorMessage("test_register_new_user_officer","there are no new entries in the teacher table."));
+
     }
 
     public function test_register_new_user_teacher(){
@@ -55,21 +57,21 @@ class administratorTest extends TestCase
         $this->assertTrue($res,$this->printErrorMessage("test_register_new_user_teacher","wrong returned value"));
 
 
-        $conn = TestsConnectMySQL();
-        $query = "SELECT * 
+
+        $query = "SELECT u.ID
                   FROM Teacher p, User u 
                   WHERE p.UserID = u.ID AND u.Name = 'Jamie' AND u.Surname = 'Lannister' AND u.Email = 'king@slay.er';";
-        $res = $conn->query($query);
-        $this->assertEquals(1,$res->fetch_row(),$this->printErrorMessage("test_register_new_user_teacher","there are no new entries in the teacher table."));
-        $res->close();
+       $ID = perform_SELECT_return_single_value($query);
+        $this->assertNotNull($ID,$this->printErrorMessage("test_register_new_user_teacher","there are no new entries in the teacher table."));
+
     }
 
     public function test_register_new_user_BOUNDARY(){
         $admin = new administrator();
-        $user_cf = "GPYFWK45H15B778Y";
+        $user_cf = "YPBDDN86C62G482B";
         $user_name = "Jon";
         $user_surname = "Snow";
-        $user_usergroup = "parent";
+        $user_usergroup = "teacher";
         $user_email = "king@inthe.north";
         $res = $admin->register_new_user($user_name,$user_surname,null,$user_usergroup,$user_cf);
         $this->assertFalse($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
@@ -86,8 +88,8 @@ class administratorTest extends TestCase
         $res = $admin->register_new_user($user_name,$user_surname,$user_email,$user_usergroup,null);
         $this->assertFalse($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
 
-        $res = $admin->register_new_user($user_name,$user_surname,$user_email,$user_usergroup,$user_cf);
-        $this->assertTrue($res,$this->printErrorMessage("test_register_new_user","wrong returned value"));
+		$res = $admin->register_new_user($user_name,$user_surname,$user_email,$user_usergroup,$user_cf);
+		$this->assertTrue($res,$this->printErrorMessage("test_register_new_user_teacher","wrong returned value"));
     }
 
 }
