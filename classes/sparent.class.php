@@ -342,7 +342,7 @@ class sparent extends user {
 						AND nr.StudentID=s.ID
 						AND t.UserID=u.ID
 						AND nr.Seen = 0
-						and s.ID IN (SELECT StudentID FROM parent WHERE UserID = ?);";
+						and s.ID IN (SELECT StudentID FROM Parent WHERE UserID = ?);";
 		} else if ($childID > 0) {
 			$sql = "SELECT u.Name as teacherName, u.Surname as teacherSurname, Date, Description, s.Name as studentName , s.Surname as studentSurname, nr.ID as NoteID
 						FROM Note n, NoteRecord nr,Student s, Teacher t, User u
