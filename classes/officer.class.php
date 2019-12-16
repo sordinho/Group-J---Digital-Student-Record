@@ -347,7 +347,6 @@ class officer extends user
         return $IDs;
     }
 
-
     /**
      * @param $classID
      * @param $timetable [$giorno][$hour]
