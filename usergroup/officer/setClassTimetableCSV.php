@@ -42,7 +42,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
             $timetable_info = array();
             if($classID!=-1) { // se ho trovato una classe con quell'anno e quella sezione
                 $topic_teacher_info = $officer->get_teacher_topic($classID); //prendo tutte le info di professori-topic per quella classe
-                if(exists_timetable($classID)){
+                if($officer->exists_timetable($classID)){
                     $action="update";
                 } else {
                     $action="insert";
@@ -70,18 +70,18 @@ if ( isset($_POST) && isset($_FILES["file"])) {
                         $timetable_info[$dayid][$j]=$str; //metto str nella matrice
                     else{
                         $classID=-1; //todo : cosa succede se non esiste quella materia per quella classe? al momento semplicemente ignoro il resto
-                                    //  della timetable e non la carico... da modificare
+                                     //       della timetable e non la carico... da modificare
                         break;
                     }
                 }
             }
             $day_n--; //decremento il contatore
-            if($day_n == 0 && $classID!= -1){ //todo scommentare quando la funzione c'è
-                //$res = $officer->set_timetable_class($classID,$timetable_info);
-                //if(!$res){
-                //    header("Location: uploadCSVParentCredentials.php?operation_result=-1");
-                //    exit();
-                //}
+            if($day_n == 0 && $classID!= -1){
+                $res = $officer->set_timetable_class($timetable_info,$classID);
+                if(!$res){
+                    header("Location: uploadCSVParentCredentials.php?operation_result=-1");
+                    exit();
+                }
             }
         }else{
             die("An error occurred in csv parsing");
