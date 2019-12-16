@@ -347,22 +347,49 @@ class officer extends user
         return $IDs;
     }
 
-
     /**
+     * given $classID the timetable associated
      * @param $classID
-     * @param $timetable [$giorno][$hour]
      * @return bool
      */
-    public function upload_timetable_by_csv($classID, $timetable)
+    public function delete_timetable($classID)
     {
-        // 5 righe (5 giorni ) x 6 ore
-        // in ogni casella teacherID_topicID
-        return true;
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("DELETE FROM Timetables WHERE SpecificClassID = ?");
+        $stmt->bind_param("i", $classID);
+        if (!$stmt->execute()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * BEWARE: this function call delete_timetable in case the timetable is not complete in the database
+     * @param $classID+
+     * @return bool
+     */
+    public function exists_timetable($classID)
+    {
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT COUNT(*)
+                                    FROM Timetables
+                                    WHERE SpecificClassID = ?");
+        $stmt->bind_param('i', $classID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($res != 30) {
+            $this->delete_timetable($classID);
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
      * topicID|teacherID|insert
-     * @param $data
+     * @param $data è una matrice che ha per ogni giorno e per ogni ora: topicID|teacherID|insert
      * @return bool
      */
     public function set_timetable_class($data, $classID)
