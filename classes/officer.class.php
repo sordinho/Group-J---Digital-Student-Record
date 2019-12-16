@@ -41,7 +41,13 @@ class officer extends user
         $stmt->bind_param('ssdsi', $student_info["name"], $student_info["surname"], $student_info['avgLastSchool'], $student_info["CF"], $classID);
         return $stmt->execute();
     }
-
+    /*
+     * Given a year and a section returns the classID
+     * @param year int
+     *        select string
+     * @return -1 --> class does not exists
+     *          id--> classID
+     * */
     public function get_classID_from_yearSection($year,$section){
         if(!isset($year)|| !isset($section)){
             return -1;
