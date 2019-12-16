@@ -357,6 +357,11 @@ class officer extends user
     {
         // 5 righe (5 giorni ) x 6 ore
         // in ogni casella teacherID_topicID
+        for ($i = 0; $i < calendar::get_day_per_school_week(); $i++) {
+            for ($j = 0; $j < calendar::get_hour_per_school_day(); $j++) {
+
+            }
+        }
         return true;
     }
 
