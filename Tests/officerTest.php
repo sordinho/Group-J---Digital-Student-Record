@@ -178,7 +178,26 @@ class officerTest extends TestCase {
 	}
 
 	public function testGetTimetableClass(){
+		$_SESSION['officerID'] = 1;
+		$off1 = new officer();
+		$classID = 1;
 
+		// Wrong class ID
+		$this->assertEquals(0, $off1->get_timetable_by_class(-1));
+
+		// Null class ID
+		$this->assertEquals(0, $off1->get_timetable_by_class(null));
+
+		// Empty timetable
+		$this->assertEquals(0, sizeof($off1->get_timetable_by_class($classID)));
+
+		// Insert valid timetable
+		$fakePostData = "1|1|insert";
+		$timetable = $this->generateAndFillTimetableMatrix($fakePostData);
+		$this->assertTrue($off1->set_timetable_class($timetable,$classID));
+
+		// Get all the timetable
+		$this->assertEquals(30, sizeof($off1->get_timetable_by_class($classID)));
 	}
 
 	/**
