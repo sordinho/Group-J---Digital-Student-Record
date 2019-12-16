@@ -23,7 +23,6 @@ if (!empty($_POST)) {
             $idx = 'select'.$hour.$day;
             $teacher_hour_day[$hour][$day] = $_POST[$idx];
         }
-
     }
 
     /*$teacher_hour_day['hours'][0] = array();

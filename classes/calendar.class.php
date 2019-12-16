@@ -74,6 +74,11 @@ class calendar
         return 6; // aka hours_per_school_day
     }
 
+    public static function get_days_per_school_week()
+    {
+        return 5; // aka days_per_school_week
+    }
+
     /**
      * Convert a timestamp into a defined array
      *

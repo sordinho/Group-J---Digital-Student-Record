@@ -28,8 +28,8 @@ class officer extends user
         }
 
         //check fiscal code
-        if(!$this->check_fiscal_code($si['CF']))
-        	return false;
+        if (!$this->check_fiscal_code($si['CF']))
+            return false;
 
         $classID = -1;
         // immetricolation info inserted also now?
@@ -41,6 +41,7 @@ class officer extends user
         $stmt->bind_param('ssdsi', $student_info["name"], $student_info["surname"], $student_info['avgLastSchool'], $student_info["CF"], $classID);
         return $stmt->execute();
     }
+
     /*
      * Given a year and a section returns the classID
      * @param year int
@@ -48,19 +49,21 @@ class officer extends user
      * @return -1 --> class does not exists
      *          id--> classID
      * */
-    public function get_classID_from_yearSection($year,$section){
-        if(!isset($year)|| !isset($section)){
+    public function get_classID_from_yearSection($year, $section)
+    {
+        if (!isset($year) || !isset($section)) {
             return -1;
         }
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT ID FROM SpecificClass WHERE YearClassID = ? AND Section = ?;");
-        if(!$stmt) return -1;
-        $stmt->bind_param("is",$year,$section);
+        if (!$stmt) return -1;
+        $stmt->bind_param("is", $year, $section);
         $stmt->execute();
         $res = $stmt->get_result();
-        if($res->num_rows<=0) return -1;
+        if ($res->num_rows <= 0) return -1;
         return $res->fetch_row()[0];
     }
+
     /*
      * register a new parent in the user table.
      *
@@ -316,14 +319,15 @@ class officer extends user
         $IDs = array();
         for ($i = 0; $i < $res->num_rows; $i++) {
             $row = $res->fetch_assoc();
-            $stamp=$row["YearClassID"]."°".$row["Section"];
+            $stamp = $row["YearClassID"] . "°" . $row["Section"];
             array_push($IDs, $row);
         }
         $res->close();
         return $stamp;
     }
 
-	public function get_teacher_topic($classID){
+    public function get_teacher_topic($classID)
+    {
 
         $conn = $this->connectMySQL();
 
@@ -343,40 +347,51 @@ class officer extends user
         return $IDs;
     }
 
-    public function upload_timetable_by_csv() {
 
+    /**
+     * @param $classID
+     * @param $timetable [$giorno][$hour]
+     * @return bool
+     */
+    public function upload_timetable_by_csv($classID, $timetable)
+    {
+        // 5 righe (5 giorni ) x 6 ore
+        // in ogni casella teacherID_topicID
+        return true;
     }
 
     /**
+     * topicID|teacherID|insert
      * @param $data
      * @return bool
      */
-    public function setTimeTableClass($data){
-        $tt = $data;
-        /*if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
+    public function setTimeTableClass($data)
+    {
+        if (!(isset($data["hours"]) && isset($data["classID"]))) {
             return false;
         }
 
         $conn = $this->connectMySQL();
         //user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
-        for($i=0;$i<5;$i++){
-            for($j=0;$j<6;$j++){
-                $pieces = explode("_", $tt["hours"][$i][$j]);
+        for ($i = 0; $i < calendar::get_day_per_school_week(); $i++) {
+            for ($j = 0; $j < calendar::get_hour_per_school_day(); $j++) {
+                $pieces = explode("_", $data["hours"][$i][$j]);
                 $stmt = $conn->prepare("INSERT INTO Timetables (TeacherID, TopicID, SpecificClassID,HourSlot,DayOfWeek) VALUES (?,?,?,?,?);");
-                $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $tt["classID"], $j, $i);
-                if(!$stmt->execute()){
+                $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $data["classID"], $j, $i);
+                if (!$stmt->execute()) {
                     return false;
                 }
             }
-            $j=0;
-        }*/
+            $j = 0;
+        }
         return true;
     }
 
-    public function get_timetable_by_class($classID) {
+    public function get_timetable_by_class($classID)
+    {
         $officerID = $this->get_officer_ID();
         $timetable = array();
-        if (!isset($classID)||$classID==-1) {
+        if (!isset($classID) || $classID == -1) {
             return 0; // no class
         } elseif ($officerID != -1) {
             $conn = $this->connectMySql();
@@ -396,7 +411,7 @@ class officer extends user
             /*
              * there are already some occupied hour slots for the given class
              */
-            if ($res->num_rows>0) {
+            if ($res->num_rows > 0) {
                 while ($row = $res->fetch_assoc()) {
                     /*
                      * append to each hour slot teacher surname and topic name
@@ -408,7 +423,7 @@ class officer extends user
                                                     AND t.ID=?
                                                     AND tc.ID=?
                                                     ");
-                    $stmt1->bind_param('iii', $classID,$row['TeacherID'],$row['TopicID']);
+                    $stmt1->bind_param('iii', $classID, $row['TeacherID'], $row['TopicID']);
 
                     /*
                      * get the remaining topics not present in that hour slot
@@ -427,7 +442,7 @@ class officer extends user
                                                         AND HourSlot = ?
                                                         AND DayOfWeek = ?
                                                     )");
-                    $stmt2->bind_param("iiiii",$classID,$classID,$row['TopicID'],$row['HourSlot'],$row['DayOfWeek']);
+                    $stmt2->bind_param("iiiii", $classID, $classID, $row['TopicID'], $row['HourSlot'], $row['DayOfWeek']);
                     if (!$stmt1->execute()) {
                         return -1; // failed
                     }
@@ -440,7 +455,7 @@ class officer extends user
                      * teacher and topic information must be stored in a single row
                      * every class must have more than one topic
                      */
-                    if ($res1->num_rows==1 && $res2->num_rows>0) {
+                    if ($res1->num_rows == 1 && $res2->num_rows > 0) {
                         $info = $res1->fetch_assoc();
                         $row['TeacherName'] = $info['TeacherName'];
                         $row['TeacherSurname'] = $info['TeacherSurname'];
@@ -466,37 +481,37 @@ class officer extends user
         return -2; // not logged in
     }
 
-	/**
-	 * @param $title : title of the communication
-	 * @param $description : body of the communication
-	 * @return int :	-4 -> empty description
-	 * 					-3 -> empty title
-	 * 					-2 -> error in query
-	 * 					-1 -> not logged in
-	 * 					0  -> empty communication
-	 * 					1  -> success
-	 */
-	public function publish_communication($title, $description)
-	{
-		$officerID = $this->get_officer_ID();
-		if ($title==="" && $description==="") {
-			return 0; // empty communication
-		} elseif ($title==="") {
-			return -3; // empty title
-		} elseif ($description==="") {
-			return -4; // empty description
-		} elseif ($officerID != -1) {
-			$conn = $this->connectMySql();
-			$stmt = $conn->prepare("INSERT INTO Communication (Title, Description, OfficerID) VALUES (?, ?, ?)");
-			$stmt->bind_param('ssi', $title, $description, $officerID);
-			if (!$stmt->execute()) {
-				return -2; // failed insertion
-			}
-			return 1; // successfully insertion
-		}
+    /**
+     * @param $title : title of the communication
+     * @param $description : body of the communication
+     * @return int :    -4 -> empty description
+     *                    -3 -> empty title
+     *                    -2 -> error in query
+     *                    -1 -> not logged in
+     *                    0  -> empty communication
+     *                    1  -> success
+     */
+    public function publish_communication($title, $description)
+    {
+        $officerID = $this->get_officer_ID();
+        if ($title === "" && $description === "") {
+            return 0; // empty communication
+        } elseif ($title === "") {
+            return -3; // empty title
+        } elseif ($description === "") {
+            return -4; // empty description
+        } elseif ($officerID != -1) {
+            $conn = $this->connectMySql();
+            $stmt = $conn->prepare("INSERT INTO Communication (Title, Description, OfficerID) VALUES (?, ?, ?)");
+            $stmt->bind_param('ssi', $title, $description, $officerID);
+            if (!$stmt->execute()) {
+                return -2; // failed insertion
+            }
+            return 1; // successfully insertion
+        }
 
-		return -1; // not logged in
-	}
+        return -1; // not logged in
+    }
 
 
 }
