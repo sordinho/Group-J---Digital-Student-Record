@@ -396,43 +396,82 @@ class officer extends user
      */
     public function set_timetable_class($data, $classID)
     {
+        if(!$this->check_weekly_hours($data,$classID)){
+            return false;
+        }
         if (!(isset($data) && isset($classID))) {
             return false;
         }
         $hourSlot=0;
         $day=0;
+        $skip=false;
         $conn = $this->connectMySQL();
-        for ($day = 0; $day < calendar::get_days_per_school_week(); $day++) {
-            for ($hourSlot = 0; $hourSlot < calendar::get_hours_per_school_day(); $hourSlot++) {
-                $pieces = explode("|", $data[$hourSlot][$day]);
-                if($pieces[2]=="update"){
+        foreach ($data as $hours) {
+            foreach ($hours as $hourOfDay) {
+                $pieces = explode("|", $hourOfDay);
+                //TODO Verificare per ogni materia che sia rispettato il numero di ore
+                //TODO insert nuovo campo nothing per le ore buche
+                if ($pieces[2] == "update") {
                     // update nel DB
                     $stmt = $conn->prepare("UPDATE Timetables SET TeacherID = ?, TopicID = ?
                                                     WHERE SpecificClassID = ?
                                                     AND DayOfWeek = ? 
                                                     AND HourSlot = ?;");
-                    $stmt->bind_param('iiiii',intval($pieces[1]),intval($pieces[0]), $classID, $day, $hourSlot);
-                    echo "Update";
-                } else if ($pieces[2]=="insert"){
+                    $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $classID, $day, $hourSlot);
+                } else if ($pieces[2] == "insert") {
                     // insert nel DB
                     $stmt = $conn->prepare("INSERT INTO Timetables (TeacherID, TopicID, SpecificClassID,HourSlot,DayOfWeek) VALUES (?,?,?,?,?);");
-                    echo "Dati:  TeacherID: ".$pieces[1]."  TopicID: ".$pieces[0]."  SpecificClassID: ".$classID."  HourSlot: ".($hourSlot+1)."  DayOfWeek: ".($day+1);
-                    $par1=intval($pieces[1]);
-                    $par2=intval($pieces[0]);
-                    $par4=intval($hourSlot);
-                    $par5=intval($day);
-
+                    $par1 = intval($pieces[1]);
+                    $par2 = intval($pieces[0]);
+                    $par4 = intval($hourSlot);
+                    $par5 = intval($day);
                     $stmt->bind_param('iiiii', $par1, $par2, $classID, $par4, $par5);
-                    echo "Insert";
+                }else if($pieces[2] == "nothing"){
+                    $skip=true;
                 }else{
-                    echo "Errore1";
                     return false;
                 }
-                if (!$stmt->execute()) {
+                if (!$stmt->execute() && !$skip) {
+                    return false;
+                }
+                $day++;
+            }
+            $day=0;
+            $hourSlot++;
+        }
+        return true;
+    }
+
+    /**
+     * @param $data
+     * @param $classID
+     * @return bool
+     * Function that checks if the hours are correct for the timetables given by institute
+     */
+    public function check_weekly_hours($data,$classID){
+
+        if (!(isset($data) && isset($classID))) {
+            return false;
+        }
+
+        $conn = $this->connectMySQL();
+
+        $stmt = $conn->query("SELECT TopicID,Hours 
+                                        FROM YearTopicHour y,SpecificClass s
+                                        WHERE y.YearClassID=s.YearClassID AND s.ID=$classID");
+        while ($row=$stmt->fetch_assoc()) {
+            $hoursForTopic[$row['TopicID']] = $row['Hours'];
+        }
+
+        foreach ($data as $hours) {
+            foreach ($hours as $hourOfDay) {
+                $pieces = explode("|", $hourOfDay);
+                if($pieces[2]!="nothing")
+                    $hoursForTopic[$pieces[0]]--;
+                if($hoursForTopic[$pieces[0]]<0){
                     return false;
                 }
             }
-            $j = 0;
         }
         return true;
     }

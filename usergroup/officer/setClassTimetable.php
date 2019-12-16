@@ -63,7 +63,7 @@ else if (isset($_GET['classID'])) {
                     $optionList .= "<option value=\"$topicID|$teacherID|update\">$topicName - $teacherSurname</option>";
                 }
             } else {
-                $optionList .= "<option selected>Choose a topic</option>";
+                $optionList .= "<option value=\"0|0|nothing\" selected>Choose a topic</option>";
                 $topics = $officer->get_teacher_topic($_GET['classID']);
                 foreach ($topics as $topic) {
                     $topicID = $topic['TopicID'];
