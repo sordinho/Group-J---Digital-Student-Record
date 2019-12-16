@@ -22,8 +22,12 @@ class user {
 		return $mysqli;
 	}
 
+	/**
+	 * Get DB table name from a givn usergroup
+	 * @param $usergroup : usergroup name [parent, teacher, officer, ...]
+	 * @return bool|string
+	 */
 	function get_user_group_table_name($usergroup) {
-		$table_name = false;
 		switch ($usergroup) {
 			case "parent":
 				$table_name = "Parent";
@@ -148,38 +152,61 @@ class user {
 	 *            SETTERS
 	 ***********************************/
 
-	// set login
+	/**
+	 * Set user id in session. => user is logged in
+	 * @param $id_user : user_id this is ID from User table
+	 */
 	protected function set_logged($id_user) {
 		$_SESSION['id'] = $id_user;
 		return;
 	}
 
+	/**
+	 * Set a user as administrator in session
+	 */
 	protected function set_admin() {
 		$_SESSION['admin'] = true;
 	}
 
-	//Memorizza nelle sessioni lo username
+	/**
+	 * Save username in session
+	 * @param $username
+	 */
 	protected function set_username($username) {
 		$_SESSION['username'] = $username;
 		return;
 	}
 
+	/**
+	 * Save usergroup in session
+	 * @param $usergroup
+	 */
 	protected function set_usergroup($usergroup) {
 		$_SESSION['usergroup'] = $usergroup;
 		return;
 	}
 
-	// Save name for gui?
+	/**
+	 * Save first name of the user in session
+	 * @param $name
+	 */
 	protected function set_name($name) {
 		$_SESSION['name'] = ucfirst($name);
 		return;
 	}
 
-	// Save surname for GUI
+	/**
+	 * Save last name of the user in session
+	 * @param $surname
+	 */
 	protected function set_surname($surname) {
 		$_SESSION['surname'] = $surname;
 	}
 
+	/**
+	 * Save in session the base of the url for a user
+	 * @param $baseUrl : Ex: "/usergroup/teacher/"
+	 */
 	protected function set_base_url($baseUrl) {
 		$_SESSION['base_url'] = $baseUrl;
 		return;
@@ -189,33 +216,60 @@ class user {
 	 *             GETTERS
 	 ***********************************/
 
-	// verifica login
+
+	/**
+	 * Check if a user is logged in by checking if set ID in session
+	 * @return bool
+	 */
 	public function is_logged() {
 		return isset($_SESSION['id']);
 	}
 
 
-	//Restituisce la mail memorizzata nelle sessioni
+	/**
+	 * Get username from session
+	 * @return mixed|string
+	 */
 	public function get_username() {
 		return isset($_SESSION['username']) ? $_SESSION['username'] : '';
 	}
 
+	/**
+	 * Get first name from session
+	 * @return mixed|string
+	 */
 	public function get_name() {
 		return isset($_SESSION['name']) ? $_SESSION['name'] : '';
 	}
 
+	/**
+	 * Get last name from session
+	 * @return mixed|string
+	 */
 	public function get_surname() {
 		return isset($_SESSION['surname']) ? $_SESSION['surname'] : '';
 	}
 
+	/**
+	 * Get usergroup from session
+	 * @return mixed|string
+	 */
 	public function get_usergroup() {
 		return isset($_SESSION['usergroup']) ? $_SESSION['usergroup'] : '';
 	}
 
+	/**
+	 * Get ID from session
+	 * @return int|mixed
+	 */
 	public function get_id() {
 		return isset($_SESSION['id']) ? $_SESSION['id'] : -1;
 	}
 
+	/**
+	 * Get base url from session
+	 * @return mixed|string
+	 */
 	public function get_base_url() {
 		return isset($_SESSION['base_url']) ? $_SESSION['base_url'] : '';
 	}
@@ -232,7 +286,10 @@ class user {
 		exit();
 	}
 
-	/*  Return the logout link */
+	/**
+	 * Get a logout link
+	 * @return string
+	 */
 	public function get_link_logout() {
 		if ($this->is_logged())
 			return '<a href="' . $this->Urls['logout_page'] . '" class="logout">Logout</a>';
@@ -265,13 +322,21 @@ class user {
 		return $str;
 	}
 
-	// Verify email syntax (TRUE if ok)
+	/**
+	 * Check if an email is a valid one according to the regex
+	 * @param $email
+	 * @return false|int
+	 */
 	public function is_email($email) {
 		$regex = '/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD';
 		return preg_match($regex, $email);
 	}
 
-	// Verify if constraints on password strength are satisfied
+	/**
+	 * Check if a password satisfy a length constraint
+	 * @param $password
+	 * @return bool
+	 */
 	public function is_secure_password($password) {
 		if (strlen($password) >= 5) {
 			return TRUE;

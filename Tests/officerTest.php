@@ -135,4 +135,58 @@ class officerTest extends TestCase {
 		// True values
 		$this->assertEquals(1, $off1->publish_communication("testTitle", "Test Description"));
 	}
+
+	public function testSetTimetableClass() {
+		$_SESSION['officerID'] = 1;
+		$off1 = new officer();
+
+		// Simulating POST data ====> topicID|teacherID|{insert,update}
+		$fakePostData = "null|null|null";
+		$classID = 1;
+
+		// All null values
+		$timetable = $this->generateAndFillTimetableMatrix($fakePostData);
+		$this->assertFalse($off1->set_timetable_class($timetable,null));
+
+		// Valid class ID null timetable
+		$this->assertFalse($off1->set_timetable_class($timetable,$classID));
+
+		// Null value on insert/update
+		$fakePostData = "1|1|null";
+		$timetable = $this->generateAndFillTimetableMatrix($fakePostData);
+		$this->assertFalse($off1->set_timetable_class($timetable,$classID));
+
+		// Null value on topicID
+		$fakePostData = "null|1|insert";
+		$timetable = $this->generateAndFillTimetableMatrix($fakePostData);
+		$this->assertFalse($off1->set_timetable_class($timetable,$classID));
+
+		// Null value on teacherID
+		$fakePostData = "1|null|insert";
+		$timetable = $this->generateAndFillTimetableMatrix($fakePostData);
+		$this->assertFalse($off1->set_timetable_class($timetable,$classID));
+
+		// Insert valid timetable
+		$fakePostData = "1|1|insert";
+		$timetable = $this->generateAndFillTimetableMatrix($fakePostData);
+		$this->assertTrue($off1->set_timetable_class($timetable,$classID));
+
+		// Update all timetable
+		$fakePostData = "8|6|update";
+		$timetable = $this->generateAndFillTimetableMatrix($fakePostData);
+		$this->assertTrue($off1->set_timetable_class($timetable,$classID));
+	}
+
+	/**
+	 * utility function for generating a matric containing fake post data for testing set timetable
+	 * @param $postData
+	 */
+	private function generateAndFillTimetableMatrix($postData){
+		for ($day = 0; $day < 5; $day++) {
+			$teacher_hour_day[$day] = array();
+			for ($hour= 0; $hour<6; $hour++){
+				$teacher_hour_day[$day][$hour] = $postData;
+			}
+		}
+	}
 }
