@@ -510,13 +510,11 @@ class officer extends user
                         $row['TeacherName'] = $info['TeacherName'];
                         $row['TeacherSurname'] = $info['TeacherSurname'];
                         $row['TopicName'] = $info['TopicName'];
-                        $row['action'] = 'update';
                         /*
                          *  on top of each hour slot must be the already inserted topic
                          */
                         $timetable[$row['HourSlot']][$row['DayOfWeek']][] = $row;
                         while ($row2 = $res2->fetch_assoc()) {
-                            $row2['action'] = 'insert';
                             $timetable[$row['HourSlot']][$row['DayOfWeek']][] = $row2;
                         }
                     } else {

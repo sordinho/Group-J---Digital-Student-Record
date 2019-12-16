@@ -60,8 +60,7 @@ else if (isset($_GET['classID'])) {
                     $topicName = $topic['TopicName'];
                     $teacherID = $topic['TeacherID'];
                     $teacherSurname = $topic['TeacherSurname'];
-                    $action = $topic['action'];
-                    $optionList .= "<option value=\"$topicID|$teacherID|$action\">$topicName - $teacherSurname</option>";
+                    $optionList .= "<option value=\"$topicID|$teacherID|update\">$topicName - $teacherSurname</option>";
                 }
             } else {
                 $optionList .= "<option selected>Choose a topic</option>";
@@ -71,7 +70,6 @@ else if (isset($_GET['classID'])) {
                     $topicName = $topic['TopicName'];
                     $teacherID = $topic['TeacherID'];
                     $teacherSurname = $topic['TeacherSurname'];
-                    $action = $topic['action'];
                     $optionList .= "<option value=\"$topicID|$teacherID|insert\">$topicName - $teacherSurname</option>";
                 }
             }
