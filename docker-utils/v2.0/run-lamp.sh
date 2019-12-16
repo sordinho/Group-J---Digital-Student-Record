@@ -34,7 +34,7 @@ cat << EOB
     
     ******************************************************
     *                                                    *
-    *    Docker image: groupJ/digital_student_record     *
+    *    Docker image: se2polito/team-j                  *
     *                                                    *
     ******************************************************
 
