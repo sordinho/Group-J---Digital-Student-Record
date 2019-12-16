@@ -42,6 +42,19 @@ class officer extends user
         return $stmt->execute();
     }
 
+    public function get_classID_from_yearSection($year,$section){
+        if(!isset($year)|| !isset($section)){
+            return -1;
+        }
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT ID FROM SpecificClass WHERE YearClassID = ? AND Section = ?;");
+        if(!$stmt) return -1;
+        $stmt->bind_param("is",$year,$section);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows<=0) return -1;
+        return $res->fetch_row()[0];
+    }
     /*
      * register a new parent in the user table.
      *
