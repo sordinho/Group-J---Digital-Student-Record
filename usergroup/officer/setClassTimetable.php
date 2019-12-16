@@ -1,6 +1,7 @@
 <?php
 
 require_once("../../config.php");
+require_once ("../../classes/calendar.class.php");
 
 $site = new csite();
 initialize_site($site);
@@ -26,7 +27,7 @@ if (!empty($_POST)) {
 
     }
 
-    if ($officer->setTimeTableClass($teacher_hour_day,$_SESSION['classID'])) {
+    if ($officer->set_timetable_class($teacher_hour_day,$_SESSION['classID'])) {
         $content = '
 			<div class="alert alert-success" role="warning">
 			Timetable saved correctly <a href="./setClassTimetable.php" class="alert-link">just click here!</a>
@@ -59,8 +60,7 @@ else if (isset($_GET['classID'])) {
                     $topicName = $topic['TopicName'];
                     $teacherID = $topic['TeacherID'];
                     $teacherSurname = $topic['TeacherSurname'];
-                    $action = $topic['action'];
-                    $optionList .= "<option value=\"$topicID|$teacherID|$action\">$topicName - $teacherSurname</option>";
+                    $optionList .= "<option value=\"$topicID|$teacherID|update\">$topicName - $teacherSurname</option>";
                 }
             } else {
                 $optionList .= "<option selected>Choose a topic</option>";
@@ -70,7 +70,6 @@ else if (isset($_GET['classID'])) {
                     $topicName = $topic['TopicName'];
                     $teacherID = $topic['TeacherID'];
                     $teacherSurname = $topic['TeacherSurname'];
-                    $action = $topic['action'];
                     $optionList .= "<option value=\"$topicID|$teacherID|insert\">$topicName - $teacherSurname</option>";
                 }
             }
@@ -347,7 +346,7 @@ else {
     $content = '<div class="card">
 
                 <h2 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
-                    Change class composition for:
+                    Change timetable of class:
                 </h2>
                 <div class="card-body  px-lg-5 pt-0 mt-md-5 ">';
     $content .=

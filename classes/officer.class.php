@@ -389,22 +389,45 @@ class officer extends user
 
     /**
      * topicID|teacherID|insert
+     * @param $data
+     * @param $classID
      * @param $data è una matrice che ha per ogni giorno e per ogni ora: topicID|teacherID|insert
      * @return bool
      */
     public function set_timetable_class($data, $classID)
     {
-        if (!(isset($data["hours"]) && isset($data["classID"]))) {
+        if (!(isset($data) && isset($classID))) {
             return false;
         }
-
+        $hourSlot=0;
+        $day=0;
         $conn = $this->connectMySQL();
-        //user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
-        for ($i = 0; $i < calendar::get_day_per_school_week(); $i++) {
-            for ($j = 0; $j < calendar::get_hour_per_school_day(); $j++) {
-                $pieces = explode("_", $data["hours"][$i][$j]);
-                $stmt = $conn->prepare("INSERT INTO Timetables (TeacherID, TopicID, SpecificClassID,HourSlot,DayOfWeek) VALUES (?,?,?,?,?);");
-                $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $data["classID"], $j, $i);
+        for ($day = 0; $day < calendar::get_days_per_school_week(); $day++) {
+            for ($hourSlot = 0; $hourSlot < calendar::get_hours_per_school_day(); $hourSlot++) {
+                $pieces = explode("|", $data[$hourSlot][$day]);
+                if($pieces[2]=="update"){
+                    // update nel DB
+                    $stmt = $conn->prepare("UPDATE Timetables SET TeacherID = ?, TopicID = ?
+                                                    WHERE SpecificClassID = ?
+                                                    AND DayOfWeek = ? 
+                                                    AND HourSlot = ?;");
+                    $stmt->bind_param('iiiii',intval($pieces[1]),intval($pieces[0]), $classID, $day, $hourSlot);
+                    echo "Update";
+                } else if ($pieces[2]=="insert"){
+                    // insert nel DB
+                    $stmt = $conn->prepare("INSERT INTO Timetables (TeacherID, TopicID, SpecificClassID,HourSlot,DayOfWeek) VALUES (?,?,?,?,?);");
+                    echo "Dati:  TeacherID: ".$pieces[1]."  TopicID: ".$pieces[0]."  SpecificClassID: ".$classID."  HourSlot: ".($hourSlot+1)."  DayOfWeek: ".($day+1);
+                    $par1=intval($pieces[1]);
+                    $par2=intval($pieces[0]);
+                    $par4=intval($hourSlot);
+                    $par5=intval($day);
+
+                    $stmt->bind_param('iiiii', $par1, $par2, $classID, $par4, $par5);
+                    echo "Insert";
+                }else{
+                    echo "Errore1";
+                    return false;
+                }
                 if (!$stmt->execute()) {
                     return false;
                 }
@@ -487,13 +510,11 @@ class officer extends user
                         $row['TeacherName'] = $info['TeacherName'];
                         $row['TeacherSurname'] = $info['TeacherSurname'];
                         $row['TopicName'] = $info['TopicName'];
-                        $row['action'] = 'update';
                         /*
                          *  on top of each hour slot must be the already inserted topic
                          */
                         $timetable[$row['HourSlot']][$row['DayOfWeek']][] = $row;
                         while ($row2 = $res2->fetch_assoc()) {
-                            $row2['action'] = 'insert';
                             $timetable[$row['HourSlot']][$row['DayOfWeek']][] = $row2;
                         }
                     } else {
