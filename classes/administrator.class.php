@@ -113,12 +113,19 @@ class administrator extends user {
 		return true;
 	}
 
-	// Check if user is an admin. Set at login with set_admin()
+	/**
+	 * Check if user is an admin. Set at login with set_admin()
+	 * @return bool|mixed true if session['admin'] is set. False else
+	 */
 	public function is_admin() {
 		return isset($_SESSION['admin']) ? $_SESSION['admin'] : false;
 	}
 
-	// Override of parent method, just check if was set admin in session
+	/**
+	 * Override of parent method, just check if was set admin in session
+	 * and if user is logged in
+	 * @return bool
+	 */
 	public function is_logged() {
 		$cond = parent::is_logged() && $this->is_admin();
 		return $cond;
