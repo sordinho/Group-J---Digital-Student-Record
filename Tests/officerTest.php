@@ -177,6 +177,10 @@ class officerTest extends TestCase {
 		$this->assertTrue($off1->set_timetable_class($timetable,$classID));
 	}
 
+	public function testGetTimetableClass(){
+
+	}
+
 	/**
 	 * utility function for generating a matric containing fake post data for testing set timetable
 	 * @param $postData
