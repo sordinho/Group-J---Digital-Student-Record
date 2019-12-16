@@ -365,6 +365,7 @@ class officer extends user
     }
 
     /**
+     * BEWARE: this function call delete_timetable in case the timetable is not complete in the database
      * @param $classID+
      * @return bool
      */
