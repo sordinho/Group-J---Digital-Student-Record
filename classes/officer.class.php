@@ -337,6 +337,14 @@ class officer extends user
         return $IDs;
     }
 
+    public function upload_timetable_by_csv() {
+
+    }
+
+    /**
+     * @param $data
+     * @return bool
+     */
     public function setTimeTableClass($data){
         $tt = $data;
         /*if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
