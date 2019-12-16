@@ -26,49 +26,7 @@ if (!empty($_POST)) {
 
     }
 
-    /*$teacher_hour_day['hours'][0] = array();
-    $teacher_hour_day['hours'][0][0]= $_POST['select00'];
-    $teacher_hour_day['hours'][0][1]= $_POST['select01'];
-    $teacher_hour_day['hours'][0][2]= $_POST['select02'];
-    $teacher_hour_day['hours'][0][3]= $_POST['select03'];
-    $teacher_hour_day['hours'][0][4]= $_POST['select04'];
-    $teacher_hour_day['hours'][0][5]= $_POST['select05'];
-
-    $teacher_hour_day['hours'][1] = array();
-    $teacher_hour_day['hours'][1][0]= $_POST['select10'];
-    $teacher_hour_day['hours'][1][1]= $_POST['select11'];
-    $teacher_hour_day['hours'][1][2]= $_POST['select12'];
-    $teacher_hour_day['hours'][1][3]= $_POST['select13'];
-    $teacher_hour_day['hours'][1][4]= $_POST['select14'];
-    $teacher_hour_day['hours'][1][5]= $_POST['select15'];
-
-    $teacher_hour_day['hours'][2] = array();
-    $teacher_hour_day['hours'][2][0]= $_POST['select20'];
-    $teacher_hour_day['hours'][2][1]= $_POST['select21'];
-    $teacher_hour_day['hours'][2][2]= $_POST['select22'];
-    $teacher_hour_day['hours'][2][3]= $_POST['select23'];
-    $teacher_hour_day['hours'][2][4]= $_POST['select24'];
-    $teacher_hour_day['hours'][2][5]= $_POST['select25'];
-
-    $teacher_hour_day['hours'][3] = array();
-    $teacher_hour_day['hours'][3][0]= $_POST['select30'];
-    $teacher_hour_day['hours'][3][1]= $_POST['select31'];
-    $teacher_hour_day['hours'][3][2]= $_POST['select32'];
-    $teacher_hour_day['hours'][3][3]= $_POST['select33'];
-    $teacher_hour_day['hours'][3][4]= $_POST['select34'];
-    $teacher_hour_day['hours'][3][5]= $_POST['select35'];
-
-    $teacher_hour_day['hours'][4] = array();
-    $teacher_hour_day['hours'][4][0]= $_POST['select40'];
-    $teacher_hour_day['hours'][4][1]= $_POST['select41'];
-    $teacher_hour_day['hours'][4][2]= $_POST['select42'];
-    $teacher_hour_day['hours'][4][3]= $_POST['select43'];
-    $teacher_hour_day['hours'][4][4]= $_POST['select44'];
-    $teacher_hour_day['hours'][4][5]= $_POST['select45'];*/
-
-    //$teacher_hour_day['classID']=$_SESSION['classID'];
-
-    if ($officer->setTimeTableClass($teacher_hour_day)) {
+    if ($officer->setTimeTableClass($teacher_hour_day,$_SESSION['classID'])) {
         $content = '
 			<div class="alert alert-success" role="warning">
 			Timetable saved correctly <a href="./setClassTimetable.php" class="alert-link">just click here!</a>

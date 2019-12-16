@@ -337,17 +337,22 @@ class officer extends user
         return $IDs;
     }
 
-    public function setTimeTableClass($data){
-        $tt = $data;
-        /*if (!(isset($tt["hours"]) && isset($tt["classID"]))) {
+    public function setTimeTableClass($teacher_hour_day,$classID){
+        $tt = $teacher_hour_day;
+        if (!(isset($tt["hours"]) && isset($classID))) {
             return false;
         }
+        //value="$topicID|$teacherID|$action"
 
         $conn = $this->connectMySQL();
         //user.Name, user.Surname, topic.Name, topic.ID, teacher.ID
         for($i=0;$i<5;$i++){
             for($j=0;$j<6;$j++){
-                $pieces = explode("_", $tt["hours"][$i][$j]);
+                $pieces = explode("|", $tt[$i][$j]);
+                //cercare se già inserita -> UPDATE
+
+
+                //se non ancora inserita -> INSERT
                 $stmt = $conn->prepare("INSERT INTO Timetables (TeacherID, TopicID, SpecificClassID,HourSlot,DayOfWeek) VALUES (?,?,?,?,?);");
                 $stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $tt["classID"], $j, $i);
                 if(!$stmt->execute()){
@@ -355,7 +360,7 @@ class officer extends user
                 }
             }
             $j=0;
-        }*/
+        }
         return true;
     }
 
