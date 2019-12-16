@@ -365,7 +365,7 @@ class officer extends user
      * @param $data
      * @return bool
      */
-    public function setTimeTableClass($data)
+    public function set_timetable_class($data)
     {
         if (!(isset($data["hours"]) && isset($data["classID"]))) {
             return false;

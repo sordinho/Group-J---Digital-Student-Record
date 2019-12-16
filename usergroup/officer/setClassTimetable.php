@@ -67,7 +67,7 @@ if (!empty($_POST)) {
 
     //$teacher_hour_day['classID']=$_SESSION['classID'];
 
-    if ($officer->setTimeTableClass($teacher_hour_day)) {
+    if ($officer->set_timetable_class($teacher_hour_day)) {
         $content = '
 			<div class="alert alert-success" role="warning">
 			Timetable saved correctly <a href="./setClassTimetable.php" class="alert-link">just click here!</a>
