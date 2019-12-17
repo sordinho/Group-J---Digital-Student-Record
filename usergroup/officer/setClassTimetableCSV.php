@@ -16,7 +16,7 @@ if(!$officer ->is_logged() ){
 
 if ( isset($_POST) && isset($_FILES["file"])) {
     //Check if there was an error uploading the file
-    if ($_FILES["file"]["error"] > 0 ||  $_FILES["file"]["type"] != 'text/csv') {
+    if ($_FILES["file"]["error"] > 0 /*||  $_FILES["file"]["type"] != 'text/csv'*/) {
         echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
         exit();
     }
@@ -38,7 +38,9 @@ if ( isset($_POST) && isset($_FILES["file"])) {
         if($day_n == 0){// the row should be a new class, so let's parse their info
             $year = $row[0];
             $section = $row[1];
+
             $classID = $officer->get_classID_from_yearSection($year,$section); // classID || -1
+
             $timetable_info = array();
             if($classID!=-1) { // se ho trovato una classe con quell'anno e quella sezione
                 $topic_teacher_info = $officer->get_teacher_topic($classID); //prendo tutte le info di professori-topic per quella classe
@@ -51,8 +53,8 @@ if ( isset($_POST) && isset($_FILES["file"])) {
             $day_n = 5; //inizializzo il contatore a 5
 
         } else if ($day_n > 0){ //se sto ancora parsificando i giorni della settimana per una data classe
-            if (sizeof($row) != 6)
-                die("You have an inconsistent csv file");
+            //if (sizeof($row) != 6)
+              //  die("You have an inconsistent csv file");
             if($classID != -1) { // se la classe esiste
                 $found = false;
                 $dayid = 5 - $day_n;//from 0 to 4
@@ -60,26 +62,39 @@ if ( isset($_POST) && isset($_FILES["file"])) {
                 $str = "";
                 for($j = 0; $j< 6 ; $j++){ // per ogni ora della settimana --> row[j] = nome della materia
                     $found = false;
-                    for($i = 0; $i< sizeof($topic_teacher_info)&&!$found;$i++){ //per ogni entry delle info su topic-teachers
-                        if($topic_teacher_info[$i]['TopicName'] == $row[$j]){ //se ho trovato quella materia allora ho anche il topicID e il teacher id
-                            $str = $topic_teacher_info[$i]['TopicID']."|".$topic_teacher_info[$i]['TeacherID']."|".$action; // riempio quello che andrà nella casella della matrice
-                            $found=true;
+                    if(isset($row[$j])) {
+                        for ($i = 0; $i < sizeof($topic_teacher_info) && !$found; $i++) { //per ogni entry delle info su topic-teachers
+                            if ($topic_teacher_info[$i]['TopicName'] == $row[$j]) { //se ho trovato quella materia allora ho anche il topicID e il teacher id
+                                $str = $topic_teacher_info[$i]['TopicID'] . "|" . $topic_teacher_info[$i]['TeacherID'] . "|" . $action; // riempio quello che andrà nella casella della matrice
+                                $found = true;
+                            }
                         }
-                    }
-                    if($found) //se ho trovato quella materia e ho riempito str
-                        $timetable_info[$dayid][$j]=$str; //metto str nella matrice
-                    else{
-                        $classID=-1; //todo : cosa succede se non esiste quella materia per quella classe? al momento semplicemente ignoro il resto
-                                     //       della timetable e non la carico... da modificare
-                        break;
+                        if ($found) { //se ho trovato quella materia e ho riempito str
+                            $timetable_info[$dayid][$j] = $str; //metto str nella matrice
+                        }
+                        else {
+                               // echo "$day_n $dayid $j ->".$row[$j];
+                               // exit();
+
+                            $classID = -1; //todo : cosa succede se non esiste quella materia per quella classe? al momento semplicemente ignoro il resto
+                            //       della timetable e non la carico... da modificare
+                            break;
+                        }
+                    } else{
+                        $timetable_info[$dayid][$j] = "0|0|nothing";
                     }
                 }
             }
+
             $day_n--; //decremento il contatore
+            //if($day_n == 0 ) {
+              //  echo "$day_n $classID";
+               // exit();
+            //}
             if($day_n == 0 && $classID!= -1){
                 $res = $officer->set_timetable_class($timetable_info,$classID);
                 if(!$res){
-                    header("Location: uploadCSVParentCredentials.php?operation_result=-1");
+                    header("Location: setClassTimetableCSV.php?operation_result=-1");
                     exit();
                 }
             }
@@ -87,7 +102,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
             die("An error occurred in csv parsing");
         }
     }
-    header("Location: uploadCSVParentCredentials.php?operation_result=1");
+    header("Location: setClassTimetableCSV.php?operation_result=1");
     exit();
 } else {
     if(isset($_GET['operation_result'])){
@@ -95,13 +110,13 @@ if ( isset($_POST) && isset($_FILES["file"])) {
             case 1:
                 $content.= '
                             <div class="alert alert-success" role="alert">
-                                Parent successfully uploaded. Go <a href="index.php" class="alert-link">back to your homepage.</a>
+                                Timetable successfully uploaded. Go <a href="index.php" class="alert-link">back to your homepage.</a>
                             </div>';
                 break;
             case 0:
                 $content.= '
                             <div class="alert alert-danger" role="alert">
-                                Error in uploading parent\'s master data. <a href="uploadCSVParentCredentials.php" class="alert-link">Retry </a> or <a href="../officer/index.php" class="alert-link">back to your homepage.</a>
+                                Error in uploading timetable\'s master data. <a href="setClassTimetableCSV.php" class="alert-link">Retry </a> or <a href="../officer/index.php" class="alert-link">back to your homepage.</a>
                             </div>';
 
                 break;
@@ -132,7 +147,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
             <div class="card-body px-lg-5 pt-0">
 
                 <!-- Form -->
-                <form class="text-center" style="color: #757575;" action="uploadCSVParentCredentials.php" enctype="multipart/form-data" method="post">
+                <form class="text-center" style="color: #757575;" action="setClassTimetableCSV.php" enctype="multipart/form-data" method="post">
                     <p class="card-body info-color white-text text-center py-4">CSV upload</p>
                     <div class="form-row">
                         <div class="col">

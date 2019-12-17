@@ -505,6 +505,7 @@ INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`
 (22, 7, 7, 2),
 (23, 8, 8, 2);
 
+
 -- --------------------------------------------------------
 
 --
