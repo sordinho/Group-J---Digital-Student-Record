@@ -472,6 +472,11 @@ class officer extends user
                 }
             }
         }
+
+        foreach ($hoursForTopic as $hour)
+            if($hour!=0)
+                return false;
+
         return true;
     }
 
