@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 17, 2019 alle 10:38
+-- Creato il: Dic 17, 2019 alle 11:24
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -410,7 +410,8 @@ INSERT INTO `Timetables` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`, `DayO
 (113, 5, 5, 1, 1, 4),
 (114, 6, 6, 1, 2, 4),
 (115, 8, 8, 1, 3, 4),
-(119, 8, 8, 1, 2, 5);
+(119, 8, 8, 1, 2, 5),
+(121, 3, 3, 1, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -504,7 +505,6 @@ INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`
 (21, 6, 6, 2),
 (22, 7, 7, 2),
 (23, 8, 8, 2);
-
 
 -- --------------------------------------------------------
 
@@ -783,7 +783,7 @@ ALTER TABLE `YearTopicHour`
 -- AUTO_INCREMENT per la tabella `Communication`
 --
 ALTER TABLE `Communication`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT per la tabella `Homework`
 --
@@ -838,7 +838,7 @@ ALTER TABLE `Teacher`
 -- AUTO_INCREMENT per la tabella `Timetables`
 --
 ALTER TABLE `Timetables`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --
