@@ -110,6 +110,7 @@ CREATE TABLE `TopicRecord` (
 			$stmt->bind_param('ii', $teacherID, $selectedClass);
 
 		} else {
+		    // TODO fix duplicates, ``SELECT DISTINCT...`` temp workaround
 			$stmt = $conn->prepare("SELECT DISTINCT tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription 
                                             FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t 
                                             WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? ");
