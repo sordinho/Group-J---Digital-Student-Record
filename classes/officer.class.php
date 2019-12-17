@@ -366,7 +366,7 @@ class officer extends user
 
     /**
      * BEWARE: this function call delete_timetable in case the timetable is not complete in the database
-     * @param $classID+
+     * @param $classID
      * @return bool
      */
     public function exists_timetable($classID)
@@ -388,14 +388,13 @@ class officer extends user
     }
 
     /**
-     * topicID|teacherID|insert
-     * @param $data
      * @param $classID
      * @param $data è una matrice che ha per ogni giorno e per ogni ora: topicID|teacherID|insert
      * @return bool
      */
     public function set_timetable_class($data, $classID)
     {
+        //if hours not correct (based on weekly hours for topic) won't touch the DB
         if(!$this->check_weekly_hours($data,$classID)){
             return false;
         }

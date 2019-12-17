@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 15, 2019 alle 13:15
+-- Creato il: Dic 17, 2019 alle 09:57
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -41,7 +41,8 @@ CREATE TABLE `Communication` (
 INSERT INTO `Communication` (`ID`, `Title`, `Description`, `Timestamp`, `OfficerID`) VALUES
 (1, 'Christmas holidays', 'All lectures are suspended from 20/12/2019 until 07/01/2020', '2019-12-09 16:34:14', 1),
 (2, 'All labs will be closed', 'The access to all laboratories will be restored on 10/01/2020', '2019-12-09 17:34:14', 2),
-(3, 'Lecture suspended', 'All lectures are suspended on 11/12/2019', '2019-12-09 16:35:07', 1);
+(3, 'Lecture suspended', 'All lectures are suspended on 11/12/2019', '2019-12-09 16:35:07', 1),
+(4, 'Sprint demo', 'A demo for the third sprint will be perfomed on 17/12/2019', '2019-12-16 12:18:28', 1);
 
 -- --------------------------------------------------------
 
@@ -153,7 +154,12 @@ CREATE TABLE `Note` (
 
 INSERT INTO `Note` (`ID`, `TeacherID`, `SpecificClassID`, `Date`, `Description`) VALUES
 (1, 1, 1, '2019-12-09 23:00:00', 'note1'),
-(4, 1, 1, '2019-12-09 23:00:00', 'Di Leo and Riba talk during lesson');
+(4, 1, 1, '2019-12-09 23:00:00', 'Di Leo and Riba talk during lesson'),
+(5, 1, 1, '2019-12-12 23:00:00', 'Student talks with classmates'),
+(6, 1, 1, '2019-12-09 23:00:00', 'Di Leo is doing E2E testing with his teammates'),
+(7, 7, 2, '2019-12-08 23:00:00', 'Dries plays football during the lecture'),
+(8, 7, 3, '2019-12-12 23:00:00', 'dries mertens plays with nintendo switch during the lecture'),
+(9, 1, 1, '2019-12-15 23:00:00', 'Di Leo and Sordi note');
 
 -- --------------------------------------------------------
 
@@ -173,10 +179,20 @@ CREATE TABLE `NoteRecord` (
 --
 
 INSERT INTO `NoteRecord` (`ID`, `StudentID`, `NoteID`, `Seen`) VALUES
-(1, 2, 1, 0),
+(1, 2, 1, 1),
 (2, 6, 1, 0),
-(3, 2, 4, 0),
-(4, 5, 4, 0);
+(3, 2, 4, 1),
+(4, 5, 4, 0),
+(5, 4, 5, 1),
+(6, 2, 6, 1),
+(7, 6, 6, 0),
+(8, 3, 6, 0),
+(9, 5, 6, 0),
+(10, 8, 6, 0),
+(11, 4, 6, 1),
+(12, 13, 8, 0),
+(13, 2, 9, 1),
+(14, 4, 9, 1);
 
 -- --------------------------------------------------------
 
@@ -205,7 +221,20 @@ INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `L
 (13, 3, 1, '2019-12-02', 1, 6),
 (14, 2, 1, '2019-12-02', 1, 6),
 (15, 5, 1, '2019-12-02', 0, 0),
-(16, 4, 1, '2019-12-02', 0, 0);
+(16, 4, 1, '2019-12-02', 0, 0),
+(19, 2, 1, '2019-12-12', 0, 4),
+(20, 6, 1, '2019-12-12', 1, 6),
+(21, 2, 1, '2019-12-12', 0, 4),
+(22, 4, 1, '2019-12-13', 0, 4),
+(23, 4, 1, '2019-12-12', 0, 0),
+(24, 2, 1, '2019-12-12', 0, 4),
+(25, 6, 1, '2019-12-11', 0, 0),
+(26, 1, 1, '2019-12-11', 0, 2),
+(27, 5, 1, '2019-12-11', 0, 4),
+(28, 3, 1, '2019-12-11', 1, 6),
+(29, 5, 1, '2019-12-16', 1, 6),
+(30, 2, 1, '2019-12-16', 0, 0),
+(31, 1, 1, '2019-12-16', 0, 4);
 
 -- --------------------------------------------------------
 
@@ -413,7 +442,9 @@ INSERT INTO `Topic` (`ID`, `Name`, `Description`) VALUES
 (5, 'Geography', 'Subject Description 5'),
 (6, 'Art', 'Subject Description 6'),
 (7, 'Music', 'Subject Description 7'),
-(8, 'Literature', 'Subject Description 8');
+(8, 'Literature', 'Subject Description 8'),
+(9, 'Physical Education', 'Subject Description 9'),
+(10, 'Philosophy', 'Subject Description 10');
 
 -- --------------------------------------------------------
 
@@ -466,7 +497,14 @@ INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`
 (3, 3, 1, 3),
 (4, 7, 4, 3),
 (5, 1, 2, 1),
-(6, 7, 3, 2);
+(6, 7, 3, 2),
+(7, 2, 2, 1),
+(8, 3, 3, 1),
+(10, 4, 4, 1),
+(11, 5, 5, 1),
+(12, 6, 6, 1),
+(13, 7, 7, 1),
+(14, 8, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -489,7 +527,9 @@ CREATE TABLE `UploadedClassDocuments` (
 --
 
 INSERT INTO `UploadedClassDocuments` (`ID`, `FileName`, `DiskFileName`, `SpecificClassID`, `Description`, `Date`, `SubjectID`) VALUES
-(2, 'LaTazza.pdf', '86329158974b8aee362961df76c41e26_LaTazza.pdf', 1, 'TestDB1', '2019-12-10 15:50:09', 1);
+(3, 'emailSec.pdf', '8290566acbb0d5e1388dc6008275431a_emailSec.pdf', 1, 'Email security lioy', '2019-12-15 16:45:20', 2),
+(4, 'Designers_Personas_Presentation_en.pptx', '3292103ac1749a4ec06dc15b592ef270_Designers_Personas_Presentation_en.pptx', 1, 'Personas Template', '2019-12-15 17:34:35', 1),
+(5, 'HistoryNotes.txt', '4147fc3ec062e49b5f19c5a4c9078329_HistoryNotes.txt', 1, 'History Notes', '2019-12-16 12:11:52', 1);
 
 -- --------------------------------------------------------
 
@@ -743,7 +783,7 @@ ALTER TABLE `YearTopicHour`
 -- AUTO_INCREMENT per la tabella `Communication`
 --
 ALTER TABLE `Communication`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT per la tabella `Homework`
 --
@@ -758,17 +798,17 @@ ALTER TABLE `MarksRecord`
 -- AUTO_INCREMENT per la tabella `Note`
 --
 ALTER TABLE `Note`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT per la tabella `NoteRecord`
 --
 ALTER TABLE `NoteRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT per la tabella `Officer`
 --
@@ -803,7 +843,7 @@ ALTER TABLE `Timetables`
 -- AUTO_INCREMENT per la tabella `Topic`
 --
 ALTER TABLE `Topic`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT per la tabella `TopicRecord`
 --
@@ -813,12 +853,12 @@ ALTER TABLE `TopicRecord`
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
 ALTER TABLE `TopicTeacherClass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT per la tabella `UploadedClassDocuments`
 --
 ALTER TABLE `UploadedClassDocuments`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT per la tabella `User`
 --
