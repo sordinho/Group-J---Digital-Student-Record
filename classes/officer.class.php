@@ -333,7 +333,7 @@ class officer extends user
 
         $res = $conn->query("SELECT User.Name as TeacherName, User.Surname as TeacherSurname, Topic.Name as TopicName, Topic.ID as TopicID, Teacher.ID as TeacherID
                                     FROM TopicTeacherClass, Topic, Teacher, User
-                                    WHERE TopicTeacherClass.TeacherID=Teacher.ID AND TopicTeacherClass.TopicID=Topic.ID AND Teacher.UserID=user.ID AND TopicTeacherClass.SpecificClassID=$classID
+                                    WHERE TopicTeacherClass.TeacherID=Teacher.ID AND TopicTeacherClass.TopicID=Topic.ID AND Teacher.UserID=User.ID AND TopicTeacherClass.SpecificClassID=$classID
                                     GROUP BY User.Name, User.Surname, Topic.Name, Topic.ID, Teacher.ID");
 
         if ($res->num_rows <= 0)
