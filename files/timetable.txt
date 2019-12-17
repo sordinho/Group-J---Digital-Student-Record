@@ -1,5 +1,5 @@
 1,B
-Literature,Literature,Music
+Literature,Literature,Music,Maths
 Literature,Literature,Maths,Music,Literature
 Literature,Art,Art,Maths,Maths,Geography
 Geography,Science,Science,Maths,Maths

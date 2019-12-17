@@ -70,7 +70,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
                             }
                         }
                         if ($found) { //se ho trovato quella materia e ho riempito str
-                            $timetable_info[$dayid][$j] = $str; //metto str nella matrice
+                            $timetable_info[$j][$dayid] = $str; //metto str nella matrice
                         }
                         else {
                                // echo "$day_n $dayid $j ->".$row[$j];
@@ -81,7 +81,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
                             break;
                         }
                     } else{
-                        $timetable_info[$dayid][$j] = "0|0|nothing";
+                        $timetable_info[$j][$dayid] = "0|0|nothing";
                     }
                 }
             }
