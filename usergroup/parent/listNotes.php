@@ -36,10 +36,11 @@ if ($unseen_notes && sizeof($unseen_notes) > 0) {
 
 	foreach ($unseen_notes as $i => $row) {
 		array_push($seenNotesID, $row['NoteID']);
+		$dates = explode(" ", $row['Date']);
 		$content .= '<tr>
         <th scope="row">' . $row['studentName'] . ' ' . $row['studentSurname'] . '</th>
         <td>' . $row['Description'] . '</td>
-        <td>' . $row['Date'] . '</td>
+        <td>' . $dates[0] . '</td>
         <td>' . $row['teacherName'] . ' ' . $row['teacherSurname'] . '</td>
       </tr>';
 	}
@@ -73,10 +74,11 @@ $notes = $sparent->get_notes($sparent->get_current_child());
 
 if ($notes) {
 	foreach ($notes as $i => $row) {
+		$dates = explode(" ", $row['Date']);
 		$content .= '<tr>
         <th scope="row">' . $row['studentName'] . ' ' . $row['studentSurname'] . '</th>
         <td>' . $row['Description'] . '</td>
-        <td>' . $row['Date'] . '</td>
+        <td>' . $dates[0] . '</td>
         <td>' . $row['teacherName'] . ' ' . $row['teacherSurname'] . '</td>
       </tr>';
 	}
