@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 17, 2019 alle 09:57
+-- Creato il: Dic 17, 2019 alle 10:16
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -387,36 +387,30 @@ CREATE TABLE `Timetables` (
 --
 
 INSERT INTO `Timetables` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`, `DayOfWeek`, `HourSlot`) VALUES
-(61, 1, 1, 1, 0, 0),
-(62, 1, 1, 1, 0, 1),
-(63, 1, 1, 1, 0, 2),
-(64, 1, 1, 1, 0, 3),
-(65, 1, 1, 1, 0, 4),
-(66, 1, 1, 1, 0, 5),
-(67, 1, 1, 1, 1, 0),
-(68, 1, 1, 1, 1, 1),
-(69, 1, 1, 1, 1, 2),
-(70, 1, 1, 1, 1, 3),
-(71, 1, 1, 1, 1, 4),
-(72, 1, 1, 1, 1, 5),
-(73, 1, 1, 1, 2, 0),
-(74, 1, 1, 1, 2, 1),
-(75, 1, 1, 1, 2, 2),
-(76, 1, 1, 1, 2, 3),
-(77, 1, 1, 1, 2, 4),
-(78, 1, 1, 1, 2, 5),
-(79, 1, 1, 1, 3, 0),
-(80, 1, 1, 1, 3, 1),
-(81, 1, 1, 1, 3, 2),
-(82, 1, 1, 1, 3, 3),
-(83, 1, 1, 1, 3, 4),
-(84, 1, 1, 1, 3, 5),
-(85, 1, 1, 1, 4, 0),
-(86, 1, 1, 1, 4, 1),
-(87, 1, 1, 1, 4, 2),
-(88, 1, 1, 1, 4, 3),
-(89, 1, 1, 1, 4, 4),
-(90, 1, 1, 1, 4, 5);
+(92, 1, 1, 1, 0, 0),
+(93, 3, 3, 1, 1, 0),
+(94, 3, 3, 1, 2, 0),
+(95, 3, 3, 1, 3, 0),
+(96, 8, 8, 1, 4, 0),
+(97, 1, 1, 1, 0, 1),
+(98, 3, 3, 1, 1, 1),
+(99, 3, 3, 1, 2, 1),
+(100, 7, 7, 1, 3, 1),
+(101, 8, 8, 1, 4, 1),
+(102, 1, 2, 1, 0, 2),
+(103, 4, 4, 1, 1, 2),
+(104, 5, 5, 1, 2, 2),
+(105, 8, 8, 1, 3, 2),
+(106, 7, 7, 1, 4, 2),
+(107, 1, 2, 1, 0, 3),
+(108, 4, 4, 1, 1, 3),
+(109, 6, 6, 1, 2, 3),
+(110, 8, 8, 1, 3, 3),
+(112, 3, 3, 1, 0, 4),
+(113, 5, 5, 1, 1, 4),
+(114, 6, 6, 1, 2, 4),
+(115, 8, 8, 1, 3, 4),
+(119, 8, 8, 1, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -552,7 +546,7 @@ CREATE TABLE `User` (
 
 INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) VALUES
 (1, 'Mary', 'Smith', 'pns1a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
-(2, 'Joseph', 'ParentSurname2', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
+(2, 'Joseph', 'Geller', 'pns2a@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (3, 'Marco', 'Torchiano', 'marco.torchiano@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (4, 'Paolo', 'Montuschi', 'teach2@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (5, 'Renato', 'Ferrero', 'teach3@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
@@ -838,7 +832,7 @@ ALTER TABLE `Teacher`
 -- AUTO_INCREMENT per la tabella `Timetables`
 --
 ALTER TABLE `Timetables`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --
