@@ -4,3 +4,9 @@ Literature,Literature,Maths,Music,Literature
 Literature,Art,Art,Maths,Maths,Geography
 Geography,Science,Science,Maths,Maths
 Maths,Physics,Physics,History,History
+1,A
+History,History,Physics,Physics,Maths
+Maths,Maths,Science,Science,Geography
+Maths,Maths,Geography,Art,Art,Literature
+Maths,Music,Literature,Literature,Literature
+Literature,Literature,Music,Maths
