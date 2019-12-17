@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 17, 2019 alle 10:16
+-- Creato il: Dic 17, 2019 alle 10:38
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -487,18 +487,23 @@ CREATE TABLE `TopicTeacherClass` (
 
 INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`) VALUES
 (1, 1, 1, 1),
-(2, 2, 1, 2),
-(3, 3, 1, 3),
-(4, 7, 4, 3),
 (5, 1, 2, 1),
-(6, 7, 3, 2),
 (7, 2, 2, 1),
 (8, 3, 3, 1),
 (10, 4, 4, 1),
 (11, 5, 5, 1),
 (12, 6, 6, 1),
 (13, 7, 7, 1),
-(14, 8, 8, 1);
+(14, 8, 8, 1),
+(15, 1, 1, 2),
+(16, 1, 2, 2),
+(17, 2, 2, 2),
+(18, 3, 3, 2),
+(19, 4, 4, 2),
+(20, 5, 5, 2),
+(21, 6, 6, 2),
+(22, 7, 7, 2),
+(23, 8, 8, 2);
 
 -- --------------------------------------------------------
 
@@ -847,7 +852,7 @@ ALTER TABLE `TopicRecord`
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
 ALTER TABLE `TopicTeacherClass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT per la tabella `UploadedClassDocuments`
 --
