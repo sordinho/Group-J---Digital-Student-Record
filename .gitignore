@@ -10,8 +10,13 @@ vendor/
 
 Tests/TestFoo.php
 
-Tests/.phpunit.result.cache
-.phpunit.result.cache
 phpinfo.php
 phpunit.phar
-.scannerwork/
+.phpunit.result.cache
+.scannerwork
+Tests/.phpunit.result.cache
+Tests/phpunit.phar
+Tests/.scannerwork
+Tests/phpunit.coverage.xml
+Tests/phpunit.report.xml
+Tests/phpunit.xml
