@@ -10,7 +10,7 @@ $site->setPage($page);
 $sparent = new sparent();
 
 if (!$sparent->is_logged() ) {
-	header("location: /error.php?errorID=19");
+	$sparent->get_error(19);
 	exit();
 }
 $linkNotes = "";
