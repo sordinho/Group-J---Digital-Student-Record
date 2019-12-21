@@ -9,12 +9,28 @@ $site->setPage($page);
 
 $content = "";
 
-if (!isset($_SESSION['id']) && isset($_POST['username'])) {
-	if (!isset($_POST['usergroup'])) {
+if (isset($_SESSION['id']) && isset($_POST['username']) && !isset($_SESSION['usergroup'])) {
+	$usr = new user();
+	if (isset($_POST['usergroup'])) {
+		if ($usr->select_usergroup($_POST['usergroup'])) {
+			$url = $usr->get_base_url();
+			$content .= "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $url . "' />";
+		} else {
+			$usr->get_error(26);
+		}
+	} else {
+		$usergroup = $usr->retrieve_usergroups($usr->get_username());
+		foreach ($usergroup as $ug) {
+			$content .= $ug." ";
+		}
+		$content .= "select an usergroup";
+	}
+} elseif (!isset($_SESSION['id']) && isset($_POST['username'])) {
+	/*if (!isset($_POST['usergroup'])) {
 		$url = 'location: '.PLATFORM_PATH.'/error.php?errorID=20';
 		header($url);
 		exit();
-	}
+	}*/
 
 	$content .= '<div class="article-clean">
                     <div class="d-flex justify-content-center">
@@ -29,18 +45,31 @@ if (!isset($_SESSION['id']) && isset($_POST['username'])) {
 
 	$post_data["username"] = $_POST['username'];
 	$post_data["password"] = $_POST['password'];
-	$post_data["usergroup"] = $_POST['usergroup'];
 
-	if ($result = $usr->user_login($post_data)) {
-		$url = $usr->get_base_url() . "index.php";
-		if ($usr->get_usergroup() == 'parent') {
-			$sparent = new sparent();
-			$sparent->retrieve_and_register_childs();
-		}
+	$result = $usr->user_login($post_data);
 
-		$content .= "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $url . "' />";
-	} else {
-		$usr->get_error(11);
+	switch ($result) {
+		case 1:
+			$url = $usr->get_base_url() . "index.php";
+			if ($usr->get_usergroup() == 'parent') {
+				$sparent = new sparent();
+				$sparent->retrieve_and_register_childs();
+			}
+			$content .= "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $url . "' />";
+			break;
+
+		case -1:
+			$usr->get_error(11);
+			break;
+
+		case 2:
+			$url = "/index.php";
+			$content .= "<meta http-equiv='refresh' content='1; url=" . PLATFORM_PATH . $url . "' />";
+			break;
+
+		default:
+//			$usr->get_error(11);
+			break;
 	}
 } else {
 	$usr = new user();
