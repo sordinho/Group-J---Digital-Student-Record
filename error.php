@@ -27,7 +27,9 @@ $messages = array(
     22 => 'Failed at registering a new record',
     23 => 'Text area is mandatory. <br> It must be filled.',
     24 => 'The selected class has no students.',
-    25 => 'Operation not allowed.'
+    25 => 'Operation not allowed.',
+    26 => 'Usergroup selection error',
+    27 => 'Cannot retrieve any usergroup'
 );
 if(isset($_GET['errorID'])){
 	$message_script = $_GET['errorID'];
