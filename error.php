@@ -14,7 +14,7 @@ $messages = array(
 	8 => 'This username is already registered.',
 	9 => 'This email is already registered.',
 	10 => 'Registration successfully completed.<br>',
-	11 => 'Login Error',
+	11 => 'Login error.',
 	12 => 'Login successful.',
 	13 => 'Logout successful.',
 	14 => 'You need to be logged in for viewing this page.',
@@ -23,13 +23,13 @@ $messages = array(
 	18 => 'Attempt to modify parameters.<br>That\'s not funny.',
 	19 => 'You\'re not authorized to view this resource.',
     20 => 'Please select a role.',
-    21 => 'You should select at least one field',
-    22 => 'Failed at registering a new record',
+    21 => 'You should select at least one field.',
+    22 => 'Failed at registering a new record.',
     23 => 'Text area is mandatory. <br> It must be filled.',
     24 => 'The selected class has no students.',
     25 => 'Operation not allowed.',
-    26 => 'Usergroup selection error',
-    27 => 'Cannot retrieve any usergroup'
+    26 => 'Usergroup selection error.',
+    27 => 'Cannot retrieve any usergroup.'
 );
 if(isset($_GET['errorID'])){
 	$message_script = $_GET['errorID'];
