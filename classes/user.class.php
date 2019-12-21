@@ -51,80 +51,58 @@ class user {
 	 * @return bool
 	 */
 	function user_login($post_data) {
+	    $return = -1;
 		$username = $post_data["username"];
 		$password = $post_data["password"];
-		/*
-		 * before the usergroup was retrieved from the db, now it is specified at login time
-		 */
-		$retrievedUsergroup = $post_data["usergroup"] /*""*/;
 
 		$mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
 		if ($mysqli->connect_errno) {
 			printf("Connect failed: %s\n", mysqli_connect_error());
-			return false;
+            $return = -1;
 		}
 
 		//TODO: extend with name and surname (maybe save that in an array as user_info[] ?)
 		// Here using prepared statement to avoid SQLi
-		$query = $mysqli->prepare("SELECT ID, Name, Surname, Password/*, UserGroup*/ FROM User WHERE Email = ? AND UserGroup = ?");
-		$query->bind_param('ss', $username, $retrievedUsergroup);
+		$query = $mysqli->prepare("SELECT ID, Name, Surname, Password, UserGroup FROM User WHERE Email = ?");
+		$query->bind_param('s', $username);
 		$res = $query->execute();
 		if (!$res) {
 			printf("Error message: %s\n", $mysqli->error);
-			return false;
+            $return = -1;
 		}
 
 		$query->store_result();
-		$query->bind_result($id, $name, $surname, $pass/*, $retrievedUsergroup*/);
+		$query->bind_result($id, $name, $surname, $pass, $usergroup);
 		// In case of success there should be just 1 user for a given (username is also a primary key for its table)
-		if ($query->num_rows != 1) {
-			return false;
+		if ($query->num_rows == -1) {
+            $return = -1;
 		}
 		$query->fetch();
 		if (password_verify($password, $pass)) {
-			// If here login was successful (hash was verified)
-			$this->set_logged($id);
-			$this->set_usergroup($retrievedUsergroup);
-			$this->set_username($username);
-			$this->set_name($name);
-			$this->set_surname($surname);
-			$base_url = "/usergroup/" . $retrievedUsergroup . "/";
-			$this->set_base_url($base_url);
 
-			// Get specific ID for teacher, parent ...
-			if ($retrievedUsergroup == 'admin')
-				$this->set_admin();
-			else {
-				$user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
-				$specificID = -1;
-				if ($user_group_table != false) {
-					$queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
-					$queryID->bind_param('i', $id);
+            $this->set_logged($id);
+            $this->set_username($username);
+            $this->set_name($name);
+            $this->set_surname($surname);
+            $num_rows = $query->num_rows;
 
-					$result = $queryID->execute();
-					if (!$result) {
-						printf("Error message: %s\n", $mysqli->error);
-						return false;
-					}
-					$queryID->store_result();
-					$queryID->bind_result($specificID);
-					// In case of success there should be just 1 *USER* for a given (username is also a primary key for its table)
-					if ($queryID->num_rows < 1) {
-						return false;
-					}
-					$queryID->fetch();
-					$this->set_specific_ID(intval($specificID), $retrievedUsergroup);
-				} else {
-					return false;
-				}
-			}
+            if ($num_rows == 1) {
+                if ($this->set_session_usergroup($usergroup, $mysqli)) {
+                    $return = 1; // successfully login + one usergroup
+                }
+            } elseif ($num_rows > 1) {
+                $return = 2; // successfully login + multiple usergroups
+            } else {
+                $return = -1;
+            }
+
 		} else
-			return false;
+            $return = -1;
 
 		$query->close();
 		$mysqli->close();
 
-		return true;
+		return $return;
 	}
 	/**
 	 * This function sets the specific ID (parentID, teacherID ...) given the user ID and the usergroup
@@ -147,6 +125,95 @@ class user {
 				break;
 		}
 	}
+
+	public function set_session_usergroup($retrievedUsergroup, $mysqli) {
+
+        // If here login was successful (hash was verified)
+        $this->set_usergroup($retrievedUsergroup);
+
+        $base_url = "/usergroup/" . $retrievedUsergroup . "/";
+        $this->set_base_url($base_url);
+        // Get specific ID for teacher, parent ...
+        if ($retrievedUsergroup == 'admin')
+            $this->set_admin();
+        else {
+            $user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
+            $specificID = -1;
+            if ($user_group_table != false) {
+                /** @noinspection SqlResolve */
+                $queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
+                $id = $this->get_id();
+                $queryID->bind_param('i', $id);
+
+                $result = $queryID->execute();
+                if (!$result) {
+                    printf("Error message: %s\n", $mysqli->error);
+                    $queryID->close();
+                    return false;
+                }
+                $queryID->store_result();
+                $queryID->bind_result($specificID);
+                // In case of success there should be just 1 *USER* for a given (username is also a primary key for its table)
+                if ($queryID->num_rows < 1) {
+                    $queryID->close();
+                    return false;
+                }
+                $queryID->fetch();
+                $this->set_specific_ID(intval($specificID), $retrievedUsergroup);
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function select_usergroup($usergroup) {
+        $return = false;
+        $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
+        if ($mysqli->connect_errno) {
+            printf("Connect failed: %s\n", mysqli_connect_error());
+            $return = false;
+        }
+
+        if ($this->set_session_usergroup($usergroup, $mysqli)) {
+            $return = true;
+        }
+
+        $mysqli->close();
+        return $return;
+    }
+
+    public function retrieve_usergroups($username) {
+	    $usergroup = array();
+        $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
+        /* check connection */
+        if ($mysqli->connect_errno) {
+            printf("Connect failed: %s\n", $mysqli->connect_errno);
+            $mysqli->close();
+            return array();
+        }
+
+        $stmt = $mysqli->prepare("SELECT UserGroup FROM User WHERE Email = ?");
+        $stmt->bind_param('s', $username);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            $mysqli->close();
+            return array();
+        }
+
+        $res = $stmt->get_result();
+        if ($res->num_rows>1) {
+            while ($row = $res->fetch_object()) {
+                $usergroup[] = $row->UserGroup;
+            }
+        }
+
+        $stmt->close();
+        $mysqli->close();
+        return $usergroup;
+
+    }
 
 	/***********************************
 	 *            SETTERS
