@@ -53,3 +53,24 @@ body {
         display: none;
     }
 }
+
+#usergroup-selection {
+    width: 90%;
+    height: 60%;
+    margin: 0 auto;
+}
+
+.card-role {
+    width: 200px;
+    height: 100px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card-role:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container-role {
+    padding: 2px 16px;
+}
