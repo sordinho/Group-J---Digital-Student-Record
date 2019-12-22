@@ -39,9 +39,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && !isset($_SESSION['
 				break;
 		}
 		$roles .= "
-		<div class='col-3'>
+		<div class='col col-sm col-md'>
 		<form method='POST' action='index.php'>
-				<button class='card-role' style='border: none; background: none' type='submit' name='usergroup' value='$ug'>
+				<button class='card-role rounded' style='border: none; background: none' type='submit' name='usergroup' value='$ug'>
 					  <i class='$icon fa-2x'></i>
 					  <div class='container-role'>
 						<h5><b>$ug</b></h5>
