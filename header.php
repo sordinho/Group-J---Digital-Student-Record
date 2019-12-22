@@ -93,31 +93,5 @@ echo '<!-- Modal Login -->
 		
 		
 		';
-echo '<!-- Modal for registration(signup) -->
-	<div class="modal fade" id="registerModal" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-body" style="padding:40px 50px;">
-					<form method="POST" action="./register.php">
-					<div class="form-group">
-						<label for="rfront_office"><span class="glyphicon glyphicon-user"></span> front_office:</label>
-						<input type="text" class="form-control" name="front_office" id="rfront_office" placeholder="Your email">
-					</div>
-					<div class="form-group">
-						<label for="rpassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-						<input type="password" class="form-control" name="password" id="rpassword" placeholder="Enter password">
-					</div>
-					<div class="checkbox">
-						<label><input type="checkbox" name = "tos" value="yes" checked>Privacy consense</label>
-					</div>
-						<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span>Register</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>';
+
 ?>
