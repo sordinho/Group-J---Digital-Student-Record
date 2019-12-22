@@ -80,6 +80,10 @@ class user {
 		$query->fetch();
 		if (password_verify($password, $pass)) {
 
+		    /*
+		     * the ID is always set
+		     * in case of multiple usergroups it will be overwritten
+		     */
             $this->set_logged($id);
             $this->set_username($username);
             $this->set_name($name);
@@ -87,7 +91,7 @@ class user {
             $num_rows = $query->num_rows;
 
             if ($num_rows == 1) {
-                if ($this->set_session_usergroup($usergroup, $mysqli)) {
+                if ($this->set_session_usergroup($usergroup, $id, $mysqli)) {
                     $return = 1; // successfully login + one usergroup
                 }
             } elseif ($num_rows > 1) {
@@ -126,7 +130,7 @@ class user {
 		}
 	}
 
-	public function set_session_usergroup($retrievedUsergroup, $mysqli) {
+	public function set_session_usergroup($retrievedUsergroup, $userID, $mysqli) {
 
         // If here login was successful (hash was verified)
         $this->set_usergroup($retrievedUsergroup);
@@ -142,8 +146,7 @@ class user {
             if ($user_group_table != false) {
                 /** @noinspection SqlResolve */
                 $queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
-                $id = $this->get_id();
-                $queryID->bind_param('i', $id);
+                $queryID->bind_param('i', $userID);
 
                 $result = $queryID->execute();
                 if (!$result) {
@@ -176,8 +179,13 @@ class user {
             $return = false;
         }
 
-        if ($this->set_session_usergroup($usergroup, $mysqli)) {
-            $return = true;
+        /*
+         * $_SESSION['ID'] overwrite with the specified usergroup
+         */
+        if ($userID = $this->retrieve_user_id_by_usergroup($this->get_username(), $usergroup)) {
+            if ($this->set_session_usergroup($usergroup, $userID, $mysqli)) {
+                $return = true;
+            }
         }
 
         $mysqli->close();
@@ -213,6 +221,27 @@ class user {
         $mysqli->close();
         return $usergroup;
 
+    }
+
+    public function retrieve_user_id_by_usergroup($email, $usergroup) {
+	    $conn = $this->connectMySQL();
+	    $stmt = $conn->prepare("SELECT ID FROM User WHERE Email = ? AND UserGroup = ?");
+        $stmt->bind_param('ss', $email, $usergroup);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            return -1;
+        }
+
+        $res = $stmt->get_result();
+        if ($res->num_rows == 1) {
+            $row = $res->fetch_object();
+            $stmt->close();
+            $conn->close();
+            return $row->ID;
+        }
+
+        return -1;
     }
 
 	/***********************************
