@@ -88,7 +88,7 @@ else{
     $uploaddir = $uptwo.'/uploads/';
     //Given a string containing the path to a file or directory, this function will return the trailing name component ex: 'echo basename("etc/sudoers.d") >> sudoers.d'
     $realname = basename($_FILES['file']['name']);
-    $hash = md5($realname.strval(rand(100, 99999)));
+    $hash = md5($realname.strval(random_int(100, 99999)));
     $server_filename = $hash ."_". $realname;
     $uploadfile = $uploaddir . $server_filename;
 
@@ -126,7 +126,7 @@ else{
     $specificClassID = $_POST["classID"];
     $description = $_POST["description"];
     $subjectID = $_POST["topicID"];
-    intval($teacher->insert_material($realname, $server_filename, $specificClassID, $description, $subjectID));
+    $result = intval($teacher->insert_material($realname, $server_filename, $specificClassID, $description, $subjectID));
     $content = '<div class="alert alert-success" role="alert">
                     Assignment successfully registered. <a href="uploadMaterial.php" class="alert-link">Upload others files</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
                 </div>';
