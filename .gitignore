@@ -13,7 +13,7 @@ Tests/TestFoo.php
 phpinfo.php
 phpunit.phar
 .phpunit.result.cache
-.scannerwork
 Tests/.phpunit.result.cache
 Tests/phpunit.phar
 Tests/.scannerwork
+.scannerwork/
