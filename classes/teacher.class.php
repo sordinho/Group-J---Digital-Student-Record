@@ -645,7 +645,7 @@ CREATE TABLE `TopicRecord` (
             $row=$res->fetch_assoc();
             $countStudent=$row['COUNT'];
             $conn = $this->connectMySQL();
-            $stmt = $conn->prepare("SELECT Count(DISTINCT TopicID) as COUNT FROM TimeTables WHERE SpecificClassID=?;");
+            $stmt = $conn->prepare("SELECT Count(DISTINCT TopicID) as COUNT FROM Timetables WHERE SpecificClassID=?;");
             $stmt->bind_param("i", $specificClassID);
             if (!$stmt->execute())
                 return false;
@@ -686,7 +686,7 @@ CREATE TABLE `TopicRecord` (
     public function get_missing_term_marks($studentID,$termID,$specificClassID){
         $conn = $this->connectMySQL();
         $missingTopicIDs=array();
-        $stmt = $conn->prepare("SELECT DISTINCT TopicID,Name FROM TimeTables,Topic WHERE SpecificClassID=? AND 
+        $stmt = $conn->prepare("SELECT DISTINCT TopicID,Name FROM Timetables,Topic WHERE SpecificClassID=? AND 
                                                                                      TopicID NOT IN (SELECT TopicID FROM FinalGrades WHERE StudentID = ? AND TermID = ? ) AND 
                                                                                      Topic.ID=TopicID");
         if (!$stmt)
