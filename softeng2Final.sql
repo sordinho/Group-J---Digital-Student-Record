@@ -57,6 +57,18 @@ CREATE TABLE `FinalGrades` (
   `TermID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `FinalGrades` (`ID`, `StudentID`, `TopicID`, `Mark`, `TermID`) VALUES
+(122, 1, 1, 2, 1),
+(123, 1, 2, 0, 1),
+(124, 2, 1, 9, 1),
+(125, 2, 2, 8, 1),
+(126, 2, 3, 0, 1),
+(127, 2, 4, 0, 1),
+(128, 2, 5, 0, 1),
+(129, 2, 6, 0, 1),
+(130, 2, 7, 0, 1),
+(131, 2, 8, 0, 1);
+
 -- --------------------------------------------------------
 
 --

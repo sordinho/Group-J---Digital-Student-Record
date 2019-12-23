@@ -714,7 +714,7 @@ CREATE TABLE `TopicRecord` (
         if (!$stmt->execute())
             return false;
         $res = $stmt->get_result();
-        if ($res > 0) {
+        if ($res->num_rows==1) {
             $row=$res->fetch_assoc();
             return $row['Surname']." ".$row['Name'];
         }else{
@@ -734,7 +734,7 @@ CREATE TABLE `TopicRecord` (
         if (!$stmt->execute())
             return 0;
         $res = $stmt->get_result();
-        if ($res > 0) {
+        if ($res->num_rows == 1) {
             $row=$res->fetch_assoc();
             return $row['Average'];
         }else{
@@ -748,7 +748,7 @@ CREATE TABLE `TopicRecord` (
 
         $values=explode("_", $value);
 
-        if(!isset($values[0]) || !isset($values[1]) || !isset($values[2]) || !isset($values[3]))
+        if(!is_numeric($values[0]) || !is_numeric($values[1]) || !is_numeric($values[2]) || !is_numeric($values[3]))
             return false;
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("INSERT INTO FinalGrades (StudentID,TopicID,Mark,TermID) VALUES (?,?,?,?);");
@@ -769,7 +769,7 @@ CREATE TABLE `TopicRecord` (
         if (!$stmt->execute())
             return false;
         $res = $stmt->get_result();
-        if ($res > 0) {
+        if ($res->num_rows==1) {
             $row=$res->fetch_assoc();
             return $row['SpecificClassID'];
         }else{

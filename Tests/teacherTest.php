@@ -399,7 +399,7 @@ class teacherTest extends TestCase
     public function testIs_teacher_of_the_student()
     {
         $_SESSION["teacherID"] = 1;
-        $teacherObject = new Teacher();
+        $teacherObject = new teacher();
         $studentID = 1;
 
         // Wrong student id
@@ -535,5 +535,138 @@ class teacherTest extends TestCase
         $this->assertFalse($res, $this->printErrorMessage("testRegister_new_note", "operation should have returned false"));
         $res = $teacher->register_new_note($invalidDate2, $classID, $note);
         $this->assertFalse($res, $this->printErrorMessage("testRegister_new_note", "operation should have returned false"));
+    }
+
+    public function testGet_coordinated_class()
+    {
+        $specificclassID = 1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $res = $teacher->get_coordinated_class($teacher->get_teacher_ID());
+        $this->assertEquals(intval($specificclassID), intval($res[0]['ID']));
+
+        $res = $teacher->get_coordinated_class(null);
+        $this->assertEmpty($res);
+
+        $_SESSION['teacherID'] = 4;
+        $teacher = new teacher();
+        $res = $teacher->get_coordinated_class($teacher->get_teacher_ID());
+        $this->assertEmpty($res);
+
+
+    }
+
+    public function testHas_final_grades()
+    {
+        //($studentID,$termID,$specificClassID)
+        $specificclassID = 1;
+        $termID=1;
+        $studentID=1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $this->assertFalse($teacher->has_final_grades($studentID,$termID,$specificclassID));
+
+        $studentID=2;
+        $this->assertTrue($teacher->has_final_grades($studentID,$termID,$specificclassID));
+    }
+
+    public function testGet_actual_term()
+    {
+        $termID=1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $this->assertEquals($termID,$teacher->get_actual_term());
+
+    }
+
+    public function testGet_missing_term_marks()
+    {
+        $termID=1;
+        $studentID=2;
+        $specificclassid=1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $this->assertEmpty($teacher->get_missing_term_marks($studentID,$termID,$specificclassid));
+
+        $studentID=1;
+        $this->assertNotEmpty($teacher->get_missing_term_marks($studentID,$termID,$specificclassid));
+
+    }
+
+    public function testGet_student_stamp_by_id()
+    {
+        $studentID=1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $this->assertEquals("Lozano Hirving", $teacher->get_student_stamp_by_id($studentID));
+
+        $studentID=24;
+        $this->assertFalse($teacher->get_student_stamp_by_id($studentID));
+
+    }
+
+    public function testGet_average_mark_for_topic()
+    {
+        $studentID=6;
+        $topicID=1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $this->assertEquals(8.5, $teacher->get_average_mark_for_topic($topicID,$studentID));
+
+        $studentID=24;
+        $this->assertEquals(0,$teacher->get_average_mark_for_topic($topicID,$studentID));
+    }
+
+    public function testSet_final_grade()
+    {
+        //public function set_final_grade($value){
+        //$value=StudentID_TopicID_Grade_TermID
+
+        $value="1_3_5_1";
+        $classID=1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $this->assertEquals($classID, $teacher->set_final_grade($value));
+
+        $value="1__5_1";
+        $this->assertFalse($teacher->set_final_grade($value));
+
+    }
+
+    public function testGet_specificclassid_by_student()
+    {
+        $classID=1;
+        $studentID=1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $this->assertEquals($classID, $teacher->get_specificclassid_by_student($studentID));
+
+        $studentID=2;
+        $this->assertEquals($classID, $teacher->get_specificclassid_by_student($studentID));
+
+        $classID=2;
+        $studentID=9;
+        $this->assertEquals($classID, $teacher->get_specificclassid_by_student($studentID));
+
+        $studentID=24;
+        $this->assertFalse($teacher->get_specificclassid_by_student($studentID));
+    }
+
+    public function testGet_students_by_class_id2()
+    {
+        $classID=1;
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $this->assertCount(8,$teacher->get_students_by_class_id($classID));
+
+        $classID=2;
+        $this->assertCount(3,$teacher->get_students_by_class_id($classID));
+
+        $classID=3;
+        $this->assertCount(1,$teacher->get_students_by_class_id($classID));
+
+        $classID=4;
+        $this->assertCount(0,$teacher->get_students_by_class_id($classID));
+
     }
 }
