@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests" tests="76" assertions="249" errors="3" warnings="0" failures="14" skipped="0" time="3.871286">
+    <testsuite name="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" tests="3" assertions="10" errors="0" warnings="0" failures="1" skipped="0" time="1.282100">
+      <testcase name="test_register_new_user_officer" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="27" assertions="2" time="0.424214">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">administratorTest::test_register_new_user_officer
+administratorTest: error in test_register_new_user_officer --&gt; there are no new entries in the teacher table..
+Failed asserting that null is not null.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php:45
+</failure>
+      </testcase>
+      <testcase name="test_register_new_user_teacher" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="49" assertions="2" time="0.456059"/>
+      <testcase name="test_register_new_user_BOUNDARY" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="69" assertions="6" time="0.401827"/>
+    </testsuite>
+    <testsuite name="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" tests="5" assertions="14" errors="0" warnings="0" failures="0" skipped="0" time="0.031617">
+      <testcase name="testValidate_date" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="16" assertions="2" time="0.006234"/>
+      <testcase name="testIs_holiday" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="24" assertions="4" time="0.010921"/>
+      <testcase name="testBy_the_end_of_the_week" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="36" assertions="4" time="0.005454"/>
+      <testcase name="testGet_hours_per_school_day" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="48" assertions="1" time="0.004366"/>
+      <testcase name="testTimestamp_to_date" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="53" assertions="3" time="0.004642"/>
+    </testsuite>
+    <testsuite name="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" tests="8" assertions="32" errors="0" warnings="0" failures="3" skipped="0" time="0.253914">
+      <testcase name="testGetOfficerID" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="26" assertions="2" time="0.006550"/>
+      <testcase name="testEnrollStudent" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="34" assertions="5" time="0.026131"/>
+      <testcase name="testAddNewUser" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="65" assertions="8" time="0.034889"/>
+      <testcase name="testAddNewParent" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="86" assertions="1" time="0.022766">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">officerTest::testAddNewParent
+officerTest: error in testAddNewParent --&gt; returned value should be true.
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php:93
+</failure>
+      </testcase>
+      <testcase name="testRemoveUser" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="107" assertions="2" time="0.039350"/>
+      <testcase name="testPublishCommunication" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="117" assertions="5" time="0.019363"/>
+      <testcase name="testSetTimetableClass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="139" assertions="6" time="0.013396">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">officerTest::testSetTimetableClass
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php:172
+</failure>
+      </testcase>
+      <testcase name="testGetTimetableClass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="180" assertions="3" time="0.091469">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">officerTest::testGetTimetableClass
+Failed asserting that 6 matches expected 0.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php:192
+</failure>
+      </testcase>
+    </testsuite>
+    <testsuite name="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" tests="20" assertions="96" errors="0" warnings="0" failures="2" skipped="0" time="0.753270">
+      <testcase name="testGet_grades_NULL" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="27" assertions="1" time="0.026713"/>
+      <testcase name="testGet_grades" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="32" assertions="9" time="0.025044"/>
+      <testcase name="testSet_current_child" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="79" assertions="1" time="0.005727"/>
+      <testcase name="testGet_current_child" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="86" assertions="1" time="0.005559"/>
+      <testcase name="test__construct" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="92" assertions="1" time="0.005911"/>
+      <testcase name="testRetrieve_and_register_childs" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="98" assertions="4" time="0.024812"/>
+      <testcase name="testGet_homeworks" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="136" assertions="3" time="0.053460"/>
+      <testcase name="testGet_absences_and_delays" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="150" assertions="30" time="0.180733"/>
+      <testcase name="testGet_absences" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="199" assertions="11" time="0.162374"/>
+      <testcase name="testGet_announcements" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="230" assertions="2" time="0.039868"/>
+      <testcase name="testGet_parent_ID" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="246" assertions="2" time="0.008147"/>
+      <testcase name="testGet_children_info" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="253" assertions="8" time="0.009851"/>
+      <testcase name="testIs_logged" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="276" assertions="5" time="0.007639"/>
+      <testcase name="testGet_child_stamp_by_id" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="290" assertions="2" time="0.008754"/>
+      <testcase name="testGet_material_info" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="296" assertions="3" time="0.018988"/>
+      <testcase name="testGet_num_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="310" assertions="4" time="0.005507"/>
+      <testcase name="testSet_current_num_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="323" assertions="2" time="0.067874">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">sparentTest::testSet_current_num_unseen_notes
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php:333
+</failure>
+      </testcase>
+      <testcase name="testGet_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="335" assertions="1" time="0.053842">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">sparentTest::testGet_unseen_notes
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php:343
+</failure>
+      </testcase>
+      <testcase name="testGet_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="351" assertions="4" time="0.030943"/>
+      <testcase name="testSet_notes_seen" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="364" assertions="2" time="0.011525"/>
+    </testsuite>
+    <testsuite name="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" tests="26" assertions="70" errors="0" warnings="0" failures="7" skipped="0" time="0.624178">
+      <testcase name="testModify_lecture_topic_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="32" assertions="5" time="0.024798"/>
+      <testcase name="testModify_lecture_topic" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="57" assertions="2" time="0.037333">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">teacherTest::testModify_lecture_topic
+Test non superato
+Failed asserting that null matches expected 'MODIFIED Test topic description'.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php:76
+</failure>
+        <system-out>Error message: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+</system-out>
+      </testcase>
+      <testcase name="testInsert_new_lecture_topic" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="81" assertions="2" time="0.017461">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">teacherTest::testInsert_new_lecture_topic
+Test non superato!
+Failed asserting that 1 matches expected null.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php:101
+</failure>
+        <system-out>Error message: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+</system-out>
+      </testcase>
+      <testcase name="testInsert_new_lecture_topic_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="106" assertions="2" time="0.034276"/>
+      <testcase name="testGet_topics" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="120" assertions="2" time="0.031702"/>
+      <testcase name="testGet_teacher_ID" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="139" assertions="1" time="0.003946"/>
+      <testcase name="testGet_teacher_ID_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="146" assertions="1" time="0.004191"/>
+      <testcase name="testGet_assigned_classes_names" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="153" assertions="2" time="0.017291"/>
+      <testcase name="testGet_students_by_class_id" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="166" assertions="2" time="0.020732"/>
+      <testcase name="testGet_daily_absences" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="179" assertions="3" time="0.023382"/>
+      <testcase name="testGet_assigned_classes" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="202" assertions="2" time="0.025299"/>
+      <testcase name="testGet_topics_record" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="216" assertions="3" time="0.035353"/>
+      <testcase name="testGet_lecture_by_ID" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="239" assertions="2" time="0.033445"/>
+      <testcase name="testInsert_grade" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="254" assertions="7" time="0.069326"/>
+      <testcase name="testInsert_new_assignment" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="293" assertions="1" time="0.025092"/>
+      <testcase name="testRegister_early_exit" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="324" assertions="1" time="0.008861">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">teacherTest::testRegister_early_exit
+teacherTest: error in testRegister_early_exit --&gt; function should have returned true.
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php:331
+</failure>
+      </testcase>
+      <testcase name="testRegister_early_exit_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="337" assertions="8" time="0.007170"/>
+      <testcase name="testRegister_absence" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="354" assertions="4" time="0.009635">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">teacherTest::testRegister_absence
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php:371
+</failure>
+      </testcase>
+      <testcase name="testStudent_was_absent" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="375" assertions="4" time="0.031515">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">teacherTest::testStudent_was_absent
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php:393
+</failure>
+      </testcase>
+      <testcase name="testIs_teacher_of_the_student" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="399" assertions="2" time="0.034558"/>
+      <testcase name="test_register_late_arrival" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="413" assertions="1" time="0.008892">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">teacherTest::test_register_late_arrival
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php:426
+</failure>
+      </testcase>
+      <testcase name="testIs_logged" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="433" assertions="5" time="0.006881"/>
+      <testcase name="testGet_uploaded_material" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="449" assertions="2" time="0.068355"/>
+      <testcase name="testInsert_material" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="465" assertions="1" time="0.019767"/>
+      <testcase name="testRegister_note_record" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="478" assertions="4" time="0.015574"/>
+      <testcase name="testRegister_new_note" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="497" assertions="1" time="0.009344">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">teacherTest::testRegister_new_note
+teacherTest: error in testRegister_new_note --&gt; operation should have returned true.
+Failed asserting that false is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php:506
+</failure>
+      </testcase>
+    </testsuite>
+    <testsuite name="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" tests="14" assertions="27" errors="3" warnings="0" failures="1" skipped="0" time="0.926207">
+      <testcase name="testGet_name" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="21" assertions="1" time="0.005328"/>
+      <testcase name="test__construct" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="28" assertions="0" time="0.004845">
+        <error type="PHPUnit\Framework\RiskyTestError">Risky Test
+</error>
+      </testcase>
+      <testcase name="testIs_secure_password" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="33" assertions="3" time="0.006253"/>
+      <testcase name="testIs_email" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="41" assertions="7" time="0.008164"/>
+      <testcase name="testIs_logged" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="53" assertions="2" time="0.004711"/>
+      <testcase name="testGet_id" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="62" assertions="2" time="0.005987"/>
+      <testcase name="testGet_base_url" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="71" assertions="2" time="0.005820"/>
+      <testcase name="testGet_link_logout" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="80" assertions="2" time="0.006175"/>
+      <testcase name="testGet_error" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="89" assertions="0" time="0.003816">
+        <error type="PHPUnit\Framework\RiskyTestError">Risky Test
+</error>
+      </testcase>
+      <testcase name="testGet_usergroup" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="94" assertions="2" time="0.005031"/>
+      <testcase name="testUser_login" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="103" assertions="2" time="0.853826">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">userTest::testUser_login
+userTest : testUser_login failed at login correctly
+Failed asserting that -1 is true.
+
+C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php:115
+</failure>
+      </testcase>
+      <testcase name="testGet_surname" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="130" assertions="2" time="0.005745"/>
+      <testcase name="testRegister" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="139" assertions="0" time="0.004824">
+        <error type="PHPUnit\Framework\RiskyTestError">Risky Test
+</error>
+      </testcase>
+      <testcase name="testGet_username" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="144" assertions="2" time="0.005683"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

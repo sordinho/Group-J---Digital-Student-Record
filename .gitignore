@@ -13,10 +13,9 @@ Tests/TestFoo.php
 phpinfo.php
 phpunit.phar
 .phpunit.result.cache
-.scannerwork
 Tests/.phpunit.result.cache
 Tests/phpunit.phar
 Tests/.scannerwork
-Tests/phpunit.coverage.xml
-Tests/phpunit.report.xml
-Tests/phpunit.xml
+# Sonar Scanner working directories
+.sonar/
+.scannerwork/

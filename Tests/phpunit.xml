@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit>
+    <testsuites>
+        <testsuite name="Tests">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">../classes</directory>
+            <exclude>
+
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
