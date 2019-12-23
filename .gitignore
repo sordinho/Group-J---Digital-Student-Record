@@ -16,4 +16,6 @@ phpunit.phar
 Tests/.phpunit.result.cache
 Tests/phpunit.phar
 Tests/.scannerwork
+# Sonar Scanner working directories
+.sonar/
 .scannerwork/
