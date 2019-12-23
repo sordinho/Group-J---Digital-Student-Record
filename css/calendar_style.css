@@ -154,7 +154,6 @@
   vertical-align: top;
   display: inline-block;
   padding: 0;
-  margin: 0;
   width: 5px;
   height: 5px;
   line-height: 5px;
@@ -313,7 +312,7 @@
 }
 
 @-webkit-keyframes moveToTopFade {
-  to { opacity: .3; height:0px; margin-top:0px; opacity: 0.3; -webkit-transform: translateY(-100%); }
+  to { opacity: .3; height:0px; margin-top:0px;  -webkit-transform: translateY(-100%); }
 }
 @-moz-keyframes moveToTopFade {
   to { height:0px; -moz-transform: translateY(-100%); }
