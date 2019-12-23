@@ -42,6 +42,7 @@ Usernames and passwords for testing purposes can be found [HERE](USERNAMES.md)
 
 ## Codebase analytics
 <img src="sonar_overview.jpg" width="200">
+
 ## The Team :busts_in_silhouette: :trollface:
 
 - [Vittorio Di Leo](https://github.com/VittorioDiLeo)
