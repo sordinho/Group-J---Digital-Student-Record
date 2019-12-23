@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 23, 2019 alle 13:04
+-- Creato il: Dic 23, 2019 alle 13:29
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -319,7 +319,7 @@ CREATE TABLE `SpecificClass` (
 --
 
 INSERT INTO `SpecificClass` (`ID`, `YearClassID`, `Section`, `UploadedPath`, `CoordinatorTeacherID`) VALUES
-(-1, -1, 'noC', '', 1),
+(-1, -1, 'noC', '', 19),
 (1, 1, 'A', 'uploadedPath1', 1),
 (2, 1, 'B', 'uploadedPath2', 2),
 (3, 1, 'C', 'uploadedPath3', 3);
@@ -391,7 +391,8 @@ INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 (15, 0, 68, 'fc10'),
 (16, 0, 69, 'fc10'),
 (17, 0, 70, 'fc10'),
-(18, 0, 71, 'fc10');
+(18, 0, 71, 'fc10'),
+(19, -1, 72, 'noteacherfc1');
 
 -- --------------------------------------------------------
 
@@ -648,7 +649,8 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 (68, 'Marek', 'Hamsik', 'marek.hamsik@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (69, 'Maurizio', 'Rebaudengo', 'maurizio.rebaudengo@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
 (70, 'Paolo', 'Garza', 'paolo.garza@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
-(71, 'Bufalino', 'Stefania', 'stefania.bufalino@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher');
+(71, 'Bufalino', 'Stefania', 'stefania.bufalino@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(72, 'No', 'Teacher', 'NoTeacher@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher');
 
 -- --------------------------------------------------------
 
@@ -933,7 +935,7 @@ ALTER TABLE `Student`
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
 ALTER TABLE `Teacher`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT per la tabella `Terms`
 --
@@ -968,7 +970,7 @@ ALTER TABLE `UploadedClassDocuments`
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT per la tabella `YearClass`
 --
