@@ -6,7 +6,7 @@ initialize_site($site);
 $page = new cpage("");
 $site->setPage($page);
 
-$teacher = new Teacher();
+$teacher = new teacher();
 
 if (!$teacher->is_logged()) {
     header("location: /error.php?errorID=19");
