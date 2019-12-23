@@ -309,23 +309,6 @@ class officer extends user
         return $cond;
     }
 
-    public function get_class_stamp_by_id($classID)
-    {
-        $conn = $this->connectMySQL();
-
-        $res = $conn->query("SELECT YearClassID, Section FROM SpecificClass WHERE ID=$classID");
-        if ($res->num_rows <= 0)
-            return array();
-        $IDs = array();
-        for ($i = 0; $i < $res->num_rows; $i++) {
-            $row = $res->fetch_assoc();
-            $stamp = $row["YearClassID"] . "°" . $row["Section"];
-            array_push($IDs, $row);
-        }
-        $res->close();
-        return $stamp;
-    }
-
     public function get_teacher_topic($classID)
     {
 

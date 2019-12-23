@@ -450,6 +450,26 @@ class user {
 		$regex = '/^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$/';
 		return preg_match($regex,$fcode);
 	}
+
+
+    public function get_class_stamp_by_id($classID)
+    {
+        $conn = $this->connectMySQL();
+
+        $res = $conn->query("SELECT YearClassID, Section FROM SpecificClass WHERE ID=$classID");
+        if ($res->num_rows <= 0)
+            return array();
+        $IDs = array();
+        for ($i = 0; $i < $res->num_rows; $i++) {
+            $row = $res->fetch_assoc();
+            $stamp = $row["YearClassID"] . "°" . $row["Section"];
+            array_push($IDs, $row);
+        }
+        $res->close();
+        return $stamp;
+    }
+
+
 }
 
 ?>

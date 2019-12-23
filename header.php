@@ -56,7 +56,9 @@ echo '<!-- Modal Login -->
 						
 						
 						
-						<div class="text-center">
+						<div class="text-center">';
+
+                        /*
                             <div class="btn-group btn-group-toggle m-3" data-toggle="buttons">
                                 <label class="btn btn-outline-secondary">
                                     <input type="radio" name="usergroup" value="parent">Parent
@@ -71,8 +73,9 @@ echo '<!-- Modal Login -->
                                     <input type="radio" name="usergroup" value="admin">Admin
                                 </label>
                             </div>
-                                
-                            <div class="checkbox">
+                                */
+echo '
+                            <div class="checkbox"  style="margin-top:50px;">
                                 <label><input type="checkbox" value="" checked>Remember me</label>
                             </div>
 						</div>

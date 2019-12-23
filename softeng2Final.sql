@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 17, 2019 alle 11:24
+-- Creato il: Dic 23, 2019 alle 13:04
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -40,9 +40,22 @@ CREATE TABLE `Communication` (
 
 INSERT INTO `Communication` (`ID`, `Title`, `Description`, `Timestamp`, `OfficerID`) VALUES
 (1, 'Christmas holidays', 'All lectures are suspended from 20/12/2019 until 07/01/2020', '2019-12-09 16:34:14', 1),
-(2, 'All labs will be closed', 'The access to all laboratories will be restored on 10/01/2020', '2019-12-09 17:34:14', 2),
 (3, 'Lecture suspended', 'All lectures are suspended on 11/12/2019', '2019-12-09 16:35:07', 1),
-(4, 'Sprint demo', 'A demo for the third sprint will be perfomed on 17/12/2019', '2019-12-16 12:18:28', 1);
+(8, 'Holydays', 'description of holydays', '2019-12-17 14:53:18', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `FinalGrades`
+--
+
+CREATE TABLE `FinalGrades` (
+  `ID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `TopicID` int(11) NOT NULL,
+  `Mark` int(11) NOT NULL,
+  `TermID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -159,7 +172,8 @@ INSERT INTO `Note` (`ID`, `TeacherID`, `SpecificClassID`, `Date`, `Description`)
 (6, 1, 1, '2019-12-09 23:00:00', 'Di Leo is doing E2E testing with his teammates'),
 (7, 7, 2, '2019-12-08 23:00:00', 'Dries plays football during the lecture'),
 (8, 7, 3, '2019-12-12 23:00:00', 'dries mertens plays with nintendo switch during the lecture'),
-(9, 1, 1, '2019-12-15 23:00:00', 'Di Leo and Sordi note');
+(9, 1, 1, '2019-12-15 23:00:00', 'Di Leo and Sordi note'),
+(12, 1, 1, '2019-12-16 23:00:00', 'di leo and sordi are talking during demo');
 
 -- --------------------------------------------------------
 
@@ -192,7 +206,9 @@ INSERT INTO `NoteRecord` (`ID`, `StudentID`, `NoteID`, `Seen`) VALUES
 (11, 4, 6, 1),
 (12, 13, 8, 0),
 (13, 2, 9, 1),
-(14, 4, 9, 1);
+(14, 4, 9, 1),
+(18, 2, 12, 1),
+(19, 4, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -222,9 +238,7 @@ INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `L
 (14, 2, 1, '2019-12-02', 1, 6),
 (15, 5, 1, '2019-12-02', 0, 0),
 (16, 4, 1, '2019-12-02', 0, 0),
-(19, 2, 1, '2019-12-12', 0, 4),
 (20, 6, 1, '2019-12-12', 1, 6),
-(21, 2, 1, '2019-12-12', 0, 4),
 (22, 4, 1, '2019-12-13', 0, 4),
 (23, 4, 1, '2019-12-12', 0, 0),
 (24, 2, 1, '2019-12-12', 0, 4),
@@ -234,7 +248,11 @@ INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `L
 (28, 3, 1, '2019-12-11', 1, 6),
 (29, 5, 1, '2019-12-16', 1, 6),
 (30, 2, 1, '2019-12-16', 0, 0),
-(31, 1, 1, '2019-12-16', 0, 4);
+(31, 1, 1, '2019-12-16', 0, 4),
+(81, 4, 1, '2019-12-17', 0, 0),
+(82, 2, 1, '2019-12-17', 0, 4),
+(83, 1, 1, '2019-12-17', 1, 6),
+(84, 3, 1, '2019-12-17', 1, 6);
 
 -- --------------------------------------------------------
 
@@ -337,7 +355,7 @@ INSERT INTO `Student` (`ID`, `Name`, `Surname`, `AverageLastSchool`, `CF`, `Spec
 (11, 'Mario', 'Rossi', 7, 'LVMLVS80T70L552B', 2),
 (12, 'Javier', 'Lautaro', 10, 'LTRJVR97A01F839O', 2),
 (13, 'Dries', 'Mertens', 10, 'MRTDRS89L03F839J', 3),
-(18, 'Francesco', 'Riba', 9, 'WTCPGG93M51H398P', 1),
+(18, 'Lorenzo', 'Riba', 9, 'WTCPGG93M51H398P', 1),
 (23, 'Ross', 'Trebbiani', 9.25, 'TRBRSS80A01F839Q', -1);
 
 -- --------------------------------------------------------
@@ -365,7 +383,35 @@ INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 (5, 0, 7, 'fc5'),
 (6, 0, 8, 'fc6'),
 (7, 0, 9, 'fc7'),
-(8, 0, 57, 'VTRNTN80M01F839G');
+(8, 0, 57, 'VTRNTN80M01F839G'),
+(11, 0, 64, 'fc10'),
+(12, 0, 65, 'fc11'),
+(13, 0, 66, 'fc10'),
+(14, 0, 67, 'fc10'),
+(15, 0, 68, 'fc10'),
+(16, 0, 69, 'fc10'),
+(17, 0, 70, 'fc10'),
+(18, 0, 71, 'fc10');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Terms`
+--
+
+CREATE TABLE `Terms` (
+  `ID` int(11) NOT NULL,
+  `LimitDay` date NOT NULL,
+  `Stamp` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `Terms`
+--
+
+INSERT INTO `Terms` (`ID`, `LimitDay`, `Stamp`) VALUES
+(1, '2019-12-21', '2019/2020 - 01'),
+(2, '2019-06-14', '2018/2019 - 02');
 
 -- --------------------------------------------------------
 
@@ -387,31 +433,56 @@ CREATE TABLE `Timetables` (
 --
 
 INSERT INTO `Timetables` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`, `DayOfWeek`, `HourSlot`) VALUES
-(92, 1, 1, 1, 0, 0),
-(93, 3, 3, 1, 1, 0),
-(94, 3, 3, 1, 2, 0),
-(95, 3, 3, 1, 3, 0),
-(96, 8, 8, 1, 4, 0),
-(97, 1, 1, 1, 0, 1),
-(98, 3, 3, 1, 1, 1),
-(99, 3, 3, 1, 2, 1),
-(100, 7, 7, 1, 3, 1),
-(101, 8, 8, 1, 4, 1),
-(102, 1, 2, 1, 0, 2),
-(103, 4, 4, 1, 1, 2),
-(104, 5, 5, 1, 2, 2),
-(105, 8, 8, 1, 3, 2),
-(106, 7, 7, 1, 4, 2),
-(107, 1, 2, 1, 0, 3),
-(108, 4, 4, 1, 1, 3),
-(109, 6, 6, 1, 2, 3),
-(110, 8, 8, 1, 3, 3),
-(112, 3, 3, 1, 0, 4),
-(113, 5, 5, 1, 1, 4),
-(114, 6, 6, 1, 2, 4),
-(115, 8, 8, 1, 3, 4),
-(119, 8, 8, 1, 2, 5),
-(121, 3, 3, 1, 4, 3);
+(392, 18, 8, 2, 0, 0),
+(393, 18, 8, 2, 1, 0),
+(394, 18, 8, 2, 2, 0),
+(395, 15, 5, 2, 3, 0),
+(396, 13, 3, 2, 4, 0),
+(397, 18, 8, 2, 0, 1),
+(398, 18, 8, 2, 1, 1),
+(399, 16, 6, 2, 2, 1),
+(400, 14, 4, 2, 3, 1),
+(401, 12, 2, 2, 4, 1),
+(402, 17, 7, 2, 0, 2),
+(403, 13, 3, 2, 1, 2),
+(404, 16, 6, 2, 2, 2),
+(405, 14, 4, 2, 3, 2),
+(406, 12, 2, 2, 4, 2),
+(407, 13, 3, 2, 0, 3),
+(408, 17, 7, 2, 1, 3),
+(409, 13, 3, 2, 2, 3),
+(410, 13, 3, 2, 3, 3),
+(411, 11, 1, 2, 4, 3),
+(413, 18, 8, 2, 1, 4),
+(414, 13, 3, 2, 2, 4),
+(415, 13, 3, 2, 3, 4),
+(416, 11, 1, 2, 4, 4),
+(419, 15, 5, 2, 2, 5),
+(422, 1, 1, 1, 0, 0),
+(423, 3, 3, 1, 1, 0),
+(424, 3, 3, 1, 2, 0),
+(425, 3, 3, 1, 3, 0),
+(426, 8, 8, 1, 4, 0),
+(427, 1, 1, 1, 0, 1),
+(428, 3, 3, 1, 1, 1),
+(429, 3, 3, 1, 2, 1),
+(430, 7, 7, 1, 3, 1),
+(431, 8, 8, 1, 4, 1),
+(432, 1, 2, 1, 0, 2),
+(433, 4, 4, 1, 1, 2),
+(434, 5, 5, 1, 2, 2),
+(435, 8, 8, 1, 3, 2),
+(436, 7, 7, 1, 4, 2),
+(437, 1, 2, 1, 0, 3),
+(438, 3, 3, 1, 1, 3),
+(439, 6, 6, 1, 2, 3),
+(440, 8, 8, 1, 3, 3),
+(441, 3, 3, 1, 4, 3),
+(442, 4, 4, 1, 0, 4),
+(443, 5, 5, 1, 1, 4),
+(444, 6, 6, 1, 2, 4),
+(445, 8, 8, 1, 3, 4),
+(449, 8, 8, 1, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -496,15 +567,14 @@ INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`
 (12, 6, 6, 1),
 (13, 7, 7, 1),
 (14, 8, 8, 1),
-(15, 1, 1, 2),
-(16, 1, 2, 2),
-(17, 2, 2, 2),
-(18, 3, 3, 2),
-(19, 4, 4, 2),
-(20, 5, 5, 2),
-(21, 6, 6, 2),
-(22, 7, 7, 2),
-(23, 8, 8, 2);
+(16, 11, 1, 2),
+(17, 12, 2, 2),
+(18, 13, 3, 2),
+(19, 14, 4, 2),
+(20, 15, 5, 2),
+(21, 16, 6, 2),
+(22, 17, 7, 2),
+(23, 18, 8, 2);
 
 -- --------------------------------------------------------
 
@@ -529,7 +599,10 @@ CREATE TABLE `UploadedClassDocuments` (
 INSERT INTO `UploadedClassDocuments` (`ID`, `FileName`, `DiskFileName`, `SpecificClassID`, `Description`, `Date`, `SubjectID`) VALUES
 (3, 'emailSec.pdf', '8290566acbb0d5e1388dc6008275431a_emailSec.pdf', 1, 'Email security lioy', '2019-12-15 16:45:20', 2),
 (4, 'Designers_Personas_Presentation_en.pptx', '3292103ac1749a4ec06dc15b592ef270_Designers_Personas_Presentation_en.pptx', 1, 'Personas Template', '2019-12-15 17:34:35', 1),
-(5, 'HistoryNotes.txt', '4147fc3ec062e49b5f19c5a4c9078329_HistoryNotes.txt', 1, 'History Notes', '2019-12-16 12:11:52', 1);
+(5, 'HistoryNotes.txt', '4147fc3ec062e49b5f19c5a4c9078329_HistoryNotes.txt', 1, 'History Notes', '2019-12-16 12:11:52', 1),
+(6, 'README.md', 'dc6ee570c4469821a4f4977fe7a4cf33_README.md', 2, 'This is a readme file', '2019-12-17 10:50:00', 1),
+(7, 'Dockerfile', 'c4de739d81ce66af524a8d1eb4d7b945_Dockerfile', 1, 'M dockerfile', '2019-12-17 11:03:32', 2),
+(9, 'Notes.txt', '5dc4c3e30a85be5a5099b423cd6361ac_Notes.txt', 1, 'notes ', '2019-12-17 14:51:39', 1);
 
 -- --------------------------------------------------------
 
@@ -567,7 +640,15 @@ INSERT INTO `User` (`ID`, `Name`, `Surname`, `Email`, `Password`, `UserGroup`) V
 (46, 'System', 'Administrator', 'sysadmin@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'admin'),
 (55, 'Tony', 'Lioy', 'tony.lioy@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
 (56, 'Fei Fei', 'Li', 'lifeifei@gmail.com', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'parent'),
-(57, 'Antonio', 'Vetro', 'antonio.vetro@io.io', '$2y$12$wh/CWpnhPY/pQ2xzNLZMIemWcJ62UnNJv0omRDt5.Px8gFUp8rfim', 'teacher');
+(57, 'Antonio', 'Vetro', 'antonio.vetro@io.io', '$2y$12$wh/CWpnhPY/pQ2xzNLZMIemWcJ62UnNJv0omRDt5.Px8gFUp8rfim', 'teacher'),
+(64, 'Mario', 'Baldi', 'mario.baldi@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(65, 'Lorenzo', 'Insigne', 'lorenzo.insigne@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(66, 'Luca', 'Ardito', 'luca.ardito@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(67, 'Rino', 'Gattuso', 'rino.gattuso@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(68, 'Marek', 'Hamsik', 'marek.hamsik@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(69, 'Maurizio', 'Rebaudengo', 'maurizio.rebaudengo@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(70, 'Paolo', 'Garza', 'paolo.garza@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher'),
+(71, 'Bufalino', 'Stefania', 'stefania.bufalino@io.io', '$2y$12$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher');
 
 -- --------------------------------------------------------
 
@@ -645,6 +726,15 @@ ALTER TABLE `Communication`
   ADD KEY `OfficerID` (`OfficerID`);
 
 --
+-- Indici per le tabelle `FinalGrades`
+--
+ALTER TABLE `FinalGrades`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `fk_finalgrades_studentID` (`StudentID`),
+  ADD KEY `fk_finalgrades_topicID` (`TopicID`),
+  ADD KEY `fk_finalgrades_termID` (`TermID`);
+
+--
 -- Indici per le tabelle `Homework`
 --
 ALTER TABLE `Homework`
@@ -718,12 +808,17 @@ ALTER TABLE `Teacher`
   ADD KEY `UserID` (`UserID`);
 
 --
+-- Indici per le tabelle `Terms`
+--
+ALTER TABLE `Terms`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indici per le tabelle `Timetables`
 --
 ALTER TABLE `Timetables`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `TeacherID_2` (`TeacherID`,`DayOfWeek`,`HourSlot`),
-  ADD UNIQUE KEY `TeacherID_3` (`TeacherID`,`DayOfWeek`,`HourSlot`),
   ADD KEY `TeacherID` (`TeacherID`),
   ADD KEY `TopicID` (`TopicID`),
   ADD KEY `SpecificClassID` (`SpecificClassID`);
@@ -783,7 +878,12 @@ ALTER TABLE `YearTopicHour`
 -- AUTO_INCREMENT per la tabella `Communication`
 --
 ALTER TABLE `Communication`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT per la tabella `FinalGrades`
+--
+ALTER TABLE `FinalGrades`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT per la tabella `Homework`
 --
@@ -798,17 +898,17 @@ ALTER TABLE `MarksRecord`
 -- AUTO_INCREMENT per la tabella `Note`
 --
 ALTER TABLE `Note`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT per la tabella `NoteRecord`
 --
 ALTER TABLE `NoteRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 --
 -- AUTO_INCREMENT per la tabella `Officer`
 --
@@ -833,12 +933,17 @@ ALTER TABLE `Student`
 -- AUTO_INCREMENT per la tabella `Teacher`
 --
 ALTER TABLE `Teacher`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT per la tabella `Terms`
+--
+ALTER TABLE `Terms`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT per la tabella `Timetables`
 --
 ALTER TABLE `Timetables`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=452;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --
@@ -858,12 +963,12 @@ ALTER TABLE `TopicTeacherClass`
 -- AUTO_INCREMENT per la tabella `UploadedClassDocuments`
 --
 ALTER TABLE `UploadedClassDocuments`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT per la tabella `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT per la tabella `YearClass`
 --
@@ -883,6 +988,14 @@ ALTER TABLE `YearTopicHour`
 --
 ALTER TABLE `Communication`
   ADD CONSTRAINT `fk_officerID2` FOREIGN KEY (`OfficerID`) REFERENCES `Officer` (`ID`);
+
+--
+-- Limiti per la tabella `FinalGrades`
+--
+ALTER TABLE `FinalGrades`
+  ADD CONSTRAINT `fk_finalgrades_studentID` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`),
+  ADD CONSTRAINT `fk_finalgrades_termID` FOREIGN KEY (`TermID`) REFERENCES `Terms` (`ID`),
+  ADD CONSTRAINT `fk_finalgrades_topicID` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`);
 
 --
 -- Limiti per la tabella `Homework`

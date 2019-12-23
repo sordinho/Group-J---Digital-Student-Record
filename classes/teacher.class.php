@@ -227,25 +227,7 @@ CREATE TABLE `TopicRecord` (
 		return $absences;
 	}
 
-	public function get_students_by_class_id($classID) {
-		$students = array();
-		$conn = $this->connectMySQL();
-		$stmt = $conn->prepare("SELECT ID, Name, Surname
-	                                  FROM Student
-	                                  WHERE SpecificClassID = ?
-	                                  ORDER BY Surname,Name,ID;");
-		if (!$stmt)
-			return $students;
-		$stmt->bind_param('i', $classID);
-		$stmt->execute();
-		$res = $stmt->get_result();
-		if ($res > 0) {
-			while ($row = $res->fetch_assoc()) {
-				array_push($students, $row);
-			}
-		}
-		return $students;
-	}
+
 
 	public function get_lecture_by_id($lectureID) {
 		$conn = $this->connectMySQL();
@@ -629,4 +611,190 @@ CREATE TABLE `TopicRecord` (
 
 		return $res->fetch_row()[0];
 	}
+
+	public function get_coordinated_class($teacherID){
+        $conn = $this->connectMySQL();
+        $coordinatedClassIDs=array();
+        $stmt = $conn->prepare("SELECT ID FROM SpecificClass WHERE CoordinatorTeacherID = ?;");
+        if (!$stmt)
+            return false;
+        $stmt->bind_param("i", $teacherID);
+        if (!$stmt->execute())
+            return false;
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            while ($row = $res->fetch_assoc()) {
+                array_push($coordinatedClassIDs, $row);
+            }
+        }else{
+            return false;
+        }
+        return $coordinatedClassIDs;
+    }
+
+    public function has_final_grades($studentID,$termID,$specificClassID){
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT Count(Distinct ID) as COUNT FROM FinalGrades WHERE StudentID = ? AND TermID = ? ;");
+        if (!$stmt)
+            return false;
+        $stmt->bind_param("ii", $studentID,$termID);
+        if (!$stmt->execute())
+            return false;
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            $row=$res->fetch_assoc();
+            $countStudent=$row['COUNT'];
+            $conn = $this->connectMySQL();
+            $stmt = $conn->prepare("SELECT Count(DISTINCT TopicID) as COUNT FROM TimeTables WHERE SpecificClassID=?;");
+            $stmt->bind_param("i", $specificClassID);
+            if (!$stmt->execute())
+                return false;
+            $res = $stmt->get_result();
+            if ($res > 0) {
+                $row=$res->fetch_assoc();
+                $countTopics=$row['COUNT'];
+                if($countStudent==$countTopics){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public function get_actual_term(){
+
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT ID FROM Terms WHERE LimitDay <  ? ORDER BY LimitDay DESC LIMIT 1;");
+        if (!$stmt)
+            return false;
+        $stmt->bind_param("s", date("Y-m-d"));
+        if (!$stmt->execute())
+            return false;
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            $row=$res->fetch_assoc();
+            return $row['ID'];
+        }else{
+            return false;
+        }
+
+    }
+
+    public function get_missing_term_marks($studentID,$termID,$specificClassID){
+        $conn = $this->connectMySQL();
+        $missingTopicIDs=array();
+        $stmt = $conn->prepare("SELECT DISTINCT TopicID,Name FROM TimeTables,Topic WHERE SpecificClassID=? AND 
+                                                                                     TopicID NOT IN (SELECT TopicID FROM FinalGrades WHERE StudentID = ? AND TermID = ? ) AND 
+                                                                                     Topic.ID=TopicID");
+        if (!$stmt)
+            return false;
+        $stmt->bind_param("iii", $specificClassID,$studentID,$termID);
+        if (!$stmt->execute())
+            return false;
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            while ($row = $res->fetch_assoc()) {
+                array_push($missingTopicIDs, $row);
+            }
+        }else{
+            return false;
+        }
+        return $missingTopicIDs;
+    }
+
+    public function get_student_stamp_by_id($studentID){
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT Surname,Name FROM Student WHERE ID=?");
+        if (!$stmt)
+            return false;
+        $stmt->bind_param("i", $studentID);
+        if (!$stmt->execute())
+            return false;
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            $row=$res->fetch_assoc();
+            return $row['Surname']." ".$row['Name'];
+        }else{
+            return false;
+        }
+    }
+
+    public function get_average_mark_for_topic($topicID,$studentID){
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT StudentID,AVG(Mark) AS Average FROM MarksRecord,Terms WHERE TopicID=? AND StudentID=? AND 
+                                        Timestamp < ? AND 
+                                        Timestamp > (SELECT LimitDay FROM Terms WHERE LimitDay < ? ORDER BY LimitDay DESC LIMIT 1 OFFSET 1)
+                                        GROUP BY StudentID");
+        if (!$stmt)
+            return 0;
+        $stmt->bind_param("iiss", $topicID,$studentID,date("Y-m-d"),date("Y-m-d"));
+        if (!$stmt->execute())
+            return 0;
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            $row=$res->fetch_assoc();
+            return $row['Average'];
+        }else{
+            return 0;
+        }
+    }
+
+    public function set_final_grade($value){
+	    //format of $value
+        // $_GET['studentID']."_".$mark['TopicID']."_".round($averageMinus,0)."_".$teacher->get_actual_term()
+
+        $values=explode("_", $value);
+
+        if(!isset($values[0]) || !isset($values[1]) || !isset($values[2]) || !isset($values[3]))
+            return false;
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("INSERT INTO FinalGrades (StudentID,TopicID,Mark,TermID) VALUES (?,?,?,?);");
+        if (!$stmt)
+            return false;
+        $stmt->bind_param("iiii", $values[0], $values[1],$values[2],$values[3]);
+        $stmt->execute();
+        return $this->get_specificclassid_by_student($values[0]);
+
+    }
+
+    public function get_specificclassid_by_student($studentID){
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT SpecificClassID FROM Student WHERE ID=?");
+        if (!$stmt)
+            return false;
+        $stmt->bind_param("i", $studentID);
+        if (!$stmt->execute())
+            return false;
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            $row=$res->fetch_assoc();
+            return $row['SpecificClassID'];
+        }else{
+            return false;
+        }
+    }
+
+    public function get_students_by_class_id($classID) {
+        $students = array();
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT ID, Name, Surname
+	                                  FROM Student
+	                                  WHERE SpecificClassID = ?
+	                                  ORDER BY Surname,Name,ID;");
+        if (!$stmt)
+            return $students;
+        $stmt->bind_param('i', $classID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res > 0) {
+            while ($row = $res->fetch_assoc()) {
+                array_push($students, $row);
+            }
+        }
+        return $students;
+    }
+
 }
