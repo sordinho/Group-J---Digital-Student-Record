@@ -436,16 +436,11 @@ class sparent extends user {
 	}
 	#not sure about the parameter to pass
 	public function check_download_permission($fname) {
-		if (!isset($childID)) {
-			return array();
-		}
-
-		$material_info = array();
 		$conn = $this->connectMySql();
 		$stmt = $conn->prepare("SELECT * FROM UploadedClassDocuments as ucd, Student as s, Parent as p
 							WHERE ucd.SpecificClassID=s.SpecificClassID
 							AND s.ID = p.StudentID
-							AND p.ID = ? AND FileName = ?");
+							AND p.ID = ? AND ucd.DiskFileName = ?");
 		$stmt->bind_param('is', $this->get_parent_ID(), $fname);
 		$stmt->execute();
 		$res = $stmt->get_result();
