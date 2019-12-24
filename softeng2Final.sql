@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 24, 2019 alle 14:23
+-- Creato il: Dic 24, 2019 alle 20:06
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -56,14 +56,6 @@ CREATE TABLE `FinalGrades` (
   `Mark` int(11) NOT NULL,
   `TermID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dump dei dati per la tabella `FinalGrades`
---
-
-INSERT INTO `FinalGrades` (`ID`, `StudentID`, `TopicID`, `Mark`, `TermID`) VALUES
-(1, 2, 1, 9, 1),
-(2, 1, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -174,11 +166,11 @@ CREATE TABLE `MeetingReservation` (
 --
 
 INSERT INTO `MeetingReservation` (`ID`, `ParentID`, `TeacherAvailabilityID`, `Date`, `TimeSlot`) VALUES
-(1, 5, 1, '2020-01-13', 1),
-(2, 5, 1, '2020-01-13', 3),
-(3, 2, 2, '2020-01-17', 3),
-(4, 2, 4, '2020-01-15', 2),
-(5, 7, 4, '2020-01-22', 1);
+(1, 5, 1, '2020-01-13', 0),
+(2, 5, 1, '2020-01-13', 2),
+(3, 2, 2, '2020-01-17', 2),
+(4, 2, 4, '2020-01-15', 1),
+(5, 7, 4, '2020-01-22', 0);
 
 -- --------------------------------------------------------
 
@@ -631,7 +623,9 @@ INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`
 (20, 15, 5, 2),
 (21, 16, 6, 2),
 (22, 17, 7, 2),
-(23, 18, 8, 2);
+(23, 18, 8, 2),
+(24, 7, 7, 3),
+(25, 3, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -1041,7 +1035,7 @@ ALTER TABLE `TopicRecord`
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
 ALTER TABLE `TopicTeacherClass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT per la tabella `UploadedClassDocuments`
 --

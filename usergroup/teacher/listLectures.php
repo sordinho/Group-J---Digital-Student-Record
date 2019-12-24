@@ -25,7 +25,7 @@ OUT;
 		case 0:
 			$content.= <<<OUT
 <div class="alert alert-danger" role="alert">
- Error in modifying lecture. <a href="listLectures.php" class="alert-link">Retry </a> or <a href="../officer/index.php" class="alert-link">back to your homepage.</a>
+ Error in modifying lecture. <a href="listLectures.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
 </div>
 OUT;
 
@@ -56,7 +56,7 @@ OUT;
 							  </div>
 							  <div class="form-group">
 							  <label for="exampleFormControlSelect2">Subject</label>
-							  <input type="text" class="form-control" value = "' . $lecture_info["TopicName"] . '" name="TopicName" id="subject" disabled>
+							  <input type="text" class="form-control" value = "' . $lecture_info["TopicName"] . ' - ' . $lecture_info['YearClass'] . $lecture_info['Section'] . '" name="TopicName" id="subject" disabled>
 							  </div>
 							  <div class="form-group">
 							  <label for="exampleFormControlTextarea1">Description</label>
@@ -105,6 +105,7 @@ OUT;
       <tr>
         <th scope="col">Description</th>
         <th scope="col">Subject</th>
+        <th scope="col">Class</th>
         <th scope="col">Date</th>
       </tr>
     </thead>
@@ -117,6 +118,7 @@ OUT;
 		$content .= '<tr>
         <th scope="row"><a class="alert-link" href="listLectures.php?action=edit&lectureID='.$row['RecordID'].'">' . $title . '</a></th>
         <td>' . $row['TopicName'] . '</td>
+        <td>' . $row['YearClass'].$row['Section'] .'</td>
         <td>' . $row['TimeStamps'] . '</td>
       </tr>';
 	}

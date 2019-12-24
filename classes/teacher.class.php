@@ -188,10 +188,11 @@ CREATE TABLE `TopicRecord` (
 	public function get_topics_record() {
 		$topicRecords = array();
 		$conn = $this->connectMySQL();
-		$stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamps, 
-									  TopicRecord.Description as TopicDescription, Topic.Name as TopicName, TopicRecord.ID as RecordID
-									  FROM TopicRecord, Topic
-									  WHERE TopicRecord.TopicID=Topic.ID AND TopicRecord.TeacherID=?");
+		$stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamps,
+                                               TopicRecord.Description as TopicDescription, Topic.Name as TopicName, TopicRecord.ID as RecordID,
+                                               SpecificClass.YearClassID as YearClass, SpecificClass.Section
+                                        FROM TopicRecord, Topic, SpecificClass
+                                        WHERE TopicRecord.TopicID=Topic.ID AND SpecificClass.ID=TopicRecord.SpecificClassID AND TopicRecord.TeacherID=?");
 //		$teacherID = $this->get_teacher_ID();
 		$teacherID = $_SESSION['teacherID'];
 		$stmt->bind_param('i', $teacherID);
@@ -231,12 +232,14 @@ CREATE TABLE `TopicRecord` (
 
 	public function get_lecture_by_id($lectureID) {
 		$conn = $this->connectMySQL();
-		$stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamp, 
-									  TopicRecord.Description as TopicDescription,
-									  TopicRecord.ID as TopicRecordID, 
-									  Topic.Name as TopicName
-									  FROM TopicRecord , Topic
-									  WHERE TopicRecord.TopicID=Topic.ID and TopicRecord.ID=?");
+		$stmt = $conn->prepare("SELECT TopicRecord.Timestamp as TimeStamp,
+                                           TopicRecord.Description as TopicDescription,
+                                           TopicRecord.ID as TopicRecordID,
+                                           Topic.Name as TopicName,
+                                           SpecificClass.YearClassID as YearClass,
+                                           SpecificClass.Section
+                                    FROM TopicRecord , Topic , SpecificClass
+                                    WHERE TopicRecord.TopicID=Topic.ID and SpecificClass.ID=TopicRecord.SpecificClassID and TopicRecord.ID=?");
 
 		$stmt->bind_param('i', $lectureID);
 		$stmt->execute();
