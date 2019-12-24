@@ -14,6 +14,13 @@ if(substr($actual_url, 0, strlen($local_host_url)) === $local_host_url) {
     $uploaddir = '../../uploads/';
 }
 /*End of local host behavior*/
+// Check permissio
+$sparent = new sparent();
+
+if (!$sparent->is_logged() || !$sparent->check_download_permission()) {
+    header("location: /error.php?errorID=19");
+    exit();
+}
 
 $file = $uploaddir.$file;
 
