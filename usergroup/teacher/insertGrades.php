@@ -95,7 +95,7 @@ function enableLaude(elem){
     }
 }
 --></script>
-                      <div class="card-body">
+                      <div class="card-body table-responsive">
                       <form method="post" class="form-inline" style="color:#757575" action="insertGrades.php">
                         <table class="table table-striped">
                       <thead>
