@@ -41,7 +41,16 @@ if (!isset($_POST["description"])) {
         }
     } else {
 //$content ='<a href="usergroup/teacher/teacherAction1ToMove.php">Action1To incorporate in MENU</a>';
-        $topics = $teacher->get_topics();
+
+        $topics = $teacher->get_assigned_classes();
+        foreach ($topics as $topic) {
+            $index = array_search('TopicDescription', $topic);
+            unset($topic[$index]);
+            $value = json_encode($topic);
+            $topic_list .= "<option value='$value'>" . $topic['TopicName'] . " - ".$topic['YearClass'].$topic['Section']."</option>";
+        }
+
+        /*$topics = $teacher->get_topics();
         foreach ($topics as $topic) {
             $topic_list .= "<option value='{$topic['TopicID']}'>" . $topic['TopicName'] . "</option>";
         }
@@ -50,7 +59,7 @@ if (!isset($_POST["description"])) {
         foreach ($classes as $class) {
             $class_str = $class['YearClass'] . $class['Section'];
             $class_list .= "<option value='{$class['ClassID']}'>" . $class_str . "</option>";
-        }
+        }*/
 
         $content = '
 
@@ -64,17 +73,19 @@ if (!isset($_POST["description"])) {
                                 <form method="POST">
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect2">Subject select</label>
-                                        <select class="form-control" name="topicID" id="topicID">
+                                        <select class="form-control" name="topic" id="topicID">
                                             ' . $topic_list . '
                                         </select>
                                     </div>
                             
+                                    <!--
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect3">Class select</label>
                                         <select  class="form-control" name="classID" id="classID">
-                                            ' . $class_list . '
+                                            
                                         </select>
                                     </div>
+                                    -->
                             
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Description of the lecture</label>
@@ -96,7 +107,11 @@ if (!isset($_POST["description"])) {
     //print("Now we should insert the topic");
     //	public function insert_new_lecture_topic($lectureDescription, $topicID, $timestamp) {
 
-    if ($teacher->insert_new_lecture_topic($_POST["description"], $_POST["topicID"], $_POST["date"], $_POST["classID"])) {
+    $post = json_decode($_POST['topic'], TRUE);
+    $topicID = $post['TopicID'];
+    $classID = $post['ClassID'];
+
+    if ($teacher->insert_new_lecture_topic($_POST["description"], $topicID, $_POST["date"], $classID)) {
         header("Location: addLecture.php?operation_result=1");
         die();
     }
