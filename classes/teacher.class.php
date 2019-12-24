@@ -688,7 +688,7 @@ CREATE TABLE `TopicRecord` (
         $missingTopicIDs=array();
         $stmt = $conn->prepare("SELECT DISTINCT TopicID,Name FROM Timetables,Topic WHERE SpecificClassID=? AND 
                                                                                      TopicID NOT IN (SELECT TopicID FROM FinalGrades WHERE StudentID = ? AND TermID = ? ) AND 
-                                                                                     Topic.ID=TopicID");
+                                                                                     Topic.ID=TopicID ORDER BY Name");
         if (!$stmt)
             return false;
         $stmt->bind_param("iii", $specificClassID,$studentID,$termID);
