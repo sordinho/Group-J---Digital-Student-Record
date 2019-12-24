@@ -94,4 +94,26 @@ class calendar
         return $date;
     }
 
+    public static function from_num_to_dow($n) {
+        $day = "";
+        switch ($n) {
+            case 0:
+                $day = "Monday";
+                break;
+            case 1:
+                $day = "Tuesday";
+                break;
+            case 2:
+                $day = "Wednesday";
+                break;
+            case 3:
+                $day = "Thursday";
+                break;
+            case 4:
+                $day = "Friday";
+                break;
+        }
+        return $day;
+    }
+
 }

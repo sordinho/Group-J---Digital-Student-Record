@@ -1,4 +1,5 @@
 <?php
+require_once 'calendar.class.php';
 
 
 class sparent extends user {

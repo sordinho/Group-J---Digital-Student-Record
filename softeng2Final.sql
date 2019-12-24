@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 23, 2019 alle 13:29
+-- Creato il: Dic 24, 2019 alle 14:23
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -57,17 +57,13 @@ CREATE TABLE `FinalGrades` (
   `TermID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dump dei dati per la tabella `FinalGrades`
+--
+
 INSERT INTO `FinalGrades` (`ID`, `StudentID`, `TopicID`, `Mark`, `TermID`) VALUES
-(122, 1, 1, 2, 1),
-(123, 1, 2, 0, 1),
-(124, 2, 1, 9, 1),
-(125, 2, 2, 8, 1),
-(126, 2, 3, 0, 1),
-(127, 2, 4, 0, 1),
-(128, 2, 5, 0, 1),
-(129, 2, 6, 0, 1),
-(130, 2, 7, 0, 1),
-(131, 2, 8, 0, 1);
+(1, 2, 1, 9, 1),
+(2, 1, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -158,6 +154,31 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (33, 4, 10, 7, 7, '2019-12-03 11:00:00', 0),
 (34, 2, 10, 1, 2, '2019-12-03 10:43:54', 1),
 (35, 4, 10, 1, 1, '2019-12-03 10:43:54', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `MeetingReservation`
+--
+
+CREATE TABLE `MeetingReservation` (
+  `ID` int(11) NOT NULL,
+  `ParentID` int(11) NOT NULL,
+  `TeacherAvailabilityID` int(11) NOT NULL,
+  `Date` date NOT NULL,
+  `TimeSlot` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `MeetingReservation`
+--
+
+INSERT INTO `MeetingReservation` (`ID`, `ParentID`, `TeacherAvailabilityID`, `Date`, `TimeSlot`) VALUES
+(1, 5, 1, '2020-01-13', 1),
+(2, 5, 1, '2020-01-13', 3),
+(3, 2, 2, '2020-01-17', 3),
+(4, 2, 4, '2020-01-15', 2),
+(5, 7, 4, '2020-01-22', 1);
 
 -- --------------------------------------------------------
 
@@ -405,6 +426,29 @@ INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 (17, 0, 70, 'fc10'),
 (18, 0, 71, 'fc10'),
 (19, -1, 72, 'noteacherfc1');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `TeacherAvailability`
+--
+
+CREATE TABLE `TeacherAvailability` (
+  `ID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `DayOfWeek` int(11) NOT NULL,
+  `HourSlot` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `TeacherAvailability`
+--
+
+INSERT INTO `TeacherAvailability` (`ID`, `TeacherID`, `DayOfWeek`, `HourSlot`) VALUES
+(1, 7, 1, 2),
+(2, 8, 4, 1),
+(3, 13, 4, 5),
+(4, 1, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -766,6 +810,14 @@ ALTER TABLE `MarksRecord`
   ADD KEY `TopicID` (`TopicID`);
 
 --
+-- Indici per le tabelle `MeetingReservation`
+--
+ALTER TABLE `MeetingReservation`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ParentID` (`ParentID`),
+  ADD KEY `TeacherAvailabilityID` (`TeacherAvailabilityID`);
+
+--
 -- Indici per le tabelle `Note`
 --
 ALTER TABLE `Note`
@@ -820,6 +872,13 @@ ALTER TABLE `Student`
 ALTER TABLE `Teacher`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
+
+--
+-- Indici per le tabelle `TeacherAvailability`
+--
+ALTER TABLE `TeacherAvailability`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `TeacherID` (`TeacherID`);
 
 --
 -- Indici per le tabelle `Terms`
@@ -897,7 +956,7 @@ ALTER TABLE `Communication`
 -- AUTO_INCREMENT per la tabella `FinalGrades`
 --
 ALTER TABLE `FinalGrades`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT per la tabella `Homework`
 --
@@ -908,6 +967,11 @@ ALTER TABLE `Homework`
 --
 ALTER TABLE `MarksRecord`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+--
+-- AUTO_INCREMENT per la tabella `MeetingReservation`
+--
+ALTER TABLE `MeetingReservation`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT per la tabella `Note`
 --
@@ -948,6 +1012,11 @@ ALTER TABLE `Student`
 --
 ALTER TABLE `Teacher`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+--
+-- AUTO_INCREMENT per la tabella `TeacherAvailability`
+--
+ALTER TABLE `TeacherAvailability`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT per la tabella `Terms`
 --
@@ -1027,6 +1096,13 @@ ALTER TABLE `MarksRecord`
   ADD CONSTRAINT `fk_topic` FOREIGN KEY (`TopicID`) REFERENCES `Topic` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Limiti per la tabella `MeetingReservation`
+--
+ALTER TABLE `MeetingReservation`
+  ADD CONSTRAINT `fk_parentID_MR` FOREIGN KEY (`ParentID`) REFERENCES `Parent` (`ID`),
+  ADD CONSTRAINT `fk_teacherAvailabilityID_MR` FOREIGN KEY (`TeacherAvailabilityID`) REFERENCES `TeacherAvailability` (`ID`);
+
+--
 -- Limiti per la tabella `NotPresentRecord`
 --
 ALTER TABLE `NotPresentRecord`
@@ -1063,6 +1139,12 @@ ALTER TABLE `Student`
 --
 ALTER TABLE `Teacher`
   ADD CONSTRAINT `fk_teacherID` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `TeacherAvailability`
+--
+ALTER TABLE `TeacherAvailability`
+  ADD CONSTRAINT `fk_teacherID_TA` FOREIGN KEY (`TeacherID`) REFERENCES `Teacher` (`ID`);
 
 --
 -- Limiti per la tabella `Timetables`
