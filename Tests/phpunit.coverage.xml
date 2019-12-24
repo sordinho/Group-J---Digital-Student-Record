@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1577109515">
-  <project timestamp="1577109515">
+<coverage generated="1577119752">
+  <project timestamp="1577119752">
     <file name="C:\xampp\htdocs\Group-J---Digital-Student-Record\classes\administrator.class.php">
       <class name="administrator" namespace="global">
         <metrics complexity="19" methods="4" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="46" elements="66" coveredelements="47"/>
@@ -647,11 +647,11 @@
     </file>
     <file name="C:\xampp\htdocs\Group-J---Digital-Student-Record\classes\teacher.class.php">
       <class name="teacher" namespace="global">
-        <metrics complexity="144" methods="31" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="388" coveredstatements="170" elements="419" coveredelements="176"/>
+        <metrics complexity="144" methods="31" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="388" coveredstatements="260" elements="419" coveredelements="266"/>
       </class>
-      <line num="8" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="28"/>
-      <line num="9" type="stmt" count="28"/>
-      <line num="10" type="stmt" count="28"/>
+      <line num="8" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="37"/>
+      <line num="9" type="stmt" count="37"/>
+      <line num="10" type="stmt" count="37"/>
       <line num="20" type="method" name="insert_new_lecture_topic" visibility="public" complexity="4" crap="7.46" count="4"/>
       <line num="26" type="stmt" count="4"/>
       <line num="28" type="stmt" count="4"/>
@@ -707,8 +707,8 @@
       <line num="127" type="stmt" count="1"/>
       <line num="128" type="stmt" count="1"/>
       <line num="131" type="stmt" count="1"/>
-      <line num="135" type="method" name="get_teacher_ID" visibility="public" complexity="2" crap="2" count="6"/>
-      <line num="136" type="stmt" count="6"/>
+      <line num="135" type="method" name="get_teacher_ID" visibility="public" complexity="2" crap="2" count="7"/>
+      <line num="136" type="stmt" count="7"/>
       <line num="140" type="method" name="get_assigned_classes_names" visibility="public" complexity="3" crap="3.01" count="1"/>
       <line num="141" type="stmt" count="1"/>
       <line num="142" type="stmt" count="1"/>
@@ -936,152 +936,152 @@
       <line num="609" type="stmt" count="0"/>
       <line num="610" type="stmt" count="0"/>
       <line num="612" type="stmt" count="0"/>
-      <line num="615" type="method" name="get_coordinated_class" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="616" type="stmt" count="0"/>
-      <line num="617" type="stmt" count="0"/>
-      <line num="618" type="stmt" count="0"/>
-      <line num="619" type="stmt" count="0"/>
+      <line num="615" type="method" name="get_coordinated_class" visibility="public" complexity="5" crap="5.25" count="1"/>
+      <line num="616" type="stmt" count="1"/>
+      <line num="617" type="stmt" count="1"/>
+      <line num="618" type="stmt" count="1"/>
+      <line num="619" type="stmt" count="1"/>
       <line num="620" type="stmt" count="0"/>
-      <line num="621" type="stmt" count="0"/>
-      <line num="622" type="stmt" count="0"/>
+      <line num="621" type="stmt" count="1"/>
+      <line num="622" type="stmt" count="1"/>
       <line num="623" type="stmt" count="0"/>
-      <line num="624" type="stmt" count="0"/>
-      <line num="625" type="stmt" count="0"/>
-      <line num="626" type="stmt" count="0"/>
-      <line num="627" type="stmt" count="0"/>
+      <line num="624" type="stmt" count="1"/>
+      <line num="625" type="stmt" count="1"/>
+      <line num="626" type="stmt" count="1"/>
+      <line num="627" type="stmt" count="1"/>
       <line num="630" type="stmt" count="0"/>
-      <line num="632" type="stmt" count="0"/>
-      <line num="635" type="method" name="has_final_grades" visibility="public" complexity="7" crap="56" count="0"/>
-      <line num="636" type="stmt" count="0"/>
-      <line num="637" type="stmt" count="0"/>
-      <line num="638" type="stmt" count="0"/>
+      <line num="632" type="stmt" count="1"/>
+      <line num="635" type="method" name="has_final_grades" visibility="public" complexity="7" crap="7.39" count="1"/>
+      <line num="636" type="stmt" count="1"/>
+      <line num="637" type="stmt" count="1"/>
+      <line num="638" type="stmt" count="1"/>
       <line num="639" type="stmt" count="0"/>
-      <line num="640" type="stmt" count="0"/>
-      <line num="641" type="stmt" count="0"/>
+      <line num="640" type="stmt" count="1"/>
+      <line num="641" type="stmt" count="1"/>
       <line num="642" type="stmt" count="0"/>
-      <line num="643" type="stmt" count="0"/>
-      <line num="644" type="stmt" count="0"/>
-      <line num="645" type="stmt" count="0"/>
-      <line num="646" type="stmt" count="0"/>
-      <line num="647" type="stmt" count="0"/>
-      <line num="648" type="stmt" count="0"/>
-      <line num="649" type="stmt" count="0"/>
-      <line num="650" type="stmt" count="0"/>
+      <line num="643" type="stmt" count="1"/>
+      <line num="644" type="stmt" count="1"/>
+      <line num="645" type="stmt" count="1"/>
+      <line num="646" type="stmt" count="1"/>
+      <line num="647" type="stmt" count="1"/>
+      <line num="648" type="stmt" count="1"/>
+      <line num="649" type="stmt" count="1"/>
+      <line num="650" type="stmt" count="1"/>
       <line num="651" type="stmt" count="0"/>
-      <line num="652" type="stmt" count="0"/>
-      <line num="653" type="stmt" count="0"/>
-      <line num="654" type="stmt" count="0"/>
-      <line num="655" type="stmt" count="0"/>
-      <line num="656" type="stmt" count="0"/>
-      <line num="657" type="stmt" count="0"/>
-      <line num="659" type="stmt" count="0"/>
+      <line num="652" type="stmt" count="1"/>
+      <line num="653" type="stmt" count="1"/>
+      <line num="654" type="stmt" count="1"/>
+      <line num="655" type="stmt" count="1"/>
+      <line num="656" type="stmt" count="1"/>
+      <line num="657" type="stmt" count="1"/>
+      <line num="659" type="stmt" count="1"/>
       <line num="663" type="stmt" count="0"/>
       <line num="665" type="stmt" count="0"/>
-      <line num="667" type="method" name="get_actual_term" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="669" type="stmt" count="0"/>
-      <line num="670" type="stmt" count="0"/>
-      <line num="671" type="stmt" count="0"/>
+      <line num="667" type="method" name="get_actual_term" visibility="public" complexity="4" crap="4.25" count="1"/>
+      <line num="669" type="stmt" count="1"/>
+      <line num="670" type="stmt" count="1"/>
+      <line num="671" type="stmt" count="1"/>
       <line num="672" type="stmt" count="0"/>
-      <line num="673" type="stmt" count="0"/>
-      <line num="674" type="stmt" count="0"/>
+      <line num="673" type="stmt" count="1"/>
+      <line num="674" type="stmt" count="1"/>
       <line num="675" type="stmt" count="0"/>
-      <line num="676" type="stmt" count="0"/>
-      <line num="677" type="stmt" count="0"/>
-      <line num="678" type="stmt" count="0"/>
-      <line num="679" type="stmt" count="0"/>
+      <line num="676" type="stmt" count="1"/>
+      <line num="677" type="stmt" count="1"/>
+      <line num="678" type="stmt" count="1"/>
+      <line num="679" type="stmt" count="1"/>
       <line num="681" type="stmt" count="0"/>
-      <line num="686" type="method" name="get_missing_term_marks" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="687" type="stmt" count="0"/>
-      <line num="688" type="stmt" count="0"/>
-      <line num="689" type="stmt" count="0"/>
-      <line num="692" type="stmt" count="0"/>
+      <line num="686" type="method" name="get_missing_term_marks" visibility="public" complexity="5" crap="5.25" count="1"/>
+      <line num="687" type="stmt" count="1"/>
+      <line num="688" type="stmt" count="1"/>
+      <line num="689" type="stmt" count="1"/>
+      <line num="692" type="stmt" count="1"/>
       <line num="693" type="stmt" count="0"/>
-      <line num="694" type="stmt" count="0"/>
-      <line num="695" type="stmt" count="0"/>
+      <line num="694" type="stmt" count="1"/>
+      <line num="695" type="stmt" count="1"/>
       <line num="696" type="stmt" count="0"/>
-      <line num="697" type="stmt" count="0"/>
-      <line num="698" type="stmt" count="0"/>
-      <line num="699" type="stmt" count="0"/>
-      <line num="700" type="stmt" count="0"/>
+      <line num="697" type="stmt" count="1"/>
+      <line num="698" type="stmt" count="1"/>
+      <line num="699" type="stmt" count="1"/>
+      <line num="700" type="stmt" count="1"/>
       <line num="703" type="stmt" count="0"/>
-      <line num="705" type="stmt" count="0"/>
-      <line num="708" type="method" name="get_student_stamp_by_id" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="709" type="stmt" count="0"/>
-      <line num="710" type="stmt" count="0"/>
-      <line num="711" type="stmt" count="0"/>
+      <line num="705" type="stmt" count="1"/>
+      <line num="708" type="method" name="get_student_stamp_by_id" visibility="public" complexity="4" crap="4.07" count="1"/>
+      <line num="709" type="stmt" count="1"/>
+      <line num="710" type="stmt" count="1"/>
+      <line num="711" type="stmt" count="1"/>
       <line num="712" type="stmt" count="0"/>
-      <line num="713" type="stmt" count="0"/>
-      <line num="714" type="stmt" count="0"/>
+      <line num="713" type="stmt" count="1"/>
+      <line num="714" type="stmt" count="1"/>
       <line num="715" type="stmt" count="0"/>
-      <line num="716" type="stmt" count="0"/>
-      <line num="717" type="stmt" count="0"/>
-      <line num="718" type="stmt" count="0"/>
-      <line num="719" type="stmt" count="0"/>
-      <line num="721" type="stmt" count="0"/>
-      <line num="725" type="method" name="get_average_mark_for_topic" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="726" type="stmt" count="0"/>
-      <line num="727" type="stmt" count="0"/>
-      <line num="731" type="stmt" count="0"/>
+      <line num="716" type="stmt" count="1"/>
+      <line num="717" type="stmt" count="1"/>
+      <line num="718" type="stmt" count="1"/>
+      <line num="719" type="stmt" count="1"/>
+      <line num="721" type="stmt" count="1"/>
+      <line num="725" type="method" name="get_average_mark_for_topic" visibility="public" complexity="4" crap="4.07" count="1"/>
+      <line num="726" type="stmt" count="1"/>
+      <line num="727" type="stmt" count="1"/>
+      <line num="731" type="stmt" count="1"/>
       <line num="732" type="stmt" count="0"/>
-      <line num="733" type="stmt" count="0"/>
-      <line num="734" type="stmt" count="0"/>
+      <line num="733" type="stmt" count="1"/>
+      <line num="734" type="stmt" count="1"/>
       <line num="735" type="stmt" count="0"/>
-      <line num="736" type="stmt" count="0"/>
-      <line num="737" type="stmt" count="0"/>
-      <line num="738" type="stmt" count="0"/>
-      <line num="739" type="stmt" count="0"/>
-      <line num="741" type="stmt" count="0"/>
-      <line num="745" type="method" name="set_final_grade" visibility="public" complexity="6" crap="42" count="0"/>
-      <line num="749" type="stmt" count="0"/>
-      <line num="751" type="stmt" count="0"/>
-      <line num="752" type="stmt" count="0"/>
-      <line num="753" type="stmt" count="0"/>
-      <line num="754" type="stmt" count="0"/>
-      <line num="755" type="stmt" count="0"/>
+      <line num="736" type="stmt" count="1"/>
+      <line num="737" type="stmt" count="1"/>
+      <line num="738" type="stmt" count="1"/>
+      <line num="739" type="stmt" count="1"/>
+      <line num="741" type="stmt" count="1"/>
+      <line num="745" type="method" name="set_final_grade" visibility="public" complexity="6" crap="6.04" count="1"/>
+      <line num="749" type="stmt" count="1"/>
+      <line num="751" type="stmt" count="1"/>
+      <line num="752" type="stmt" count="1"/>
+      <line num="753" type="stmt" count="1"/>
+      <line num="754" type="stmt" count="1"/>
+      <line num="755" type="stmt" count="1"/>
       <line num="756" type="stmt" count="0"/>
-      <line num="757" type="stmt" count="0"/>
-      <line num="758" type="stmt" count="0"/>
-      <line num="759" type="stmt" count="0"/>
-      <line num="763" type="method" name="get_specificclassid_by_student" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="764" type="stmt" count="0"/>
-      <line num="765" type="stmt" count="0"/>
-      <line num="766" type="stmt" count="0"/>
+      <line num="757" type="stmt" count="1"/>
+      <line num="758" type="stmt" count="1"/>
+      <line num="759" type="stmt" count="1"/>
+      <line num="763" type="method" name="get_specificclassid_by_student" visibility="public" complexity="4" crap="4.07" count="2"/>
+      <line num="764" type="stmt" count="2"/>
+      <line num="765" type="stmt" count="2"/>
+      <line num="766" type="stmt" count="2"/>
       <line num="767" type="stmt" count="0"/>
-      <line num="768" type="stmt" count="0"/>
-      <line num="769" type="stmt" count="0"/>
+      <line num="768" type="stmt" count="2"/>
+      <line num="769" type="stmt" count="2"/>
       <line num="770" type="stmt" count="0"/>
-      <line num="771" type="stmt" count="0"/>
-      <line num="772" type="stmt" count="0"/>
-      <line num="773" type="stmt" count="0"/>
-      <line num="774" type="stmt" count="0"/>
-      <line num="776" type="stmt" count="0"/>
-      <line num="780" type="method" name="get_students_by_class_id" visibility="public" complexity="4" crap="4.01" count="1"/>
-      <line num="781" type="stmt" count="1"/>
-      <line num="782" type="stmt" count="1"/>
-      <line num="783" type="stmt" count="1"/>
-      <line num="787" type="stmt" count="1"/>
+      <line num="771" type="stmt" count="2"/>
+      <line num="772" type="stmt" count="2"/>
+      <line num="773" type="stmt" count="2"/>
+      <line num="774" type="stmt" count="2"/>
+      <line num="776" type="stmt" count="1"/>
+      <line num="780" type="method" name="get_students_by_class_id" visibility="public" complexity="4" crap="4.01" count="2"/>
+      <line num="781" type="stmt" count="2"/>
+      <line num="782" type="stmt" count="2"/>
+      <line num="783" type="stmt" count="2"/>
+      <line num="787" type="stmt" count="2"/>
       <line num="788" type="stmt" count="0"/>
-      <line num="789" type="stmt" count="1"/>
-      <line num="790" type="stmt" count="1"/>
-      <line num="791" type="stmt" count="1"/>
-      <line num="792" type="stmt" count="1"/>
-      <line num="793" type="stmt" count="1"/>
-      <line num="794" type="stmt" count="1"/>
-      <line num="797" type="stmt" count="1"/>
-      <metrics loc="799" ncloc="607" classes="1" methods="31" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="388" coveredstatements="170" elements="419" coveredelements="176"/>
+      <line num="789" type="stmt" count="2"/>
+      <line num="790" type="stmt" count="2"/>
+      <line num="791" type="stmt" count="2"/>
+      <line num="792" type="stmt" count="2"/>
+      <line num="793" type="stmt" count="2"/>
+      <line num="794" type="stmt" count="2"/>
+      <line num="797" type="stmt" count="2"/>
+      <metrics loc="799" ncloc="607" classes="1" methods="31" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="388" coveredstatements="260" elements="419" coveredelements="266"/>
     </file>
     <file name="C:\xampp\htdocs\Group-J---Digital-Student-Record\classes\user.class.php">
       <class name="user" namespace="global">
         <metrics complexity="70" methods="30" coveredmethods="18" conditionals="0" coveredconditionals="0" statements="185" coveredstatements="86" elements="215" coveredelements="104"/>
       </class>
-      <line num="11" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="68"/>
-      <line num="12" type="stmt" count="68"/>
-      <line num="15" type="method" name="connectMySQL" visibility="protected" complexity="2" crap="2.26" count="36"/>
-      <line num="16" type="stmt" count="36"/>
-      <line num="18" type="stmt" count="36"/>
+      <line num="11" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="77"/>
+      <line num="12" type="stmt" count="77"/>
+      <line num="15" type="method" name="connectMySQL" visibility="protected" complexity="2" crap="2.26" count="45"/>
+      <line num="16" type="stmt" count="45"/>
+      <line num="18" type="stmt" count="45"/>
       <line num="19" type="stmt" count="0"/>
       <line num="20" type="stmt" count="0"/>
-      <line num="22" type="stmt" count="36"/>
+      <line num="22" type="stmt" count="45"/>
       <line num="30" type="method" name="get_user_group_table_name" complexity="4" crap="7.18" count="1"/>
       <line num="31" type="stmt" count="1"/>
       <line num="32" type="stmt" count="1"/>
@@ -1291,6 +1291,6 @@
       <line num="469" type="stmt" count="0"/>
       <metrics loc="474" ncloc="326" classes="1" methods="30" coveredmethods="18" conditionals="0" coveredconditionals="0" statements="185" coveredstatements="86" elements="215" coveredelements="104"/>
     </file>
-    <metrics files="6" loc="2528" ncloc="1850" classes="6" methods="112" coveredmethods="39" conditionals="0" coveredconditionals="0" statements="1142" coveredstatements="615" elements="1254" coveredelements="654"/>
+    <metrics files="6" loc="2528" ncloc="1850" classes="6" methods="112" coveredmethods="39" conditionals="0" coveredconditionals="0" statements="1142" coveredstatements="705" elements="1254" coveredelements="744"/>
   </project>
 </coverage>

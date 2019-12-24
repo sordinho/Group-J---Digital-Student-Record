@@ -435,4 +435,73 @@ class sparent extends user {
 		$this->set_current_num_unseen_notes($this->get_current_child());
 		return true;
 	}
+
+    public function get_teacher_availability() {
+	    $info = array();
+	    $conn = $this->connectMySQL();
+	    $stmt = $conn->prepare("SELECT
+                                      ta.ID AS TeacherAvailabilityID,
+                                      u.Name as TeacherName,
+                                      u.Surname as TeacherSurname,
+                                      tc.Name as TopicName,
+                                      ta.DayOfWeek,
+                                      ta.HourSlot
+                                    FROM
+                                      TeacherAvailability ta,
+                                      TopicTeacherClass ttc,
+                                      Student s,
+                                      User u,
+                                      Teacher t,
+                                      Topic tc
+                                    WHERE
+                                      ttc.TeacherID = ta.TeacherID AND ttc.SpecificClassID = s.SpecificClassID AND ttc.TeacherID = t.ID AND u.ID = t.UserID AND ttc.TopicID = tc.ID AND s.ID = ?");
+        $stmt->bind_param('i', $this->get_current_child());
+        if (!$stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            return $info;
+        }
+
+        $res = $stmt->get_result();
+        if ($res->num_rows > 0) {
+            while ($row = $res->fetch_assoc()) {
+                array_push($info, $row);
+            }
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $info;
+    }
+
+    public function get_future_reservations_by_teacher_availability_id($id) {
+        $info = array();
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT
+                                      *
+                                    FROM
+                                      MeetingReservation
+                                    WHERE
+                                      TeacherAvailabilityID = ? AND DATE > ?");
+        $today = date('Y-m-d');
+        $stmt->bind_param('is', $id, $today);
+        if (!$stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            return $info;
+        }
+
+        $res = $stmt->get_result();
+        if ($res->num_rows > 0) {
+            while ($row = $res->fetch_assoc()) {
+                $info[$row['TimeSlot']]= $row;
+            }
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $info;
+    }
 }
