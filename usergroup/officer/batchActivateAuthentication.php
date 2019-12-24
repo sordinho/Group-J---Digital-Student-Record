@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("Register new parent");
+$page = new cpage("Activate new parents");
 $site->setPage($page);
 $officer = new officer();
 
