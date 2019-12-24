@@ -114,7 +114,7 @@ class cpage {
                     $teacher=new teacher();
                     $coordinatedClassIDs=$teacher->get_coordinated_class($teacher->get_teacher_ID());
                     if($coordinatedClassIDs){
-                        $hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-user-tie mx-3"></i><span class="text-nowrap mx-2">Class Coordination</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+                        $hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-users mx-3"></i><span class="text-nowrap mx-2">Class Coordination</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 								<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
                         foreach ($coordinatedClassIDs as $coordinatedClassID){
                             $hidden_menu.= '<a class="dropdown-item text-white" role="presentation" href="./assignFinalGrades.php?classID='.$coordinatedClassID['ID'].'"><span>'. $teacher->get_class_stamp_by_id($coordinatedClassID['ID']).'</span></a>';
