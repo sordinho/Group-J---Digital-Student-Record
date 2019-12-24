@@ -28,21 +28,10 @@ class user {
 	 * @return bool|string
 	 */
 	function get_user_group_table_name($usergroup) {
-		switch ($usergroup) {
-			case "parent":
-				$table_name = "Parent";
-				break;
-			case "teacher":
-				$table_name = "Teacher";
-				break;
-			case "officer":
-				$table_name = "Officer";
-				break;
-			default:
-				$table_name = false;
-		}
+		$usergroup_valid_array = ["Teacher", "Officer", "Parent"];
+		$c_usergroup = ucfirst($usergroup);
+		return in_array($c_usergroup, $usergroup_valid_array)? $c_usergroup : false;
 
-		return $table_name;
 	}
 
 	/** Verify username and password for a user to consent log in (can be different "types" of users)
