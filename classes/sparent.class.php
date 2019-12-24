@@ -108,17 +108,17 @@ class sparent extends user {
 		//TODO: change this code snippet by avoiding repetition in validate_date
 		if ($is_valid_from and $is_valid_to and $from_date < $to_date) {
 			/*there are two dates which are not false and in a valid format*/
-			$sql = $conn->prepare("    SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date >= ? AND Date < ?");
+			$sql = $conn->prepare("SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date >= ? AND Date < ?");
 			$sql->bind_param('iss', $childID, $from_date, $to_date);
 
 		} else if ($is_valid_from) {
 			/*only from_date is set, the other one is set at false or not in a valid form*/
-			$sql = $conn->prepare("    SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date >= ?");
+			$sql = $conn->prepare("SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date >= ?");
 			$sql->bind_param('is', $childID, $from_date);
 
 		} else if ($is_valid_to) {
 			/*only to_date is set, the other one is set at false or not in a valid form*/
-			$sql = $conn->prepare("    SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date < ?");
+			$sql = $conn->prepare("SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date < ?");
 			$sql->bind_param('is', $childID, $to_date);
 
 		} else if ($from_date == false and $to_date == false) {
@@ -433,5 +433,26 @@ class sparent extends user {
 		}
 		$this->set_current_num_unseen_notes($this->get_current_child());
 		return true;
+	}
+	#not sure about the parameter to pass
+	public function check_download_permission($fname) {
+		if (!isset($childID)) {
+			return array();
+		}
+
+		$material_info = array();
+		$conn = $this->connectMySql();
+		$stmt = $conn->prepare("SELECT * FROM UploadedClassDocuments as ucd, Student as s, Parent as p
+							WHERE ucd.SpecificClassID=s.SpecificClassID
+							AND s.ID = p.StudentID
+							AND p.ID = ? AND FileName = ?");
+		$stmt->bind_param('is', $this->get_parent_ID(), $fname);
+		$stmt->execute();
+		$res = $stmt->get_result();
+
+		if (!$res) {
+			return false;
+		}
+		return $res->num_rows > 0;
 	}
 }
