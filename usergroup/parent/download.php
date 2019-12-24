@@ -1,5 +1,6 @@
 
 <?php
+require_once("../../config.php");
 $file = basename($_GET['file']);
 
 //Given a string containing the path of a file or directory, this function will return the parent directory's path that is *levels* (2) up from the current directory
@@ -17,19 +18,23 @@ if(substr($actual_url, 0, strlen($local_host_url)) === $local_host_url) {
 // Check permissio
 $sparent = new sparent();
 
-if (!$sparent->is_logged() || !$sparent->check_download_permission()) {
+$disk_name_arr = explode('_',$file);
+unset($disk_name_arr[0]);
+$realname = implode($disk_name_arr);
+$file = $uploaddir.$file;
+
+if (!$sparent->is_logged() || !$sparent->check_download_permission($_GET['file'])) {
     header("location: /error.php?errorID=19");
     exit();
 }
 
-$file = $uploaddir.$file;
 
 if(!file_exists($file)){ // file does not exist
 die('file not found');
 } else {
 header("Cache-Control: public");
 header("Content-Description: File Transfer");
-header("Content-Disposition: attachment; filename=$file");
+header("Content-Disposition: attachment; filename=$realname");
 header("Content-Type: application/zip");
 header("Content-Transfer-Encoding: binary");
 
