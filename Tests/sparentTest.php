@@ -371,5 +371,40 @@ class sparentTest extends TestCase
         $this->assertTrue($parent->set_notes_seen($notes));
     }
 
+    public function testGet_term_list(){
+
+        $_SESSION['parentID']=2;
+        $parent = new sparent();
+
+        $this->assertNotEmpty($parent->get_term_list());
+        //$this->assertFalse($parent->get_term_list());
+    }
+
+    public function testGet_term_stamp_by_id(){
+
+        $stamp1="2019/2020 - 01";
+        $stamp2="2018/2019 - 02";
+        $_SESSION['parentID']=2;
+        $parent = new sparent();
+
+        $this->assertEquals($stamp1,$parent->get_term_stamp_by_id(1));
+        $this->assertEquals($stamp2,$parent->get_term_stamp_by_id(2));
+        $this->assertFalse($parent->get_term_stamp_by_id(0));
+    }
+
+    public function testGet_final_term_marks_by_studentID(){
+
+        $studentID1=2;
+        $studentID2=4;
+        $studentID3=0;
+        $termID1=1;
+        $termID2=0;
+        $_SESSION['parentID']=2;
+        $parent = new sparent();
+
+        $this->assertNotEmpty($parent->get_final_term_marks_by_studentID($studentID1,$termID1));
+        $this->assertNotEmpty($parent->get_final_term_marks_by_studentID($studentID2,$termID1));
+        $this->assertFalse($parent->get_final_term_marks_by_studentID($studentID3,$termID2));
+    }
 
 }
