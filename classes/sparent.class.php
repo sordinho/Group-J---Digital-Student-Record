@@ -520,4 +520,61 @@ class sparent extends user {
 
         return $info;
     }
+
+    public function get_term_list(){
+        $conn = $this->connectMySql();
+        $terms = array();
+        $query = "SELECT ID,Stamp FROM Terms ORDER BY LimitDay";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res -> num_rows == 0)
+            return false;
+        while ($row = $res->fetch_assoc())
+            array_push($terms, $row);
+        return $terms;
+    }
+
+    public function get_term_stamp_by_id($termID){
+        $conn = $this->connectMySql();
+        $query = "SELECT Stamp FROM Terms WHERE ID=?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('i',$termID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res -> num_rows == 0)
+            return false;
+        if($res -> num_rows >1)
+            return false;
+        return $res->fetch_assoc()['Stamp'];
+    }
+
+    public function get_final_term_marks_by_studentID($studentID,$termID){
+        $conn = $this->connectMySql();
+        $terms = array();
+        $query = "SELECT t.Name, Mark, u.Surname 
+                  FROM  Topic t, FinalGrades FG, Teacher Te,User u, SpecificClass SC, Student S, TopicTeacherClass TTC
+                  WHERE   FG.StudentID=?
+                                            AND		FG.StudentID=S.ID
+                                            AND		FG.TopicID=t.ID
+                                            AND		FG.StudentID=S.ID
+                                            AND		S.SpecificClassID=SC.ID
+                                            AND		TTC.SpecificClassID=SC.ID
+                                            AND 	TTC.TeacherID=Te.ID
+                                            AND 	u.ID=Te.UserID
+                                            AND 	TTC.TopicID=t.ID
+                                            AND     FG.TermID=?
+                                            ORDER BY t.Name";
+        $stmt = $conn->prepare($query);
+        if(!$stmt)
+            return false;
+        $stmt->bind_param('ii',$studentID,$termID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res -> num_rows == 0)
+            return false;
+        while ($row = $res->fetch_assoc())
+            array_push($terms, $row);
+        return $terms;
+    }
 }
