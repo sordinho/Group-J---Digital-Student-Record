@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 24, 2019 alle 20:06
+-- Creato il: Dic 26, 2019 alle 17:46
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -56,6 +56,27 @@ CREATE TABLE `FinalGrades` (
   `Mark` int(11) NOT NULL,
   `TermID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `FinalGrades`
+--
+
+INSERT INTO `FinalGrades` (`ID`, `StudentID`, `TopicID`, `Mark`, `TermID`) VALUES
+(24, 2, 6, 0, 1),
+(25, 2, 5, 0, 1),
+(26, 2, 1, 9, 1),
+(27, 2, 8, 0, 1),
+(28, 2, 3, 0, 1),
+(29, 2, 7, 0, 1),
+(30, 2, 2, 8, 1),
+(31, 4, 6, 6, 1),
+(32, 4, 5, 6, 1),
+(33, 4, 1, 10, 1),
+(34, 4, 8, 0, 1),
+(35, 4, 3, 0, 1),
+(36, 4, 7, 10, 1),
+(37, 4, 2, 5, 1),
+(38, 4, 4, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -608,15 +629,12 @@ CREATE TABLE `TopicTeacherClass` (
 
 INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`) VALUES
 (1, 1, 1, 1),
-(5, 1, 2, 1),
-(7, 2, 2, 1),
 (8, 3, 3, 1),
 (10, 4, 4, 1),
 (11, 5, 5, 1),
 (12, 6, 6, 1),
 (13, 7, 7, 1),
 (14, 8, 8, 1),
-(16, 11, 1, 2),
 (17, 12, 2, 2),
 (18, 13, 3, 2),
 (19, 14, 4, 2),
@@ -625,7 +643,8 @@ INSERT INTO `TopicTeacherClass` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`
 (22, 17, 7, 2),
 (23, 18, 8, 2),
 (24, 7, 7, 3),
-(25, 3, 4, 3);
+(25, 3, 4, 3),
+(26, 2, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -950,7 +969,7 @@ ALTER TABLE `Communication`
 -- AUTO_INCREMENT per la tabella `FinalGrades`
 --
 ALTER TABLE `FinalGrades`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT per la tabella `Homework`
 --
@@ -1035,7 +1054,7 @@ ALTER TABLE `TopicRecord`
 -- AUTO_INCREMENT per la tabella `TopicTeacherClass`
 --
 ALTER TABLE `TopicTeacherClass`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT per la tabella `UploadedClassDocuments`
 --
