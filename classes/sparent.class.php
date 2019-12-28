@@ -612,4 +612,49 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		}
 		return $lectureTopics;
 	}
+
+	/**
+	 * Function used for booking a meeting with a teacher
+	 * @param $parentID : ID of the parent who want to book the meeting
+	 * @param $teacherID : teacher to meet
+	 * @param $date : date of the meeting to book
+	 * @param $timeSlot : timeSlot to book
+	 * @return bool : false in case of error, true in case of success
+	 */
+	public function book_meeting($parentID, $teacherID, $date, $timeSlot) {
+		if ($parentID == null || $parentID == '' || $date == null || $date = '' || $teacherID == null || $teacherID < 1)
+			return false;
+
+		$date = strtotime($date);
+		$conn = $this->connectMySQL();
+
+		//TODO 1) check the timeslot is free for a teacher in this date
+
+		//Check timeslot is a valid one for the given teacher<->date
+		$dayOfTheWeek = calendar::from_dow_to_num(date('l', $date));
+		$hourSlot = intval($timeSlot / 3);
+		$query2 = "SELECT HourSlot FROM TeacherAvailability WHERE TeacherID=? AND DayOfWeek=?";
+		$getTimeSlotsStmt = $conn->prepare($query2);
+		$getTimeSlotsStmt->bind_param("ii", $teacherID, $dayOfTheWeek);
+		$getTimeSlotsStmt->execute();
+		$res = $getTimeSlotsStmt->get_result();
+		$result = false;
+		// check there is a hourslot same as he wanted hourslot
+		while ($row = $res->fetch_array()) {
+			if ($row[0] == $hourSlot)
+				$result = true;
+		}
+		// we didn't get it
+		if(!$result)
+			return false;
+		$getTimeSlotsStmt->close();
+
+		
+		// TODO 2) book the meeting
+		// Insert a new meeting
+		$query3 = "";
+
+
+		return false;
+	}
 }
