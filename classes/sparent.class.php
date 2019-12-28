@@ -522,6 +522,10 @@ class sparent extends user {
 		return $info;
 	}
 
+    /**
+     * Returns the list of Id,Stamp of all terms
+     * @return array|bool
+     */
 	public function get_term_list() {
 		$conn = $this->connectMySql();
 		$terms = array();
@@ -536,6 +540,12 @@ class sparent extends user {
 		return $terms;
 	}
 
+    /**
+     * Returns the Stamp of a given term by TermID
+     * @param $termID
+     * @return bool|mixed
+     *
+     */
 	public function get_term_stamp_by_id($termID) {
 		$conn = $this->connectMySql();
 		$query = "SELECT Stamp FROM Terms WHERE ID=?";

@@ -136,7 +136,6 @@ CREATE TABLE `TopicRecord` (
 		return isset($_SESSION['teacherID']) ? $_SESSION['teacherID'] : -1;
 	}
 
-
 	public function get_assigned_classes_names() {
 		$classes = array();
 		$conn = $this->connectMySQL();
@@ -157,10 +156,6 @@ CREATE TABLE `TopicRecord` (
 		return $classes;
 
 	}
-
-	/*
-	 * get ClassID, TopicName, TopicDescription for a given teacherID
-	 */
 
 	public function get_assigned_classes() {
 		$classes = array();
@@ -227,8 +222,6 @@ CREATE TABLE `TopicRecord` (
 		}
 		return $absences;
 	}
-
-
 
 	public function get_lecture_by_id($lectureID) {
 		$conn = $this->connectMySQL();
@@ -507,7 +500,6 @@ CREATE TABLE `TopicRecord` (
 		return $cond;
 	}
 
-
 	public function get_uploaded_material() {
 
 		$teacherID = $_SESSION['teacherID'];
@@ -708,6 +700,11 @@ CREATE TABLE `TopicRecord` (
         return $missingTopicIDs;
     }
 
+    /**
+     * Returns the Stamp of a student surname and name given his StudentID
+     * @param $studentID
+     * @return bool|string
+     */
     public function get_student_stamp_by_id($studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT Surname,Name FROM Student WHERE ID=?");
@@ -725,6 +722,12 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
+    /**
+     * Given a TopicID and a StudentID, returns the average of the marks
+     * @param $topicID
+     * @param $studentID
+     * @return int|mixed
+     */
     public function get_average_mark_for_topic($topicID,$studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT StudentID,AVG(Mark) AS Average FROM MarksRecord,Terms WHERE TopicID=? AND StudentID=? AND 
@@ -745,6 +748,12 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
+    /**
+     * Given the $value ("StudentID_TopicID_Average_TermID") will insert the final grade in the DB so that the parent can see it
+     * Returns false if something is wrong, the SpecificClassID if everything is inserted correctly
+     * @param $value
+     * @return bool|mixed
+     */
     public function set_final_grade($value){
 	    //format of $value
         // $_GET['studentID']."_".$mark['TopicID']."_".round($averageMinus,0)."_".$teacher->get_actual_term()
@@ -763,6 +772,11 @@ CREATE TABLE `TopicRecord` (
 
     }
 
+    /**
+     * Returns the SpecificClassID of the class the student given by StudentID is inserted in
+     * @param $studentID
+     * @return bool|mixed
+     */
     public function get_specificclassid_by_student($studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT SpecificClassID FROM Student WHERE ID=?");
@@ -780,6 +794,11 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
+    /**
+     * Returns the list of students of the class with given ClassID
+     * @param $classID
+     * @return array
+     */
     public function get_students_by_class_id($classID) {
         $students = array();
         $conn = $this->connectMySQL();
@@ -799,7 +818,6 @@ CREATE TABLE `TopicRecord` (
         }
         return $students;
     }
-
 
     /**
      * @param $day "Monday, Tuesday..."
