@@ -116,4 +116,52 @@ class calendar
         return $day;
     }
 
+    public static function from_dow_to_num($d) {
+        $day = -1;
+        switch ($d) {
+            case "Monday":
+                $day = 0;
+                break;
+            case "Tuesday":
+                $day = 1;
+                break;
+            case "Wednesday":
+                $day = 2;
+                break;
+            case "Thursday":
+                $day = 3;
+                break;
+            case "Friday":
+                $day = 4;
+                break;
+        }
+        return $day;
+    }
+
+    public static function from_hour_to_slot($h) {
+        $hourSlot = -1;
+        switch ($h) {
+            case "08:00":
+                $hourSlot = 0;
+                break;
+            case "09:00":
+                $hourSlot = 1;
+                break;
+            case "10:00":
+                $hourSlot = 2;
+                break;
+            case "11:00":
+                $hourSlot = 3;
+                break;
+            case "12:00":
+                $hourSlot = 4;
+                break;
+            case "13:00":
+                $hourSlot = 5;
+                break;
+        }
+
+        return $hourSlot;
+    }
+
 }
