@@ -435,6 +435,7 @@ class sparent extends user {
 		$this->set_current_num_unseen_notes($this->get_current_child());
 		return true;
 	}
+
 	#not sure about the parameter to pass
 	public function check_download_permission($fname) {
 		$conn = $this->connectMySql();
@@ -452,10 +453,10 @@ class sparent extends user {
 		return $res->num_rows > 0;
 	}
 
-    public function get_teacher_availability() {
-	    $info = array();
-	    $conn = $this->connectMySQL();
-	    $stmt = $conn->prepare("SELECT
+	public function get_teacher_availability() {
+		$info = array();
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("SELECT
                                       ta.ID AS TeacherAvailabilityID,
                                       u.Name as TeacherName,
                                       u.Surname as TeacherSurname,
@@ -471,88 +472,88 @@ class sparent extends user {
                                       Topic tc
                                     WHERE
                                       ttc.TeacherID = ta.TeacherID AND ttc.SpecificClassID = s.SpecificClassID AND ttc.TeacherID = t.ID AND u.ID = t.UserID AND ttc.TopicID = tc.ID AND s.ID = ?");
-        $stmt->bind_param('i', $this->get_current_child());
-        if (!$stmt->execute()) {
-            $stmt->close();
-            $conn->close();
-            return $info;
-        }
+		$stmt->bind_param('i', $this->get_current_child());
+		if (!$stmt->execute()) {
+			$stmt->close();
+			$conn->close();
+			return $info;
+		}
 
-        $res = $stmt->get_result();
-        if ($res->num_rows > 0) {
-            while ($row = $res->fetch_assoc()) {
-                array_push($info, $row);
-            }
-        }
+		$res = $stmt->get_result();
+		if ($res->num_rows > 0) {
+			while ($row = $res->fetch_assoc()) {
+				array_push($info, $row);
+			}
+		}
 
-        $stmt->close();
-        $conn->close();
+		$stmt->close();
+		$conn->close();
 
-        return $info;
-    }
+		return $info;
+	}
 
-    public function get_future_reservations_by_teacher_availability_id($id) {
-        $info = array();
-        $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("SELECT
+	public function get_future_reservations_by_teacher_availability_id($id) {
+		$info = array();
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("SELECT
                                       *
                                     FROM
                                       MeetingReservation
                                     WHERE
                                       TeacherAvailabilityID = ? AND DATE > ?");
-        $today = date('Y-m-d');
-        $stmt->bind_param('is', $id, $today);
-        if (!$stmt->execute()) {
-            $stmt->close();
-            $conn->close();
-            return $info;
-        }
+		$today = date('Y-m-d');
+		$stmt->bind_param('is', $id, $today);
+		if (!$stmt->execute()) {
+			$stmt->close();
+			$conn->close();
+			return $info;
+		}
 
-        $res = $stmt->get_result();
-        if ($res->num_rows > 0) {
-            while ($row = $res->fetch_assoc()) {
-                $info[$row['TimeSlot']]= $row;
-            }
-        }
+		$res = $stmt->get_result();
+		if ($res->num_rows > 0) {
+			while ($row = $res->fetch_assoc()) {
+				$info[$row['TimeSlot']] = $row;
+			}
+		}
 
-        $stmt->close();
-        $conn->close();
+		$stmt->close();
+		$conn->close();
 
-        return $info;
-    }
+		return $info;
+	}
 
-    public function get_term_list(){
-        $conn = $this->connectMySql();
-        $terms = array();
-        $query = "SELECT ID,Stamp FROM Terms ORDER BY LimitDay";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        if ($res -> num_rows == 0)
-            return false;
-        while ($row = $res->fetch_assoc())
-            array_push($terms, $row);
-        return $terms;
-    }
+	public function get_term_list() {
+		$conn = $this->connectMySql();
+		$terms = array();
+		$query = "SELECT ID,Stamp FROM Terms ORDER BY LimitDay";
+		$stmt = $conn->prepare($query);
+		$stmt->execute();
+		$res = $stmt->get_result();
+		if ($res->num_rows == 0)
+			return false;
+		while ($row = $res->fetch_assoc())
+			array_push($terms, $row);
+		return $terms;
+	}
 
-    public function get_term_stamp_by_id($termID){
-        $conn = $this->connectMySql();
-        $query = "SELECT Stamp FROM Terms WHERE ID=?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('i',$termID);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        if ($res -> num_rows == 0)
-            return false;
-        if($res -> num_rows >1)
-            return false;
-        return $res->fetch_assoc()['Stamp'];
-    }
+	public function get_term_stamp_by_id($termID) {
+		$conn = $this->connectMySql();
+		$query = "SELECT Stamp FROM Terms WHERE ID=?";
+		$stmt = $conn->prepare($query);
+		$stmt->bind_param('i', $termID);
+		$stmt->execute();
+		$res = $stmt->get_result();
+		if ($res->num_rows == 0)
+			return false;
+		if ($res->num_rows > 1)
+			return false;
+		return $res->fetch_assoc()['Stamp'];
+	}
 
-    public function get_final_term_marks_by_studentID($studentID,$termID){
-        $conn = $this->connectMySql();
-        $terms = array();
-        $query = "SELECT t.Name, Mark, u.Surname 
+	public function get_final_term_marks_by_studentID($studentID, $termID) {
+		$conn = $this->connectMySql();
+		$terms = array();
+		$query = "SELECT t.Name, Mark, u.Surname 
                   FROM  Topic t, FinalGrades FG, Teacher Te,User u, SpecificClass SC, Student S, TopicTeacherClass TTC
                   WHERE   FG.StudentID=?
                                             AND		FG.StudentID=S.ID
@@ -565,16 +566,50 @@ class sparent extends user {
                                             AND 	TTC.TopicID=t.ID
                                             AND     FG.TermID=?
                                             ORDER BY t.Name";
-        $stmt = $conn->prepare($query);
-        if(!$stmt)
-            return false;
-        $stmt->bind_param('ii',$studentID,$termID);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        if ($res -> num_rows == 0)
-            return false;
-        while ($row = $res->fetch_assoc())
-            array_push($terms, $row);
-        return $terms;
-    }
+		$stmt = $conn->prepare($query);
+		if (!$stmt)
+			return false;
+		$stmt->bind_param('ii', $studentID, $termID);
+		$stmt->execute();
+		$res = $stmt->get_result();
+		if ($res->num_rows == 0)
+			return false;
+		while ($row = $res->fetch_assoc())
+			array_push($terms, $row);
+		return $terms;
+	}
+
+	/**
+	 * Get list of lecture topics for the class of a given student IF
+	 * @param $studentID
+	 * @return bool|array
+	 */
+	public function get_lecture_topics($studentID) {
+		$lectureTopics = array();
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("SELECT tr.Timestamp as Date,
+       tr.Description as Description,
+       t.Name as TopicName,
+       yc.Year as YearClass,
+       sc.Section as Section,
+       u.Name as TeacherName,
+       u.Surname as TeacherSurname
+FROM TopicRecord tr, Topic t, SpecificClass sc, Teacher tc, Student s, User u, Yearclass yc
+WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
+    AND tr.TopicID=t.ID -- topic info
+    AND tr.SpecificClassID=sc.ID AND sc.YearClassID=yc.ID -- class info
+    AND s.SpecificClassID=sc.ID
+    AND s.ID = ?;");
+		$stmt->bind_param('i', $studentID);
+		$stmt->execute();
+		$res = $stmt->get_result();
+		if ($res->num_rows <= 0) {
+			return false;
+		} else {
+			while ($row = $res->fetch_assoc()) {
+				array_push($lectureTopics, $row);
+			}
+		}
+		return $lectureTopics;
+	}
 }
