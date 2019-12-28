@@ -807,7 +807,7 @@ CREATE TABLE `TopicRecord` (
      * @return int -1 on calendar fail
      * @return int -2 on failing to prepare a stmt
      * @return int -3 on failing to get teacher id
-     * @return int -4 on failing to retrieve a timetable
+     * @return int -4 on trying to insert a meeting hour when there is lecture
      * @return int -5 on failing to insert/update the teacher availability
      * @return int 1 on success
      */
@@ -823,7 +823,7 @@ CREATE TABLE `TopicRecord` (
             return -2;
         }
         $teacherID = $this->get_teacher_ID();
-        if ($teacherID == -1) {
+        if ($teacherID < 0) {
             return -3;
         }
         $stmt->bind_param("iii", $teacherID, $hourSlot, $dayOfWeek);
