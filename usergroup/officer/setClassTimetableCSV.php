@@ -78,7 +78,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
 
                             $classID = -1; //todo : cosa succede se non esiste quella materia per quella classe? al momento semplicemente ignoro il resto
                             //       della timetable e non la carico... da modificare
-                            break;
+                            //  break;
                         }
                     } else{
                         $timetable_info[$j][$dayid] = "0|0|nothing";

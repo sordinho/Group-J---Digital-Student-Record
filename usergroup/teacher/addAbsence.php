@@ -281,29 +281,7 @@ OUT;
                 }
             }
         }
-        for ($i = 0; $i < sizeof($students_info);$i++){
-            $id = $students_info[$i]['ID'];
-            if(isset($_POST["early_exit_hour_$id"])&&isset($_POST["status_$id"])){
-                $earlyExit = $_POST["early_exit_hour_$id"] != 6;
-                $status = $_POST["status_$id"] != 'Absent';
-                $date = $_POST['date'];
-                if(!$date){
-                    $date = date("Y-m-d H:i:s");
-                } else {
-                    $newD = date_create($date);
-                    date_time_set($newD,00,00,00);
-                    $date= date_format($newD,"Y-m-d H:i:s");
-                }
-                if($earlyExit and $status){
-                    $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"]);
-                    if (!$res) {
-                        header("Location: addAbsence.php?operation_result=0");
-                        exit();
-                    }
-                    $counter++;
-                }
-            }
-        }
+
         for ($i = 0; $i < sizeof($students_info); $i++) {
             $id = $students_info[$i]['ID'];
             if (isset($_POST["late_$id"])) {
@@ -322,6 +300,29 @@ OUT;
 
                 if ($absent and $status) {
                     $res = $teacher->register_late_arrival($id, $date);
+                    if (!$res) {
+                        header("Location: addAbsence.php?operation_result=0");
+                        exit();
+                    }
+                    $counter++;
+                }
+            }
+        }
+        for ($i = 0; $i < sizeof($students_info);$i++){
+            $id = $students_info[$i]['ID'];
+            if(isset($_POST["early_exit_hour_$id"])&&isset($_POST["status_$id"])){
+                $earlyExit = $_POST["early_exit_hour_$id"] != 6;
+                $status = $_POST["status_$id"] != 'Absent';
+                $date = $_POST['date'];
+                if(!$date){
+                    $date = date("Y-m-d H:i:s");
+                } else {
+                    $newD = date_create($date);
+                    date_time_set($newD,00,00,00);
+                    $date= date_format($newD,"Y-m-d H:i:s");
+                }
+                if($earlyExit and $status){
+                    $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"]);
                     if (!$res) {
                         header("Location: addAbsence.php?operation_result=0");
                         exit();

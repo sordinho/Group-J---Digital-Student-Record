@@ -392,8 +392,7 @@ CREATE TABLE `TopicRecord` (
 		$sql = "   SELECT COUNT(*)
                     FROM NotPresentRecord
                     WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
-                    AND NotPresentRecord.StudentID = '$studentID'
-                    AND ExitHour = 0";
+                    AND NotPresentRecord.StudentID = '$studentID'";
 
 		if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
 
@@ -424,7 +423,6 @@ CREATE TABLE `TopicRecord` (
 	 * @return true|false on success or not
 	 */
 	public function register_early_exit($studentID, $timestamp, $newExitHour) {
-		//todo check if the format of newExitHour need to be changed
 		$teacherID = $_SESSION['teacherID'];
         if(!isset($studentID) || !isset($timestamp) || !isset($newExitHour)) return false;
 
@@ -442,8 +440,7 @@ CREATE TABLE `TopicRecord` (
 		$sql = "   SELECT COUNT(*)
                     FROM NotPresentRecord
                     WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
-                    AND NotPresentRecord.StudentID = '$studentID'
-                    AND ExitHour = 0";
+                    AND NotPresentRecord.StudentID = $studentID";
 
 		if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
 
@@ -453,7 +450,7 @@ CREATE TABLE `TopicRecord` (
 
 			if ($absent) {
 				$sql = $conn->prepare("UPDATE NotPresentRecord SET ExitHour = ? WHERE StudentID = ? AND Date = ?;");
-				$sql->bind_param('is', $studentID, $y_m_d_timestamp);
+				$sql->bind_param('iis',$newExitHour, $studentID, $y_m_d_timestamp);
 				return $sql->execute();
 			} else {
 				$sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',0,?);");
