@@ -650,7 +650,7 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		$result = false;
 		// check there is a hourslot same as the wanted hourslot
 		while ($row = $res->fetch_array()) {
-			if ($row[1] == $hourSlot){
+			if ($row[1] == $hourSlot) {
 				$result = true;
 				$teacherAvailabilityID = $row[0];
 			}
@@ -671,8 +671,8 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 
 		// Insert a new meeting
 		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot),VALUES (?,?,?,?)";
-		$bookStmt= $conn->prepare($query3);
-		$bookStmt -> bind_param("iisi",$parentID,$teacherAvailabilityID,$date,$timeSlot);
+		$bookStmt = $conn->prepare($query3);
+		$bookStmt->bind_param("iisi", $parentID, $teacherAvailabilityID, $date, $timeSlot);
 		$bookStmt->execute();
 		return $bookStmt->get_result();
 	}
