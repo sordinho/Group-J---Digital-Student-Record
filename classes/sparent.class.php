@@ -522,10 +522,10 @@ class sparent extends user {
 		return $info;
 	}
 
-    /**
-     * Returns the list of Id,Stamp of all terms
-     * @return array|bool
-     */
+	/**
+	 * Returns the list of Id,Stamp of all terms
+	 * @return array|bool
+	 */
 	public function get_term_list() {
 		$conn = $this->connectMySql();
 		$terms = array();
@@ -540,12 +540,12 @@ class sparent extends user {
 		return $terms;
 	}
 
-    /**
-     * Returns the Stamp of a given term by TermID
-     * @param $termID
-     * @return bool|mixed
-     *
-     */
+	/**
+	 * Returns the Stamp of a given term by TermID
+	 * @param $termID
+	 * @return bool|mixed
+	 *
+	 */
 	public function get_term_stamp_by_id($termID) {
 		$conn = $this->connectMySql();
 		$query = "SELECT Stamp FROM Terms WHERE ID=?";
@@ -637,34 +637,43 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 
 		$date = strtotime($date);
 		$conn = $this->connectMySQL();
-
-		//TODO 1) check the timeslot is free for a teacher in this date
+		$teacherAvailabilityID = null; // saved from query1. to be used in query3.
 
 		//Check timeslot is a valid one for the given teacher<->date
 		$dayOfTheWeek = calendar::from_dow_to_num(date('l', $date));
 		$hourSlot = intval($timeSlot / 3);
-		$query2 = "SELECT HourSlot FROM TeacherAvailability WHERE TeacherID=? AND DayOfWeek=?";
-		$getTimeSlotsStmt = $conn->prepare($query2);
+		$query1 = "SELECT ID, HourSlot FROM TeacherAvailability WHERE TeacherID=? AND DayOfWeek=?";
+		$getTimeSlotsStmt = $conn->prepare($query1);
 		$getTimeSlotsStmt->bind_param("ii", $teacherID, $dayOfTheWeek);
 		$getTimeSlotsStmt->execute();
 		$res = $getTimeSlotsStmt->get_result();
 		$result = false;
-		// check there is a hourslot same as he wanted hourslot
+		// check there is a hourslot same as the wanted hourslot
 		while ($row = $res->fetch_array()) {
-			if ($row[0] == $hourSlot)
+			if ($row[1] == $hourSlot){
 				$result = true;
+				$teacherAvailabilityID = $row[0];
+			}
 		}
 		// we didn't get it
-		if(!$result)
+		if (!$result)
 			return false;
 		$getTimeSlotsStmt->close();
 
-		
-		// TODO 2) book the meeting
+		//Check the timeslot is free for the teacher in this date
+		$query2 = "SELECT ID FROM MeetingReservation mr, TeacherAvailability ta WHERE mr.TeacherAvailabilityID=ta.ID AND ta.TeacherID=? AND  Date=? AND Timeslot=?";
+		$checkFreeStmt = $conn->prepare($query2);
+		$checkFreeStmt->bind_param("isi", $teacherID, $date, $timeSlot);
+		$checkFreeStmt->execute();
+		$res = $checkFreeStmt->get_result();
+		if ($res->fetch_row() != null)
+			return false;
+
 		// Insert a new meeting
-		$query3 = "";
-
-
-		return false;
+		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot),VALUES (?,?,?,?)";
+		$bookStmt= $conn->prepare($query3);
+		$bookStmt -> bind_param("iisi",$parentID,$teacherAvailabilityID,$date,$timeSlot);
+		$bookStmt->execute();
+		return $bookStmt->get_result();
 	}
 }
