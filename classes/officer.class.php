@@ -562,5 +562,52 @@ class officer extends user {
 		return -1; // not logged in
 	}
 
+    public function get_teacher_data(){
+        $teachers = array();
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT U.ID, Name, Surname, Email, T.FiscalCode
+                                      FROM User U,Teacher T
+                                      WHERE U.ID = T.UserID;");
+        if(!$stmt)
+            return $teachers;
 
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while(($row = $res->fetch_assoc())){
+            array_push($teachers,$row);
+        }
+        return $teachers;
+    }
+
+    public function register_teacher_data($id,$name,$surname,$email,$fiscalcode){
+	    $conn = $this->connectMySQL();
+	    $conn->autocommit(FALSE);
+	    $stmt = $conn->prepare("UPDATE User SET Name = ?, Surname = ?, Email = ? WHERE ID = ?;");
+        if(!$stmt){
+            $conn->rollback();
+            $conn->autocommit(TRUE);
+            return false;
+        }
+        $stmt->bind_param("sssi",$name,$surname,$email,$id);
+        if(!$stmt->execute()){
+            $conn->rollback();
+            $conn->autocommit(TRUE);
+            return false;
+        }
+	    $stmt = $conn->prepare("UPDATE Teacher SET FiscalCode = ? WHERE UserID = ?;");
+        if(!$stmt){
+            $conn->rollback();
+            $conn->autocommit(TRUE);
+            return false;
+        }
+        $stmt->bind_param("si",$fiscalcode,$id);
+        if(!$stmt->execute()){
+            $conn->rollback();
+            $conn->autocommit(TRUE);
+            return false;
+        }
+        $conn->commit();
+        $conn->autocommit(TRUE);
+        return true;
+    }
 }
