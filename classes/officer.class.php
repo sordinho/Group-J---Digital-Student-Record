@@ -561,7 +561,12 @@ class officer extends user {
 
 		return -1; // not logged in
 	}
-
+    /*
+     * This function returns all the informations about teachers' master data
+     *
+     * @return array : empty
+     *                 [ ID, Name, Surname, Email, FiscalCode ]
+     * */
     public function get_teacher_data(){
         $teachers = array();
         $conn = $this->connectMySQL();
@@ -579,29 +584,32 @@ class officer extends user {
         return $teachers;
     }
 
-    public function register_teacher_data($id,$name,$surname,$email,$fiscalcode){
+    public function register_teacher_data($name,$surname,$email,$fiscalcode,$id){
+        if( !isset($name) || !isset($surname) || !isset($email) || !isset($fiscalcode) || !isset($id) ) return false;
+        //todo UNCOMMENT THIS WHEN ALL FISCAL CODES ARE COHERENT
+        //if( !$this->check_fiscal_code($fiscalcode) ) return false;
 	    $conn = $this->connectMySQL();
 	    $conn->autocommit(FALSE);
-	    $stmt = $conn->prepare("UPDATE User SET Name = ?, Surname = ?, Email = ? WHERE ID = ?;");
+	    $stmt = $conn->prepare("UPDATE User SET Name = ?, Surname = ?, Email = ? WHERE ID = ? AND UserGroup = 'teacher';");
         if(!$stmt){
             $conn->rollback();
             $conn->autocommit(TRUE);
             return false;
         }
         $stmt->bind_param("sssi",$name,$surname,$email,$id);
-        if(!$stmt->execute()){
+        if(!$stmt->execute() || $stmt->affected_rows == 0){
             $conn->rollback();
             $conn->autocommit(TRUE);
             return false;
         }
 	    $stmt = $conn->prepare("UPDATE Teacher SET FiscalCode = ? WHERE UserID = ?;");
-        if(!$stmt){
+        if(!$stmt ){
             $conn->rollback();
             $conn->autocommit(TRUE);
             return false;
         }
         $stmt->bind_param("si",$fiscalcode,$id);
-        if(!$stmt->execute()){
+        if(!$stmt->execute() || $stmt->affected_rows == 0){
             $conn->rollback();
             $conn->autocommit(TRUE);
             return false;

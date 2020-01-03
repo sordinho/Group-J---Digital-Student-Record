@@ -21,7 +21,7 @@ if(!empty($_POST)){
     //$debug = "";
     foreach ($teacherData as $i => $row) {
         if($_POST['status_'.$row['ID']] == "changed"){
-            $res = $officer->register_teacher_data($row['ID'],$_POST['name_'.$row['ID']],$_POST['surname_'.$row['ID']],$_POST['email_'.$row['ID']],$_POST['fiscalcode_'.$row['ID']]);
+            $res = $officer->register_teacher_data($_POST['name_'.$row['ID']],$_POST['surname_'.$row['ID']],$_POST['email_'.$row['ID']],$_POST['fiscalcode_'.$row['ID']],$row['ID']);
             if(!$res)
                 $officer->get_error(28);
             $count++;

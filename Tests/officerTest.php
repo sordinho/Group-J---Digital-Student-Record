@@ -310,6 +310,55 @@ class officerTest extends TestCase {
 		$this->assertEquals(1, $off1->publish_communication("testTitle", "Test Description"));
 	}
 
+	public function testGet_teacher_data(){
+        $off1 = new officer();
+        $teachers = $off1->get_teacher_data();
+        //[ ID, Name, Surname, Email, FiscalCode ]
+
+        $this->assertNotEmpty($teachers,$this->printErrorMessage("testGet_teacher_data","returned array should not be empty"));
+        foreach($teachers as $i => $teacher){
+            $this->assertEquals(5,sizeof($teacher),$this->printErrorMessage("testGet_teacher_data","size of the array containing the informations about a teacher should be 5."));
+        }
+    }
+
+    public function testRegister_teacher_data(){
+        $off1 = new officer();
+        $id = 3;
+        $name = "Jon";
+        $surname = "Snow";
+        $email = "kingIn@the.north";
+        $fiscalcode = "SNWJNO80A01F839C";
+        $this->assertTrue($off1->register_teacher_data($name,$surname,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should have been successful"));
+        $conn = TestsConnectMySQL();
+        $res = $conn->query("SELECT Name, Surname, Email, FiscalCode
+                                    FROM User u, Teacher t
+                                    WHERE u.ID = 3 AND u.ID=t.UserID");
+        $row = $res->fetch_row();
+        $this->assertEquals($name,$row[0],$this->printErrorMessage("testRegister_teacher_data",""));
+        $this->assertEquals($surname,$row[1],$this->printErrorMessage("testRegister_teacher_data",""));
+        $this->assertEquals($email,$row[2],$this->printErrorMessage("testRegister_teacher_data",""));
+        $this->assertEquals($fiscalcode,$row[3],$this->printErrorMessage("testRegister_teacher_data",""));
+
+        $id = -1;
+        $this->assertFalse($off1->register_teacher_data($name,$surname,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+        $id = 1;
+        $this->assertFalse($off1->register_teacher_data($name,$surname,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+    }
+
+    public function testRegister_teacher_dataBOUNDARY(){
+        $off1 = new officer();
+        $id = 3;
+        $name = "Jon";
+        $surname = "Snow";
+        $email = "kingIn@the.north";
+        $fiscalcode = "SNWJNO80A01F839C";
+        $this->assertFalse($off1->register_teacher_data(null,$surname,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+        $this->assertFalse($off1->register_teacher_data($name,null,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+        $this->assertFalse($off1->register_teacher_data($name,$surname,null,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+        $this->assertFalse($off1->register_teacher_data($name,$surname,$email,null,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+        $this->assertFalse($off1->register_teacher_data($name,$surname,$email,$fiscalcode,null),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+        $this->assertFalse($off1->register_teacher_data(null,null,null,null,null),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+	}
 	/**
 	 * utility function for generating a matrix containing fake post data for testing set timetable
 	 * @param $postData
@@ -395,4 +444,6 @@ class officerTest extends TestCase {
 
 		return $timetable;
 	}
+
+
 }
