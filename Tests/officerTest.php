@@ -194,7 +194,7 @@ class officerTest extends TestCase {
 
 		$newClassless = $off->retrieve_classless_students();
 		foreach ($newClassless as $student) {
-			$off->add_student_to_class($student['ID'],1);
+			$off->add_student_to_class($student['ID'], 1);
 		}
 
 		$newClass1 = $off->get_students_by_class_ID(1);
@@ -202,20 +202,20 @@ class officerTest extends TestCase {
 		$this->assertEquals(sizeof($newClass1), sizeof($class1) + sizeof($classless));
 	}
 
-	public function testGetTeacherTopic(){
+	public function testGetTeacherTopic() {
 		$off = new officer();
 
 		$res = $off->get_teacher_topic(-1);
-		$this->assertEquals(0,sizeof($res));
+		$this->assertEquals(0, sizeof($res));
 
 		$res = $off->get_teacher_topic(1);
-		$this->assertNotEquals(0,sizeof($res));
+		$this->assertNotEquals(0, sizeof($res));
 	}
 
-	public function testDeleteTimetable(){
+	public function testDeleteTimetable() {
 		$off = new officer();
 
-		if($off->exists_timetable(2)){
+		if ($off->exists_timetable(2)) {
 			$off->delete_timetable(2);
 		}
 
@@ -282,10 +282,20 @@ class officerTest extends TestCase {
 
 		// Insert valid timetable
 		$timetable = $this->generateTimetableMatrixClass1A();
-		$this->assertTrue($off1->set_timetable_class($timetable, $classID));
+		$off1->set_timetable_class($timetable, $classID);
 
-		// Get all the timetable
-		$this->assertEquals(25, sizeof($off1->get_timetable_by_class($classID)));
+		$storedTimetable = $off1->get_timetable_by_class($classID);
+
+		// Check number of days = 5
+		$this->assertEquals(5, sizeof($storedTimetable));
+
+		$totalHours=0;
+		for ($i = 0; $i < 5; $i++) {
+			$totalHours+= sizeof($storedTimetable[$i]);
+		}
+
+		// 1st year has only 25 hours
+		$this->assertEquals(25,$totalHours);
 	}
 
 	public function testPublishCommunication() {
@@ -310,55 +320,56 @@ class officerTest extends TestCase {
 		$this->assertEquals(1, $off1->publish_communication("testTitle", "Test Description"));
 	}
 
-	public function testGet_teacher_data(){
-        $off1 = new officer();
-        $teachers = $off1->get_teacher_data();
-        //[ ID, Name, Surname, Email, FiscalCode ]
+	public function testGet_teacher_data() {
+		$off1 = new officer();
+		$teachers = $off1->get_teacher_data();
+		//[ ID, Name, Surname, Email, FiscalCode ]
 
-        $this->assertNotEmpty($teachers,$this->printErrorMessage("testGet_teacher_data","returned array should not be empty"));
-        foreach($teachers as $i => $teacher){
-            $this->assertEquals(5,sizeof($teacher),$this->printErrorMessage("testGet_teacher_data","size of the array containing the informations about a teacher should be 5."));
-        }
-    }
+		$this->assertNotEmpty($teachers, $this->printErrorMessage("testGet_teacher_data", "returned array should not be empty"));
+		foreach ($teachers as $i => $teacher) {
+			$this->assertEquals(5, sizeof($teacher), $this->printErrorMessage("testGet_teacher_data", "size of the array containing the informations about a teacher should be 5."));
+		}
+	}
 
-    public function testRegister_teacher_data(){
-        $off1 = new officer();
-        $id = 3;
-        $name = "Jon";
-        $surname = "Snow";
-        $email = "kingIn@the.north";
-        $fiscalcode = "SNWJNO80A01F839C";
-        $this->assertTrue($off1->register_teacher_data($name,$surname,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should have been successful"));
-        $conn = TestsConnectMySQL();
-        $res = $conn->query("SELECT Name, Surname, Email, FiscalCode
+	public function testRegister_teacher_data() {
+		$off1 = new officer();
+		$id = 3;
+		$name = "Jon";
+		$surname = "Snow";
+		$email = "kingIn@the.north";
+		$fiscalcode = "SNWJNO80A01F839C";
+		$this->assertTrue($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should have been successful"));
+		$conn = TestsConnectMySQL();
+		$res = $conn->query("SELECT Name, Surname, Email, FiscalCode
                                     FROM User u, Teacher t
                                     WHERE u.ID = 3 AND u.ID=t.UserID");
-        $row = $res->fetch_row();
-        $this->assertEquals($name,$row[0],$this->printErrorMessage("testRegister_teacher_data",""));
-        $this->assertEquals($surname,$row[1],$this->printErrorMessage("testRegister_teacher_data",""));
-        $this->assertEquals($email,$row[2],$this->printErrorMessage("testRegister_teacher_data",""));
-        $this->assertEquals($fiscalcode,$row[3],$this->printErrorMessage("testRegister_teacher_data",""));
+		$row = $res->fetch_row();
+		$this->assertEquals($name, $row[0], $this->printErrorMessage("testRegister_teacher_data", ""));
+		$this->assertEquals($surname, $row[1], $this->printErrorMessage("testRegister_teacher_data", ""));
+		$this->assertEquals($email, $row[2], $this->printErrorMessage("testRegister_teacher_data", ""));
+		$this->assertEquals($fiscalcode, $row[3], $this->printErrorMessage("testRegister_teacher_data", ""));
 
-        $id = -1;
-        $this->assertFalse($off1->register_teacher_data($name,$surname,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
-        $id = 1;
-        $this->assertFalse($off1->register_teacher_data($name,$surname,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
-    }
-
-    public function testRegister_teacher_dataBOUNDARY(){
-        $off1 = new officer();
-        $id = 3;
-        $name = "Jon";
-        $surname = "Snow";
-        $email = "kingIn@the.north";
-        $fiscalcode = "SNWJNO80A01F839C";
-        $this->assertFalse($off1->register_teacher_data(null,$surname,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
-        $this->assertFalse($off1->register_teacher_data($name,null,$email,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
-        $this->assertFalse($off1->register_teacher_data($name,$surname,null,$fiscalcode,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
-        $this->assertFalse($off1->register_teacher_data($name,$surname,$email,null,$id),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
-        $this->assertFalse($off1->register_teacher_data($name,$surname,$email,$fiscalcode,null),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
-        $this->assertFalse($off1->register_teacher_data(null,null,null,null,null),$this->printErrorMessage("testRegister_teacher_data","this operation should not have been successful"));
+		$id = -1;
+		$this->assertFalse($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
+		$id = 1;
+		$this->assertFalse($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
 	}
+
+	public function testRegister_teacher_dataBOUNDARY() {
+		$off1 = new officer();
+		$id = 3;
+		$name = "Jon";
+		$surname = "Snow";
+		$email = "kingIn@the.north";
+		$fiscalcode = "SNWJNO80A01F839C";
+		$this->assertFalse($off1->register_teacher_data(null, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
+		$this->assertFalse($off1->register_teacher_data($name, null, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
+		$this->assertFalse($off1->register_teacher_data($name, $surname, null, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
+		$this->assertFalse($off1->register_teacher_data($name, $surname, $email, null, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
+		$this->assertFalse($off1->register_teacher_data($name, $surname, $email, $fiscalcode, null), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
+		$this->assertFalse($off1->register_teacher_data(null, null, null, null, null), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
+	}
+
 	/**
 	 * utility function for generating a matrix containing fake post data for testing set timetable
 	 * @param $postData
@@ -374,19 +385,19 @@ class officerTest extends TestCase {
 		return $teacher_hour_day;
 	}
 
-	private function generateTimetableMatrixClass1A(){
+	private function generateTimetableMatrixClass1A() {
 		$timetable[0][0] = "1|1|insert";
 		$timetable[0][1] = "1|1|insert";
 		$timetable[0][2] = "2|1|insert";
 		$timetable[0][3] = "2|1|insert";
 		$timetable[0][4] = "4|4|insert";
-		$timetable[0][5] = ".|.|nothing";
+		$timetable[0][5] = "||nothing";
 		$timetable[1][0] = "3|3|insert";
 		$timetable[1][1] = "3|3|insert";
 		$timetable[1][2] = "4|4|insert";
 		$timetable[1][3] = "3|3|insert";
 		$timetable[1][4] = "5|5|insert";
-		$timetable[1][5] = ".|.|nothing";
+		$timetable[1][5] = "||nothing";
 		$timetable[2][0] = "3|3|insert";
 		$timetable[2][1] = "3|3|insert";
 		$timetable[2][2] = "5|5|insert";
@@ -398,18 +409,18 @@ class officerTest extends TestCase {
 		$timetable[3][2] = "8|8|insert";
 		$timetable[3][3] = "8|8|insert";
 		$timetable[3][4] = "8|8|insert";
-		$timetable[3][5] = ".|.|nothing";
+		$timetable[3][5] = "||nothing";
 		$timetable[4][0] = "8|8|insert";
 		$timetable[4][1] = "8|8|insert";
 		$timetable[4][2] = "7|7|insert";
 		$timetable[4][3] = "3|3|insert";
-		$timetable[4][4] = ".|.|nothing";
-		$timetable[4][5] = ".|.|nothing";
+		$timetable[4][4] = "||nothing";
+		$timetable[4][5] = "||nothing";
 
 		return $timetable;
 	}
 
-	private function generateTimetableMatrixClass1AUpdate(){
+	private function generateTimetableMatrixClass1AUpdate() {
 
 		$timetable[0][0] = "7|7|update";
 		$timetable[0][1] = "1|1|insert";
