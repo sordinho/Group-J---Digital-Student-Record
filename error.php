@@ -29,7 +29,8 @@ $messages = array(
     24 => 'The selected class has no students.',
     25 => 'Operation not allowed.',
     26 => 'Usergroup selection error.',
-    27 => 'Cannot retrieve any usergroup.'
+    27 => 'Cannot retrieve any usergroup.',
+    28 => 'Teacher\'s master data not updated.'
 );
 if(isset($_GET['errorID'])){
 	$message_script = $_GET['errorID'];

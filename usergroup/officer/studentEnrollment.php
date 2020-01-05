@@ -3,7 +3,7 @@ require_once("../../config.php");
 
 $site = new csite();
 initialize_site($site);
-$page = new cpage("");
+$page = new cpage("Upload timetable");
 $site->setPage($page);
 $officer = new officer();
 

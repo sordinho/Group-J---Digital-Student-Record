@@ -136,7 +136,6 @@ CREATE TABLE `TopicRecord` (
 		return isset($_SESSION['teacherID']) ? $_SESSION['teacherID'] : -1;
 	}
 
-
 	public function get_assigned_classes_names() {
 		$classes = array();
 		$conn = $this->connectMySQL();
@@ -157,10 +156,6 @@ CREATE TABLE `TopicRecord` (
 		return $classes;
 
 	}
-
-	/*
-	 * get ClassID, TopicName, TopicDescription for a given teacherID
-	 */
 
 	public function get_assigned_classes() {
 		$classes = array();
@@ -227,8 +222,6 @@ CREATE TABLE `TopicRecord` (
 		}
 		return $absences;
 	}
-
-
 
 	public function get_lecture_by_id($lectureID) {
 		$conn = $this->connectMySQL();
@@ -399,8 +392,7 @@ CREATE TABLE `TopicRecord` (
 		$sql = "   SELECT COUNT(*)
                     FROM NotPresentRecord
                     WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
-                    AND NotPresentRecord.StudentID = '$studentID'
-                    AND ExitHour = 0";
+                    AND NotPresentRecord.StudentID = '$studentID'";
 
 		if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
 
@@ -431,7 +423,6 @@ CREATE TABLE `TopicRecord` (
 	 * @return true|false on success or not
 	 */
 	public function register_early_exit($studentID, $timestamp, $newExitHour) {
-		//todo check if the format of newExitHour need to be changed
 		$teacherID = $_SESSION['teacherID'];
         if(!isset($studentID) || !isset($timestamp) || !isset($newExitHour)) return false;
 
@@ -449,8 +440,7 @@ CREATE TABLE `TopicRecord` (
 		$sql = "   SELECT COUNT(*)
                     FROM NotPresentRecord
                     WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
-                    AND NotPresentRecord.StudentID = '$studentID'
-                    AND ExitHour = 0";
+                    AND NotPresentRecord.StudentID = $studentID";
 
 		if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
 
@@ -460,7 +450,7 @@ CREATE TABLE `TopicRecord` (
 
 			if ($absent) {
 				$sql = $conn->prepare("UPDATE NotPresentRecord SET ExitHour = ? WHERE StudentID = ? AND Date = ?;");
-				$sql->bind_param('is', $studentID, $y_m_d_timestamp);
+				$sql->bind_param('iis',$newExitHour, $studentID, $y_m_d_timestamp);
 				return $sql->execute();
 			} else {
 				$sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',0,?);");
@@ -506,7 +496,6 @@ CREATE TABLE `TopicRecord` (
 		$cond = parent::is_logged() && $this->get_teacher_ID() != -1;
 		return $cond;
 	}
-
 
 	public function get_uploaded_material() {
 
@@ -708,6 +697,11 @@ CREATE TABLE `TopicRecord` (
         return $missingTopicIDs;
     }
 
+    /**
+     * Returns the Stamp of a student surname and name given his StudentID
+     * @param $studentID
+     * @return bool|string
+     */
     public function get_student_stamp_by_id($studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT Surname,Name FROM Student WHERE ID=?");
@@ -725,6 +719,12 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
+    /**
+     * Given a TopicID and a StudentID, returns the average of the marks
+     * @param $topicID
+     * @param $studentID
+     * @return int|mixed
+     */
     public function get_average_mark_for_topic($topicID,$studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT StudentID,AVG(Mark) AS Average FROM MarksRecord,Terms WHERE TopicID=? AND StudentID=? AND 
@@ -745,6 +745,12 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
+    /**
+     * Given the $value ("StudentID_TopicID_Average_TermID") will insert the final grade in the DB so that the parent can see it
+     * Returns false if something is wrong, the SpecificClassID if everything is inserted correctly
+     * @param $value
+     * @return bool|mixed
+     */
     public function set_final_grade($value){
 	    //format of $value
         // $_GET['studentID']."_".$mark['TopicID']."_".round($averageMinus,0)."_".$teacher->get_actual_term()
@@ -763,6 +769,11 @@ CREATE TABLE `TopicRecord` (
 
     }
 
+    /**
+     * Returns the SpecificClassID of the class the student given by StudentID is inserted in
+     * @param $studentID
+     * @return bool|mixed
+     */
     public function get_specificclassid_by_student($studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT SpecificClassID FROM Student WHERE ID=?");
@@ -780,6 +791,11 @@ CREATE TABLE `TopicRecord` (
         }
     }
 
+    /**
+     * Returns the list of students of the class with given ClassID
+     * @param $classID
+     * @return array
+     */
     public function get_students_by_class_id($classID) {
         $students = array();
         $conn = $this->connectMySQL();
@@ -798,6 +814,61 @@ CREATE TABLE `TopicRecord` (
             }
         }
         return $students;
+    }
+
+    /**
+     * @param $day "Monday, Tuesday..."
+     * @param $hour "08:00, 12:00..."
+     * @return int -1 on calendar fail
+     * @return int -2 on failing to prepare a stmt
+     * @return int -3 on failing to get teacher id
+     * @return int -4 on trying to insert a meeting hour when there is lecture
+     * @return int -5 on failing to insert/update the teacher availability
+     * @return int 1 on success
+     */
+    public function add_availability($day, $hour) {
+        $conn = $this->connectMySQL();
+        $dayOfWeek = calendar::from_dow_to_num($day);
+        $hourSlot = calendar::from_hour_to_slot($hour);
+        if ($dayOfWeek == -1 || $hourSlot == -1) {
+            return -1;
+        }
+        $stmt = $conn->prepare("SELECT * FROM Timetables WHERE TeacherID=? AND HourSlot=? AND DayOfWeek=?");
+        if (!$stmt) {
+            return -2;
+        }
+        $teacherID = $this->get_teacher_ID();
+        if ($teacherID < 0) {
+            return -3;
+        }
+        $stmt->bind_param("iii", $teacherID, $hourSlot, $dayOfWeek);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->num_rows > 0) {
+            return -4;
+        } else {
+            $stmt = $conn->prepare("SELECT * FROM TeacherAvailability WHERE TeacherID=? AND HourSlot=? AND DayOfWeek=?");
+            if (!$stmt) {
+                return -2;
+            }
+            $stmt->bind_param("iii", $teacherID, $hourSlot, $dayOfWeek);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if ($res->num_rows > 0) {
+                $stmt = $conn->prepare("UPDATE TeacherAvailability SET DayOfWeek=?, HourSlot=? WHERE TeacherID=? AND HourSlot=? AND DayOfWeek=?");
+                $stmt->bind_param("iiiii", $dayOfWeek, $hourSlot, $teacherID, $hourSlot, $dayOfWeek);
+            } else {
+                $stmt = $conn->prepare("INSERT INTO TeacherAvailability (TeacherID, DayOfWeek, HourSlot) VALUES (?,?,?)");
+                $stmt->bind_param("iii", $teacherID, $dayOfWeek, $hourSlot);
+            }
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if ($stmt->affected_rows == 1) {
+                return 1;
+            } else {
+                return -5;
+            }
+        }
     }
 
 }

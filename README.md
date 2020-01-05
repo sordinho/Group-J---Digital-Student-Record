@@ -21,7 +21,10 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 - [Retrospective](https://docs.google.com/presentation/d/1NI0G7q5EtTMxp0J2yLQ2h8HVPYKR-rp4ryxRS_Cq3Sg/edit?usp=sharing)
 
 ### 18/12/2019 - Demo 3
+- 8 Stories completed out of 8 committed
+- 31 Story Points out of 31
 - [Demo Presentation](https://docs.google.com/presentation/d/1mYpHOuHszI1RCIgmFtCQi7HUHWXRIhvTGOUo9idcpuw/edit?usp=sharing)
+- [Retrospective](https://docs.google.com/presentation/d/1oj6oe8NyNsuLPc9KacgKOs2jszch2rCMeRdy-0Giyq8/edit#slide=id.g6d23ff757e_0_11)
 
 ## Usernames and password :e-mail: :paperclip:
 Usernames and passwords for testing purposes can be found [HERE](USERNAMES.md)

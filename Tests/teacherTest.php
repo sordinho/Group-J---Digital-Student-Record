@@ -669,4 +669,20 @@ class teacherTest extends TestCase
         $this->assertCount(0,$teacher->get_students_by_class_id($classID));
 
     }
+
+    public function testAdd_availability()
+    {
+        $teacher = new teacher();
+        $this->assertEquals(-1, $teacher->add_availability("no_day","no_hour"));
+        $this->assertEquals(-1, $teacher->add_availability("Saturday","15:00"));
+        $this->assertEquals(-1, $teacher->add_availability(-1,-1));
+        $this->assertEquals(-3, $teacher->add_availability("Monday","08:00"));
+        $_SESSION['teacherID'] = 1; // Marco Torchiano (userID=3)
+        $this->assertEquals(-4, $teacher->add_availability("Monday","08:00"));
+        $this->assertEquals(-4, $teacher->add_availability("Monday","10:00"));
+        $this->assertEquals(1, $teacher->add_availability("Monday","12:00"));
+
+    }
+
+
 }
