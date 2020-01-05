@@ -120,7 +120,7 @@ class officer extends user {
 		return true;//True || False
 	}
 
-	/*
+	/**
 	 * removes a user from the USER table and all his entries from Parent table
 	 *
 	 * @param userID ---> the id of the user to be removed
@@ -140,14 +140,14 @@ class officer extends user {
 		$res = $stmt->get_result();
 		if ($res->num_rows != 1)
 			return false;
-		$stmt = $conn->prepare("DELETE FROM User WHERE ID = ?;");
+		$stmt = $conn->prepare("DELETE FROM Parent WHERE UserID = ?;");
 		if (!$stmt)
 			return false;
 		$stmt->bind_param("i", $userID);
-		if (!$stmt->execute())
-			return false;
-		$stmt = $conn->prepare("DELETE FROM Parent WHERE UserID = ?;");
-		IF (!$stmt)
+		$stmt->execute();
+
+		$stmt = $conn->prepare("DELETE FROM User WHERE ID = ?;");
+		if (!$stmt)
 			return false;
 		$stmt->bind_param("i", $userID);
 		return $stmt->execute();
@@ -158,7 +158,7 @@ class officer extends user {
 		//todo : to be edited
 		// Se un parent non ha password cosa c'è in quel campo della tabella User? Stringa vuota o altro?
 		$res = $conn->query("SELECT ID,Email FROM User WHERE UserGroup = 'parent' AND Password = ''");
-		if ($res->num_rows <= 0)
+		if ($res->num_rows == 0)
 			return array();
 		$IDs = array();
 		for ($i = 0; $i < $res->num_rows; $i++) {

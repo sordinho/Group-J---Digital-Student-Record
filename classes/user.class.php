@@ -30,7 +30,7 @@ class user {
 	function get_user_group_table_name($usergroup) {
 		$usergroup_valid_array = ["Teacher", "Officer", "Parent"];
 		$c_usergroup = ucfirst($usergroup);
-		return in_array($c_usergroup, $usergroup_valid_array)? $c_usergroup : false;
+		return in_array($c_usergroup, $usergroup_valid_array) ? $c_usergroup : false;
 
 	}
 
@@ -40,14 +40,14 @@ class user {
 	 * @return bool
 	 */
 	function user_login($post_data) {
-	    $return = -1;
+		$return = -1;
 		$username = $post_data["username"];
 		$password = $post_data["password"];
 
 		$mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
 		if ($mysqli->connect_errno) {
 			printf("Connect failed: %s\n", mysqli_connect_error());
-            $return = -1;
+			$return = -1;
 		}
 
 		//TODO: extend with name and surname (maybe save that in an array as user_info[] ?)
@@ -57,40 +57,40 @@ class user {
 		$res = $query->execute();
 		if (!$res) {
 			printf("Error message: %s\n", $mysqli->error);
-            $return = -1;
+			$return = -1;
 		}
 
 		$query->store_result();
 		$query->bind_result($id, $name, $surname, $pass, $usergroup);
 		// In case of success there should be just 1 user for a given (username is also a primary key for its table)
 		if ($query->num_rows == -1) {
-            $return = -1;
+			$return = -1;
 		}
 		$query->fetch();
 		if (password_verify($password, $pass)) {
 
-		    /*
-		     * the ID is always set
-		     * in case of multiple usergroups it will be overwritten
-		     */
-            $this->set_logged($id);
-            $this->set_username($username);
-            $this->set_name($name);
-            $this->set_surname($surname);
-            $num_rows = $query->num_rows;
+			/*
+			 * the ID is always set
+			 * in case of multiple usergroups it will be overwritten
+			 */
+			$this->set_logged($id);
+			$this->set_username($username);
+			$this->set_name($name);
+			$this->set_surname($surname);
+			$num_rows = $query->num_rows;
 
-            if ($num_rows == 1) {
-                if ($this->set_session_usergroup($usergroup, $id, $mysqli)) {
-                    $return = 1; // successfully login + one usergroup
-                }
-            } elseif ($num_rows > 1) {
-                $return = 2; // successfully login + multiple usergroups
-            } else {
-                $return = -1;
-            }
+			if ($num_rows == 1) {
+				if ($this->set_session_usergroup($usergroup, $id, $mysqli)) {
+					$return = 1; // successfully login + one usergroup
+				}
+			} elseif ($num_rows > 1) {
+				$return = 2; // successfully login + multiple usergroups
+			} else {
+				$return = -1;
+			}
 
 		} else
-            $return = -1;
+			$return = -1;
 
 		$query->close();
 		$mysqli->close();
@@ -121,117 +121,113 @@ class user {
 
 	public function set_session_usergroup($retrievedUsergroup, $userID, $mysqli) {
 
-        // If here login was successful (hash was verified)
-        $this->set_usergroup($retrievedUsergroup);
+		// If here login was successful (hash was verified)
+		$this->set_usergroup($retrievedUsergroup);
 
-        $base_url = "/usergroup/" . $retrievedUsergroup . "/";
-        $this->set_base_url($base_url);
-        // Get specific ID for teacher, parent ...
-        if ($retrievedUsergroup == 'admin')
-            $this->set_admin();
-        else {
-            $user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
-            $specificID = -1;
-            if ($user_group_table != false) {
-                /** @noinspection SqlResolve */
-                $queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
-                $queryID->bind_param('i', $userID);
+		$base_url = "/usergroup/" . $retrievedUsergroup . "/";
+		$this->set_base_url($base_url);
+		// Get specific ID for teacher, parent ...
+		if ($retrievedUsergroup == 'admin')
+			$this->set_admin();
+		else {
+			$user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
+			$specificID = -1;
+			if ($user_group_table != false) {
+				/** @noinspection SqlResolve */
+				$queryID = $mysqli->prepare("SELECT ID FROM " . $user_group_table . " WHERE UserID = ?");
+				$queryID->bind_param('i', $userID);
 
-                $result = $queryID->execute();
-                if (!$result) {
-                    printf("Error message: %s\n", $mysqli->error);
-                    $queryID->close();
-                    return false;
-                }
-                $queryID->store_result();
-                $queryID->bind_result($specificID);
-                // In case of success there should be just 1 *USER* for a given (username is also a primary key for its table)
-                if ($queryID->num_rows < 1) {
-                    $queryID->close();
-                    return false;
-                }
-                $queryID->fetch();
-                $this->set_specific_ID(intval($specificID), $retrievedUsergroup);
-            } else {
-                return false;
-            }
-        }
+				$result = $queryID->execute();
+				if (!$result) {
+					printf("Error message: %s\n", $mysqli->error);
+					$queryID->close();
+					return false;
+				}
+				$queryID->store_result();
+				$queryID->bind_result($specificID);
+				// In case of success there should be just 1 *USER* for a given (username is also a primary key for its table)
+				if ($queryID->num_rows < 1) {
+					$queryID->close();
+					return false;
+				}
+				$queryID->fetch();
+				$this->set_specific_ID(intval($specificID), $retrievedUsergroup);
+			} else {
+				return false;
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public function select_usergroup($usergroup) {
-        $return = false;
-        $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
-        if ($mysqli->connect_errno) {
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            $return = false;
-        }
+	public function select_usergroup($usergroup) {
+		$return = false;
+		$mysqli = $this->connectMySQL();
 
-        /*
-         * $_SESSION['ID'] overwrite with the specified usergroup
-         */
-        if ($userID = $this->retrieve_user_id_by_usergroup($this->get_username(), $usergroup)) {
-            if ($this->set_session_usergroup($usergroup, $userID, $mysqli)) {
-                $return = true;
-            }
-        }
+		/*
+		 * $_SESSION['ID'] overwrite with the specified usergroup
+		 */
+		if ($userID = $this->retrieve_user_id_by_usergroup($this->get_username(), $usergroup)) {
+			if ($this->set_session_usergroup($usergroup, $userID, $mysqli)) {
+				$return = true;
+			}
+		}
 
-        $mysqli->close();
-        return $return;
-    }
+		$mysqli->close();
+		return $return;
+	}
 
-    public function retrieve_usergroups($username) {
-	    $usergroup = array();
-        $mysqli = new mysqli(DBAddr, DBUser, DBPassword, DBName);
-        /* check connection */
-        if ($mysqli->connect_errno) {
-            printf("Connect failed: %s\n", $mysqli->connect_errno);
-            $mysqli->close();
-            return array();
-        }
+	public function retrieve_usergroups($username) {
+		$usergroup = array();
+		$mysqli = $this->connectMySQL();
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_errno);
+			$mysqli->close();
+			return array();
+		}
 
-        $stmt = $mysqli->prepare("SELECT UserGroup FROM User WHERE Email = ?");
-        $stmt->bind_param('s', $username);
-        if (!$stmt->execute()) {
-            $stmt->close();
-            $mysqli->close();
-            return array();
-        }
+		$stmt = $mysqli->prepare("SELECT UserGroup FROM User WHERE Email = ?");
+		$stmt->bind_param('s', $username);
+		if (!$stmt->execute()) {
+			$stmt->close();
+			$mysqli->close();
+			return array();
+		}
 
-        $res = $stmt->get_result();
-        if ($res->num_rows>1) {
-            while ($row = $res->fetch_object()) {
-                $usergroup[] = $row->UserGroup;
-            }
-        }
+		$res = $stmt->get_result();
+		if ($res->num_rows > 1) {
+			while ($row = $res->fetch_object()) {
+				$usergroup[] = $row->UserGroup;
+			}
+		}
 
-        $stmt->close();
-        $mysqli->close();
-        return $usergroup;
+		$stmt->close();
+		$mysqli->close();
+		return $usergroup;
 
-    }
+	}
 
-    public function retrieve_user_id_by_usergroup($email, $usergroup) {
-	    $conn = $this->connectMySQL();
-	    $stmt = $conn->prepare("SELECT ID FROM User WHERE Email = ? AND UserGroup = ?");
-        $stmt->bind_param('ss', $email, $usergroup);
-        if (!$stmt->execute()) {
-            $stmt->close();
-            $conn->close();
-            return -1;
-        }
+	public function retrieve_user_id_by_usergroup($email, $usergroup) {
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("SELECT ID FROM User WHERE Email = ? AND UserGroup = ?");
+		$stmt->bind_param('ss', $email, $usergroup);
+		if (!$stmt->execute()) {
+			$stmt->close();
+			$conn->close();
+			return -1;
+		}
 
-        $res = $stmt->get_result();
-        if ($res->num_rows == 1) {
-            $row = $res->fetch_object();
-            $stmt->close();
-            $conn->close();
-            return $row->ID;
-        }
+		$res = $stmt->get_result();
+		if ($res->num_rows == 1) {
+			$row = $res->fetch_object();
+			$stmt->close();
+			$conn->close();
+			return $row->ID;
+		}
 
-        return -1;
-    }
+		return -1;
+	}
 
 	/***********************************
 	 *            SETTERS
@@ -395,7 +391,7 @@ class user {
 	 * @return string
 	 * @throws Exception
 	 */
-	protected function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'){
+	protected function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
 		$str = '';
 		$max = mb_strlen($keyspace, '8bit') - 1;
 		if ($max < 1) {
@@ -435,28 +431,27 @@ class user {
 	 * @param $fcode
 	 * @return false|int
 	 */
-	public function check_fiscal_code($fcode){
+	public function check_fiscal_code($fcode) {
 		$regex = '/^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$/';
-		return preg_match($regex,$fcode);
+		return preg_match($regex, $fcode);
 	}
 
 
-    public function get_class_stamp_by_id($classID)
-    {
-        $conn = $this->connectMySQL();
+	public function get_class_stamp_by_id($classID) {
+		$conn = $this->connectMySQL();
 
-        $res = $conn->query("SELECT YearClassID, Section FROM SpecificClass WHERE ID=$classID");
-        if ($res->num_rows <= 0)
-            return array();
-        $IDs = array();
-        for ($i = 0; $i < $res->num_rows; $i++) {
-            $row = $res->fetch_assoc();
-            $stamp = $row["YearClassID"] . "°" . $row["Section"];
-            array_push($IDs, $row);
-        }
-        $res->close();
-        return $stamp;
-    }
+		$res = $conn->query("SELECT YearClassID, Section FROM SpecificClass WHERE ID=$classID");
+		if ($res->num_rows <= 0)
+			return array();
+		$IDs = array();
+		for ($i = 0; $i < $res->num_rows; $i++) {
+			$row = $res->fetch_assoc();
+			$stamp = $row["YearClassID"] . "°" . $row["Section"];
+			array_push($IDs, $row);
+		}
+		$res->close();
+		return $stamp;
+	}
 
 
 }
