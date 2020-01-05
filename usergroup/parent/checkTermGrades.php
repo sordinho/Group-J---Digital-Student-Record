@@ -38,6 +38,7 @@ if ($cur_child == -1) {
                 </h3>
                 <div class="card-body  px-lg-5 pt-0 mt-md-5">
                 <form>
+                    <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -62,6 +63,7 @@ if ($cur_child == -1) {
         }
         $content .= ' </tbody>
                       </table>
+                      </div>
                       </form>
                       </div>
                       </div>

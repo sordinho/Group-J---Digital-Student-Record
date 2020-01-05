@@ -43,7 +43,7 @@ if (!isset($_POST['submit'])) {
 <div class="card">
 <h3 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">Book a meeting</h3>
 <div class="card-body  px-lg-5 pt-0 mt-md-5">
-
+<div class="table-responsive">
 <table class="table table-striped table-hover">
   <thead>
     <tr>
@@ -97,6 +97,7 @@ OUT;
         $content .=<<<OUT
   </tbody>
 </table>
+</div>
 
 </div>
 </div>

@@ -267,7 +267,6 @@ class sparent extends user {
 		return $stamp;
 	}
 
-	#not sure about the parameter to pass
 	public function get_material_info($childID) {
 		if (!isset($childID)) {
 			return array();
@@ -576,5 +575,38 @@ class sparent extends user {
         while ($row = $res->fetch_assoc())
             array_push($terms, $row);
         return $terms;
+    }
+
+    public function get_timetable($childID) {
+        if (!isset($childID)) {
+            return array();
+        }
+
+        $timetable = array();
+        $conn = $this->connectMySql();
+
+        /*
+         * given a childID returns its timetable: the teacher surname and the topic name are returned - not ids
+         */
+        $stmt = $conn->prepare("    SELECT User.Surname AS Teacher, Topic.Name AS Subject, Timetables.DayOfWeek AS DayOfWeek, Timetables.HourSlot AS Hour
+                                            FROM Student, Timetables, Teacher, Topic, User
+                                            WHERE Timetables.SpecificClassID = Student.SpecificClassID 
+                                            AND Teacher.ID = Timetables.TeacherID
+                                            AND Teacher.UserID = User.ID
+                                            AND Timetables.TopicID = Topic.ID
+                                            AND Student.ID = ?");
+        $stmt->bind_param('i', $childID);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if (!$res) {
+            return false;
+        }
+        while ($row = $res->fetch_assoc()) {
+            $day_of_week = $row['DayOfWeek'];
+            $hour = $row['Hour'];
+            $timetable[$day_of_week][$hour] = $row['Subject'] . ' - ' . $row['Teacher'];
+        }
+        return $timetable;
     }
 }
