@@ -223,6 +223,17 @@ class officerTest extends TestCase {
 
 	}
 
+	public function testExistsTimetable() {
+		$off = new officer();
+
+		$off->delete_timetable(1);
+		$this->assertFalse($off->exists_timetable(1));
+
+		$timetable = $this->generateTimetableMatrixClass1A();
+		$off->set_timetable_class($timetable, 1);
+		$this->assertTrue($off->exists_timetable(1));
+	}
+
 
 	public function testSetTimetableClass() {
 		$_SESSION['officerID'] = 1;
@@ -289,13 +300,13 @@ class officerTest extends TestCase {
 		// Check number of days = 5
 		$this->assertEquals(5, sizeof($storedTimetable));
 
-		$totalHours=0;
+		$totalHours = 0;
 		for ($i = 0; $i < 5; $i++) {
-			$totalHours+= sizeof($storedTimetable[$i]);
+			$totalHours += sizeof($storedTimetable[$i]);
 		}
 
 		// 1st year has only 25 hours
-		$this->assertEquals(25,$totalHours);
+		$this->assertEquals(25, $totalHours);
 	}
 
 	public function testPublishCommunication() {

@@ -356,8 +356,8 @@ class officer extends user {
 	}
 
 	/**
-	 * @param $classID
-	 * @param $data è una matrice che ha per ogni giorno e per ogni ora: topicID|teacherID|insert
+	 * @param $classID specifcClassID
+	 * @param $data una matrice che ha per ogni giorno e per ogni ora: topicID|teacherID|insert
 	 * @return bool
 	 */
 	public function set_timetable_class($data, $classID) {
