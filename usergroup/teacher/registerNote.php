@@ -68,6 +68,7 @@ if (isset($_GET['operation_result'])) {
         }
         $table_content = '<div class="card-body">
                             <form method="post" class="form-inline" style="color:#757575" action="registerNote.php">
+                            <div class="table-responsive">
                             <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -100,7 +101,8 @@ OUT;
         $table_content .= '
                                     
                                     </tbody>
-                                    </table>';
+                                    </table>
+                                    </div>';
 
         $table_content .= '
                             <div class="col-sm-12">

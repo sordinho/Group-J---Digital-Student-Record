@@ -58,7 +58,7 @@ $content .= '<ul class="list-group">
             <div class="card">
                 <h3 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">Notes</h3>
                 <div class="card-body  px-lg-5 pt-0 mt-md-5">
-                
+                <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                         <tr>

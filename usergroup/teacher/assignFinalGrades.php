@@ -45,6 +45,7 @@ if (isset($_GET['classID'])) {
                 </h2>
                 <div class="card-body  px-lg-5 pt-0 mt-md-5">
                     <form>
+                    <div class="table-responsive">
                     <table class="table table-striped">
                         <thead >
                         <tr>
@@ -67,7 +68,7 @@ if (isset($_GET['classID'])) {
         }
         $content .= "
                         </tbody>
-                    </table> </form>
+                    </table></div> </form>
                 </div>
             </div>";
 
@@ -105,7 +106,9 @@ if (isset($_GET['classID'])) {
                     Final Term Marks of:  '.$teacher->get_student_stamp_by_id($_GET['studentID']).'
                 </h2>
                 <div class="card-body  px-lg-5 pt-0 mt-md-5">
+                    
                     <form>
+                    <div class="table-responsive">
                     <table class="table table-striped">
                         <thead >
                         <tr>
@@ -136,7 +139,7 @@ if (isset($_GET['classID'])) {
         }
         $content .= "
                         </tbody>
-                    </table> </form>
+                    </table></div> </form>
                 </div>
             </div>";
 

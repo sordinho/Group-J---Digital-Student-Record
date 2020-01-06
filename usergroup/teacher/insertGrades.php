@@ -97,13 +97,14 @@ function enableLaude(elem){
 --></script>
                       <div class="card-body table-responsive">
                       <form method="post" class="form-inline" style="color:#757575" action="insertGrades.php">
+                      <div class="table-responsive">
                         <table class="table table-striped">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Last Name</th>
-                          <th scope="col">First Name</th>
-                          <th scope="col">Insert Grade</th>
+                          <th scope="col">Student</th>
+                          <th scope="col">Grade</th>
+                          <th scope="col">Subject</th>
+                          <th scope="col">Laude</th>
                         </tr>
                       </thead>
                       <tbody>';
@@ -112,36 +113,38 @@ function enableLaude(elem){
             $name = $students_info[$i]['Name'];
             $surname = $students_info[$i]['Surname'];
             $id = $students_info[$i]['ID'];
-            $stud_num =$i+1;
             $table_content .= <<<OUT
                             <tr>
-                                <th scope="row">$stud_num</th>
-                                    <td><div class="col-xs-2 m-2">$surname</div></td>
-                                    <td><div class="col-xs-2 m-2">$name</div></td>
-                                    <td>
-                                        <div class="form-group row">
-                                            <div class="col-xs-2 pl-2 pr-2">
-                                                <input type="number" onchange="enableLaude(this)" id="$id" placeholder="grade" name="grade_$id" class="form-control" step="0.25" min="0" max="10">
+                                <td><div class="col">$name $surname</div></td>
+                                        <div class="form-group col">
+                                            <td>
+                                            <div class="col pl-2">
+                                                <input type="number" onchange="enableLaude(this)" id="$id" placeholder="Grade" name="grade_$id" class="form-control" step="0.25" min="0" max="10">
                                             </div>
-                                            <div class="col-xs-2 pl-2 pr-2">
+                                            </td>
+                                            <td>
+                                            <div class="col pl-2">
                                                 <select class='class="browser-default custom-select custom-select-lg"' name='subjectID_$id'>
                                                     <option value="" disabled selected>Choose a subject</option>
                                                         $select_content;
                                                 </select>
                                             </div>
-                                                      
-                                            <div class="col-xs-2 pl-2 pr-2">
+                                            </td>
+                                            <td>     
+                                            <div class="col pl-2">
                                                 <input type="checkbox" class="form-check-input" id="laude_$id" name="laude_$id" value="yes" disabled>
                                                 <label class="form-check-label" id="laude_label_$id" for="exampleCheck1">Laude</label>
                                             </div>
+                                            </td>
                                         </div>
-                                    </td>
+                                    
                             </tr>
 OUT;
         }
 
         $table_content .= '</tbody>
                         </table>
+                        </div>
                         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
                         </form>
                           </div>

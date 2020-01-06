@@ -67,7 +67,9 @@ function modifiedTeacher(elem){
                     Teachers\' master data
                 </h2>
                 <div class="card-body">
+                
                 <form method="post" class="form-inline" style="color:#757575" action="handleTeacherMasterData.php">
+  <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -117,6 +119,7 @@ function modifiedTeacher(elem){
         $content .= '
     </tbody>
   </table>
+  </div>
   <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
   </form>
   </div>

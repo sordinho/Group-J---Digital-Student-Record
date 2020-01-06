@@ -100,6 +100,7 @@ OUT;
                 </h2>
                 <div class="card-body  px-lg-5 pt-0 mt-md-5">
                 <form>
+                <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -126,6 +127,7 @@ OUT;
 	$content .= '
     </tbody>
   </table>
+  </div>
   </form>
   </div>';
 

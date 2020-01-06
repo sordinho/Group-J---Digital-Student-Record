@@ -52,6 +52,7 @@ if (isset($_GET['classID'])) {
             </script>';
         $content .= '
                     <form>
+                    <div class="table-responsive">
                     <table class="table table-striped">
                         <thead >
                         <tr>
@@ -73,7 +74,7 @@ if (isset($_GET['classID'])) {
         }
         $content .= "
                         </tbody>
-                    </table> </form>
+                    </table></div> </form>
                 </div>
             </div>";
 
@@ -88,6 +89,7 @@ if (isset($_GET['classID'])) {
                 ';
         $content .= '
                     <form>
+                    <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -109,7 +111,7 @@ if (isset($_GET['classID'])) {
         }
         $content .= "
                         </tbody>
-                    </table> </form>
+                    </table></div> </form>
                 </div>
             </div>";
     }

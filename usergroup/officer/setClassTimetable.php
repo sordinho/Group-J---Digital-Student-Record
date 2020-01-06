@@ -130,7 +130,7 @@ else if (isset($_GET['classID'])) {
                     
                     <form action="setClassTimetable.php" method="post">
                         <div class="input-group ">
-
+                                    <div class="table-responsive">
                                     <table class="table table-bordered table-striped">
                                       <thead>
                                         <tr>
