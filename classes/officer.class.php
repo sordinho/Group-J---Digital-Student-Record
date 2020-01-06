@@ -120,7 +120,7 @@ class officer extends user {
 		return true;//True || False
 	}
 
-	/*
+	/**
 	 * removes a user from the USER table and all his entries from Parent table
 	 *
 	 * @param userID ---> the id of the user to be removed
@@ -140,14 +140,14 @@ class officer extends user {
 		$res = $stmt->get_result();
 		if ($res->num_rows != 1)
 			return false;
-		$stmt = $conn->prepare("DELETE FROM User WHERE ID = ?;");
+		$stmt = $conn->prepare("DELETE FROM Parent WHERE UserID = ?;");
 		if (!$stmt)
 			return false;
 		$stmt->bind_param("i", $userID);
-		if (!$stmt->execute())
-			return false;
-		$stmt = $conn->prepare("DELETE FROM Parent WHERE UserID = ?;");
-		IF (!$stmt)
+		$stmt->execute();
+
+		$stmt = $conn->prepare("DELETE FROM User WHERE ID = ?;");
+		if (!$stmt)
 			return false;
 		$stmt->bind_param("i", $userID);
 		return $stmt->execute();
@@ -158,7 +158,7 @@ class officer extends user {
 		//todo : to be edited
 		// Se un parent non ha password cosa c'è in quel campo della tabella User? Stringa vuota o altro?
 		$res = $conn->query("SELECT ID,Email FROM User WHERE UserGroup = 'parent' AND Password = ''");
-		if ($res->num_rows <= 0)
+		if ($res->num_rows == 0)
 			return array();
 		$IDs = array();
 		for ($i = 0; $i < $res->num_rows; $i++) {
@@ -327,21 +327,28 @@ class officer extends user {
 	}
 
 	/**
-	 * BEWARE: this function call delete_timetable in case the timetable is not complete in the database
-	 * @param $classID
+	 * This function check if there's a complete timetable for a given class
+	 * @param $classID : class to check
 	 * @return bool
 	 */
 	public function exists_timetable($classID) {
 		$conn = $this->connectMySQL();
+
+		$query1 = "SELECT SUM(Hours) FROM YearTopicHour yth, SpecificClass sc WHERE yth.YearClassID=sc.YearClassID AND sc.ID=?";
+		$stmtTotHour = $conn->prepare($query1);
+		$stmtTotHour->bind_param("i", $classID);
+		$stmtTotHour->execute();
+		$totHourValue = $stmtTotHour->get_result();
+
+
 		$stmt = $conn->prepare("SELECT COUNT(*)
                                     FROM Timetables
                                     WHERE SpecificClassID = ?");
 		$stmt->bind_param('i', $classID);
 		$stmt->execute();
-		$res = $stmt->get_result();
+		$totHoour = $stmt->get_result();
 
-		if ($res != 30) {
-			$this->delete_timetable($classID);
+		if ($totHourValue->fetch_row() != $totHoour->fetch_row()) {
 			return false;
 		} else {
 			return true;
@@ -349,8 +356,8 @@ class officer extends user {
 	}
 
 	/**
-	 * @param $classID
-	 * @param $data è una matrice che ha per ogni giorno e per ogni ora: topicID|teacherID|insert
+	 * @param $classID specifcClassID
+	 * @param $data una matrice che ha per ogni giorno e per ogni ora: topicID|teacherID|insert
 	 * @return bool
 	 */
 	public function set_timetable_class($data, $classID) {
@@ -440,6 +447,10 @@ class officer extends user {
 		return true;
 	}
 
+	/**
+	 * @param $classID
+	 * @return array|int
+	 */
 	public function get_timetable_by_class($classID) {
 		$officerID = $this->get_officer_ID();
 		$timetable = array();
@@ -561,61 +572,62 @@ class officer extends user {
 
 		return -1; // not logged in
 	}
-    /*
-     * This function returns all the informations about teachers' master data
-     *
-     * @return array : empty
-     *                 [ ID, Name, Surname, Email, FiscalCode ]
-     * */
-    public function get_teacher_data(){
-        $teachers = array();
-        $conn = $this->connectMySQL();
-        $stmt = $conn->prepare("SELECT U.ID, Name, Surname, Email, T.FiscalCode
+
+	/*
+	 * This function returns all the informations about teachers' master data
+	 *
+	 * @return array : empty
+	 *                 [ ID, Name, Surname, Email, FiscalCode ]
+	 * */
+	public function get_teacher_data() {
+		$teachers = array();
+		$conn = $this->connectMySQL();
+		$stmt = $conn->prepare("SELECT U.ID, Name, Surname, Email, T.FiscalCode
                                       FROM User U,Teacher T
                                       WHERE U.ID = T.UserID;");
-        if(!$stmt)
-            return $teachers;
+		if (!$stmt)
+			return $teachers;
 
-        $stmt->execute();
-        $res = $stmt->get_result();
-        while(($row = $res->fetch_assoc())){
-            array_push($teachers,$row);
-        }
-        return $teachers;
-    }
+		$stmt->execute();
+		$res = $stmt->get_result();
+		while (($row = $res->fetch_assoc())) {
+			array_push($teachers, $row);
+		}
+		return $teachers;
+	}
 
-    public function register_teacher_data($name,$surname,$email,$fiscalcode,$id){
-        if( !isset($name) || !isset($surname) || !isset($email) || !isset($fiscalcode) || !isset($id) ) return false;
-        //todo UNCOMMENT THIS WHEN ALL FISCAL CODES ARE COHERENT
-        //if( !$this->check_fiscal_code($fiscalcode) ) return false;
-	    $conn = $this->connectMySQL();
-	    $conn->autocommit(FALSE);
-	    $stmt = $conn->prepare("UPDATE User SET Name = ?, Surname = ?, Email = ? WHERE ID = ? AND UserGroup = 'teacher';");
-        if(!$stmt){
-            $conn->rollback();
-            $conn->autocommit(TRUE);
-            return false;
-        }
-        $stmt->bind_param("sssi",$name,$surname,$email,$id);
-        if(!$stmt->execute() || $stmt->affected_rows == 0){
-            $conn->rollback();
-            $conn->autocommit(TRUE);
-            return false;
-        }
-	    $stmt = $conn->prepare("UPDATE Teacher SET FiscalCode = ? WHERE UserID = ?;");
-        if(!$stmt ){
-            $conn->rollback();
-            $conn->autocommit(TRUE);
-            return false;
-        }
-        $stmt->bind_param("si",$fiscalcode,$id);
-        if(!$stmt->execute() || $stmt->affected_rows == 0){
-            $conn->rollback();
-            $conn->autocommit(TRUE);
-            return false;
-        }
-        $conn->commit();
-        $conn->autocommit(TRUE);
-        return true;
-    }
+	public function register_teacher_data($name, $surname, $email, $fiscalcode, $id) {
+		if (!isset($name) || !isset($surname) || !isset($email) || !isset($fiscalcode) || !isset($id)) return false;
+		//todo UNCOMMENT THIS WHEN ALL FISCAL CODES ARE COHERENT
+		//if( !$this->check_fiscal_code($fiscalcode) ) return false;
+		$conn = $this->connectMySQL();
+		$conn->autocommit(FALSE);
+		$stmt = $conn->prepare("UPDATE User SET Name = ?, Surname = ?, Email = ? WHERE ID = ? AND UserGroup = 'teacher';");
+		if (!$stmt) {
+			$conn->rollback();
+			$conn->autocommit(TRUE);
+			return false;
+		}
+		$stmt->bind_param("sssi", $name, $surname, $email, $id);
+		if (!$stmt->execute() || $stmt->affected_rows == 0) {
+			$conn->rollback();
+			$conn->autocommit(TRUE);
+			return false;
+		}
+		$stmt = $conn->prepare("UPDATE Teacher SET FiscalCode = ? WHERE UserID = ?;");
+		if (!$stmt) {
+			$conn->rollback();
+			$conn->autocommit(TRUE);
+			return false;
+		}
+		$stmt->bind_param("si", $fiscalcode, $id);
+		if (!$stmt->execute() || $stmt->affected_rows == 0) {
+			$conn->rollback();
+			$conn->autocommit(TRUE);
+			return false;
+		}
+		$conn->commit();
+		$conn->autocommit(TRUE);
+		return true;
+	}
 }
