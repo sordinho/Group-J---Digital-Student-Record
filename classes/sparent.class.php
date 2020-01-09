@@ -652,17 +652,6 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		if($row == null)
 			return false;
 		$teacherAvailabilityID = $row[0];
-//		$result = false;
-//		// check there is a hourslot same as the wanted hourslot
-//		while ($row = $res->fetch_array()) {
-//			if ($row[1] == $hourSlot) {
-//				$result = true;
-//				$teacherAvailabilityID = $row[0];
-//			}
-//		}
-//		// we didn't get it
-//		if (!$result)
-//			return false;
 		$getTimeSlotsStmt->close();
 
 		//Check the timeslot is free for the teacher in this date
