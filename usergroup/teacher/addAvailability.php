@@ -20,14 +20,14 @@ if (!isset($_POST["date"]) and !isset($_POST["time"])) {
             case 1:
                 $content .= ' 
 								<div class="alert alert-success" role="alert">
-								    Assignment successfully registered. <a href="addAvailability.php" class="alert-link">Add another Assignment</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+								    Assignment successfully registered. <a href="addAvailability.php" class="alert-link">Add another meeting</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
 								</div>
 							';
                 break;
             case 0:
                 $content .= '
 								<div class="alert alert-danger" role="alert">
-								    Error in registering a new assignment. <a href="addAvailability.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+								    Error in registering the meeting slot. <a href="addAvailability.php" class="alert-link">Retry </a> or <a href="index.php" class="alert-link">back to your homepage.</a>
 								</div>
 							';
 
