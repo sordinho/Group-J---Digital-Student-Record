@@ -679,15 +679,7 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot) VALUES (?,?,?,?)";
 		$bookStmt = $conn->prepare($query3);
 		$bookStmt->bind_param("iisi", $parentID, $teacherAvailabilityID, $date, $timeSlot);
-<<<<<<< HEAD
 		return $bookStmt->execute();
-
-||||||| merged common ancestors
-		$bookStmt->execute();
-		return $bookStmt->get_result();
-=======
-		return $bookStmt->execute();
->>>>>>> 39c1d11b3e5a4c152a25775de791490955bd6233
 	}
 
 	public function get_timetable($childID) {
