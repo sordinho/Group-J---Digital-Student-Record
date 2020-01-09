@@ -457,6 +457,7 @@ class sparent extends user {
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT
                                       ta.ID AS TeacherAvailabilityID,
+                                      t.ID AS TeacherID,
                                       u.Name as TeacherName,
                                       u.Surname as TeacherSurname,
                                       tc.Name as TopicName,
@@ -624,39 +625,42 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 
 	/**
 	 * Function used for booking a meeting with a teacher
-	 * @param $parentID : ID of the parent who want to book the meeting
 	 * @param $teacherID : teacher to meet
 	 * @param $date : date of the meeting to book
+	 * @param $hourSlot : hourSlot to book
 	 * @param $timeSlot : timeSlot to book
 	 * @return bool : false in case of error, true in case of success
 	 */
-	public function book_meeting($parentID, $teacherID, $date, $timeSlot) {
-		if ($parentID == null || $parentID == '' || $date == null || $date = '' || $teacherID == null || $teacherID < 1)
+	public function book_meeting($teacherID, $date, $hourSlot, $timeSlot) {
+		if ($hourSlot == null || $hourSlot == '' || $date == null || $date = '' || $teacherID == null || $teacherID < 1)
 			return false;
 
+		$parentID = $this->get_parent_ID();
 		$date = strtotime($date);
 		$conn = $this->connectMySQL();
 		$teacherAvailabilityID = null; // saved from query1. to be used in query3.
 
-		//Check timeslot is a valid one for the given teacher<->date
+		//Check hourslot is a valid one for the given teacher<->date
 		$dayOfTheWeek = calendar::from_dow_to_num(date('l', $date));
-		$hourSlot = intval($timeSlot / 3);
-		$query1 = "SELECT ID, HourSlot FROM TeacherAvailability WHERE TeacherID=? AND DayOfWeek=?";
+//		$hourSlot = intval($timeSlot / 3);
+		$query1 = "SELECT ID, HourSlot FROM TeacherAvailability WHERE TeacherID=? AND DayOfWeek=? AND HourSlot=?";
 		$getTimeSlotsStmt = $conn->prepare($query1);
-		$getTimeSlotsStmt->bind_param("ii", $teacherID, $dayOfTheWeek);
+		$getTimeSlotsStmt->bind_param("iii", $teacherID, $dayOfTheWeek, $hourSlot);
 		$getTimeSlotsStmt->execute();
 		$res = $getTimeSlotsStmt->get_result();
-		$result = false;
-		// check there is a hourslot same as the wanted hourslot
-		while ($row = $res->fetch_array()) {
-			if ($row[1] == $hourSlot) {
-				$result = true;
-				$teacherAvailabilityID = $row[0];
-			}
-		}
-		// we didn't get it
-		if (!$result)
+		if($res->fetch_row() == null)
 			return false;
+//		$result = false;
+//		// check there is a hourslot same as the wanted hourslot
+//		while ($row = $res->fetch_array()) {
+//			if ($row[1] == $hourSlot) {
+//				$result = true;
+//				$teacherAvailabilityID = $row[0];
+//			}
+//		}
+//		// we didn't get it
+//		if (!$result)
+//			return false;
 		$getTimeSlotsStmt->close();
 
 		//Check the timeslot is free for the teacher in this date
@@ -669,43 +673,43 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 			return false;
 
 		// Insert a new meeting
-		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot),VALUES (?,?,?,?)";
+		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot) VALUES (?,?,?,?)";
 		$bookStmt = $conn->prepare($query3);
 		$bookStmt->bind_param("iisi", $parentID, $teacherAvailabilityID, $date, $timeSlot);
 		$bookStmt->execute();
 		return $bookStmt->get_result();
 	}
 
-    public function get_timetable($childID) {
-        if (!isset($childID)) {
-            return array();
-        }
+	public function get_timetable($childID) {
+		if (!isset($childID)) {
+			return array();
+		}
 
-        $timetable = array();
-        $conn = $this->connectMySql();
+		$timetable = array();
+		$conn = $this->connectMySql();
 
-        /*
-         * given a childID returns its timetable: the teacher surname and the topic name are returned - not ids
-         */
-        $stmt = $conn->prepare("    SELECT User.Surname AS Teacher, Topic.Name AS Subject, Timetables.DayOfWeek AS DayOfWeek, Timetables.HourSlot AS Hour
+		/*
+		 * given a childID returns its timetable: the teacher surname and the topic name are returned - not ids
+		 */
+		$stmt = $conn->prepare("    SELECT User.Surname AS Teacher, Topic.Name AS Subject, Timetables.DayOfWeek AS DayOfWeek, Timetables.HourSlot AS Hour
                                             FROM Student, Timetables, Teacher, Topic, User
                                             WHERE Timetables.SpecificClassID = Student.SpecificClassID 
                                             AND Teacher.ID = Timetables.TeacherID
                                             AND Teacher.UserID = User.ID
                                             AND Timetables.TopicID = Topic.ID
                                             AND Student.ID = ?");
-        $stmt->bind_param('i', $childID);
-        $stmt->execute();
-        $res = $stmt->get_result();
+		$stmt->bind_param('i', $childID);
+		$stmt->execute();
+		$res = $stmt->get_result();
 
-        if (!$res) {
-            return false;
-        }
-        while ($row = $res->fetch_assoc()) {
-            $day_of_week = $row['DayOfWeek'];
-            $hour = $row['Hour'];
-            $timetable[$day_of_week][$hour] = $row['Subject'] . ' - ' . $row['Teacher'];
-        }
-        return $timetable;
-    }
+		if (!$res) {
+			return false;
+		}
+		while ($row = $res->fetch_assoc()) {
+			$day_of_week = $row['DayOfWeek'];
+			$hour = $row['Hour'];
+			$timetable[$day_of_week][$hour] = $row['Subject'] . ' - ' . $row['Teacher'];
+		}
+		return $timetable;
+	}
 }
