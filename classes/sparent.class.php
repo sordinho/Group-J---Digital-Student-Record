@@ -648,6 +648,7 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		$getTimeSlotsStmt->bind_param("iii", $teacherID, $dayOfTheWeek, $hourSlot);
 		$getTimeSlotsStmt->execute();
 		$res = $getTimeSlotsStmt->get_result();
+
 		$row = $res->fetch_row();
 		if($row == null)
 			return false;
