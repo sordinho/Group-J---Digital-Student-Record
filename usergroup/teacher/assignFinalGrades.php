@@ -86,7 +86,7 @@ if (isset($_GET['classID'])) {
     $_SESSION["classID"] = intval($_GET['classID']);
     if (count($marks) == 0) {
         $content = '<div class="alert alert-danger" role="alert">
-                            There are no final terms to assign to selected student.<a href=".PLATFORM_PATH."/usergroup/teacher/index.php" class="alert-link">Back to home page.</a>
+                            There are no final terms to assign to selected student.<a href="'.PLATFORM_PATH.'"/usergroup/teacher/index.php" class="alert-link">Back to home page.</a>
                         </div>
                     ';
     } else {
