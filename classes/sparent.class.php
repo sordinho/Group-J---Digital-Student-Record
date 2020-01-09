@@ -457,6 +457,7 @@ class sparent extends user {
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT
                                       ta.ID AS TeacherAvailabilityID,
+                                      t.ID AS TeacherID,
                                       u.Name as TeacherName,
                                       u.Surname as TeacherSurname,
                                       tc.Name as TopicName,
