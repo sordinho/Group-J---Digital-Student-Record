@@ -121,12 +121,11 @@ class cpage {
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkHomeworks.php">        <i class="fas fa-book mx-3"></i>        <span class="text-nowrap mx-2">Check Homeworks</span></a></li>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkAttendance.php">       <i class="fas fa-user mx-3"></i>        <span class="text-nowrap mx-2">Check Attendance</span></a></li>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./downloadMaterial.php">      <i class="fas fa-download mx-3"></i>    <span class="text-nowrap mx-2">Download Materials</span></a></li>';
-                        $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./downloadMaterial.php">      <i class="fas fa-flag mx-3"></i>        <span class="text-nowrap mx-2">Term Grades</span></a></li>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./timetable.php">             <i class="fas fa-calendar-alt mx-3"></i><span class="text-nowrap mx-2">Timetable</span></a></li>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./checkLectureTopics.php">    <i class="fas fa-list-alt mx-3"></i>    <span class="text-nowrap mx-2">Lecture Topics</span></a></li>';
                         $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./bookMeeting.php">           <i class="fas fa-comments mx-3"></i>    <span class="text-nowrap mx-2">Book Meeting</span></a></li>';
 
-                        $hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-users mx-3"></i><span class="text-nowrap mx-2">Term Grades</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
+                        $hidden_menu .= '		<li class="nav-item dropdown"><a class="dropdown-toggle nav-link text-left text-white py-1 px-0 position-relative" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-flag mx-3"></i><span class="text-nowrap mx-2">Term Grades</span><i class="fas fa-caret-down float-none float-lg-right fa-sm"></i></a>
 								<div class="dropdown-menu border-0 animated fadeIn" role="menu">';
                         $terms = $par->get_term_list();
                         if($terms){
