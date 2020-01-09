@@ -457,4 +457,29 @@ class sparentTest extends TestCase
 		$this->assertTrue($parent->book_meeting(1,"2020-01-29",3,0));
 	}
 
+	public function testGetLectureTopics(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// Invalid child ID
+		$this->assertFalse($parent->get_lecture_topics(-1));
+
+		// Valid child ID
+		$this->assertNotEquals(0,sizeof($parent->get_lecture_topics(2)));
+	}
+
+	public function testGetTimetable(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// invalid child id
+		$this->assertEquals(0,sizeof($parent->get_timetable(null)));
+
+		// Valid child id (1st year)
+		$this->assertEquals(25,sizeof($parent->get_timetable(2)));
+
+	}
+
+	
+
 }
