@@ -441,20 +441,20 @@ class sparentTest extends TestCase
 		$_SESSION['parentID']=2;
 		$parent = new sparent();
 
-		// invalid parent
-		$this->assertFalse($parent->book_meeting(null,1,date("Y-m-d"),0));
-
 		// invalid teacher
-		$this->assertFalse($parent->book_meeting(2,null,date("Y-m-d"),0));
-
-		// invalid date
-		$this->assertFalse($parent->book_meeting(2,1,null,0));
-
-		// invalid timeslot
-		$this->assertFalse($parent->book_meeting(2,1,date("Y-m-d"),null));
+//		$this->assertFalse($parent->book_meeting(null,date("Y-m-d"),3,0));
+//
+//		// invalid date
+//		$this->assertFalse($parent->book_meeting(1,null,3,0));
+//
+//		// invalid hourslot
+//		$this->assertFalse($parent->book_meeting(1,date("Y-m-d"),null,0));
+//
+//		// invalid timeslot
+//		$this->assertFalse($parent->book_meeting(1,date("Y-m-d"),3,null));
 
 		// Valid meeting
-		$this->assertTrue($parent->book_meeting(2,1,"2020-01-13",0));
+		$this->assertTrue($parent->book_meeting(1,"2020-01-29",3,0));
 	}
 
 }
