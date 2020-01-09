@@ -407,4 +407,54 @@ class sparentTest extends TestCase
         $this->assertFalse($parent->get_final_term_marks_by_studentID($studentID3,$termID2));
     }
 
+    public function testGet_teacher_availability(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// No child for the parent
+		$this->assertEquals(0,sizeof($parent->get_teacher_availability()));
+
+		// Set children info in session
+		$parent->set_current_child(2);
+		$this->assertNotEquals(0,sizeof($parent->get_teacher_availability()));
+	}
+
+	public function testGet_future_reservations_by_teacher_availability_id(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// Invalid teacher availability id
+		$this->assertEquals(0,sizeof($parent->get_future_reservations_by_teacher_availability_id(-1)));
+
+		// Teacher with no booked meetings
+		$this->assertEquals(0,sizeof($parent->get_future_reservations_by_teacher_availability_id(3)));
+
+		$datetime = new DateTime('tomorrow');
+		$tomorrow = $datetime->format('Y-m-d');
+		$queryInsert = "INSERT INTO MeetingReservation (ParentID,TeacherAvailabilityID,Date,Timeslot) VALUES (10,3,'".$tomorrow."',0)";
+		perform_INSERT_or_DELETE($queryInsert);
+
+		$this->assertEquals(1,sizeof($parent->get_future_reservations_by_teacher_availability_id(3)));
+	}
+
+	public function testBook_meeting(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// invalid parent
+		$this->assertFalse($parent->book_meeting(null,1,date("Y-m-d"),0));
+
+		// invalid teacher
+		$this->assertFalse($parent->book_meeting(2,null,date("Y-m-d"),0));
+
+		// invalid date
+		$this->assertFalse($parent->book_meeting(2,1,null,0));
+
+		// invalid timeslot
+		$this->assertFalse($parent->book_meeting(2,1,date("Y-m-d"),null));
+
+		// Valid meeting
+		$this->assertTrue($parent->book_meeting(2,1,"2020-01-13",0));
+	}
+
 }
