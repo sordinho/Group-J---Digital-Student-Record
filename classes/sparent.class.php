@@ -604,7 +604,7 @@ class sparent extends user {
        sc.Section as Section,
        u.Name as TeacherName,
        u.Surname as TeacherSurname
-FROM TopicRecord tr, Topic t, SpecificClass sc, Teacher tc, Student s, User u, Yearclass yc
+FROM TopicRecord tr, Topic t, SpecificClass sc, Teacher tc, Student s, User u, YearClass yc
 WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
     AND tr.TopicID=t.ID -- topic info
     AND tr.SpecificClassID=sc.ID AND sc.YearClassID=yc.ID -- class info
