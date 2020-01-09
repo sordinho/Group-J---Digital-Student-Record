@@ -110,10 +110,10 @@ OUT;
 
 } else {
     if ($sparent->book_meeting($_POST['teacherID'], $_POST['date'], $_POST['hourSlot'], $_POST['timeSlot'])) {
-        header("Location: addLecture.php?operation_result=1");
+        header("Location: bookMeeting.php?operation_result=1");
         die();
     } else {
-        header("Location: addLecture.php?operation_result=0");
+        header("Location: bookMeeting.php?operation_result=0");
         die();
     }
 

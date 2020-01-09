@@ -604,7 +604,7 @@ class sparent extends user {
        sc.Section as Section,
        u.Name as TeacherName,
        u.Surname as TeacherSurname
-FROM TopicRecord tr, Topic t, SpecificClass sc, Teacher tc, Student s, User u, Yearclass yc
+FROM TopicRecord tr, Topic t, SpecificClass sc, Teacher tc, Student s, User u, YearClass yc
 WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
     AND tr.TopicID=t.ID -- topic info
     AND tr.SpecificClassID=sc.ID AND sc.YearClassID=yc.ID -- class info
@@ -653,17 +653,6 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		if($row == null)
 			return false;
 		$teacherAvailabilityID = $row[0];
-//		$result = false;
-//		// check there is a hourslot same as the wanted hourslot
-//		while ($row = $res->fetch_array()) {
-//			if ($row[1] == $hourSlot) {
-//				$result = true;
-//				$teacherAvailabilityID = $row[0];
-//			}
-//		}
-//		// we didn't get it
-//		if (!$result)
-//			return false;
 		$getTimeSlotsStmt->close();
 
 		//Check the timeslot is free for the teacher in this date
@@ -679,15 +668,7 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot) VALUES (?,?,?,?)";
 		$bookStmt = $conn->prepare($query3);
 		$bookStmt->bind_param("iisi", $parentID, $teacherAvailabilityID, $date, $timeSlot);
-<<<<<<< HEAD
 		return $bookStmt->execute();
-
-||||||| merged common ancestors
-		$bookStmt->execute();
-		return $bookStmt->get_result();
-=======
-		return $bookStmt->execute();
->>>>>>> 39c1d11b3e5a4c152a25775de791490955bd6233
 	}
 
 	public function get_timetable($childID) {
