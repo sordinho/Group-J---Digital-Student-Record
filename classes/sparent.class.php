@@ -628,10 +628,11 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 	 * @param $parentID : ID of the parent who want to book the meeting
 	 * @param $teacherID : teacher to meet
 	 * @param $date : date of the meeting to book
+	 * @param $hourSlot : hourSlot to book
 	 * @param $timeSlot : timeSlot to book
 	 * @return bool : false in case of error, true in case of success
 	 */
-	public function book_meeting($parentID, $teacherID, $date, $timeSlot) {
+	public function book_meeting($parentID, $teacherID, $date, $hourSlot, $timeSlot) {
 		if ($parentID == null || $parentID == '' || $date == null || $date = '' || $teacherID == null || $teacherID < 1)
 			return false;
 
@@ -670,7 +671,7 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 			return false;
 
 		// Insert a new meeting
-		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot),VALUES (?,?,?,?)";
+		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot) VALUES (?,?,?,?)";
 		$bookStmt = $conn->prepare($query3);
 		$bookStmt->bind_param("iisi", $parentID, $teacherAvailabilityID, $date, $timeSlot);
 		$bookStmt->execute();
