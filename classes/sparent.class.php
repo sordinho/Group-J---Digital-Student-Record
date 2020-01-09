@@ -648,8 +648,9 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		$getTimeSlotsStmt->bind_param("iii", $teacherID, $dayOfTheWeek, $hourSlot);
 		$getTimeSlotsStmt->execute();
 		$res = $getTimeSlotsStmt->get_result();
-		if($res->fetch_row() == null)
+		if($row = $res->fetch_row() == null)
 			return false;
+		$teacherAvailabilityID = $row[0];
 //		$result = false;
 //		// check there is a hourslot same as the wanted hourslot
 //		while ($row = $res->fetch_array()) {
@@ -676,8 +677,7 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot) VALUES (?,?,?,?)";
 		$bookStmt = $conn->prepare($query3);
 		$bookStmt->bind_param("iisi", $parentID, $teacherAvailabilityID, $date, $timeSlot);
-		$bookStmt->execute();
-		return $bookStmt->get_result();
+		return $bookStmt->execute();
 	}
 
 	public function get_timetable($childID) {
