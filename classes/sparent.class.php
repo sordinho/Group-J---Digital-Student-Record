@@ -632,16 +632,16 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 	 * @return bool : false in case of error, true in case of success
 	 */
 	public function book_meeting($teacherID, $date, $hourSlot, $timeSlot) {
-		if ($hourSlot == null || $hourSlot == '' || $date == null || $date = '' || $teacherID == null || $teacherID < 1)
+		if ($hourSlot == null || $hourSlot == '' || $date == null || $date == '' || $teacherID == null || $teacherID < 1)
 			return false;
 
 		$parentID = $this->get_parent_ID();
-		$date = strtotime($date);
+		$t_date = strtotime($date);
 		$conn = $this->connectMySQL();
 		$teacherAvailabilityID = null; // saved from query1. to be used in query3.
 
 		//Check hourslot is a valid one for the given teacher<->date
-		$dayOfTheWeek = calendar::from_dow_to_num(date('l', $date));
+		$dayOfTheWeek = calendar::from_dow_to_num(date('l', $t_date));
 //		$hourSlot = intval($timeSlot / 3);
 		$query1 = "SELECT ID, HourSlot FROM TeacherAvailability WHERE TeacherID=? AND DayOfWeek=? AND HourSlot=?";
 		$getTimeSlotsStmt = $conn->prepare($query1);
@@ -664,7 +664,7 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		$getTimeSlotsStmt->close();
 
 		//Check the timeslot is free for the teacher in this date
-		$query2 = "SELECT ID FROM MeetingReservation mr, TeacherAvailability ta WHERE mr.TeacherAvailabilityID=ta.ID AND ta.TeacherID=? AND  Date=? AND Timeslot=?";
+		$query2 = "SELECT mr.ID FROM MeetingReservation mr, TeacherAvailability ta WHERE mr.TeacherAvailabilityID=ta.ID AND ta.TeacherID=? AND Date=? AND Timeslot=?";
 		$checkFreeStmt = $conn->prepare($query2);
 		$checkFreeStmt->bind_param("isi", $teacherID, $date, $timeSlot);
 		$checkFreeStmt->execute();
