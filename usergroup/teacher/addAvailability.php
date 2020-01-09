@@ -81,7 +81,7 @@ if (!isset($_POST["date"]) and !isset($_POST["time"])) {
 
     $day = json_decode($_POST['day'], TRUE);
 
-    if ($teacher->add_availability($day, $_POST["time"])) {
+    if ($teacher->add_availability($day, $_POST["time"]) > 0) {
         header("Location: addAvailability.php?operation_result=1");
         die();
     } else {
