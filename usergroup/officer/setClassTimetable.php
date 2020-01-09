@@ -126,8 +126,6 @@ else if (isset($_GET['classID'])) {
                         Set Timetable for class: '.$officer->get_class_stamp_by_id($_GET['classID']).'
                     </h2>
                     <div class="card-body  px-lg-5 pt-0 mt-md-5 ">
-
-                    
                     <form action="setClassTimetable.php" method="post">
                         <div class="input-group ">
                                     <div class="table-responsive">

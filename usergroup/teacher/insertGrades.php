@@ -104,7 +104,7 @@ function enableLaude(elem){
                           <th scope="col">Student</th>
                           <th scope="col">Grade</th>
                           <th scope="col">Subject</th>
-                          <th scope="col">Laude</th>
+                          <th scope="col">Laude </th>
                         </tr>
                       </thead>
                       <tbody>';
