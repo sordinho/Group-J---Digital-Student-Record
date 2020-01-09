@@ -37,6 +37,8 @@ body {
 
 #sidebar {
     position: fixed;
+    overflow-y: auto;
+    height: 100%;
 }
 
 #navbar-title {

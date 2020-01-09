@@ -20,7 +20,7 @@ if (!isset($_POST["date"]) and !isset($_POST["time"])) {
             case 1:
                 $content .= ' 
 								<div class="alert alert-success" role="alert">
-								    Assignment successfully registered. <a href="addAvailability.php" class="alert-link">Add another meeting</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
+								    Meeting slot successfully registered. <a href="addAvailability.php" class="alert-link">Add another meeting</a> or <a href="index.php" class="alert-link">back to your homepage.</a>
 								</div>
 							';
                 break;
@@ -60,7 +60,7 @@ if (!isset($_POST["date"]) and !isset($_POST["time"])) {
                                 <label for="appt">Time of the meeting</label>
 
                                 <input type="time" id="time" name="time" class="form-control"
-                                       min="08:00" max="14:00" required style="border-radius: 5px;">
+                                       min="08:00" max="13:00" required style="border-radius: 5px;">
                                 <br>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Day of the meeting</label>
@@ -80,8 +80,8 @@ if (!isset($_POST["date"]) and !isset($_POST["time"])) {
 } else {
 
     $day = json_decode($_POST['day'], TRUE);
-
-    if ($teacher->add_availability($day, $_POST["time"])) {
+    $ret = $teacher->add_availability($day, $_POST["time"]);
+    if ($ret > 0) {
         header("Location: addAvailability.php?operation_result=1");
         die();
     } else {
