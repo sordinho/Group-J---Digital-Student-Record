@@ -9,7 +9,7 @@ body {
     flex-direction: column;
     height: 100%;
 }
-.table td {
+.table td, .table th {
     vertical-align: middle;
 }
 .min_container {
