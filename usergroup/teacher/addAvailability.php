@@ -40,6 +40,14 @@ if (!isset($_POST["date"]) and !isset($_POST["time"])) {
 							';
         }
     } else {
+
+        $days = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
+
+        foreach ($days as $day) {
+            $value = json_encode($day);
+            $day_list .= "<option value='$value'>" . $day . "</option>";
+        }
+
         $content = '
                 <div class="card">
 					<h2 class="card-header info-color white-text text-center py-4" style="background-color:rgba(108,108,108,0.9);color:white">
@@ -54,8 +62,12 @@ if (!isset($_POST["date"]) and !isset($_POST["time"])) {
                                 <input type="time" id="time" name="time" class="form-control"
                                        min="08:00" max="14:00" required style="border-radius: 5px;">
                                 <br>
-                                <label for="exampleFormControlTextarea1">Day of the meeting</label>
-                                <input type="date" id="date" name="date" class="form-control">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Day of the meeting</label>
+                                    <select class="custom-select" name="day" id="dayID">
+                                        ' . $day_list . '
+                                    </select>
+                                </div>
                             </div>
                             
                             <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Confirm</button>	
@@ -66,7 +78,10 @@ if (!isset($_POST["date"]) and !isset($_POST["time"])) {
 					';
     }
 } else {
-    if ($teacher->add_availability($_POST["date"], $_POST["time"])) {
+
+    $day = json_decode($_POST['day'], TRUE);
+
+    if ($teacher->add_availability($day, $_POST["time"])) {
         header("Location: addAvailability.php?operation_result=1");
         die();
     } else {
