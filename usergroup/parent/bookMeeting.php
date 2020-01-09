@@ -78,7 +78,6 @@ OUT;
                         $w = '+'.($week*7).' days';
                         $date = $date->modify($w);
                         $date = $date->format('Y-m-d');
-                        // TODO check is_holidays
                         if (!calendar::is_holiday($date)) {
                             $content .=<<<OUT
 <tr>
@@ -87,7 +86,7 @@ OUT;
       <td>$topicName</td>
       <td>$day, <input type="hidden" value="$date" name="date">$date</td>
       <td><input type="hidden" value="$hour" name="hourSlot">$hourSlot:<input type="hidden" value="$i" name="timeSlot">$timeSlot</td>
-      <td><button class="btn btn-success" type="submit" name="submit" value="bookMeeting">Confirm</button></td>
+      <td style="text-align: end"><button class="btn btn-success" type="submit" name="submit" value="bookMeeting">Confirm</button></td>
   </form>
 </tr>
 OUT;
