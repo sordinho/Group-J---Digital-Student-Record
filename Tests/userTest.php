@@ -150,4 +150,38 @@ class userTest extends TestCase
         $this->assertEquals('', $user->get_username(), "userTest : testGet_surname wrong returned value");
     }
 
+    public function testRetrieve_usergroups(){
+		$username1 = "marco.torchiano@io.io"; //Teacher
+		$username2 = "tony.lioy@io.io"; //Teacher + parent
+
+		$user1 = new user();
+
+		$this->assertEquals(0,sizeof($user1->retrieve_usergroups(null)));
+		$this->assertEquals(0,sizeof($user1->retrieve_usergroups($username1)));
+		$this->assertEquals(2,sizeof($user1->retrieve_usergroups($username2)));
+	}
+
+	public function testRetrieve_user_id_by_usergroup(){
+		$username1 = "marco.torchiano@io.io"; //Teacher
+		$username2 = "tony.lioy@io.io"; //Teacher + parent
+
+		$user1 = new user();
+
+		$this->assertEquals(-1,$user1->retrieve_user_id_by_usergroup(null,null));
+		$this->assertEquals(3,$user1->retrieve_user_id_by_usergroup($username1,"teacher"));
+		$this->assertEquals(9,$user1->retrieve_user_id_by_usergroup($username2,"teacher"));
+		$this->assertEquals(55,$user1->retrieve_user_id_by_usergroup($username2,"parent"));
+
+	}
+
+	public function testGet_class_stamp_by_id(){
+		$usr = new user();
+
+		$this->assertEquals(0,sizeof($usr->get_class_stamp_by_id(null)));
+		$this->assertEquals("-1°noC",$usr->get_class_stamp_by_id(-1));
+		$this->assertEquals("1°A",$usr->get_class_stamp_by_id(1));
+
+		$this->assertEquals("1°C",($usr->get_class_stamp_by_id(3)));
+	}
+
 }
