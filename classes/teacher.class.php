@@ -275,6 +275,7 @@ CREATE TABLE `TopicRecord` (
 		}
 	}
 
+
 	/**
 	 * this function register a student with given studentID as absent on date timestamp.
 	 *
@@ -420,9 +421,10 @@ CREATE TABLE `TopicRecord` (
 	 * @param $studentID
 	 * @param $timestamp in the format "Y-m-d H:i:s"
 	 * @param $newExitHour in the range 0-6
+     * @param $late 0/1 optional, used to decide if the query should affect the Late field too or not
 	 * @return true|false on success or not
 	 */
-	public function register_early_exit($studentID, $timestamp, $newExitHour) {
+	public function register_early_exit($studentID, $timestamp, $newExitHour,$late = 0) {
 		$teacherID = $_SESSION['teacherID'];
         if(!isset($studentID) || !isset($timestamp) || !isset($newExitHour)) return false;
 
@@ -449,12 +451,22 @@ CREATE TABLE `TopicRecord` (
 			$result->close();
 
 			if ($absent) {
-				$sql = $conn->prepare("UPDATE NotPresentRecord SET ExitHour = ? WHERE StudentID = ? AND Date = ?;");
-				$sql->bind_param('iis',$newExitHour, $studentID, $y_m_d_timestamp);
+			    if($late == 0) {
+                    $sql = $conn->prepare("UPDATE NotPresentRecord SET ExitHour = ? WHERE StudentID = ? AND Date = ?;");
+                    $sql->bind_param('iis', $newExitHour, $studentID, $y_m_d_timestamp);
+                } else if($late == 1) {
+                    $sql = $conn->prepare("UPDATE NotPresentRecord SET ExitHour = ?, Late = 1 WHERE StudentID = ? AND Date = ?;");
+                    $sql->bind_param('iis', $newExitHour, $studentID, $y_m_d_timestamp);
+                }
 				return $sql->execute();
 			} else {
-				$sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',0,?);");
-				$sql->bind_param('iii', $studentID, $classID, $newExitHour);
+			    if($late == 0) {
+                    $sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',0,?);");
+                    $sql->bind_param('iii', $studentID, $classID, $newExitHour);
+                } else if( $late == 1){
+                    $sql = $conn->prepare("INSERT INTO NotPresentRecord(StudentID,SpecificClassID,Date,Late,ExitHour) VALUES (?,?,'$y_m_d_timestamp',1,?);");
+                    $sql->bind_param('iii', $studentID, $classID, $newExitHour);
+                }
 				return $sql->execute();
 			}
 		} else {
