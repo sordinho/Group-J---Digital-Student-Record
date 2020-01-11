@@ -457,6 +457,7 @@ class sparent extends user {
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT
                                       ta.ID AS TeacherAvailabilityID,
+                                      t.ID AS TeacherID,
                                       u.Name as TeacherName,
                                       u.Surname as TeacherSurname,
                                       tc.Name as TopicName,
@@ -603,7 +604,7 @@ class sparent extends user {
        sc.Section as Section,
        u.Name as TeacherName,
        u.Surname as TeacherSurname
-FROM TopicRecord tr, Topic t, SpecificClass sc, Teacher tc, Student s, User u, Yearclass yc
+FROM TopicRecord tr, Topic t, SpecificClass sc, Teacher tc, Student s, User u, YearClass yc
 WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
     AND tr.TopicID=t.ID -- topic info
     AND tr.SpecificClassID=sc.ID AND sc.YearClassID=yc.ID -- class info
@@ -624,43 +625,38 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 
 	/**
 	 * Function used for booking a meeting with a teacher
-	 * @param $parentID : ID of the parent who want to book the meeting
 	 * @param $teacherID : teacher to meet
 	 * @param $date : date of the meeting to book
+	 * @param $hourSlot : hourSlot to book
 	 * @param $timeSlot : timeSlot to book
 	 * @return bool : false in case of error, true in case of success
 	 */
-	public function book_meeting($parentID, $teacherID, $date, $timeSlot) {
-		if ($parentID == null || $parentID == '' || $date == null || $date = '' || $teacherID == null || $teacherID < 1)
+	public function book_meeting($teacherID, $date, $hourSlot, $timeSlot) {
+		if ($hourSlot == null || $hourSlot == '' || $date == null || $date == '' || $teacherID == null || $teacherID < 1)
 			return false;
 
-		$date = strtotime($date);
+		$parentID = $this->get_parent_ID();
+		$t_date = strtotime($date);
 		$conn = $this->connectMySQL();
 		$teacherAvailabilityID = null; // saved from query1. to be used in query3.
 
-		//Check timeslot is a valid one for the given teacher<->date
-		$dayOfTheWeek = calendar::from_dow_to_num(date('l', $date));
-		$hourSlot = intval($timeSlot / 3);
-		$query1 = "SELECT ID, HourSlot FROM TeacherAvailability WHERE TeacherID=? AND DayOfWeek=?";
+		//Check hourslot is a valid one for the given teacher<->date
+		$dayOfTheWeek = calendar::from_dow_to_num(date('l', $t_date));
+//		$hourSlot = intval($timeSlot / 3);
+		$query1 = "SELECT ID, HourSlot FROM TeacherAvailability WHERE TeacherID=? AND DayOfWeek=? AND HourSlot=?";
 		$getTimeSlotsStmt = $conn->prepare($query1);
-		$getTimeSlotsStmt->bind_param("ii", $teacherID, $dayOfTheWeek);
+		$getTimeSlotsStmt->bind_param("iii", $teacherID, $dayOfTheWeek, $hourSlot);
 		$getTimeSlotsStmt->execute();
 		$res = $getTimeSlotsStmt->get_result();
-		$result = false;
-		// check there is a hourslot same as the wanted hourslot
-		while ($row = $res->fetch_array()) {
-			if ($row[1] == $hourSlot) {
-				$result = true;
-				$teacherAvailabilityID = $row[0];
-			}
-		}
-		// we didn't get it
-		if (!$result)
+
+		$row = $res->fetch_row();
+		if($row == null)
 			return false;
+		$teacherAvailabilityID = $row[0];
 		$getTimeSlotsStmt->close();
 
 		//Check the timeslot is free for the teacher in this date
-		$query2 = "SELECT ID FROM MeetingReservation mr, TeacherAvailability ta WHERE mr.TeacherAvailabilityID=ta.ID AND ta.TeacherID=? AND  Date=? AND Timeslot=?";
+		$query2 = "SELECT mr.ID FROM MeetingReservation mr, TeacherAvailability ta WHERE mr.TeacherAvailabilityID=ta.ID AND ta.TeacherID=? AND Date=? AND Timeslot=?";
 		$checkFreeStmt = $conn->prepare($query2);
 		$checkFreeStmt->bind_param("isi", $teacherID, $date, $timeSlot);
 		$checkFreeStmt->execute();
@@ -669,11 +665,10 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 			return false;
 
 		// Insert a new meeting
-		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot),VALUES (?,?,?,?)";
+		$query3 = "INSERT INTO MeetingReservation (ParentID, TeacherAvailabilityID, Date, TimeSlot) VALUES (?,?,?,?)";
 		$bookStmt = $conn->prepare($query3);
 		$bookStmt->bind_param("iisi", $parentID, $teacherAvailabilityID, $date, $timeSlot);
-		$bookStmt->execute();
-		return $bookStmt->get_result();
+		return $bookStmt->execute();
 	}
 
     /**
@@ -687,8 +682,8 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
             return false;
         }
 
-        $timetable = array();
-        $conn = $this->connectMySql();
+		$timetable = array();
+		$conn = $this->connectMySql();
 
         $stmt1 = $conn->prepare("    SELECT COUNT(*) AS NUM
                                             FROM Student, Timetables, Teacher, Topic, User
@@ -723,4 +718,5 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
             return false;
         }
     }
+
 }

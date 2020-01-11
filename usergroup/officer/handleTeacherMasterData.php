@@ -57,7 +57,7 @@ OUT;
 function modifiedTeacher(elem){
     let id = elem.getAttribute("id").split("_")[1];
     document.getElementById("status_"+id).value="changed";
-    let tmp = document.getElementById("status_"+id).value;
+    let tmp = document.getElementById("status_"+id).setAttribute("value","changed");
     elem.style.backgroundColor = "yellow";
 }
 --></script>

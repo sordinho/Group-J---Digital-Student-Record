@@ -11,7 +11,8 @@
         <whitelist addUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">../classes</directory>
             <exclude>
-
+                <file>../classes/csite.class.php</file>
+                <file>../classes/cpage.class.php</file>
             </exclude>
         </whitelist>
     </filter>

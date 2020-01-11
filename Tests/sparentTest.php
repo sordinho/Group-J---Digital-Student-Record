@@ -407,6 +407,79 @@ class sparentTest extends TestCase
         $this->assertFalse($parent->get_final_term_marks_by_studentID($studentID3,$termID2));
     }
 
+    public function testGet_teacher_availability(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// No child for the parent
+		$this->assertEquals(0,sizeof($parent->get_teacher_availability()));
+
+		// Set children info in session
+		$parent->set_current_child(2);
+		$this->assertNotEquals(0,sizeof($parent->get_teacher_availability()));
+	}
+
+	public function testGet_future_reservations_by_teacher_availability_id(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// Invalid teacher availability id
+		$this->assertEquals(0,sizeof($parent->get_future_reservations_by_teacher_availability_id(-1)));
+
+		// Teacher with no booked meetings
+		$this->assertEquals(0,sizeof($parent->get_future_reservations_by_teacher_availability_id(3)));
+
+		$datetime = new DateTime('tomorrow');
+		$tomorrow = $datetime->format('Y-m-d');
+		$queryInsert = "INSERT INTO MeetingReservation (ParentID,TeacherAvailabilityID,Date,Timeslot) VALUES (10,3,'".$tomorrow."',0)";
+		perform_INSERT_or_DELETE($queryInsert);
+
+		$this->assertEquals(1,sizeof($parent->get_future_reservations_by_teacher_availability_id(3)));
+	}
+
+	public function testBook_meeting(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// invalid teacher
+		$this->assertFalse($parent->book_meeting(null,date("Y-m-d"),3,0));
+
+		// invalid date
+		$this->assertFalse($parent->book_meeting(1,null,3,0));
+
+		// invalid hourslot
+		$this->assertFalse($parent->book_meeting(1,date("Y-m-d"),null,0));
+
+		// invalid timeslot
+		$this->assertFalse($parent->book_meeting(1,date("Y-m-d"),3,null));
+
+		// Valid meeting
+		$this->assertTrue($parent->book_meeting(1,"2020-01-29",3,0));
+	}
+
+	public function testGetLectureTopics(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// Invalid child ID
+		$this->assertFalse($parent->get_lecture_topics(-1));
+
+		// Valid child ID
+		$this->assertNotEquals(0,sizeof($parent->get_lecture_topics(2)));
+	}
+
+	public function testGetTimetable(){
+		$_SESSION['parentID']=2;
+		$parent = new sparent();
+
+		// invalid child id
+		$this->assertEquals(0,sizeof($parent->get_timetable(null)));
+
+		// Valid child id (1st year)
+		$this->assertEquals(25,sizeof($parent->get_timetable(2)));
+
+	}
+
     public function testGet_timetable() {
 
         $parent = new sparent();

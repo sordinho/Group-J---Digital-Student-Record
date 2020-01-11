@@ -9,6 +9,9 @@ body {
     flex-direction: column;
     height: 100%;
 }
+.table td, .table th {
+    vertical-align: middle;
+}
 .min_container {
     flex: 1 0 auto;
 }
@@ -37,6 +40,8 @@ body {
 
 #sidebar {
     position: fixed;
+    overflow-y: auto;
+    height: 100%;
 }
 
 #navbar-title {

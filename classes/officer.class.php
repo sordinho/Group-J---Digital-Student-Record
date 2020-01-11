@@ -609,7 +609,7 @@ class officer extends user {
 			return false;
 		}
 		$stmt->bind_param("sssi", $name, $surname, $email, $id);
-		if (!$stmt->execute() || $stmt->affected_rows == 0) {
+		if (!$stmt->execute()) {
 			$conn->rollback();
 			$conn->autocommit(TRUE);
 			return false;
@@ -621,7 +621,7 @@ class officer extends user {
 			return false;
 		}
 		$stmt->bind_param("si", $fiscalcode, $id);
-		if (!$stmt->execute() || $stmt->affected_rows == 0) {
+		if (!$stmt->execute() ) {
 			$conn->rollback();
 			$conn->autocommit(TRUE);
 			return false;

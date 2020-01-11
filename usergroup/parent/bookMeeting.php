@@ -62,12 +62,15 @@ OUT;
                 $slot = $sparent->get_future_reservations_by_teacher_availability_id($meeting['TeacherAvailabilityID']);
                 for ($i=0; $i < NUM_SLOT; $i++) {
                     if ($i !== $slot[$i]['TimeSlot']) {
+                        $teacherID = $meeting['TeacherID'];
                         $teacherName = $meeting['TeacherName'];
                         $teacherSurname = $meeting['TeacherSurname'];
                         $topicName = $meeting['TopicName'];
                         $day = calendar::from_num_to_dow($meeting['DayOfWeek']);
+                        $hour = $meeting['HourSlot'];
                         $hourSlot = $meeting['HourSlot']+8;
-                        $timeSlot = $i*20;
+//                        $timeSlot = $i*20;
+                        $timeSlot = 60/NUM_SLOT*$i;
                         if ($timeSlot==0) $timeSlot = "00";
                         $d = 'next '.$day;
                         $date = new DateTime();
@@ -75,18 +78,19 @@ OUT;
                         $w = '+'.($week*7).' days';
                         $date = $date->modify($w);
                         $date = $date->format('Y-m-d');
-                        // TODO check is_holidays
-//                        if (!calendar::is_holiday($date)) {
+                        if (!calendar::is_holiday($date)) {
                             $content .=<<<OUT
 <tr>
-  <th scope="row">$teacherName $teacherSurname</th>
-  <td>$topicName</td>
-  <td>$day, $date</td>
-  <td>$hourSlot:$timeSlot</td>
-  <td>Confirm button</td>
+  <form method="POST">
+      <th scope="row"><input type="hidden" value="$teacherID" name="teacherID">$teacherName $teacherSurname</th>
+      <td>$topicName</td>
+      <td>$day, <input type="hidden" value="$date" name="date">$date</td>
+      <td><input type="hidden" value="$hour" name="hourSlot">$hourSlot:<input type="hidden" value="$i" name="timeSlot">$timeSlot</td>
+      <td style="text-align: end"><button class="btn btn-success" type="submit" name="submit" value="bookMeeting">Confirm</button></td>
+  </form>
 </tr>
 OUT;
-//                        }
+                        }
 
                     }
                 }
@@ -105,7 +109,14 @@ OUT;
     }
 
 } else {
-    // logic
+    if ($sparent->book_meeting($_POST['teacherID'], $_POST['date'], $_POST['hourSlot'], $_POST['timeSlot'])) {
+        header("Location: bookMeeting.php?operation_result=1");
+        die();
+    } else {
+        header("Location: bookMeeting.php?operation_result=0");
+        die();
+    }
+
 }
 
 

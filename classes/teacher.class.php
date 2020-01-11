@@ -828,11 +828,14 @@ CREATE TABLE `TopicRecord` (
      */
     public function add_availability($day, $hour) {
         $conn = $this->connectMySQL();
-        $dayOfWeek = calendar::from_dow_to_num($day);
-        $hourSlot = calendar::from_hour_to_slot($hour);
+		$dayOfWeek = calendar::from_dow_to_num($day);
+		
+		# TODO: comment following line if minutes should be accounted for
+		$hour = explode( ':', $hour)[0].":00";
+		$hourSlot = calendar::from_hour_to_slot($hour);
         if ($dayOfWeek == -1 || $hourSlot == -1) {
             return -1;
-        }
+		}
         $stmt = $conn->prepare("SELECT * FROM Timetables WHERE TeacherID=? AND HourSlot=? AND DayOfWeek=?");
         if (!$stmt) {
             return -2;
@@ -840,7 +843,8 @@ CREATE TABLE `TopicRecord` (
         $teacherID = $this->get_teacher_ID();
         if ($teacherID < 0) {
             return -3;
-        }
+		}
+
         $stmt->bind_param("iii", $teacherID, $hourSlot, $dayOfWeek);
         $stmt->execute();
         $res = $stmt->get_result();
