@@ -16,34 +16,11 @@ if (!$teacher->is_logged()) {
 
 // If this page was called after performing an operation, the result is shown to the user
 if (isset($_GET['operation_result'])) {
-    /*$print = $_GET['operation_result'];
-    $content .= '
-                <div class="alert alert-danger" role="alert">'.
-                $print.
-                '</div>';*/
     switch ($_GET['operation_result']) {
         case 1:
             $content .= '
                 <div class="alert alert-success" role="alert">
                     Absences successfully registered. <a href="addAbsence.php" class="alert-link">Keep registering absence</a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
-                </div>';
-            break;
-        case 0:
-            $content .= '
-                <div class="alert alert-danger" role="alert">
-                    Error in uploading students\' absence. <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
-                </div>'; 
-            break;
-        case -1:
-            $content .= '
-                <div class="alert alert-danger" role="alert">
-                    Error <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
-                </div>';
-            break;
-        case -2:
-            $content .= '
-                <div class="alert alert-danger" role="alert">
-                    No student selected. <a href="addAbsence.php" class="alert-link">Retry </a> or <a href="../teacher/index.php" class="alert-link">back to your homepage.</a>
                 </div>';
             break;
         default:
@@ -550,10 +527,10 @@ OUT;
             header("Location: addAbsence.php?operation_result=1");
             exit();
         } else if ($counter == 0){
-            header("Location: addAbsence.php?operation_result=-2");
+            $teacher->get_error(21);
             exit();
         } else {
-            header("Location: addAbsence.php?operation_result=0");
+            $teacher->get_error(22);
             exit();
         }
     }
