@@ -468,18 +468,6 @@ class sparentTest extends TestCase
 		$this->assertNotEquals(0,sizeof($parent->get_lecture_topics(2)));
 	}
 
-	public function testGetTimetable(){
-		$_SESSION['parentID']=2;
-		$parent = new sparent();
-
-		// invalid child id
-		$this->assertEquals(0,sizeof($parent->get_timetable(null)));
-
-		// Valid child id (1st year)
-		$this->assertEquals(25,sizeof($parent->get_timetable(2)));
-
-	}
-
     public function testGet_timetable() {
 
         $parent = new sparent();
