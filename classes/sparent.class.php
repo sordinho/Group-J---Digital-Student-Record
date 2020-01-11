@@ -676,36 +676,51 @@ WHERE tr.TeacherID=tc.ID AND tc.UserID=u.ID -- teacher info
 		return $bookStmt->get_result();
 	}
 
+    /**
+     *
+     * given a childID returns its timetable: the teacher surname and the topic name are returned - not ids
+     * @param $childID
+     * @return array|bool - timetable if it is present, elsewhere it returns false
+     */
     public function get_timetable($childID) {
         if (!isset($childID)) {
-            return array();
+            return false;
         }
 
         $timetable = array();
         $conn = $this->connectMySql();
 
-        /*
-         * given a childID returns its timetable: the teacher surname and the topic name are returned - not ids
-         */
-        $stmt = $conn->prepare("    SELECT User.Surname AS Teacher, Topic.Name AS Subject, Timetables.DayOfWeek AS DayOfWeek, Timetables.HourSlot AS Hour
+        $stmt1 = $conn->prepare("    SELECT COUNT(*) AS NUM
                                             FROM Student, Timetables, Teacher, Topic, User
                                             WHERE Timetables.SpecificClassID = Student.SpecificClassID 
                                             AND Teacher.ID = Timetables.TeacherID
                                             AND Teacher.UserID = User.ID
                                             AND Timetables.TopicID = Topic.ID
                                             AND Student.ID = ?");
-        $stmt->bind_param('i', $childID);
-        $stmt->execute();
-        $res = $stmt->get_result();
+        $stmt1->bind_param('i', $childID);
+        $stmt1->execute();
+        $res = $stmt1->get_result();
+        $row = $res->fetch_assoc();
+        if ($row['NUM'] > 0) {
+            $stmt2 = $conn->prepare("    SELECT User.Surname AS Teacher, Topic.Name AS Subject, Timetables.DayOfWeek AS DayOfWeek, Timetables.HourSlot AS Hour
+                                            FROM Student, Timetables, Teacher, Topic, User
+                                            WHERE Timetables.SpecificClassID = Student.SpecificClassID 
+                                            AND Teacher.ID = Timetables.TeacherID
+                                            AND Teacher.UserID = User.ID
+                                            AND Timetables.TopicID = Topic.ID
+                                            AND Student.ID = ?");
+            $stmt2->bind_param('i', $childID);
+            $stmt2->execute();
+            $res = $stmt2->get_result();
 
-        if (!$res) {
+            while ($row = $res->fetch_assoc()) {
+                $day_of_week = $row['DayOfWeek'];
+                $hour = $row['Hour'];
+                $timetable[$day_of_week][$hour] = $row['Subject'] . ' - ' . $row['Teacher'];
+            }
+            return $timetable;
+        } else {
             return false;
         }
-        while ($row = $res->fetch_assoc()) {
-            $day_of_week = $row['DayOfWeek'];
-            $hour = $row['Hour'];
-            $timetable[$day_of_week][$hour] = $row['Subject'] . ' - ' . $row['Teacher'];
-        }
-        return $timetable;
     }
 }
