@@ -22,7 +22,7 @@ if (!$sparent->is_logged()) {
 $content = '';
 
 $timetable = $sparent->get_timetable($cur_child);
-if(empty($timetable)){
+if (!$timetable){
     $content .= '<div class="alert alert-danger" role="alert"> The timetable is still not available </div>';
 } else {
 

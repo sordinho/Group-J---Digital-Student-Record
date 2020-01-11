@@ -480,6 +480,28 @@ class sparentTest extends TestCase
 
 	}
 
-	
+    public function testGet_timetable() {
+
+        $parent = new sparent();
+
+        /*
+         * get result < 0
+         */
+
+        // assuming childID 13 is in class 3, which has no timetable
+        $this->assertFalse($parent->get_timetable(13));
+
+        /*
+         * get result > 0
+         */
+
+        // assuming childID 1 is in class 1, which has timetable
+        $this->assertNotEmpty($parent->get_timetable(1));
+
+        /*
+         * childID = NULL
+         */
+        $this->assertFalse($parent->get_timetable(NULL));
+    }
 
 }
