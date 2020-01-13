@@ -828,6 +828,36 @@ CREATE TABLE `TopicRecord` (
         return $students;
     }
 
+    public function get_availability(){
+        $availability = array();
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT * FROM TeacherAvailability WHERE TeacherID = ?;");
+        if(!$stmt) return $availability;
+        $stmt->bind_param("i",$this->get_teacher_ID());
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows>0){
+            while ($row = $res->fetch_assoc()) {
+                array_push($availability, $row);
+            }
+        }
+        return $availability;
+    }
+
+    public function get_booked_meetings($date,$teacherAvailabilityID){
+        if (!isset($date) || !isset($teacherAvailabilityID)) return false;
+        if(!calendar::validate_date($date,'Y-m-d')) return false;
+
+        $conn = $this->connectMySQL();
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM MeetingReservation WHERE TeacherAvailabilityID = ? AND Date = ?;");
+        if(!$stmt) return false;
+        $stmt->bind_param("is",$teacherAvailabilityID,$date);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if($res->num_rows>0) return $res->fetch_row()[0];
+        else return 0;
+    }
+
     /**
      * @param $day "Monday, Tuesday..."
      * @param $hour "08:00, 12:00..."
@@ -838,6 +868,7 @@ CREATE TABLE `TopicRecord` (
      * @return int -5 on failing to insert/update the teacher availability
      * @return int 1 on success
      */
+
     public function add_availability($day, $hour) {
         $conn = $this->connectMySQL();
 		$dayOfWeek = calendar::from_dow_to_num($day);

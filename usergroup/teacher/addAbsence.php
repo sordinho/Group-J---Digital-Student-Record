@@ -9,7 +9,6 @@ $page = new cpage("Student Presence Verification");
 $site->setPage($page);
 
 if (!$teacher->is_logged()) {
-	// header("location: /error.php?errorID=19");
 	$teacher->get_error(19);
 	exit();
 }

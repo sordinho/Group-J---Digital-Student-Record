@@ -537,6 +537,30 @@ class teacherTest extends TestCase
         $this->assertFalse($res, $this->printErrorMessage("testRegister_new_note", "operation should have returned false"));
     }
 
+    public function testGet_Availability(){
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $res = $teacher->get_availability();
+        $this->assertTrue($res != null);
+        $this->assertNotEmpty($res);
+    }
+
+    public function testGet_booked_meetings(){
+        $_SESSION['teacherID'] = 1;
+        $teacher = new teacher();
+        $date = "2020-01-15";
+        $teacherAvailabilityID = 4;
+
+        $res = $teacher->get_booked_meetings($date,$teacherAvailabilityID);
+        $this->assertEquals(1,$res);
+
+        $res = $teacher->get_booked_meetings($date,null);
+        $this->assertFalse($res);
+
+        $res = $teacher->get_booked_meetings(null,$teacherAvailabilityID);
+        $this->assertFalse($res);
+    }
+
     public function testGet_coordinated_class()
     {
         $specificclassID = 1;
