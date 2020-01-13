@@ -22,7 +22,7 @@ if ($_GET["action"] != "generateTimetable") {
             <br>
             <h1>TimeTable generation</h1>
             <p class="lead">Click on the button to generate the timetables.<br></p>
-            <a class="btn btn-primary" href="./generateTimetables.php?action=generateTimetable"role="button">Delete and generate new Timetables</a>
+            <a class="btn btn-warning" href="./generateTimetables.php?action=generateTimetable"role="button">Delete and generate new Timetables</a>
         </div>
     </div>';
 } else {
@@ -118,6 +118,9 @@ if ($_GET["action"] != "generateTimetable") {
             $officer->set_timetable_class($data, $classID);
         }
         //var_dump($timetables);
+    }
+    else{
+        die("An error occured. Are you sure you have enough teacher to fullfill the requirements?");
     }
 }
 $page->setContent($content);
