@@ -667,11 +667,7 @@ CREATE TABLE `UploadedClassDocuments` (
 --
 
 INSERT INTO `UploadedClassDocuments` (`ID`, `FileName`, `DiskFileName`, `SpecificClassID`, `Description`, `Date`, `SubjectID`) VALUES
-(3, 'emailSec.pdf', '8290566acbb0d5e1388dc6008275431a_emailSec.pdf', 1, 'Email security lioy', '2019-12-15 16:45:20', 2),
-(4, 'Designers_Personas_Presentation_en.pptx', '3292103ac1749a4ec06dc15b592ef270_Designers_Personas_Presentation_en.pptx', 1, 'Personas Template', '2019-12-15 17:34:35', 1),
 (5, 'HistoryNotes.txt', '4147fc3ec062e49b5f19c5a4c9078329_HistoryNotes.txt', 1, 'History Notes', '2019-12-16 12:11:52', 1),
-(6, 'README.md', 'dc6ee570c4469821a4f4977fe7a4cf33_README.md', 2, 'This is a readme file', '2019-12-17 10:50:00', 1),
-(7, 'Dockerfile', 'c4de739d81ce66af524a8d1eb4d7b945_Dockerfile', 1, 'M dockerfile', '2019-12-17 11:03:32', 2),
 (9, 'Notes.txt', '5dc4c3e30a85be5a5099b423cd6361ac_Notes.txt', 1, 'notes ', '2019-12-17 14:51:39', 1);
 
 -- --------------------------------------------------------
