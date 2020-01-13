@@ -17,7 +17,7 @@ For building the image you need the [Dockerfile](Dockerfile)
 
 1. Place all the content of this directory at the same level of the github repository directory.
 2. Open terminal and go to directory containing repo, Dockerfile and other files.
-3. Run `docker build -t se2polito/team-j:rXXX` where `XXX` is the TAG (release number)
+3. Run `docker build -t se2polito/team-j:rXXX .` where `XXX` is the TAG (release number)
 4. Take a coffee
 
 ## Notes
