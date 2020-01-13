@@ -60,4 +60,35 @@ class calendarTest extends TestCase
         $this->assertEquals('08', $date['day'], $this->printErrorMessage("testTimestamp_to_date"));
         $this->assertEquals('10:11', $date['time'], $this->printErrorMessage("testTimestamp_to_date"));
     }
+
+    public function testGet_days_per_school_week()
+    {
+        $this->assertEquals(5, calendar::get_days_per_school_week(), $this->printErrorMessage("testGet_days_per_school_week"));
+    }
+
+    public function testFrom_num_to_dow()
+    {
+        foreach(['Monday','Tuesday','Wednesday','Thursday','Friday'] as $index=>$day) {
+            $this->assertEquals($day, calendar::from_num_to_dow($index));
+        }
+        $this->assertEquals('',calendar::from_num_to_dow(5));
+        $this->assertEquals('',calendar::from_num_to_dow(6));
+        $this->assertEquals('',calendar::from_num_to_dow(7));
+    }
+
+    public function testFrom_dow_to_num()
+    {
+        foreach(['Monday','Tuesday','Wednesday','Thursday','Friday'] as $index=>$day) {
+            $this->assertEquals($index, calendar::from_dow_to_num($day));
+        }
+        $this->assertEquals(-1, calendar::from_dow_to_num('Saturday'));
+        $this->assertEquals(-1, calendar::from_dow_to_num('Sunday'));
+    }
+
+    public function testFrom_hour_to_slot()
+    {
+        foreach (['08:00', '09:00', '10:00', '11:00', '12:00', '13:00'] as $index => $hour) {
+            $this->assertEquals($index, calendar::from_hour_to_slot($hour), $this->printErrorMessage('calendarTest ', $hour . ' not passed'));
+        }
+    }
 }
