@@ -18,7 +18,7 @@ class teacher extends user {
 	 *                      false           otherwise
 	 * */
 	public function insert_new_lecture_topic($lectureDescription, $topicID, $timestamp, $classID) {
-		//todo : come arriva la data dell'inserzione? UNIX timestamp o già formattata?
+		//td : come arriva la data dell'inserzione? UNIX timestamp o già formattata?
 		//       come salviamo nel db il timestamp? Al momento sto ipotizzando arrivino
 		//       nello stesso formato di actual_date
 		//$classID = -1; //
@@ -27,8 +27,10 @@ class teacher extends user {
 		// given unix timestamp
 		$lecture_date = strtotime($timestamp);
 		// secondi in una settimana
-		if (!calendar::by_the_end_of_the_week($actual_date, $lecture_date) || calendar::is_holiday($timestamp))
-			return false;
+		if (!calendar::by_the_end_of_the_week($actual_date, $lecture_date) || calendar::is_holiday($timestamp)) {
+
+            return false;
+        }
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("INSERT INTO TopicRecord (TeacherID, Timestamp, Description, TopicID, SpecificClassID) VALUES (?,?,?,?,?);");
 		/*
@@ -41,8 +43,10 @@ CREATE TABLE `TopicRecord` (
   `SpecificClassID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 		*/
-		if ($stmt == false)
-			return false;
+		if ($stmt == false) {
+            return false;
+
+        }
 		$stmt->bind_param('issii', $_SESSION['teacherID'], $timestamp, $lectureDescription, $topicID, $classID);
 		return $stmt->execute();//True || False
 	}
@@ -61,8 +65,10 @@ CREATE TABLE `TopicRecord` (
 
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT Timestamp,TeacherID FROM TopicRecord WHERE ID = ?;");
-		if (!$stmt)
-			return false;
+		if (!$stmt) {
+            return false;
+
+        }
 		$stmt->bind_param('i', $topicRecordID);
 		$stmt->execute();
 		$res = $stmt->get_result();
@@ -74,14 +80,20 @@ CREATE TABLE `TopicRecord` (
 			//modifica entro la fine della settimana
 			$actual_date = strtotime(date("Y-m-d H:i:s"));
 			$lecture_date = strtotime($row[0]);
-			if (!calendar::by_the_end_of_the_week($actual_date, $lecture_date))
-				return false;
-			if ($row[1] != $_SESSION['teacherID'])
-				return false;
+			if (!calendar::by_the_end_of_the_week($actual_date, $lecture_date)) {
+
+                return false;
+            }
+			if ($row[1] != $_SESSION['teacherID']) {
+                return false;
+
+            }
 			$res->close();
 			$stmt = $conn->prepare("UPDATE TopicRecord SET Description=? WHERE ID=?;");
-			if (!$stmt)
-				return false;
+			if (!$stmt) {
+                return false;
+
+            }
 			$stmt->bind_param("si", $newDescription, $topicRecordID);
 			return $stmt->execute();
 		}
@@ -205,13 +217,19 @@ CREATE TABLE `TopicRecord` (
 
 	public function get_daily_absences($date, $specificClassID) {
 		$absences = array();
-        if (calendar::validate_date($date,"Y-m-d") == false) return $absences;
+        if (calendar::validate_date($date,"Y-m-d") == false) {
+            return $absences;
+
+        }
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT StudentID, Late, ExitHour
                                       FROM NotPresentRecord
                                       WHERE Date = ? 
                                         AND SpecificClassID = ?;");
-		if (!$stmt) return $absences;
+		if (!$stmt) {
+            return $absences;
+
+        }
 		$stmt->bind_param("si", $date, $specificClassID);
 		$stmt->execute();
 		$res = $stmt->get_result();
@@ -256,11 +274,27 @@ CREATE TABLE `TopicRecord` (
 	 * @return true on success or false on failure
 	 */
 	public function insert_grade($studentID, $subjectID, $mark, $laude, $timestamp) {
-		if ($mark < 1 or $mark > 10) return false;
-		if ($laude != 0 and $laude != 1) return false;
+		if ($mark < 1 or $mark > 10)
+        {
+            return false;
 
-		if ($mark != 10 and $laude == true) return false;
-		if (calendar::validate_date($timestamp) == false) return false;
+        }
+		if ($laude != 0 and $laude != 1)
+        {
+            return false;
+
+        }
+
+		if ($mark != 10 and $laude == true)
+        {
+            return false;
+
+        }
+		if (calendar::validate_date($timestamp) == false)
+        {
+            return false;
+
+        }
 
 		$teacherID = $_SESSION['teacherID'];
 
@@ -286,9 +320,15 @@ CREATE TABLE `TopicRecord` (
 	 */
 	public function register_absence($studentID, $timestamp) {
 		$teacherID = $_SESSION['teacherID'];
-		if (!calendar::validate_date($timestamp))
-			return false;
-		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp)) || calendar::is_holiday($timestamp)) return false;
+		if (!calendar::validate_date($timestamp)) {
+            return false;
+
+        }
+		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp)) || calendar::is_holiday($timestamp))
+        {
+            return false;
+
+        }
 		$y_m_d = date("Y-m-d", strtotime($timestamp));
 		$classID = $this->is_teacher_of_the_student($studentID);
 		//$ret = "studentID : ".$studentID." - classID : ".$classID . " - date : ".$y_m_d." - student was absent: ".$this->student_was_absent($y_m_d,$studentID);
@@ -381,9 +421,17 @@ CREATE TABLE `TopicRecord` (
 	public function register_late_arrival($studentID, $timestamp) {
 		$teacherID = $_SESSION['teacherID'];
 
-		if (!calendar::validate_date($timestamp)) return false;
+		if (!calendar::validate_date($timestamp))
+        {
+            return false;
 
-		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))||calendar::is_holiday($timestamp)) return false;
+        }
+
+		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))||calendar::is_holiday($timestamp))
+        {
+            return false;
+
+        }
 
 		$y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
 		$hours_per_school_day = calendar::get_hours_per_school_day();
@@ -395,7 +443,7 @@ CREATE TABLE `TopicRecord` (
                     WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
                     AND NotPresentRecord.StudentID = '$studentID'";
 
-		if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
+		if (($classID = $this->is_teacher_of_the_student($studentID)) && $result = $conn->query($sql)) {
 
 			$row = $result->fetch_array();
 			$absent = $row[0]; //it means multiple possibilities: late arrival, absent, early exit...
@@ -426,13 +474,29 @@ CREATE TABLE `TopicRecord` (
 	 */
 	public function register_early_exit($studentID, $timestamp, $newExitHour,$late = 0) {
 		$teacherID = $_SESSION['teacherID'];
-        if(!isset($studentID) || !isset($timestamp) || !isset($newExitHour)) return false;
+        if(!isset($studentID) || !isset($timestamp) || !isset($newExitHour))
+        {
+            return false;
 
-        if($newExitHour > calendar::get_hours_per_school_day()) return false;
+        }
 
-		if (!calendar::validate_date($timestamp)) return false;
+        if($newExitHour > calendar::get_hours_per_school_day())
+        {
+            return false;
 
-		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))||calendar::is_holiday($timestamp)) return false;
+        }
+
+		if (!calendar::validate_date($timestamp))
+        {
+            return false;
+
+        }
+
+		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($timestamp))||calendar::is_holiday($timestamp))
+        {
+            return false;
+
+        }
 
 		$y_m_d_timestamp = date("Y-m-d", strtotime($timestamp));
 		$hours_per_school_day = calendar::get_hours_per_school_day();
@@ -444,7 +508,7 @@ CREATE TABLE `TopicRecord` (
                     WHERE NotPresentRecord.Date = '$y_m_d_timestamp'
                     AND NotPresentRecord.StudentID = $studentID";
 
-		if (($classID = $this->is_teacher_of_the_student($studentID)) and $result = $conn->query($sql)) {
+		if (($classID = $this->is_teacher_of_the_student($studentID)) && $result = $conn->query($sql)) {
 
 			$row = $result->fetch_array();
 			$absent = $row[0]; //it means multiple possibilities: late arrival, absent, early exit...
@@ -489,7 +553,10 @@ CREATE TABLE `TopicRecord` (
 
 		$stmt = $conn->prepare("INSERT INTO Homework (Description, SpecificClassID, TeacherID, Deadline, TopicID) VALUES (?,?,?,?,?);");
 		if ($stmt == false)
-			return false;
+        {
+            return false;
+
+        }
 
 		$actual_date = strtotime(date("Y-m-d H:i:s"));
 		// given unix timestamp
@@ -575,42 +642,66 @@ CREATE TABLE `TopicRecord` (
 	}
 
 	public function register_note_record($studentID, $noteID) {
-	    if(!isset($studentID) || !isset($noteID))
-	        return false;
+	    if(!isset($studentID) || !isset($noteID)) {
+            return false;
+
+        }
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("INSERT INTO NoteRecord (ID,StudentID,NoteID) VALUES (NULL,?,?);");
-		if (!$stmt)
-			return false;
+		if (!$stmt) {
+            return false;
+
+        }
 		$stmt->bind_param("ii", $studentID, $noteID);
 		return $stmt->execute();
 	}
 
 	public function register_new_note($date, $classID, $note) {
-	    if (!isset($date)||!isset($classID)||!isset($note)) return false;
-		if (!calendar::validate_date($date)) return false;
+	    if (!isset($date)||!isset($classID)||!isset($note))
+        {
+            return false;
 
-		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($date))||calendar::is_holiday($date)) return false;
+        }
+		if (!calendar::validate_date($date))
+        {
+            return false;
+
+        }
+
+		if (!calendar::by_the_end_of_the_week(strtotime(date("Y-m-d H:i:s")), strtotime($date))||calendar::is_holiday($date))
+        {
+            return false;
+
+        }
 
 		$conn = $this->connectMySQL();
         $teacherID = $this->get_teacher_ID();
 		$stmt = $conn->prepare("INSERT INTO Note (ID,TeacherID,SpecificClassID,Date,Description) VALUES (NULL,?,?,?,?);");
-		if (!$stmt)
-			return -1;
+		if (!$stmt) {
+            return -1;
+
+        }
 		$stmt->bind_param("iiss", $this->get_teacher_ID(), $classID, $date, $note);
 
-		if (!$stmt->execute())
-			return -2;
+		if (!$stmt->execute()) {
+            return -2;
+
+        }
 		$stmt = $conn->prepare("SELECT Max(ID) 
                                       FROM Note
                                       WHERE TeacherID = ?
                                         AND SpecificClassID = ?
                                         AND Date = ?
                                         AND Description = ?;");
-		if (!$stmt)
-			return -3;
+		if (!$stmt) {
+            return -3;
+
+        }
 		$stmt->bind_param("iiss", $this->get_teacher_ID(), $classID, $date, $note);
-		if (!$stmt->execute())
-			return -4;
+		if (!$stmt->execute()) {
+            return -4;
+
+        }
 		$res = $stmt->get_result();
 
 		return $res->fetch_row()[0];
@@ -620,11 +711,15 @@ CREATE TABLE `TopicRecord` (
         $conn = $this->connectMySQL();
         $coordinatedClassIDs=array();
         $stmt = $conn->prepare("SELECT ID FROM SpecificClass WHERE CoordinatorTeacherID = ?;");
-        if (!$stmt)
+        if (!$stmt) {
             return false;
+
+        }
         $stmt->bind_param("i", $teacherID);
-        if (!$stmt->execute())
+        if (!$stmt->execute()) {
             return false;
+
+        }
         $res = $stmt->get_result();
         if ($res > 0) {
             while ($row = $res->fetch_assoc()) {
@@ -639,11 +734,15 @@ CREATE TABLE `TopicRecord` (
     public function has_final_grades($studentID,$termID,$specificClassID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT Count(Distinct ID) as COUNT FROM FinalGrades WHERE StudentID = ? AND TermID = ? ;");
-        if (!$stmt)
+        if (!$stmt) {
             return false;
+
+        }
         $stmt->bind_param("ii", $studentID,$termID);
-        if (!$stmt->execute())
+        if (!$stmt->execute()) {
             return false;
+
+        }
         $res = $stmt->get_result();
         if ($res > 0) {
             $row=$res->fetch_assoc();
@@ -651,8 +750,10 @@ CREATE TABLE `TopicRecord` (
             $conn = $this->connectMySQL();
             $stmt = $conn->prepare("SELECT Count(DISTINCT TopicID) as COUNT FROM Timetables WHERE SpecificClassID=?;");
             $stmt->bind_param("i", $specificClassID);
-            if (!$stmt->execute())
+            if (!$stmt->execute()) {
                 return false;
+
+            }
             $res = $stmt->get_result();
             if ($res > 0) {
                 $row=$res->fetch_assoc();
@@ -672,11 +773,15 @@ CREATE TABLE `TopicRecord` (
 
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT ID FROM Terms WHERE LimitDay <  ? ORDER BY LimitDay DESC LIMIT 1;");
-        if (!$stmt)
+        if (!$stmt) {
             return false;
+
+        }
         $stmt->bind_param("s", date("Y-m-d"));
-        if (!$stmt->execute())
+        if (!$stmt->execute()) {
             return false;
+
+        }
         $res = $stmt->get_result();
         if ($res > 0) {
             $row=$res->fetch_assoc();
@@ -693,11 +798,15 @@ CREATE TABLE `TopicRecord` (
         $stmt = $conn->prepare("SELECT DISTINCT TopicID,Name FROM Timetables,Topic WHERE SpecificClassID=? AND 
                                                                                      TopicID NOT IN (SELECT TopicID FROM FinalGrades WHERE StudentID = ? AND TermID = ? ) AND 
                                                                                      Topic.ID=TopicID ORDER BY Name");
-        if (!$stmt)
+        if (!$stmt) {
             return false;
+
+        }
         $stmt->bind_param("iii", $specificClassID,$studentID,$termID);
-        if (!$stmt->execute())
+        if (!$stmt->execute()) {
             return false;
+
+        }
         $res = $stmt->get_result();
         if ($res > 0) {
             while ($row = $res->fetch_assoc()) {
@@ -717,11 +826,15 @@ CREATE TABLE `TopicRecord` (
     public function get_student_stamp_by_id($studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT Surname,Name FROM Student WHERE ID=?");
-        if (!$stmt)
+        if (!$stmt) {
             return false;
+
+        }
         $stmt->bind_param("i", $studentID);
-        if (!$stmt->execute())
+        if (!$stmt->execute()) {
             return false;
+
+        }
         $res = $stmt->get_result();
         if ($res->num_rows==1) {
             $row=$res->fetch_assoc();
@@ -743,16 +856,20 @@ CREATE TABLE `TopicRecord` (
                                         Timestamp <= ? AND 
                                         Timestamp > (SELECT LimitDay FROM Terms WHERE LimitDay < ? ORDER BY LimitDay DESC LIMIT 1 OFFSET 1)
                                         GROUP BY StudentID");
-        if (!$stmt)
-			return 0;
+        if (!$stmt) {
+            return 0;
+
+        }
 		$curr_date = date("Y-m-d");
 		
 		$date = new DateTime($curr_date);
 		$date->modify('+1 day');
 		$tomorrow_date =  $date->format('Y-m-d') ;
         $stmt->bind_param("iiss", $topicID,$studentID, $tomorrow_date, $curr_date);
-        if (!$stmt->execute())
+        if (!$stmt->execute()) {
             return 0;
+
+        }
         $res = $stmt->get_result();
         if ($res->num_rows == 1) {
 			$row=$res->fetch_assoc();
@@ -774,12 +891,16 @@ CREATE TABLE `TopicRecord` (
 
         $values=explode("_", $value);
 
-        if(!is_numeric($values[0]) || !is_numeric($values[1]) || !is_numeric($values[2]) || !is_numeric($values[3]))
+        if(!is_numeric($values[0]) || !is_numeric($values[1]) || !is_numeric($values[2]) || !is_numeric($values[3])) {
             return false;
+
+        }
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("INSERT INTO FinalGrades (StudentID,TopicID,Mark,TermID) VALUES (?,?,?,?);");
-        if (!$stmt)
+        if (!$stmt) {
             return false;
+
+        }
         $stmt->bind_param("iiii", $values[0], $values[1],$values[2],$values[3]);
         $stmt->execute();
         return $this->get_specificclassid_by_student($values[0]);
@@ -794,11 +915,15 @@ CREATE TABLE `TopicRecord` (
     public function get_specificclassid_by_student($studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT SpecificClassID FROM Student WHERE ID=?");
-        if (!$stmt)
+        if (!$stmt) {
             return false;
+
+        }
         $stmt->bind_param("i", $studentID);
-        if (!$stmt->execute())
+        if (!$stmt->execute()) {
             return false;
+
+        }
         $res = $stmt->get_result();
         if ($res->num_rows==1) {
             $row=$res->fetch_assoc();
@@ -820,8 +945,10 @@ CREATE TABLE `TopicRecord` (
 	                                  FROM Student
 	                                  WHERE SpecificClassID = ?
 	                                  ORDER BY Surname,Name,ID;");
-        if (!$stmt)
+        if (!$stmt) {
             return $students;
+
+        }
         $stmt->bind_param('i', $classID);
         $stmt->execute();
         $res = $stmt->get_result();
@@ -837,7 +964,11 @@ CREATE TABLE `TopicRecord` (
         $availability = array();
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT * FROM TeacherAvailability WHERE TeacherID = ?;");
-        if(!$stmt) return $availability;
+        if(!$stmt)
+        {
+            return $availability;
+
+        }
         $stmt->bind_param("i",$this->get_teacher_ID());
         $stmt->execute();
         $res = $stmt->get_result();
@@ -850,18 +981,38 @@ CREATE TABLE `TopicRecord` (
     }
 
     public function get_booked_meetings($date,$teacherAvailabilityID){
-        if (!isset($date) || !isset($teacherAvailabilityID)) return false;
-        if(!calendar::validate_date($date,'Y-m-d')) return false;
+        if (!isset($date) || !isset($teacherAvailabilityID))
+        {
+            return false;
+
+        }
+        if(!calendar::validate_date($date,'Y-m-d'))
+        {
+            return false;
+
+        }
 
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT COUNT(*) FROM MeetingReservation WHERE TeacherAvailabilityID = ? AND Date = ?;");
-        if(!$stmt) return false;
+        if(!$stmt)
+        {
+            return false;
+
+        }
         $stmt->bind_param("is",$teacherAvailabilityID,$date);
         $stmt->execute();
         $res = $stmt->get_result();
         $num = $res->fetch_row();
-        if($res->num_rows>0) return $num[0];
-        else return 0;
+        if($res->num_rows>0)
+        {
+            return $num[0];
+
+        }
+        else
+        {
+            return 0;
+
+        }
     }
 
     /**

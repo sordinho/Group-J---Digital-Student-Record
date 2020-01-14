@@ -48,7 +48,7 @@ class sparent extends user
             FROM Parent P,Student S
             WHERE P.UserID = ?
             AND P.StudentID = S.ID;");
-        //todo: use getter
+        //td: use getter
         $stmt->bind_param('d', $_SESSION['id']);//use getter
         $stmt->execute();
         $res = $stmt->get_result();

@@ -284,7 +284,7 @@ OUT;
                 }
                 if($absent and $late and $earlyExit){ //sei stato segnato come assente
                     if($statusA and $statusL){ // non eri già assente ne in ritardo
-                        //todo registra il ritardo + uscita anticipata
+                        //td registra il ritardo + uscita anticipata
                         $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"],1);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -292,7 +292,7 @@ OUT;
                         }
                         $counter++;
                     } else if($statusA and !$statusL) { //eri in ritardo
-                        //todo registra uscita anticipata
+                        //td registra uscita anticipata
                         $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"]);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -300,7 +300,7 @@ OUT;
                         }
                         $counter++;
                     } else if($statusL and !$statusA){ //eri assente
-                        //todo registra il ritardo + uscita anticipata
+                        //td registra il ritardo + uscita anticipata
                         $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"],1);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -310,7 +310,7 @@ OUT;
                     }
                 } else if ($absent and $late and !$earlyExit){
                     if($statusA and $statusL){ // non eri già assente ne in ritardo
-                        //todo registra il ritardo
+                        //td registra il ritardo
                         $res = $teacher->register_late_arrival($id,$date);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -318,10 +318,10 @@ OUT;
                         }
                         $counter++;
                     } else if($statusA and !$statusL) { //eri in ritardo
-                        //todo non fare nulla
+                        //td non fare nulla
                         //$counter++;
                     } else if($statusL and !$statusA){ //eri assente
-                        //todo registra il ritardo
+                        //td registra il ritardo
                         $res = $teacher->register_late_arrival($id,$date);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -331,7 +331,7 @@ OUT;
                     }
                 } else if( $absent and !$late and $earlyExit){
                     if($statusA and $statusL){ // non eri già assente ne in ritardo
-                        //todo registra assenza
+                        //td registra assenza
                         $res = $teacher->register_absence($id,$date);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -339,7 +339,7 @@ OUT;
                         }
                         $counter++;
                     } else if($statusA and !$statusL) { //eri in ritardo
-                        //todo registra assenza
+                        //td registra assenza
                         $res = $teacher->register_absence($id,$date);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -347,12 +347,12 @@ OUT;
                         }
                         $counter++;
                     } else if($statusL and !$statusA){ //eri assente
-                        //todo non fare nulla
+                        //td non fare nulla
                         //$counter++;
                     }
                 } else if( $absent and !$late and !$earlyExit){
                     if($statusA and $statusL){ // non eri già assente ne in ritardo
-                        //todo registra assenza
+                        //td registra assenza
                         $res = $teacher->register_absence($id,$date);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -360,7 +360,7 @@ OUT;
                         }
                         $counter++;
                     } else if($statusA and !$statusL) { //eri in ritardo
-                        //todo registra assenza
+                        //td registra assenza
                         $res = $teacher->register_absence($id,$date);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -368,12 +368,12 @@ OUT;
                         }
                         $counter++;
                     } else if($statusL and !$statusA){ //eri assente
-                        //todo non fare nulla
+                        //td non fare nulla
                         //$counter++;
                     }
                 } else if(!$absent and $late and $earlyExit){
                     if($statusA and $statusL){ // non eri già assente ne in ritardo
-                        //todo registra il ritardo + ee
+                        //td registra il ritardo + ee
                         $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"],1);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -381,7 +381,7 @@ OUT;
                         }
                         $counter++;
                     } else if($statusA and !$statusL) { //eri in ritardo
-                        //todo registra ee
+                        //td registra ee
                         $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"]);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -389,7 +389,7 @@ OUT;
                         }
                         $counter++;
                     } else if($statusL and !$statusA){ //eri assente
-                        //todo registra il ritardo  + ee
+                        //td registra il ritardo  + ee
                         $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"],1);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -399,7 +399,7 @@ OUT;
                     }
                 } else if(!$absent and $late and !$earlyExit){
                     if($statusA and $statusL){ // non eri già assente ne in ritardo
-                        //todo registra il ritardo
+                        //td registra il ritardo
                         $res = $teacher->register_late_arrival($id,$date);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -407,10 +407,10 @@ OUT;
                         }
                         $counter++;
                     } else if($statusA and !$statusL) { //eri in ritardo
-                        //todo non fare nulla
+                        //td non fare nulla
                         //$counter++;
                     } else if($statusL and !$statusA){ //eri assente
-                        //todo registra il ritardo
+                        //td registra il ritardo
                         $res = $teacher->register_late_arrival($id,$date);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -420,7 +420,7 @@ OUT;
                     }
                 } else if(!$absent and !$late and $earlyExit){
                     if($statusA and $statusL){ // non eri già assente ne in ritardo
-                        //todo registra ee
+                        //td registra ee
                         $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"]);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -428,7 +428,7 @@ OUT;
                         }
                         $counter++;
                     } else if($statusA and !$statusL) { //eri in ritardo
-                        //todo registra ee
+                        //td registra ee
                         $res = $teacher->register_early_exit($id,$date,$_POST["early_exit_hour_$id"]);
                         if (!$res) {
                             $teacher->get_error(22);
@@ -436,7 +436,7 @@ OUT;
                         }
                         $counter++;
                     } else if($statusL and !$statusA){ //eri assente
-                        //todo non fare nulla
+                        //td non fare nulla
                         //$counter++;
                     }
                 }
@@ -450,7 +450,7 @@ OUT;
                 $absent = $_POST["absence_$id"] == 'yes';
                 $status = $_POST["status_$id"] != 'Absent';
 
-                //todo in questo momento status permette di evitare di inserire 2 volte una assenza per una stessa persona
+                //td in questo momento status permette di evitare di inserire 2 volte una assenza per una stessa persona
                 // se si vuole limitare l'inserimento di una assenza solo a chi è in status "none" (nè assente nè in ritardo nè in early exit
                 // modificare la riga precedente
                 $date = $_POST['date'];
@@ -478,7 +478,7 @@ OUT;
             if (isset($_POST["late_$id"])) {
                 $absent = $_POST["late_$id"] == 'yes';
                 $status = $_POST["status_$id"] != 'Late';
-                //todo in questo momento status permette di evitare di inserire 2 volte un ritardo per una stessa persona
+                //td in questo momento status permette di evitare di inserire 2 volte un ritardo per una stessa persona
                 // se si vuole limitare l'inserimento di un ritardo solo a chi è assente o è in status "none" modificare la riga precedente
                 $date = $_POST['date'];
                 if(!$date){

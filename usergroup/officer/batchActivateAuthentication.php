@@ -30,7 +30,7 @@ if ($_GET["action"] != "activate") {
 	// call method to get the current inactive account
 	$parents = $officer->get_parents_without_access_credentials();
 	if (count($parents) == 0) {
-		//todo edit this
+		//td edit this
 		$content = <<<OUT
 <div class="alert alert-danger" role="alert">
  There are no parents without credentials.<a href="index.php" class="alert-link">Back to your homepage.</a>
