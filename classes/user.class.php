@@ -127,9 +127,9 @@ class user {
 		$base_url = "/usergroup/" . $retrievedUsergroup . "/";
 		$this->set_base_url($base_url);
 		// Get specific ID for teacher, parent ...
-		if ($retrievedUsergroup == 'admin')
+		if ($retrievedUsergroup == 'admin') {
 			$this->set_admin();
-		else {
+		} else {
 			$user_group_table = $this->get_user_group_table_name($retrievedUsergroup);
 			$specificID = -1;
 			if ($user_group_table != false) {
@@ -372,10 +372,11 @@ class user {
 	 * @return string
 	 */
 	public function get_link_logout() {
-		if ($this->is_logged())
+		if ($this->is_logged()) {
 			return '<a href="' . $this->Urls['logout_page'] . '" class="logout">Logout</a>';
-		else
+		} else {
 			return '';
+		}
 	}
 
 
@@ -441,8 +442,9 @@ class user {
 		$conn = $this->connectMySQL();
 
 		$res = $conn->query("SELECT YearClassID, Section FROM SpecificClass WHERE ID=$classID");
-		if ($res->num_rows <= 0)
+		if ($res->num_rows <= 0) {
 			return array();
+		}
 		$IDs = array();
 		for ($i = 0; $i < $res->num_rows; $i++) {
 			$row = $res->fetch_assoc();
