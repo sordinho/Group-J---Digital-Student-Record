@@ -172,4 +172,16 @@ class userTest extends TestCase
 		$this->assertEquals("1°C",($usr->get_class_stamp_by_id(3)));
 	}
 
+	public function testRandom_str(){
+        $usr = new user();
+        $this->assertNotEmpty($usr->random_str(10));
+        $this->assertNotEquals($usr->random_str(10),$usr->random_str(10));
+    }
+
+    public function testCheck_fiscal_code(){
+
+        $user = new user();
+        $this->assertEquals(1, $user->check_fiscal_code('HHYSGU96L21E241R'), 'testCheck_fiscal_code failed: valid fiscal code is to be accepted');
+    }
+
 }

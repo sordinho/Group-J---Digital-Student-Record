@@ -648,7 +648,7 @@ class teacherTest extends TestCase
         $teacher = new teacher();
         $this->assertNotEmpty($teacher->get_missing_term_marks($studentID,$termID,$specificclassid));
 
-        $studentID=9999;
+        $studentID=1;
         $this->assertNotEmpty($teacher->get_missing_term_marks($studentID,$termID,$specificclassid));
 
     }
