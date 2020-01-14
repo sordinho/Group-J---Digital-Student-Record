@@ -24,7 +24,7 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 - 8 Stories completed out of 8 committed
 - 31 Story Points out of 31
 - [Demo Presentation](https://docs.google.com/presentation/d/1mYpHOuHszI1RCIgmFtCQi7HUHWXRIhvTGOUo9idcpuw/edit?usp=sharing)
-- [Retrospective](https://docs.google.com/presentation/d/1oj6oe8NyNsuLPc9KacgKOs2jszch2rCMeRdy-0Giyq8/edit#slide=id.g6d23ff757e_0_11)
+- [Retrospective](https://docs.google.com/presentation/d/1oj6oe8NyNsuLPc9KacgKOs2jszch2rCMeRdy-0Giyq8/edit?usp=sharing)
 
 ### 14/01/2020 - Demo 4 Release 2
 - 8 Stories completed out of 8 committed
