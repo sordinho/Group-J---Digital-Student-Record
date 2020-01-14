@@ -403,7 +403,7 @@ class officer extends user {
 					return false;
 				}
 				//$day++;
-			//}
+			}
 			//$day = 0;
 			//$hourSlot++;
 		}
