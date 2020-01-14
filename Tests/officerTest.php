@@ -361,7 +361,7 @@ class officerTest extends TestCase {
 		$id = null;
 		$this->assertFalse($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
 		$id = 3;
-		$this->assertFalse($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
+		$this->assertTrue($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
 	}
 
 	public function testRegister_teacher_dataBOUNDARY() {
