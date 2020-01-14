@@ -22,6 +22,42 @@ class teacherTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         createTestDatabase();
+        perform_INSERT_or_DELETE("INSERT INTO User (ID, Name, Surname, Email, Password, UserGroup) VALUES (9999, 'TestName', 'TestSurname', 'TestEmail', '$2y$12\$ZOB4hLXsBQmRWwU7u0hP4e3GUbyOEg7Gll1ZJMEDd4d4sWiqDE8by', 'teacher')");
+        perform_INSERT_or_DELETE("INSERT INTO Teacher (ID, MeetingHourID, UserID, FiscalCode) VALUES (9999, 0, 9999, '')");
+
+        perform_INSERT_or_DELETE("INSERT INTO TopicTeacherClass (ID, TeacherID, TopicID, SpecificClassID) VALUES
+                                        (9998, 1, 1, 1),
+                                        (9997, 2, 1, 2),
+                                        (9996, 3, 1, 3),
+                                        (9995, 7, 4, 3),
+                                        (9994, 1, 2, 1),
+                                        (9993, 7, 3, 2);");
+
+        perform_INSERT_or_DELETE("INSERT INTO SpecificClass (ID, YearClassID, Section, UploadedPath, CoordinatorTeacherID) VALUES (9999, 1, 'A', '', 1)");
+        perform_INSERT_or_DELETE("INSERT INTO TopicTeacherClass (ID, TeacherID, TopicID, SpecificClassID) VALUES (9999, 1, 1, 9999)");
+
+        perform_INSERT_or_DELETE("INSERT INTO Topic (ID, Name, Description) VALUES (9999, 'TopicTest', 'DescriptionTest')");
+        perform_INSERT_or_DELETE("INSERT INTO TopicRecord (ID, TeacherID, Description, TopicID, SpecificClassID) VALUES (9999, 1, 'DescriptionTest', 9999, 9999)");
+        perform_INSERT_or_DELETE("INSERT INTO TopicRecord (ID, TeacherID, Description, TopicID, SpecificClassID) VALUES (9998, 1, 'DescriptionTest', 9999, 9999)");
+        perform_INSERT_or_DELETE("INSERT INTO TopicRecord (ID, TeacherID, Description, TopicID, SpecificClassID) VALUES (9997, 1, 'DescriptionTest', 9999, 9999)");
+        perform_INSERT_or_DELETE("INSERT INTO TopicRecord (ID, TeacherID, Description, TopicID, SpecificClassID) VALUES (9996, 1, 'DescriptionTest', 9999, 9999)");
+
+        perform_INSERT_or_DELETE("INSERT INTO Timetables (ID, TeacherID, TopicID, SpecificClassID, DayOfWeek, HourSlot) VALUES (9999, 1, 1, 1, 0, 0)");
+        perform_INSERT_or_DELETE("INSERT INTO Timetables (ID, TeacherID, TopicID, SpecificClassID, DayOfWeek, HourSlot) VALUES (9998, 1, 1, 1, 0, 2)");
+
+        perform_INSERT_or_DELETE("INSERT INTO TeacherAvailability (ID, TeacherID, DayOfWeek, HourSlot) VALUES (9999, 9999, 2, 1)");
+        perform_INSERT_or_DELETE("INSERT INTO MeetingReservation (ID, ParentID, TeacherAvailabilityID, Date, TimeSlot) VALUES (9999, 2, 9999, '2020-01-15', 0)");
+
+        perform_INSERT_or_DELETE("INSERT INTO Student (ID, Name, Surname, AverageLastSchool, CF, SpecificClassID) VALUES (9999, 'TestName', 'TestSurname', 0, '', 9999)");
+
+        perform_INSERT_or_DELETE("INSERT INTO FinalGrades (ID, StudentID, TopicID, Mark, TermID) VALUES (9999, 9999, 8, 0, 1)");
+        perform_INSERT_or_DELETE("INSERT INTO FinalGrades (ID, StudentID, TopicID, Mark, TermID) VALUES (9998, 9999, 1, 0, 1)");
+        perform_INSERT_or_DELETE("INSERT INTO FinalGrades (ID, StudentID, TopicID, Mark, TermID) VALUES (9997, 9999, 2, 0, 1)");
+        perform_INSERT_or_DELETE("INSERT INTO FinalGrades (ID, StudentID, TopicID, Mark, TermID) VALUES (9996, 9999, 3, 0, 1)");
+        perform_INSERT_or_DELETE("INSERT INTO FinalGrades (ID, StudentID, TopicID, Mark, TermID) VALUES (9995, 9999, 4, 0, 1)");
+        perform_INSERT_or_DELETE("INSERT INTO FinalGrades (ID, StudentID, TopicID, Mark, TermID) VALUES (9994, 9999, 5, 0, 1)");
+        perform_INSERT_or_DELETE("INSERT INTO FinalGrades (ID, StudentID, TopicID, Mark, TermID) VALUES (9993, 9999, 6, 0, 1)");
+        perform_INSERT_or_DELETE("INSERT INTO FinalGrades (ID, StudentID, TopicID, Mark, TermID) VALUES (9992, 9999, 7, 0, 1)");
     }
 
     public static function tearDownAfterClass(): void
@@ -240,12 +276,12 @@ class teacherTest extends TestCase
     {
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
-        $topicID = 3;
+        $topicID = 9999;
         $res = $teacher->get_lecture_by_id($topicID);
         if ($res == false) {
             $this->fail($this->printErrorMessage("testGet_lecture_by_id", "function returned false instead of an array"));
         }
-        $this->assertEquals(4, sizeof($res), $this->printErrorMessage("testGet_lecture_by_id", "wrong size of returned array"));
+        $this->assertEquals(6, sizeof($res), $this->printErrorMessage("testGet_lecture_by_id", "wrong size of returned array"));
         $topicID = -1;
         $res = $teacher->get_lecture_by_id($topicID);
         $this->assertFalse($res, $this->printErrorMessage("testGet_lecture_by_id", "wrong size of returned array"));
@@ -546,10 +582,10 @@ class teacherTest extends TestCase
     }
 
     public function testGet_booked_meetings(){
-        $_SESSION['teacherID'] = 1;
+        $_SESSION['teacherID'] = 9999;
         $teacher = new teacher();
         $date = "2020-01-15";
-        $teacherAvailabilityID = 4;
+        $teacherAvailabilityID = 9999;
 
         $res = $teacher->get_booked_meetings($date,$teacherAvailabilityID);
         $this->assertEquals(1,$res);
@@ -585,12 +621,12 @@ class teacherTest extends TestCase
         //($studentID,$termID,$specificClassID)
         $specificclassID = 1;
         $termID=1;
-        $studentID=1;
+        $studentID=8888;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
         $this->assertFalse($teacher->has_final_grades($studentID,$termID,$specificclassID));
 
-        $studentID=2;
+        $studentID=9999;
         $this->assertTrue($teacher->has_final_grades($studentID,$termID,$specificclassID));
     }
 
@@ -612,7 +648,7 @@ class teacherTest extends TestCase
         $teacher = new teacher();
         $this->assertEmpty($teacher->get_missing_term_marks($studentID,$termID,$specificclassid));
 
-        $studentID=1;
+        $studentID=9999;
         $this->assertNotEmpty($teacher->get_missing_term_marks($studentID,$termID,$specificclassid));
 
     }
@@ -696,6 +732,7 @@ class teacherTest extends TestCase
 
     public function testAdd_availability()
     {
+        unset($_SESSION);
         $teacher = new teacher();
         $this->assertEquals(-1, $teacher->add_availability("no_day","no_hour"));
         $this->assertEquals(-1, $teacher->add_availability("Saturday","15:00"));
@@ -705,7 +742,6 @@ class teacherTest extends TestCase
         $this->assertEquals(-4, $teacher->add_availability("Monday","08:00"));
         $this->assertEquals(-4, $teacher->add_availability("Monday","10:00"));
         $this->assertEquals(1, $teacher->add_availability("Monday","12:00"));
-
     }
 
 

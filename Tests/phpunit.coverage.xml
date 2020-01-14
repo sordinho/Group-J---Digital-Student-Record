@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1578989519">
-  <project timestamp="1578989519">
+<coverage generated="1578990003">
+  <project timestamp="1578990003">
     <file name="C:\xampp\htdocs\Group-J---Digital-Student-Record\classes\administrator.class.php">
       <class name="administrator" namespace="global">
         <metrics complexity="19" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="50" elements="66" coveredelements="53"/>
