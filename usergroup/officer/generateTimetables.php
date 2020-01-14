@@ -119,6 +119,10 @@ if ($_GET["action"] != "generateTimetable") {
             }
             $officer->set_timetable_class($data, $classID);
         }
+        $content.= '
+            <div class="alert alert-success" role="alert">
+            Timetables successfully generated. Go <a href="index.php" class="alert-link">back to your homepage.</a>
+            </div>';
         //var_dump($timetables);
     }
     else{

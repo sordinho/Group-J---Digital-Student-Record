@@ -400,7 +400,7 @@ class officer extends user {
 				} else {
 					return false;
 				}
-				if (!$stmt->execute() && !$skip) {
+				if (!$skip && !$stmt->execute()) {
 					return false;
 				}
 				$day++;
