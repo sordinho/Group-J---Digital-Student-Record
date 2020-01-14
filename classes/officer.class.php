@@ -338,7 +338,8 @@ class officer extends user {
 		$stmtTotHour = $conn->prepare($query1);
 		$stmtTotHour->bind_param("i", $classID);
 		$stmtTotHour->execute();
-		$totHourValue = $stmtTotHour->get_result();
+		$stmtTotHour->bind_result($totHourValue);
+		$stmtTotHour->fetch();
 
 
 		$stmt = $conn->prepare("SELECT COUNT(*)
@@ -346,9 +347,11 @@ class officer extends user {
                                     WHERE SpecificClassID = ?");
 		$stmt->bind_param('i', $classID);
 		$stmt->execute();
-		$totHoour = $stmt->get_result();
+		$stmt->bind_result($totHoour);
+		$stmt->fetch();
+		//$totHoour = $stmt->get_result();
 
-		if ($totHourValue->fetch_row() != $totHoour->fetch_row()) {
+		if ($totHourValue != $totHoour) {
 			return false;
 		} else {
 			return true;
