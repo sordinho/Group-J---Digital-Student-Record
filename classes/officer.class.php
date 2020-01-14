@@ -343,16 +343,12 @@ class officer extends user {
 
 		$stmt = $conn->prepare("SELECT COUNT(*)
                                     FROM Timetables
-                                    WHERE SpecificClassID = ?");
+                                    WHERE SpecificClassID=?");
 		$stmt->bind_param('i', $classID);
 		$stmt->execute();
-		$totHoour = $stmt->get_result();
+		$totHour = $stmt->get_result();
 
-		if ($totHourValue->fetch_row() != $totHoour->fetch_row()) {
-			return false;
-		} else {
-			return true;
-		}
+		return ($totHourValue->fetch_row()[0] == $totHour->fetch_row()[0]) ;
 	}
 
 	/**
