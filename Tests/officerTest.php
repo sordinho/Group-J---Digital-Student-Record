@@ -227,7 +227,8 @@ class officerTest extends TestCase {
 	public function testExistsTimetable() {
 		$off = new officer();
 
-		$off->delete_timetable(1);
+		//$off->delete_timetable(1);
+		$off->delete_timetables();
 		$this->assertFalse($off->exists_timetable(1));
 
 		$timetable = $this->generateTimetableMatrixClass1A();

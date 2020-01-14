@@ -311,11 +311,20 @@ class officer extends user {
 	}
 
 	/**
+	 * Delete all the timetables
+	 * @return bool
+	 */
+	public function delete_timetables($classID) {
+		$conn = $this->connectMySQL();
+		$res = $conn->query("DELETE FROM Timetables WHERE 1");
+		return $res;
+	}
+	/**
 	 * given $classID the timetable associated
 	 * @param $classID
 	 * @return bool
 	 */
-	public function delete_timetable($classID) {
+	public function delete_timetable() {
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("DELETE FROM Timetables WHERE SpecificClassID = ?");
 		$stmt->bind_param("i", $classID);
@@ -398,7 +407,6 @@ class officer extends user {
 					$stmt->bind_param('iiiii', $par1, $par2, $classID, $par4, $par5);
 					$stmt->execute();
 				} else if ($pieces[2] == "nothing") {
-					continue;
 				} else {
 					return false;
 				}
