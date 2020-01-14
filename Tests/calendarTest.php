@@ -24,13 +24,13 @@ class calendarTest extends TestCase
     public function testIs_holiday()
     {
         // test xmas
-        $this->assertTrue(calendar::is_holiday('2019-12-25'), $this->printErrorMessage("testIs_holiday"));
+        $this->assertTrue(calendar::is_holiday('2019-12-25'), $this->printErrorMessage("testIs_holiday", "2019-12-25"));
         // test sunday
-        $this->assertTrue(calendar::is_holiday('2019-11-10'), $this->printErrorMessage("testIs_holiday"));
+        $this->assertTrue(calendar::is_holiday('2019-11-10'), $this->printErrorMessage("testIs_holiday", "2019-11-10"));
         // test saturday
-        $this->assertTrue(calendar::is_holiday('2019-11-09'), $this->printErrorMessage("testIs_holiday"));
+        $this->assertTrue(calendar::is_holiday('2019-11-09'), $this->printErrorMessage("testIs_holiday", "2019-11-09"));
         // test not holiday
-        $this->assertFalse(calendar::is_holiday('2019-11-13'), $this->printErrorMessage("testIs_holiday"));
+        $this->assertFalse(calendar::is_holiday('2019-11-13'), $this->printErrorMessage("testIs_holiday", "2019-11-13"));
     }
 
     public function testBy_the_end_of_the_week()
