@@ -114,9 +114,12 @@ if ($_GET["action"] != "generateTimetable") {
     if(!$failflag){
         foreach ($timetables as $classID => $data) {
             //print $classID."<br> ";
+            if (!$officer->check_weekly_hours($data, $classID)) {
+                die("Error somewhere".$classID);
+            }
             $officer->set_timetable_class($data, $classID);
         }
-        //var_dump($timetables);
+        var_dump($timetables);
     }
     else{
         die("An error occured. Are you sure you have enough teacher to fullfill the requirements?");
