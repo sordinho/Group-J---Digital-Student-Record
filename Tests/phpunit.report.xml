@@ -1,152 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Tests" tests="116" assertions="427" errors="0" warnings="0" failures="2" skipped="0" time="6.025010">
-    <testsuite name="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" tests="6" assertions="18" errors="0" warnings="0" failures="0" skipped="0" time="1.226848">
-      <testcase name="test_register_new_user_officer" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="27" assertions="2" time="0.420206">
+  <testsuite name="Tests" tests="118" assertions="430" errors="0" warnings="0" failures="0" skipped="0" time="6.156337">
+    <testsuite name="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" tests="6" assertions="18" errors="0" warnings="0" failures="0" skipped="0" time="1.296824">
+      <testcase name="test_register_new_user_officer" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="27" assertions="2" time="0.425385">
         <system-out>73</system-out>
       </testcase>
-      <testcase name="test_register_new_user_teacher" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="48" assertions="2" time="0.408331"/>
-      <testcase name="test_register_new_user_BOUNDARY" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="68" assertions="6" time="0.383325"/>
-      <testcase name="test_register_new_user" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="94" assertions="2" time="0.004815"/>
-      <testcase name="testIs_admin" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="108" assertions="2" time="0.005060"/>
-      <testcase name="testIs_logged" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="116" assertions="4" time="0.005111"/>
+      <testcase name="test_register_new_user_teacher" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="48" assertions="2" time="0.428948"/>
+      <testcase name="test_register_new_user_BOUNDARY" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="68" assertions="6" time="0.426637"/>
+      <testcase name="test_register_new_user" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="94" assertions="2" time="0.004385"/>
+      <testcase name="testIs_admin" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="108" assertions="2" time="0.004341"/>
+      <testcase name="testIs_logged" class="administratorTest" classname="administratorTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\administratorTest.php" line="116" assertions="4" time="0.007128"/>
     </testsuite>
-    <testsuite name="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" tests="9" assertions="36" errors="0" warnings="0" failures="0" skipped="0" time="0.056244">
-      <testcase name="testValidate_date" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="16" assertions="2" time="0.006465"/>
-      <testcase name="testIs_holiday" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="24" assertions="4" time="0.011946"/>
-      <testcase name="testBy_the_end_of_the_week" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="36" assertions="4" time="0.005102"/>
-      <testcase name="testGet_hours_per_school_day" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="48" assertions="1" time="0.004020"/>
-      <testcase name="testTimestamp_to_date" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="53" assertions="3" time="0.004892"/>
-      <testcase name="testGet_days_per_school_week" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="64" assertions="1" time="0.004771"/>
-      <testcase name="testFrom_num_to_dow" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="69" assertions="8" time="0.007223"/>
-      <testcase name="testFrom_dow_to_num" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="79" assertions="7" time="0.005460"/>
-      <testcase name="testFrom_hour_to_slot" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="88" assertions="6" time="0.006365"/>
+    <testsuite name="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" tests="9" assertions="36" errors="0" warnings="0" failures="0" skipped="0" time="0.053074">
+      <testcase name="testValidate_date" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="16" assertions="2" time="0.006152"/>
+      <testcase name="testIs_holiday" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="24" assertions="4" time="0.011564"/>
+      <testcase name="testBy_the_end_of_the_week" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="36" assertions="4" time="0.005137"/>
+      <testcase name="testGet_hours_per_school_day" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="48" assertions="1" time="0.004179"/>
+      <testcase name="testTimestamp_to_date" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="53" assertions="3" time="0.004524"/>
+      <testcase name="testGet_days_per_school_week" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="64" assertions="1" time="0.003967"/>
+      <testcase name="testFrom_num_to_dow" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="69" assertions="8" time="0.006604"/>
+      <testcase name="testFrom_dow_to_num" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="79" assertions="7" time="0.005399"/>
+      <testcase name="testFrom_hour_to_slot" class="calendarTest" classname="calendarTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\calendarTest.php" line="88" assertions="6" time="0.005548"/>
     </testsuite>
-    <testsuite name="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" tests="21" assertions="89" errors="0" warnings="0" failures="1" skipped="0" time="1.590833">
-      <testcase name="testGetOfficerID" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="26" assertions="2" time="0.005002"/>
-      <testcase name="testEnrollStudent" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="34" assertions="5" time="0.020687"/>
-      <testcase name="testGetClassIDFromYearSection" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="65" assertions="3" time="0.011628"/>
-      <testcase name="testAddNewUser" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="72" assertions="8" time="0.037199"/>
-      <testcase name="testAddNewParent" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="93" assertions="4" time="0.080376"/>
-      <testcase name="testRemoveUser" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="116" assertions="3" time="0.066676"/>
-      <testcase name="testGetParentsWithoutAccessCredentials" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="127" assertions="1" time="0.021616"/>
-      <testcase name="testGenerateAndRegisterPassword" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="138" assertions="2" time="0.461314"/>
-      <testcase name="testGetClassList" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="151" assertions="1" time="0.020959"/>
-      <testcase name="testGetStudentsByClassID" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="158" assertions="2" time="0.014045"/>
-      <testcase name="testRemoveStudentFromClass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="169" assertions="1" time="0.103481"/>
-      <testcase name="testAddStudentToCLass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="185" assertions="1" time="0.114222"/>
-      <testcase name="testGetTeacherTopic" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="206" assertions="2" time="0.030954"/>
-      <testcase name="testDeleteTimetable" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="216" assertions="1" time="0.033554"/>
-      <testcase name="testExistsTimetable" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="227" assertions="2" time="0.122749">
-        <failure type="PHPUnit\Framework\ExpectationFailedException">officerTest::testExistsTimetable
-Failed asserting that false is true.
-
-C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php:235
-</failure>
-      </testcase>
-      <testcase name="testSetTimetableClass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="239" assertions="7" time="0.186445"/>
-      <testcase name="testGetTimetableClass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="281" assertions="8" time="0.165150"/>
-      <testcase name="testPublishCommunication" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="309" assertions="5" time="0.014236"/>
-      <testcase name="testGet_teacher_data" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="332" assertions="18" time="0.024358"/>
-      <testcase name="testRegister_teacher_data" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="343" assertions="7" time="0.045250"/>
-      <testcase name="testRegister_teacher_dataBOUNDARY" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="367" assertions="6" time="0.010932"/>
+    <testsuite name="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" tests="21" assertions="89" errors="0" warnings="0" failures="0" skipped="0" time="1.368346">
+      <testcase name="testGetOfficerID" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="26" assertions="2" time="0.005948"/>
+      <testcase name="testEnrollStudent" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="34" assertions="5" time="0.027178"/>
+      <testcase name="testGetClassIDFromYearSection" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="65" assertions="3" time="0.012293"/>
+      <testcase name="testAddNewUser" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="72" assertions="8" time="0.026142"/>
+      <testcase name="testAddNewParent" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="93" assertions="4" time="0.052136"/>
+      <testcase name="testRemoveUser" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="116" assertions="3" time="0.034489"/>
+      <testcase name="testGetParentsWithoutAccessCredentials" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="127" assertions="1" time="0.018101"/>
+      <testcase name="testGenerateAndRegisterPassword" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="138" assertions="2" time="0.437146"/>
+      <testcase name="testGetClassList" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="151" assertions="1" time="0.010679"/>
+      <testcase name="testGetStudentsByClassID" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="158" assertions="2" time="0.013812"/>
+      <testcase name="testRemoveStudentFromClass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="169" assertions="1" time="0.069772"/>
+      <testcase name="testAddStudentToCLass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="185" assertions="1" time="0.085608"/>
+      <testcase name="testGetTeacherTopic" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="206" assertions="2" time="0.022022"/>
+      <testcase name="testDeleteTimetable" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="216" assertions="1" time="0.034670"/>
+      <testcase name="testExistsTimetable" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="227" assertions="2" time="0.124061"/>
+      <testcase name="testSetTimetableClass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="240" assertions="7" time="0.187633"/>
+      <testcase name="testGetTimetableClass" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="282" assertions="8" time="0.145951"/>
+      <testcase name="testPublishCommunication" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="310" assertions="5" time="0.015037"/>
+      <testcase name="testGet_teacher_data" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="333" assertions="18" time="0.016294"/>
+      <testcase name="testRegister_teacher_data" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="344" assertions="7" time="0.022280"/>
+      <testcase name="testRegister_teacher_dataBOUNDARY" class="officerTest" classname="officerTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\officerTest.php" line="368" assertions="6" time="0.007094"/>
     </testsuite>
-    <testsuite name="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" tests="28" assertions="121" errors="0" warnings="0" failures="0" skipped="0" time="0.744040">
-      <testcase name="testGet_grades_NULL" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="27" assertions="1" time="0.023650"/>
-      <testcase name="testGet_grades" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="32" assertions="9" time="0.016514"/>
-      <testcase name="testSet_current_child" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="79" assertions="1" time="0.006746"/>
-      <testcase name="testGet_current_child" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="86" assertions="1" time="0.006352"/>
-      <testcase name="test__construct" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="92" assertions="1" time="0.005549"/>
-      <testcase name="testRetrieve_and_register_childs" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="98" assertions="4" time="0.012975"/>
-      <testcase name="testGet_homeworks" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="136" assertions="3" time="0.043898"/>
-      <testcase name="testGet_absences_and_delays" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="150" assertions="30" time="0.144775"/>
-      <testcase name="testGet_absences" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="199" assertions="11" time="0.077589"/>
-      <testcase name="testGet_announcements" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="230" assertions="2" time="0.017434"/>
-      <testcase name="testGet_parent_ID" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="246" assertions="2" time="0.005933"/>
-      <testcase name="testGet_children_info" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="253" assertions="8" time="0.010185"/>
-      <testcase name="testIs_logged" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="276" assertions="5" time="0.007485"/>
-      <testcase name="testGet_child_stamp_by_id" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="290" assertions="2" time="0.008122"/>
-      <testcase name="testGet_material_info" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="296" assertions="3" time="0.020396"/>
-      <testcase name="testGet_num_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="310" assertions="4" time="0.004886"/>
-      <testcase name="testSet_current_num_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="323" assertions="2" time="0.041199"/>
-      <testcase name="testGet_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="339" assertions="4" time="0.033880"/>
-      <testcase name="testGet_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="359" assertions="4" time="0.022225"/>
-      <testcase name="testSet_notes_seen" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="372" assertions="2" time="0.013345"/>
-      <testcase name="testGet_term_list" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="382" assertions="1" time="0.014951"/>
-      <testcase name="testGet_term_stamp_by_id" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="391" assertions="3" time="0.016222"/>
-      <testcase name="testGet_final_term_marks_by_studentID" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="403" assertions="3" time="0.041664">
+    <testsuite name="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" tests="28" assertions="121" errors="0" warnings="0" failures="0" skipped="0" time="0.741591">
+      <testcase name="testGet_grades_NULL" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="27" assertions="1" time="0.021362"/>
+      <testcase name="testGet_grades" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="32" assertions="9" time="0.017856"/>
+      <testcase name="testSet_current_child" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="79" assertions="1" time="0.007660"/>
+      <testcase name="testGet_current_child" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="86" assertions="1" time="0.006922"/>
+      <testcase name="test__construct" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="92" assertions="1" time="0.005930"/>
+      <testcase name="testRetrieve_and_register_childs" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="98" assertions="4" time="0.024419"/>
+      <testcase name="testGet_homeworks" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="136" assertions="3" time="0.057764"/>
+      <testcase name="testGet_absences_and_delays" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="150" assertions="30" time="0.123962"/>
+      <testcase name="testGet_absences" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="199" assertions="11" time="0.106333"/>
+      <testcase name="testGet_announcements" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="230" assertions="2" time="0.016033"/>
+      <testcase name="testGet_parent_ID" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="246" assertions="2" time="0.005615"/>
+      <testcase name="testGet_children_info" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="253" assertions="8" time="0.009687"/>
+      <testcase name="testIs_logged" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="276" assertions="5" time="0.005369"/>
+      <testcase name="testGet_child_stamp_by_id" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="290" assertions="2" time="0.007988"/>
+      <testcase name="testGet_material_info" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="296" assertions="3" time="0.016987"/>
+      <testcase name="testGet_num_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="310" assertions="4" time="0.004665"/>
+      <testcase name="testSet_current_num_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="323" assertions="2" time="0.046059"/>
+      <testcase name="testGet_unseen_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="339" assertions="4" time="0.033143"/>
+      <testcase name="testGet_notes" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="359" assertions="4" time="0.023999"/>
+      <testcase name="testSet_notes_seen" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="372" assertions="2" time="0.012257"/>
+      <testcase name="testGet_term_list" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="382" assertions="1" time="0.021327"/>
+      <testcase name="testGet_term_stamp_by_id" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="391" assertions="3" time="0.013980"/>
+      <testcase name="testGet_final_term_marks_by_studentID" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="403" assertions="3" time="0.041039">
         <system-out>Error message: Cannot add or update a child row: a foreign key constraint fails (`testsofteng2`.`finalgrades`, CONSTRAINT `fk_finalgrades_studentID` FOREIGN KEY (`StudentID`) REFERENCES `student` (`ID`))
 </system-out>
       </testcase>
-      <testcase name="testGet_teacher_availability" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="433" assertions="2" time="0.020137"/>
-      <testcase name="testGet_future_reservations_by_teacher_availability_id" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="446" assertions="3" time="0.068280"/>
-      <testcase name="testBook_meeting" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="465" assertions="5" time="0.018040"/>
-      <testcase name="testGetLectureTopics" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="485" assertions="2" time="0.022627"/>
-      <testcase name="testGet_timetable" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="496" assertions="3" time="0.018981"/>
+      <testcase name="testGet_teacher_availability" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="433" assertions="2" time="0.018539"/>
+      <testcase name="testGet_future_reservations_by_teacher_availability_id" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="446" assertions="3" time="0.034733"/>
+      <testcase name="testBook_meeting" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="465" assertions="5" time="0.018236"/>
+      <testcase name="testGetLectureTopics" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="485" assertions="2" time="0.021707"/>
+      <testcase name="testGet_timetable" class="sparentTest" classname="sparentTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\sparentTest.php" line="496" assertions="3" time="0.018019"/>
     </testsuite>
-    <testsuite name="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" tests="38" assertions="120" errors="0" warnings="0" failures="1" skipped="0" time="0.688421">
-      <testcase name="testModify_lecture_topic_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="68" assertions="5" time="0.013551"/>
-      <testcase name="testModify_lecture_topic" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="93" assertions="2" time="0.029238"/>
-      <testcase name="testInsert_new_lecture_topic" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="117" assertions="3" time="0.023962"/>
-      <testcase name="testInsert_new_lecture_topic_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="142" assertions="2" time="0.004981"/>
-      <testcase name="testGet_topics" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="156" assertions="2" time="0.012301"/>
-      <testcase name="testGet_teacher_ID" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="175" assertions="1" time="0.004089"/>
-      <testcase name="testGet_teacher_ID_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="182" assertions="1" time="0.004039"/>
-      <testcase name="testGet_assigned_classes_names" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="189" assertions="2" time="0.011647"/>
-      <testcase name="testGet_students_by_class_id" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="202" assertions="2" time="0.013983"/>
-      <testcase name="testGet_daily_absences" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="215" assertions="3" time="0.017948"/>
-      <testcase name="testGet_assigned_classes" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="238" assertions="2" time="0.012255"/>
-      <testcase name="testGet_topics_record" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="252" assertions="3" time="0.015768"/>
-      <testcase name="testGet_lecture_by_ID" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="275" assertions="2" time="0.011736"/>
-      <testcase name="testInsert_grade" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="290" assertions="7" time="0.035860"/>
-      <testcase name="testInsert_new_assignment" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="329" assertions="1" time="0.011356"/>
-      <testcase name="testRegister_early_exit" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="360" assertions="2" time="0.017746"/>
-      <testcase name="testRegister_early_exit_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="373" assertions="8" time="0.008554"/>
-      <testcase name="testRegister_absence" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="390" assertions="4" time="0.030178"/>
-      <testcase name="testStudent_was_absent" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="411" assertions="5" time="0.032426"/>
-      <testcase name="testIs_teacher_of_the_student" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="435" assertions="2" time="0.010532"/>
-      <testcase name="test_register_late_arrival" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="449" assertions="4" time="0.016025"/>
-      <testcase name="testIs_logged" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="469" assertions="5" time="0.005576"/>
-      <testcase name="testGet_uploaded_material" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="485" assertions="2" time="0.049001"/>
-      <testcase name="testInsert_material" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="501" assertions="1" time="0.009396"/>
-      <testcase name="testRegister_note_record" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="514" assertions="4" time="0.014179"/>
-      <testcase name="testRegister_new_note" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="533" assertions="11" time="0.020189">
+    <testsuite name="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" tests="38" assertions="120" errors="0" warnings="0" failures="0" skipped="0" time="0.884885">
+      <testcase name="testModify_lecture_topic_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="68" assertions="5" time="0.010775"/>
+      <testcase name="testModify_lecture_topic" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="93" assertions="2" time="0.026376"/>
+      <testcase name="testInsert_new_lecture_topic" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="117" assertions="3" time="0.033089"/>
+      <testcase name="testInsert_new_lecture_topic_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="142" assertions="2" time="0.006593"/>
+      <testcase name="testGet_topics" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="156" assertions="2" time="0.014791"/>
+      <testcase name="testGet_teacher_ID" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="175" assertions="1" time="0.003862"/>
+      <testcase name="testGet_teacher_ID_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="182" assertions="1" time="0.004789"/>
+      <testcase name="testGet_assigned_classes_names" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="189" assertions="2" time="0.014885"/>
+      <testcase name="testGet_students_by_class_id" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="202" assertions="2" time="0.016806"/>
+      <testcase name="testGet_daily_absences" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="215" assertions="3" time="0.017413"/>
+      <testcase name="testGet_assigned_classes" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="238" assertions="2" time="0.014225"/>
+      <testcase name="testGet_topics_record" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="252" assertions="3" time="0.016946"/>
+      <testcase name="testGet_lecture_by_ID" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="275" assertions="2" time="0.043669"/>
+      <testcase name="testInsert_grade" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="290" assertions="7" time="0.049537"/>
+      <testcase name="testInsert_new_assignment" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="329" assertions="1" time="0.012814"/>
+      <testcase name="testRegister_early_exit" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="360" assertions="2" time="0.023017"/>
+      <testcase name="testRegister_early_exit_BOUNDARY" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="373" assertions="8" time="0.008622"/>
+      <testcase name="testRegister_absence" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="390" assertions="4" time="0.050318"/>
+      <testcase name="testStudent_was_absent" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="411" assertions="5" time="0.036814"/>
+      <testcase name="testIs_teacher_of_the_student" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="435" assertions="2" time="0.023403"/>
+      <testcase name="test_register_late_arrival" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="449" assertions="4" time="0.029629"/>
+      <testcase name="testIs_logged" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="469" assertions="5" time="0.007455"/>
+      <testcase name="testGet_uploaded_material" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="485" assertions="2" time="0.057075"/>
+      <testcase name="testInsert_material" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="501" assertions="1" time="0.008994"/>
+      <testcase name="testRegister_note_record" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="514" assertions="4" time="0.038093"/>
+      <testcase name="testRegister_new_note" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="533" assertions="11" time="0.025205">
         <system-out>13</system-out>
       </testcase>
-      <testcase name="testGet_Availability" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="576" assertions="2" time="0.008069"/>
-      <testcase name="testGet_booked_meetings" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="584" assertions="3" time="0.008447"/>
-      <testcase name="testGet_coordinated_class" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="600" assertions="3" time="0.014188"/>
-      <testcase name="testHas_final_grades" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="619" assertions="2" time="0.046058"/>
-      <testcase name="testGet_actual_term" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="633" assertions="1" time="0.010696"/>
-      <testcase name="testGet_missing_term_marks" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="642" assertions="2" time="0.014447">
-        <failure type="PHPUnit\Framework\ExpectationFailedException">teacherTest::testGet_missing_term_marks
-Failed asserting that an array is not empty.
-
-C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php:652
-</failure>
-      </testcase>
-      <testcase name="testGet_student_stamp_by_id" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="656" assertions="2" time="0.022640"/>
-      <testcase name="testGet_average_mark_for_topic" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="668" assertions="2" time="0.016922"/>
-      <testcase name="testSet_final_grade" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="680" assertions="2" time="0.013601"/>
-      <testcase name="testGet_specificclassid_by_student" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="696" assertions="4" time="0.026963"/>
-      <testcase name="testGet_students_by_class_id2" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="715" assertions="4" time="0.018759"/>
-      <testcase name="testAdd_availability" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="733" assertions="7" time="0.051115"/>
+      <testcase name="testGet_Availability" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="576" assertions="2" time="0.009961"/>
+      <testcase name="testGet_booked_meetings" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="584" assertions="3" time="0.010103"/>
+      <testcase name="testGet_coordinated_class" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="600" assertions="3" time="0.021352"/>
+      <testcase name="testHas_final_grades" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="619" assertions="2" time="0.043247"/>
+      <testcase name="testGet_actual_term" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="633" assertions="1" time="0.014034"/>
+      <testcase name="testGet_missing_term_marks" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="642" assertions="2" time="0.032101"/>
+      <testcase name="testGet_student_stamp_by_id" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="656" assertions="2" time="0.014656"/>
+      <testcase name="testGet_average_mark_for_topic" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="668" assertions="2" time="0.023781"/>
+      <testcase name="testSet_final_grade" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="680" assertions="2" time="0.016684"/>
+      <testcase name="testGet_specificclassid_by_student" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="696" assertions="4" time="0.018217"/>
+      <testcase name="testGet_students_by_class_id2" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="715" assertions="4" time="0.033372"/>
+      <testcase name="testAdd_availability" class="teacherTest" classname="teacherTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\teacherTest.php" line="733" assertions="7" time="0.052183"/>
     </testsuite>
-    <testsuite name="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" tests="14" assertions="43" errors="0" warnings="0" failures="0" skipped="0" time="1.718625">
-      <testcase name="testGet_name" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="21" assertions="1" time="0.005544"/>
-      <testcase name="testIs_secure_password" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="28" assertions="3" time="0.006936"/>
-      <testcase name="testIs_email" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="36" assertions="7" time="0.009264"/>
-      <testcase name="testIs_logged" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="48" assertions="2" time="0.007216"/>
-      <testcase name="testGet_id" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="57" assertions="2" time="0.007470"/>
-      <testcase name="testGet_base_url" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="66" assertions="2" time="0.004345"/>
-      <testcase name="testGet_link_logout" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="75" assertions="2" time="0.008251"/>
-      <testcase name="testGet_usergroup" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="84" assertions="2" time="0.004245"/>
-      <testcase name="testUser_login" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="93" assertions="7" time="1.578314"/>
-      <testcase name="testGet_surname" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="123" assertions="2" time="0.006082"/>
-      <testcase name="testGet_username" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="132" assertions="2" time="0.004665"/>
-      <testcase name="testRetrieve_usergroups" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="141" assertions="3" time="0.015772"/>
-      <testcase name="testRetrieve_user_id_by_usergroup" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="152" assertions="4" time="0.018268"/>
-      <testcase name="testGet_class_stamp_by_id" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="165" assertions="4" time="0.042253"/>
+    <testsuite name="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" tests="16" assertions="46" errors="0" warnings="0" failures="0" skipped="0" time="1.811616">
+      <testcase name="testGet_name" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="21" assertions="1" time="0.005090"/>
+      <testcase name="testIs_secure_password" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="28" assertions="3" time="0.005997"/>
+      <testcase name="testIs_email" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="36" assertions="7" time="0.007299"/>
+      <testcase name="testIs_logged" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="48" assertions="2" time="0.004334"/>
+      <testcase name="testGet_id" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="57" assertions="2" time="0.003972"/>
+      <testcase name="testGet_base_url" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="66" assertions="2" time="0.006212"/>
+      <testcase name="testGet_link_logout" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="75" assertions="2" time="0.010628"/>
+      <testcase name="testGet_usergroup" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="84" assertions="2" time="0.035167"/>
+      <testcase name="testUser_login" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="93" assertions="7" time="1.646514"/>
+      <testcase name="testGet_surname" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="123" assertions="2" time="0.006731"/>
+      <testcase name="testGet_username" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="132" assertions="2" time="0.005922"/>
+      <testcase name="testRetrieve_usergroups" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="141" assertions="3" time="0.016933"/>
+      <testcase name="testRetrieve_user_id_by_usergroup" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="152" assertions="4" time="0.018603"/>
+      <testcase name="testGet_class_stamp_by_id" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="165" assertions="4" time="0.024687"/>
+      <testcase name="testRandom_str" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="175" assertions="2" time="0.009617"/>
+      <testcase name="testCheck_fiscal_code" class="userTest" classname="userTest" file="C:\xampp\htdocs\Group-J---Digital-Student-Record\Tests\userTest.php" line="181" assertions="1" time="0.003910"/>
     </testsuite>
   </testsuite>
 </testsuites>
