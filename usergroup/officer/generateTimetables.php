@@ -119,7 +119,7 @@ if ($_GET["action"] != "generateTimetable") {
             }
             $officer->set_timetable_class($data, $classID);
         }
-        var_dump($timetables);
+        //var_dump($timetables);
     }
     else{
         die("An error occured. Are you sure you have enough teacher to fullfill the requirements?");
