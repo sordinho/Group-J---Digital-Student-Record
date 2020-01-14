@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1578998226">
-  <project timestamp="1578998226">
+<coverage generated="1579004104">
+  <project timestamp="1579004104">
     <file name="C:\xampp\htdocs\Group-J---Digital-Student-Record\classes\administrator.class.php">
       <class name="administrator" namespace="global">
         <metrics complexity="19" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="50" elements="66" coveredelements="53"/>
@@ -186,7 +186,7 @@
     </file>
     <file name="C:\xampp\htdocs\Group-J---Digital-Student-Record\classes\officer.class.php">
       <class name="officer" namespace="global">
-        <metrics complexity="113" methods="24" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="306" coveredstatements="264" elements="330" coveredelements="272"/>
+        <metrics complexity="113" methods="25" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="310" coveredstatements="269" elements="335" coveredelements="278"/>
       </class>
       <line num="9" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="21"/>
       <line num="10" type="stmt" count="21"/>
@@ -359,166 +359,171 @@
       <line num="307" type="stmt" count="1"/>
       <line num="309" type="stmt" count="1"/>
       <line num="310" type="stmt" count="1"/>
-      <line num="318" type="method" name="delete_timetable" visibility="public" complexity="2" crap="2.02" count="4"/>
-      <line num="319" type="stmt" count="4"/>
-      <line num="320" type="stmt" count="4"/>
-      <line num="321" type="stmt" count="4"/>
-      <line num="322" type="stmt" count="4"/>
-      <line num="323" type="stmt" count="0"/>
-      <line num="325" type="stmt" count="4"/>
-      <line num="334" type="method" name="exists_timetable" visibility="public" complexity="1" crap="1" count="2"/>
-      <line num="335" type="stmt" count="2"/>
-      <line num="337" type="stmt" count="2"/>
-      <line num="338" type="stmt" count="2"/>
-      <line num="339" type="stmt" count="2"/>
-      <line num="340" type="stmt" count="2"/>
-      <line num="341" type="stmt" count="2"/>
+      <line num="317" type="method" name="delete_timetables" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="318" type="stmt" count="1"/>
+      <line num="319" type="stmt" count="1"/>
+      <line num="320" type="stmt" count="1"/>
+      <line num="327" type="method" name="delete_timetable" visibility="public" complexity="2" crap="2.02" count="3"/>
+      <line num="328" type="stmt" count="3"/>
+      <line num="329" type="stmt" count="3"/>
+      <line num="330" type="stmt" count="3"/>
+      <line num="331" type="stmt" count="3"/>
+      <line num="332" type="stmt" count="0"/>
+      <line num="334" type="stmt" count="3"/>
+      <line num="343" type="method" name="exists_timetable" visibility="public" complexity="2" crap="2" count="2"/>
       <line num="344" type="stmt" count="2"/>
+      <line num="346" type="stmt" count="2"/>
       <line num="347" type="stmt" count="2"/>
       <line num="348" type="stmt" count="2"/>
       <line num="349" type="stmt" count="2"/>
+      <line num="350" type="stmt" count="2"/>
       <line num="351" type="stmt" count="2"/>
-      <line num="359" type="method" name="set_timetable_class" visibility="public" complexity="11" crap="11.12" count="3"/>
-      <line num="361" type="stmt" count="3"/>
-      <line num="362" type="stmt" count="1"/>
-      <line num="364" type="stmt" count="3"/>
-      <line num="365" type="stmt" count="0"/>
-      <line num="367" type="stmt" count="3"/>
-      <line num="368" type="stmt" count="3"/>
-      <line num="369" type="stmt" count="3"/>
-      <line num="370" type="stmt" count="3"/>
-      <line num="371" type="stmt" count="3"/>
-      <line num="372" type="stmt" count="3"/>
-      <line num="373" type="stmt" count="3"/>
-      <line num="376" type="stmt" count="3"/>
+      <line num="353" type="stmt" count="2"/>
+      <line num="354" type="stmt" count="2"/>
+      <line num="357" type="stmt" count="2"/>
+      <line num="358" type="stmt" count="2"/>
+      <line num="359" type="stmt" count="2"/>
+      <line num="360" type="stmt" count="2"/>
+      <line num="363" type="stmt" count="2"/>
+      <line num="364" type="stmt" count="2"/>
+      <line num="366" type="stmt" count="2"/>
+      <line num="375" type="method" name="set_timetable_class" visibility="public" complexity="9" crap="9.04" count="3"/>
+      <line num="377" type="stmt" count="3"/>
       <line num="378" type="stmt" count="1"/>
-      <line num="382" type="stmt" count="1"/>
+      <line num="380" type="stmt" count="3"/>
+      <line num="381" type="stmt" count="0"/>
       <line num="383" type="stmt" count="3"/>
+      <line num="384" type="stmt" count="3"/>
       <line num="385" type="stmt" count="3"/>
       <line num="386" type="stmt" count="3"/>
       <line num="387" type="stmt" count="3"/>
       <line num="388" type="stmt" count="3"/>
       <line num="389" type="stmt" count="3"/>
-      <line num="390" type="stmt" count="3"/>
-      <line num="391" type="stmt" count="3"/>
       <line num="392" type="stmt" count="3"/>
-      <line num="394" type="stmt" count="0"/>
-      <line num="396" type="stmt" count="3"/>
-      <line num="397" type="stmt" count="0"/>
-      <line num="399" type="stmt" count="3"/>
-      <line num="401" type="stmt" count="3"/>
+      <line num="394" type="stmt" count="1"/>
+      <line num="398" type="stmt" count="1"/>
+      <line num="399" type="stmt" count="1"/>
+      <line num="400" type="stmt" count="3"/>
       <line num="402" type="stmt" count="3"/>
+      <line num="403" type="stmt" count="3"/>
       <line num="404" type="stmt" count="3"/>
-      <line num="413" type="method" name="check_weekly_hours" visibility="public" complexity="10" crap="10" count="3"/>
-      <line num="415" type="stmt" count="3"/>
-      <line num="416" type="stmt" count="1"/>
-      <line num="419" type="stmt" count="3"/>
-      <line num="420" type="stmt" count="3"/>
-      <line num="421" type="stmt" count="3"/>
-      <line num="423" type="stmt" count="3"/>
-      <line num="424" type="stmt" count="3"/>
-      <line num="425" type="stmt" count="3"/>
-      <line num="428" type="stmt" count="3"/>
+      <line num="405" type="stmt" count="3"/>
+      <line num="406" type="stmt" count="3"/>
+      <line num="407" type="stmt" count="3"/>
+      <line num="408" type="stmt" count="3"/>
+      <line num="409" type="stmt" count="3"/>
+      <line num="411" type="stmt" count="0"/>
+      <line num="418" type="stmt" count="3"/>
+      <line num="427" type="method" name="check_weekly_hours" visibility="public" complexity="10" crap="10" count="3"/>
       <line num="429" type="stmt" count="3"/>
-      <line num="430" type="stmt" count="3"/>
-      <line num="431" type="stmt" count="3"/>
-      <line num="432" type="stmt" count="3"/>
+      <line num="430" type="stmt" count="1"/>
       <line num="433" type="stmt" count="3"/>
-      <line num="434" type="stmt" count="1"/>
+      <line num="434" type="stmt" count="3"/>
+      <line num="435" type="stmt" count="3"/>
+      <line num="437" type="stmt" count="3"/>
+      <line num="438" type="stmt" count="3"/>
       <line num="439" type="stmt" count="3"/>
-      <line num="440" type="stmt" count="3"/>
-      <line num="441" type="stmt" count="1"/>
+      <line num="442" type="stmt" count="3"/>
       <line num="443" type="stmt" count="3"/>
-      <line num="450" type="method" name="get_timetable_by_class" visibility="public" complexity="12" crap="12.46" count="1"/>
-      <line num="451" type="stmt" count="1"/>
-      <line num="452" type="stmt" count="1"/>
-      <line num="453" type="stmt" count="1"/>
-      <line num="454" type="stmt" count="1"/>
+      <line num="444" type="stmt" count="3"/>
+      <line num="445" type="stmt" count="3"/>
+      <line num="446" type="stmt" count="3"/>
+      <line num="447" type="stmt" count="3"/>
+      <line num="448" type="stmt" count="1"/>
+      <line num="453" type="stmt" count="3"/>
+      <line num="454" type="stmt" count="3"/>
       <line num="455" type="stmt" count="1"/>
-      <line num="456" type="stmt" count="1"/>
-      <line num="460" type="stmt" count="1"/>
-      <line num="463" type="stmt" count="1"/>
-      <line num="464" type="stmt" count="1"/>
-      <line num="465" type="stmt" count="0"/>
+      <line num="457" type="stmt" count="3"/>
+      <line num="464" type="method" name="get_timetable_by_class" visibility="public" complexity="12" crap="12.46" count="1"/>
+      <line num="465" type="stmt" count="1"/>
+      <line num="466" type="stmt" count="1"/>
+      <line num="467" type="stmt" count="1"/>
       <line num="468" type="stmt" count="1"/>
-      <line num="473" type="stmt" count="1"/>
+      <line num="469" type="stmt" count="1"/>
+      <line num="470" type="stmt" count="1"/>
       <line num="474" type="stmt" count="1"/>
+      <line num="477" type="stmt" count="1"/>
       <line num="478" type="stmt" count="1"/>
-      <line num="485" type="stmt" count="1"/>
-      <line num="490" type="stmt" count="1"/>
+      <line num="479" type="stmt" count="0"/>
+      <line num="482" type="stmt" count="1"/>
+      <line num="487" type="stmt" count="1"/>
+      <line num="488" type="stmt" count="1"/>
+      <line num="492" type="stmt" count="1"/>
+      <line num="499" type="stmt" count="1"/>
       <line num="504" type="stmt" count="1"/>
-      <line num="505" type="stmt" count="1"/>
-      <line num="506" type="stmt" count="0"/>
-      <line num="508" type="stmt" count="1"/>
-      <line num="509" type="stmt" count="1"/>
-      <line num="510" type="stmt" count="0"/>
-      <line num="512" type="stmt" count="1"/>
-      <line num="517" type="stmt" count="1"/>
       <line num="518" type="stmt" count="1"/>
       <line num="519" type="stmt" count="1"/>
-      <line num="520" type="stmt" count="1"/>
-      <line num="521" type="stmt" count="1"/>
-      <line num="525" type="stmt" count="1"/>
+      <line num="520" type="stmt" count="0"/>
+      <line num="522" type="stmt" count="1"/>
+      <line num="523" type="stmt" count="1"/>
+      <line num="524" type="stmt" count="0"/>
       <line num="526" type="stmt" count="1"/>
-      <line num="527" type="stmt" count="1"/>
-      <line num="530" type="stmt" count="0"/>
+      <line num="531" type="stmt" count="1"/>
+      <line num="532" type="stmt" count="1"/>
+      <line num="533" type="stmt" count="1"/>
+      <line num="534" type="stmt" count="1"/>
       <line num="535" type="stmt" count="1"/>
-      <line num="538" type="stmt" count="0"/>
-      <line num="551" type="method" name="publish_communication" visibility="public" complexity="7" crap="7.01" count="1"/>
-      <line num="552" type="stmt" count="1"/>
-      <line num="553" type="stmt" count="1"/>
-      <line num="554" type="stmt" count="1"/>
-      <line num="555" type="stmt" count="1"/>
-      <line num="556" type="stmt" count="1"/>
-      <line num="557" type="stmt" count="1"/>
-      <line num="558" type="stmt" count="1"/>
-      <line num="559" type="stmt" count="1"/>
-      <line num="560" type="stmt" count="1"/>
-      <line num="561" type="stmt" count="1"/>
-      <line num="562" type="stmt" count="1"/>
-      <line num="563" type="stmt" count="1"/>
-      <line num="564" type="stmt" count="0"/>
+      <line num="539" type="stmt" count="1"/>
+      <line num="540" type="stmt" count="1"/>
+      <line num="541" type="stmt" count="1"/>
+      <line num="544" type="stmt" count="0"/>
+      <line num="549" type="stmt" count="1"/>
+      <line num="552" type="stmt" count="0"/>
+      <line num="565" type="method" name="publish_communication" visibility="public" complexity="7" crap="7.01" count="1"/>
       <line num="566" type="stmt" count="1"/>
+      <line num="567" type="stmt" count="1"/>
+      <line num="568" type="stmt" count="1"/>
       <line num="569" type="stmt" count="1"/>
-      <line num="578" type="method" name="get_teacher_data" visibility="public" complexity="3" crap="3.01" count="1"/>
-      <line num="579" type="stmt" count="1"/>
+      <line num="570" type="stmt" count="1"/>
+      <line num="571" type="stmt" count="1"/>
+      <line num="572" type="stmt" count="1"/>
+      <line num="573" type="stmt" count="1"/>
+      <line num="574" type="stmt" count="1"/>
+      <line num="575" type="stmt" count="1"/>
+      <line num="576" type="stmt" count="1"/>
+      <line num="577" type="stmt" count="1"/>
+      <line num="578" type="stmt" count="0"/>
       <line num="580" type="stmt" count="1"/>
-      <line num="581" type="stmt" count="1"/>
-      <line num="584" type="stmt" count="1"/>
-      <line num="585" type="stmt" count="0"/>
-      <line num="587" type="stmt" count="1"/>
-      <line num="588" type="stmt" count="1"/>
-      <line num="589" type="stmt" count="1"/>
-      <line num="590" type="stmt" count="1"/>
-      <line num="592" type="stmt" count="1"/>
-      <line num="595" type="method" name="register_teacher_data" visibility="public" complexity="10" crap="19.83" count="2"/>
-      <line num="596" type="stmt" count="2"/>
-      <line num="599" type="stmt" count="1"/>
-      <line num="600" type="stmt" count="1"/>
+      <line num="583" type="stmt" count="1"/>
+      <line num="592" type="method" name="get_teacher_data" visibility="public" complexity="3" crap="3.01" count="1"/>
+      <line num="593" type="stmt" count="1"/>
+      <line num="594" type="stmt" count="1"/>
+      <line num="595" type="stmt" count="1"/>
+      <line num="598" type="stmt" count="1"/>
+      <line num="599" type="stmt" count="0"/>
       <line num="601" type="stmt" count="1"/>
       <line num="602" type="stmt" count="1"/>
-      <line num="603" type="stmt" count="0"/>
-      <line num="604" type="stmt" count="0"/>
-      <line num="605" type="stmt" count="0"/>
-      <line num="607" type="stmt" count="1"/>
-      <line num="608" type="stmt" count="1"/>
-      <line num="609" type="stmt" count="0"/>
-      <line num="610" type="stmt" count="0"/>
-      <line num="611" type="stmt" count="0"/>
+      <line num="603" type="stmt" count="1"/>
+      <line num="604" type="stmt" count="1"/>
+      <line num="606" type="stmt" count="1"/>
+      <line num="609" type="method" name="register_teacher_data" visibility="public" complexity="10" crap="19.83" count="2"/>
+      <line num="610" type="stmt" count="2"/>
       <line num="613" type="stmt" count="1"/>
       <line num="614" type="stmt" count="1"/>
-      <line num="615" type="stmt" count="0"/>
-      <line num="616" type="stmt" count="0"/>
+      <line num="615" type="stmt" count="1"/>
+      <line num="616" type="stmt" count="1"/>
       <line num="617" type="stmt" count="0"/>
-      <line num="619" type="stmt" count="1"/>
-      <line num="620" type="stmt" count="1"/>
-      <line num="621" type="stmt" count="0"/>
-      <line num="622" type="stmt" count="0"/>
+      <line num="618" type="stmt" count="0"/>
+      <line num="619" type="stmt" count="0"/>
+      <line num="621" type="stmt" count="1"/>
+      <line num="622" type="stmt" count="1"/>
       <line num="623" type="stmt" count="0"/>
-      <line num="625" type="stmt" count="1"/>
-      <line num="626" type="stmt" count="1"/>
+      <line num="624" type="stmt" count="0"/>
+      <line num="625" type="stmt" count="0"/>
       <line num="627" type="stmt" count="1"/>
-      <metrics loc="628" ncloc="444" classes="1" methods="24" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="306" coveredstatements="264" elements="330" coveredelements="272"/>
+      <line num="628" type="stmt" count="1"/>
+      <line num="629" type="stmt" count="0"/>
+      <line num="630" type="stmt" count="0"/>
+      <line num="631" type="stmt" count="0"/>
+      <line num="633" type="stmt" count="1"/>
+      <line num="634" type="stmt" count="1"/>
+      <line num="635" type="stmt" count="0"/>
+      <line num="636" type="stmt" count="0"/>
+      <line num="637" type="stmt" count="0"/>
+      <line num="639" type="stmt" count="1"/>
+      <line num="640" type="stmt" count="1"/>
+      <line num="641" type="stmt" count="1"/>
+      <metrics loc="642" ncloc="446" classes="1" methods="25" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="310" coveredstatements="269" elements="335" coveredelements="278"/>
     </file>
     <file name="C:\xampp\htdocs\Group-J---Digital-Student-Record\classes\sparent.class.php">
       <class name="sparent" namespace="global">
@@ -1385,8 +1390,8 @@
       <class name="user" namespace="global">
         <metrics complexity="67" methods="30" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="173" coveredstatements="128" elements="203" coveredelements="148"/>
       </class>
-      <line num="11" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="107"/>
-      <line num="12" type="stmt" count="107"/>
+      <line num="11" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="109"/>
+      <line num="12" type="stmt" count="109"/>
       <line num="15" type="method" name="connectMySQL" visibility="protected" complexity="2" crap="2.26" count="78"/>
       <line num="16" type="stmt" count="78"/>
       <line num="18" type="stmt" count="78"/>
@@ -1558,14 +1563,14 @@
       <line num="375" type="stmt" count="1"/>
       <line num="376" type="stmt" count="1"/>
       <line num="378" type="stmt" count="1"/>
-      <line num="394" type="method" name="random_str" visibility="protected" complexity="3" crap="3.03" count="4"/>
-      <line num="395" type="stmt" count="4"/>
-      <line num="396" type="stmt" count="4"/>
-      <line num="397" type="stmt" count="4"/>
+      <line num="394" type="method" name="random_str" visibility="public" complexity="3" crap="3.03" count="5"/>
+      <line num="395" type="stmt" count="5"/>
+      <line num="396" type="stmt" count="5"/>
+      <line num="397" type="stmt" count="5"/>
       <line num="398" type="stmt" count="0"/>
-      <line num="400" type="stmt" count="4"/>
-      <line num="401" type="stmt" count="4"/>
-      <line num="403" type="stmt" count="4"/>
+      <line num="400" type="stmt" count="5"/>
+      <line num="401" type="stmt" count="5"/>
+      <line num="403" type="stmt" count="5"/>
       <line num="411" type="method" name="is_email" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="412" type="stmt" count="1"/>
       <line num="413" type="stmt" count="1"/>
@@ -1573,9 +1578,9 @@
       <line num="422" type="stmt" count="1"/>
       <line num="423" type="stmt" count="1"/>
       <line num="425" type="stmt" count="1"/>
-      <line num="434" type="method" name="check_fiscal_code" visibility="public" complexity="1" crap="1" count="5"/>
-      <line num="435" type="stmt" count="5"/>
-      <line num="436" type="stmt" count="5"/>
+      <line num="434" type="method" name="check_fiscal_code" visibility="public" complexity="1" crap="1" count="6"/>
+      <line num="435" type="stmt" count="6"/>
+      <line num="436" type="stmt" count="6"/>
       <line num="440" type="method" name="get_class_stamp_by_id" visibility="public" complexity="3" crap="3" count="1"/>
       <line num="441" type="stmt" count="1"/>
       <line num="443" type="stmt" count="1"/>
@@ -1590,6 +1595,6 @@
       <line num="453" type="stmt" count="1"/>
       <metrics loc="458" ncloc="310" classes="1" methods="30" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="173" coveredstatements="128" elements="203" coveredelements="148"/>
     </file>
-    <metrics files="6" loc="3028" ncloc="2267" classes="6" methods="129" coveredmethods="57" conditionals="0" coveredconditionals="0" statements="1424" coveredstatements="1210" elements="1553" coveredelements="1267"/>
+    <metrics files="6" loc="3042" ncloc="2269" classes="6" methods="130" coveredmethods="58" conditionals="0" coveredconditionals="0" statements="1428" coveredstatements="1215" elements="1558" coveredelements="1273"/>
   </project>
 </coverage>
