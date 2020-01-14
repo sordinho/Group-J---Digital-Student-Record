@@ -63,8 +63,8 @@ if ($_GET["action"] != "generateTimetable") {
             #echo "Tothours: ".sizeof($classInfo["neededTopics"]);
             $maxHoursReached = false;
 
-            for ($i=0; $i < 5 && !$maxHoursReached && !$failflag; $i++) { 
-                for ($j=0; $j < 6 && !$maxHoursReached && !$failflag; $j++) { 
+            for ($i=0; $i < 6 && !$maxHoursReached && !$failflag; $i++) { 
+                for ($j=0; $j < 5 && !$maxHoursReached && !$failflag; $j++) { 
                     #print $i.$j."<BR>";
                     if(sizeof($classInfo["neededTopics"]) == 0){
                         $maxHoursReached = true;
