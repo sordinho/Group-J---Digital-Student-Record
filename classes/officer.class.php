@@ -375,8 +375,8 @@ class officer extends user {
 		$day = 0;
 		$skip = false;
 		$conn = $this->connectMySQL();
-		foreach ($data as $hours) {
-			foreach ($hours as $hourOfDay) {
+		foreach ($data as $hourSlot => $days) {
+			foreach ($days as $day=> $hourOfDay) {
 				$pieces = explode("|", $hourOfDay);
 				//TODO Verificare per ogni materia che sia rispettato il numero di ore
 				//TODO insert nuovo campo nothing per le ore buche
@@ -402,10 +402,10 @@ class officer extends user {
 				} else {
 					return false;
 				}
-				$day++;
-			}
-			$day = 0;
-			$hourSlot++;
+				//$day++;
+			//}
+			//$day = 0;
+			//$hourSlot++;
 		}
 		return true;
 	}
