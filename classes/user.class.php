@@ -391,7 +391,7 @@ class user {
 	 * @return string
 	 * @throws Exception
 	 */
-	protected function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+	public function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
 		$str = '';
 		$max = mb_strlen($keyspace, '8bit') - 1;
 		if ($max < 1) {
