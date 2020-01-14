@@ -96,11 +96,11 @@ class userTest extends TestCase
         //TD : Modify - still not working
         $user_data = ['username' => 'email@test.test', 'password' => 'passwordtest'];
         $user = new user();
-        $_SESSION['id']=73;
+        $_SESSION['id'] = 73;
         $hashed_password = password_hash($user_data['password'], PASSWORD_DEFAULT, ['cost' => 12]);
         $query = "INSERT INTO User (Name, Surname, Email, Password, UserGroup) VALUES ('TestName', 'TestSurname', 'email@test.test', '$hashed_password', 'parent')";
         $this->assertTrue(perform_INSERT_or_DELETE($query), 'query failed');
-        $userID= $user->get_id();
+        $userID = $user->get_id();
         $query2 = "INSERT INTO Parent (StudentID, UserID) VALUES (1,$userID)";
         $this->assertTrue(perform_INSERT_or_DELETE($query2), 'query failed');
 
@@ -109,7 +109,7 @@ class userTest extends TestCase
 
         //password errata e utente corretto
         $user_data_incorrect1 = ['username' => 'email@test.test', 'password' => 'incorrectpasswordtest'];
-        $this->assertLessThanOrEqual(0,$user->user_login($user_data_incorrect1), "userTest : testUser_login returned true, when it would had not");
+        $this->assertLessThanOrEqual(0, $user->user_login($user_data_incorrect1), "userTest : testUser_login returned true, when it would had not");
 
         //password e utente scorretti
         $user_data_incorrect2 = $user_data_incorrect1;
@@ -117,7 +117,7 @@ class userTest extends TestCase
 
         //duplicate username insertion
         perform_INSERT_or_DELETE($query);
-        $this->assertEquals(2,$user->user_login($user_data), "userTest : testUser_login returned true, when it would had not");
+        $this->assertEquals(2, $user->user_login($user_data), "userTest : testUser_login returned true, when it would had not");
     }
 
     public function testGet_surname()
@@ -138,47 +138,52 @@ class userTest extends TestCase
         $this->assertEquals('', $user->get_username(), "userTest : testGet_surname wrong returned value");
     }
 
-    public function testRetrieve_usergroups(){
-		$username1 = "marco.torchiano@io.io"; //Teacher
-		$username2 = "tony.lioy@io.io"; //Teacher + parent
+    public function testRetrieve_usergroups()
+    {
+        $username1 = "marco.torchiano@io.io"; //Teacher
+        $username2 = "tony.lioy@io.io"; //Teacher + parent
 
-		$user1 = new user();
+        $user1 = new user();
 
-		$this->assertEquals(0,sizeof($user1->retrieve_usergroups(null)));
-		$this->assertEquals(0,sizeof($user1->retrieve_usergroups($username1)));
-		$this->assertEquals(2,sizeof($user1->retrieve_usergroups($username2)));
-	}
-
-	public function testRetrieve_user_id_by_usergroup(){
-		$username1 = "marco.torchiano@io.io"; //Teacher
-		$username2 = "tony.lioy@io.io"; //Teacher + parent
-
-		$user1 = new user();
-
-		$this->assertEquals(-1,$user1->retrieve_user_id_by_usergroup(null,null));
-		$this->assertEquals(3,$user1->retrieve_user_id_by_usergroup($username1,"teacher"));
-		$this->assertEquals(9,$user1->retrieve_user_id_by_usergroup($username2,"teacher"));
-		$this->assertEquals(55,$user1->retrieve_user_id_by_usergroup($username2,"parent"));
-
-	}
-
-	public function testGet_class_stamp_by_id(){
-		$usr = new user();
-
-		$this->assertEquals(0,sizeof($usr->get_class_stamp_by_id(null)));
-		$this->assertEquals("-1°noC",$usr->get_class_stamp_by_id(-1));
-		$this->assertEquals("1°A",$usr->get_class_stamp_by_id(1));
-
-		$this->assertEquals("1°C",($usr->get_class_stamp_by_id(3)));
-	}
-
-	public function testRandom_str(){
-        $usr = new user();
-        $this->assertNotEmpty($usr->random_str(10));
-        $this->assertNotEquals($usr->random_str(10),$usr->random_str(10));
+        $this->assertEquals(0, sizeof($user1->retrieve_usergroups(null)));
+        $this->assertEquals(0, sizeof($user1->retrieve_usergroups($username1)));
+        $this->assertEquals(2, sizeof($user1->retrieve_usergroups($username2)));
     }
 
-    public function testCheck_fiscal_code(){
+    public function testRetrieve_user_id_by_usergroup()
+    {
+        $username1 = "marco.torchiano@io.io"; //Teacher
+        $username2 = "tony.lioy@io.io"; //Teacher + parent
+
+        $user1 = new user();
+
+        $this->assertEquals(-1, $user1->retrieve_user_id_by_usergroup(null, null));
+        $this->assertEquals(3, $user1->retrieve_user_id_by_usergroup($username1, "teacher"));
+        $this->assertEquals(9, $user1->retrieve_user_id_by_usergroup($username2, "teacher"));
+        $this->assertEquals(55, $user1->retrieve_user_id_by_usergroup($username2, "parent"));
+
+    }
+
+    public function testGet_class_stamp_by_id()
+    {
+        $usr = new user();
+
+        $this->assertEquals(0, sizeof($usr->get_class_stamp_by_id(null)));
+        $this->assertEquals("-1°noC", $usr->get_class_stamp_by_id(-1));
+        $this->assertEquals("1°A", $usr->get_class_stamp_by_id(1));
+
+        $this->assertEquals("1°C", ($usr->get_class_stamp_by_id(3)));
+    }
+
+    public function testRandom_str()
+    {
+        $usr = new user();
+        $this->assertNotEmpty($usr->random_str(10));
+        $this->assertNotEquals($usr->random_str(10), $usr->random_str(10));
+    }
+
+    public function testCheck_fiscal_code()
+    {
 
         $user = new user();
         $this->assertEquals(1, $user->check_fiscal_code('HHYSGU96L21E241R'), 'testCheck_fiscal_code failed: valid fiscal code is to be accepted');
