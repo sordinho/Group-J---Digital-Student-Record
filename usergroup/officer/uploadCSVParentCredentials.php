@@ -10,7 +10,7 @@ $officer = new officer();
 $num = 1;
 $content="";
 
-// TODOS: [Improvement] 
+// TDS: [Improvement] 
 // - Consider what happens if in the middle of csv parsing a query fails (a full rollback seems too hard and useless to accomplish)
 if(!$officer ->is_logged() ){
 	header("location: /error.php?errorID=19");
@@ -41,7 +41,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
             $parent_S = $row[1];
             $parent_email = $row[2];
             $child_n = $row[3];
-            $child_N = $child_n; // TODO: remove if the add_new_parent is improved and dont ask also for the input array len
+            $child_N = $child_n; // TD: remove if the add_new_parent is improved and dont ask also for the input array len
             // Now perform DB actions
             // Try to add a new user with that email, name, surname
             $userID = $officer->add_new_user($parent_N,$parent_S,$parent_email);
@@ -159,10 +159,10 @@ if ( isset($_POST["submit"]) ) {
         }
         else {
                  //Print file details
-            //echo "Upload: " . $_FILES["file"]["name"];
-            //echo "Type: " . $_FILES["file"]["type"]";
-            //echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb";
-            //echo "Temp file: " . $_FILES["file"]["tmp_name"];
+            //debug "Upload: " . $_FILES["file"]["name"];
+            //debug "Type: " . $_FILES["file"]["type"]";
+            //debug "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb";
+            //debug "Temp file: " . $_FILES["file"]["tmp_name"];
 
 $tmpName = $_FILES['csv']['tmp_name'];
 $csvAsArray = array_map('str_getcsv', file($tmpName));

@@ -39,9 +39,9 @@ class csite{
             //include("menu.php");
         echo '</div>';*/
         $this->page->render();
-        //echo '<div id="extra">';
+        //debug '<div id="extra">';
         //include("testblabla.php");
-        //echo '</div>';
+        //debug '</div>';
 
         foreach($this->footers as $footer){
             include FULL_PATH.$footer;

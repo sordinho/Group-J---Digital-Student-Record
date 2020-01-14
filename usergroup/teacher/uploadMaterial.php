@@ -77,7 +77,7 @@ else{
         exit();
     }
     
-    # Check if fields are set TODO:
+    # Check if fields are set TD:
     if ($_FILES["file"]["error"] > 0 ||  $_FILES["file"]["type"] == 'text/php') {
         echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
         exit();
@@ -118,7 +118,7 @@ else{
         #root@vps483509:/var/www/softeng2/public_html# sudo chown -R www-data:www-data uploads/
         #root@vps483509:/var/www/softeng2/public_html# chmod 755 uploads/
         die("Error while moving file");
-        //header("location: /error.php?errorID=19"); #TODO: add error
+        //header("location: /error.php?errorID=19"); #TD: add error
 	    //exit();
     }
     //var_dump($_POST);

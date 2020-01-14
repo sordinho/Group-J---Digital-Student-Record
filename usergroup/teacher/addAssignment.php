@@ -14,7 +14,7 @@ if (!$teacher->is_logged() ) {
 
 if (!isset($_POST["description"])) {
 
-    /*	TODO This is the confirm page, operation result should be:
+    /*	TD This is the confirm page, operation result should be:
                 0 if unsuccessful
                 1 if successful
                 any other number won't be accepted (see default option)*/

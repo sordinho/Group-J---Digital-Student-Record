@@ -106,7 +106,7 @@ class sparent extends user {
 		$conn = $this->connectMySql();
 		$is_valid_from = calendar::validate_date($from_date, 'Y-m-d');
 		$is_valid_to = calendar::validate_date($to_date, 'Y-m-d');
-		//TODO: change this code snippet by avoiding repetition in validate_date
+		//TD: change this code snippet by avoiding repetition in validate_date
 		if ($is_valid_from and $is_valid_to and $from_date < $to_date) {
 			/*there are two dates which are not false and in a valid format*/
 			$sql = $conn->prepare("SELECT Date, Late, ExitHour FROM NotPresentRecord WHERE StudentID = ? AND Date >= ? AND Date < ?");
@@ -156,7 +156,7 @@ class sparent extends user {
 		$conn = $this->connectMySql();
 		$is_valid_from = calendar::validate_date($from_date, 'Y-m-d');
 		$is_valid_to = calendar::validate_date($to_date, 'Y-m-d');
-		//TODO: change this code snippet by avoiding repetition in validate_date
+		//TD: change this code snippet by avoiding repetition in validate_date
 		if ($is_valid_from and $is_valid_to and $from_date < $to_date) {
 			/*there are two dates which are not false and in a valid format*/
 			$sql = $conn->prepare("    SELECT Date FROM NotPresentRecord WHERE StudentID = ? AND ExitHour = 0 AND Date >= ? AND Date < ?");
@@ -214,7 +214,7 @@ class sparent extends user {
 
 	// Register a child as the current to view and analyze by saving the studentID into the session
 	public function set_current_child($childID) {
-		// TODO: for security reason should verify that the id is in the children array relative to the parent
+		// TD: for security reason should verify that the id is in the children array relative to the parent
 		$_SESSION['curChild'] = $childID;
 		//$_SESSION['childNames'] = $child_names;
 

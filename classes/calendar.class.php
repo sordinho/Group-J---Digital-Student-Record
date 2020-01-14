@@ -16,7 +16,7 @@ class calendar
     {
         try {
             $d = new DateTime($date);
-            //TODO HANDLE EXCEPTIONS
+            //TD HANDLE EXCEPTIONS
             if($d == false)
                 return false;
         }catch (Exception $e){

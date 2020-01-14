@@ -1,6 +1,6 @@
 <?php
 require_once("../../config.php");
-//TODOs:
+//TDs:
 // A timeTable class would be better suited to contain the logic of this page
 $site = new csite();
 initialize_site($site);
@@ -59,13 +59,10 @@ if ($_GET["action"] != "generateTimetable") {
             break;
             }
 
-            #echo "<br>".$specificClassID."<br>";
-            #echo "Tothours: ".sizeof($classInfo["neededTopics"]);
             $maxHoursReached = false;
 
             for ($i=0; $i < 6 && !$maxHoursReached && !$failflag; $i++) { 
                 for ($j=0; $j < 5 && !$maxHoursReached && !$failflag; $j++) { 
-                    #print $i.$j."<BR>";
                     if(sizeof($classInfo["neededTopics"]) == 0){
                         $maxHoursReached = true;
                         break;
@@ -75,7 +72,6 @@ if ($_GET["action"] != "generateTimetable") {
                     $max_trials = 40;
                     while(!$success && $max_trials > 0){
                         $needed_topic = array_pop($classInfo["neededTopics"]);
-                        #print("<br>Counter: $i, $j <br>");
                         // Read a needed topic
                         // a) check if we hadn't already assigned a teacher to a class, given a specific subject, let's assign one
                         if(!key_exists($specificClassID, $class_topic_teacher_assignment) || !key_exists($topicID, $class_topic_teacher_assignment[$specificClassID]) ){
@@ -94,13 +90,11 @@ if ($_GET["action"] != "generateTimetable") {
                             array_push($classInfo["neededTopics"], $needed_topic);
                             shuffle($classInfo["neededTopics"]);
                         }
-                        //echo "sof: ".sizeof($classInfo["neededTopics"])."<br>";
                     }
 
                     if(!$success){
                         $failflag = true;
                         $max_try++;
-                        ##die("Please try again, a rare issue occurred.");
                         // should be replaced by a reassign teacher system or by iterating the whole code until no issue
                         // btw it should be ok at this time
                     }
@@ -123,7 +117,6 @@ if ($_GET["action"] != "generateTimetable") {
             <div class="alert alert-success" role="alert">
             Timetables successfully generated. Go <a href="index.php" class="alert-link">back to your homepage.</a>
             </div>';
-        //var_dump($timetables);
     }
     else{
         die("An error occured. Are you sure you have enough teacher to fullfill the requirements?");
@@ -143,24 +136,20 @@ function add_timetable_entry(&$timetables, &$freeTeacherByTopicDayHourslot, $cla
 
         $delkey = array_search($teacherID, $freeTeacherByTopicDayHourslot[$topicID][$i][$j]);
         unset($freeTeacherByTopicDayHourslot[$topicID][$i][$j][$delkey]);
-        #print("<br>".$specificClassID."[$i][$j] -> $teacherID ($topicID)");
-        // TODO: remove availability also from the other topics teached by that teacher foreach blabla
+        // TO: remove availability also from the other topics teached by that teacher foreach blabla
         return true;
     }
     else{
-        #print("<br>Failure:".$specificClassID."[$i][$j] -> $teacherID ($topicID)");
-        #print("Retry, improve this");
         return false;
     }
 }
 
-# TODO: should I also check here if we have timetables not compatible between classes assigned to a teacher?
+# TD: should I also check here if we have timetables not compatible between classes assigned to a teacher?
 function assign_teacher_to_class(&$teacher_assigned_classes, $teachersByTopic, $topicsByTeacher, &$class_topic_teacher_assignment, $specificClassID, $topicID){
     if(key_exists($topicID, $class_topic_teacher_assignment[$specificClassID])){
         return false;
         // this class has already a teacher assigned
     }
-    //$class_topic_teacher_assignment[$specificClassID] = array();
 
     // Find a free teacher, following condition must be satisfied:
     // - Number of classes assigned to the teacher < 3 (let's assume 1 teacher can't have more, an improvement could be adding to db the number of class or hours for the teacher)
