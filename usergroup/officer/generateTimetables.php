@@ -22,84 +22,107 @@ if ($_GET["action"] != "generateTimetable") {
             <br>
             <h1>TimeTable generation</h1>
             <p class="lead">Click on the button to generate the timetables.<br></p>
-            <a class="btn btn-primary" href="./generateTimetables.php?action=generateTimetable"role="button">Generate Timetables</a>
+            <a class="btn btn-warning" href="./generateTimetables.php?action=generateTimetable"role="button">Delete and generate new Timetables</a>
         </div>
     </div>';
 } else {
+    //0. DElete already defined timetables
     // 1. Load all the teachers into a structured array[Topic][DayOfWeek][HourSlot][teacherID]
     // 2. Load all the classes information into a structured array
     // 3. Compute the minimum requirements so we can warn the user if not enough teacher are present (in real no maximum hours is given for a teacher, skipping it for now)
     // 4. For each class, for each dayOfWeek, for each hourslot: 
         // assignTeacherToClass( teacherID, specificClassID, dayOfWeek, hourSlot)
     // 5. 
+    deleteTimetables();
+    $failflag = true;
+    for ($max_try=0; $max_try < 40 && $failflag; $max_try++) { 
 
+        // 1. Load all the teachers into a structured array[Topic][DayOfWeek][HourSlot][teacherID] 
+        // and array[teacherID]{topicsList}
+        $timetables = array();
+        $teacher_assigned_classes = array();
+        $freeTeacherByTopicDayHourslot = get_topicteacher(); // Contains an array indexed by topicID and containing a list of teacherID teaching that subject
+        $topicsByTeacher = get_topics_by_teacher(); // Array indexed by teacherID cointaining all the topicID learnt by that teacher
+        $teachersByTopic = get_teachers_by_topic(); // 
+        //var_dump($freeTeacherByTopicDayHourslot);
+        // 2. Load all the classes information into a structured array
+        $classes = get_classes_info();
+        // 3. Skip for now
 
-    // 1. Load all the teachers into a structured array[Topic][DayOfWeek][HourSlot][teacherID] 
-    // and array[teacherID]{topicsList}
-    $timetables = array();
-    $teacher_assigned_classes = array();
-    $freeTeacherByTopicDayHourslot = get_topicteacher(); // Contains an array indexed by topicID and containing a list of teacherID teaching that subject
-    $topicsByTeacher = get_topics_by_teacher(); // Array indexed by teacherID cointaining all the topicID learnt by that teacher
-    $teachersByTopic = get_teachers_by_topic(); // 
-    //var_dump($freeTeacherByTopicDayHourslot);
-    // 2. Load all the classes information into a structured array
-    $classes = get_classes_info();
-    // 3. Skip for now
+        // 4. For each class, for each dayOfWeek, for each hourslot: 
+        // pick a teacher and assign it to a specific class for a specific subject
+        $class_topic_teacher_assignment = array();
 
-    // 4. For each class, for each dayOfWeek, for each hourslot: 
-    // pick a teacher and assign it to a specific class for a specific subject
-    $class_topic_teacher_assignment = array();
+        $failflag = false;
+        foreach ($classes as $specificClassID => &$classInfo) {
+            //var_dump($classInfo["neededTopics"]);
+            if($failflag){
+            break;
+            }
 
-    foreach ($classes as $specificClassID => &$classInfo) {
-        //var_dump($classInfo["neededTopics"]);
-        echo "<br>".$specificClassID."<br>";
-        echo "Tothours: ".sizeof($classInfo["neededTopics"]);
-        $maxHoursReached = false;
-        for ($i=0; $i < 5 && !$maxHoursReached; $i++) { 
-            for ($j=0; $j < 6 && !$maxHoursReached; $j++) { 
-                if(sizeof($classInfo["neededTopics"]) == 0){
-                    $maxHoursReached = true;
-                    break;
-                }
-                $success = false;
-                //$i = sizeof($teachersByTopic[$needed_topic]);// try to reassign, skip for now for semplicity pourpose
-                $max_trials = 40;
-                while(!$success && $max_trials > 0){
-                    $needed_topic = array_pop($classInfo["neededTopics"]);
-                    print("<br>Counter: $i, $j <br>");
-                    // Read a needed topic
-                    // a) check if we hadn't already assigned a teacher to a class, given a specific subject, let's assign one
-                    if(!key_exists($specificClassID, $class_topic_teacher_assignment) || !key_exists($topicID, $class_topic_teacher_assignment[$specificClassID]) ){
-                        // search for a free teacher and assign it to a class
-                        assign_teacher_to_class($teacher_assigned_classes, $teachersByTopic, $topicsByTeacher, $class_topic_teacher_assignment, $specificClassID, $needed_topic);
-                        //var_dump($teacher_assigned_classes);
-                        //var_dump($class_topic_teacher_assignment);
+            #echo "<br>".$specificClassID."<br>";
+            #echo "Tothours: ".sizeof($classInfo["neededTopics"]);
+            $maxHoursReached = false;
+
+            for ($i=0; $i < 5 && !$maxHoursReached && !$failflag; $i++) { 
+                for ($j=0; $j < 6 && !$maxHoursReached && !$failflag; $j++) { 
+                    #print $i.$j."<BR>";
+                    if(sizeof($classInfo["neededTopics"]) == 0){
+                        $maxHoursReached = true;
+                        break;
                     }
-                    // b) Add entry to timetable given topic, teacher, class, day and hour
-                    //add_timetable_entry($timetables, $freeTeacherByTopicDayHourslot, $class_topic_teacher_assignment, $specificClassID, $needed_topic, $i, $j);
-                    // What if the teacher is already busy at that hour? Should I assign another teacher to that class? Should I do a switch in the timetable regarding the topic?
-                    $max_trials--;
-                    $success = add_timetable_entry($timetables, $freeTeacherByTopicDayHourslot, $class_topic_teacher_assignment, $specificClassID, $needed_topic, $i, $j);
-                    if (!$success){
-                        // retry with a different topic 
-                        array_push($classInfo["neededTopics"], $needed_topic);
-                        shuffle($classInfo["neededTopics"]);
+                    $success = false;
+                    //$i = sizeof($teachersByTopic[$needed_topic]);// try to reassign, skip for now for semplicity pourpose
+                    $max_trials = 40;
+                    while(!$success && $max_trials > 0){
+                        $needed_topic = array_pop($classInfo["neededTopics"]);
+                        #print("<br>Counter: $i, $j <br>");
+                        // Read a needed topic
+                        // a) check if we hadn't already assigned a teacher to a class, given a specific subject, let's assign one
+                        if(!key_exists($specificClassID, $class_topic_teacher_assignment) || !key_exists($topicID, $class_topic_teacher_assignment[$specificClassID]) ){
+                            // search for a free teacher and assign it to a class
+                            assign_teacher_to_class($teacher_assigned_classes, $teachersByTopic, $topicsByTeacher, $class_topic_teacher_assignment, $specificClassID, $needed_topic);
+                            //var_dump($teacher_assigned_classes);
+                            //var_dump($class_topic_teacher_assignment);
+                        }
+                        // b) Add entry to timetable given topic, teacher, class, day and hour
+                        //add_timetable_entry($timetables, $freeTeacherByTopicDayHourslot, $class_topic_teacher_assignment, $specificClassID, $needed_topic, $i, $j);
+                        // What if the teacher is already busy at that hour? Should I assign another teacher to that class? Should I do a switch in the timetable regarding the topic?
+                        $max_trials--;
+                        $success = add_timetable_entry($timetables, $freeTeacherByTopicDayHourslot, $class_topic_teacher_assignment, $specificClassID, $needed_topic, $i, $j);
+                        if (!$success){
+                            // retry with a different topic 
+                            array_push($classInfo["neededTopics"], $needed_topic);
+                            shuffle($classInfo["neededTopics"]);
+                        }
+                        //echo "sof: ".sizeof($classInfo["neededTopics"])."<br>";
                     }
-                    //echo "sof: ".sizeof($classInfo["neededTopics"])."<br>";
-                }
-                if(!$success){
-                    die("Please try again, a rare issue occurred.");
-                    // should be replaced by a reassign teacher system or by iterating the whole code until no issue
-                    // btw it should be ok at this time
-                }
 
+                    if(!$success){
+                        $failflag = true;
+                        $max_try++;
+                        ##die("Please try again, a rare issue occurred.");
+                        // should be replaced by a reassign teacher system or by iterating the whole code until no issue
+                        // btw it should be ok at this time
+                    }
+
+                }
             }
         }
+        # N topics with Hn hours per week for each topic, M hourslots
+        # totNeededArr[M] = (TopicID)
     }
-    # N topics with Hn hours per week for each topic, M hourslots
-    # totNeededArr[M] = (TopicID)
+    if(!$failflag){
+        foreach ($timetables as $classID => $data) {
+            //print $classID."<br> ";
+            $officer->set_timetable_class($data, $classID);
+        }
+        //var_dump($timetables);
+    }
+    else{
+        die("An error occured. Are you sure you have enough teacher to fullfill the requirements?");
+    }
 }
-
 $page->setContent($content);
 $site->render();
 
@@ -114,13 +137,13 @@ function add_timetable_entry(&$timetables, &$freeTeacherByTopicDayHourslot, $cla
 
         $delkey = array_search($teacherID, $freeTeacherByTopicDayHourslot[$topicID][$i][$j]);
         unset($freeTeacherByTopicDayHourslot[$topicID][$i][$j][$delkey]);
-        print("<br>".$specificClassID."[$i][$j] -> $teacherID ($topicID)");
+        #print("<br>".$specificClassID."[$i][$j] -> $teacherID ($topicID)");
         // TODO: remove availability also from the other topics teached by that teacher foreach blabla
         return true;
     }
     else{
-        print("<br>Failure:".$specificClassID."[$i][$j] -> $teacherID ($topicID)");
-        print("Retry, improve this");
+        #print("<br>Failure:".$specificClassID."[$i][$j] -> $teacherID ($topicID)");
+        #print("Retry, improve this");
         return false;
     }
 }
@@ -156,7 +179,7 @@ function assign_teacher_to_class(&$teacher_assigned_classes, $teachersByTopic, $
     }
     if($assigned_teacherID == -1)
         die("Not enough teacher?");
-    print("Choosen teacher: $assigned_teacherID");
+    #print("Choosen teacher: $assigned_teacherID");
 
     // Add the teacher to the class topic structure
     $class_topic_teacher_assignment[$specificClassID][$topicID] = $assigned_teacherID;
@@ -289,4 +312,8 @@ function connectMySQL() {
     }
     return $mysqli;
 }
-
+function deleteTimetables(){
+    $conn = connectMySQL();
+    $classID = intval($classID);
+    $stmt = $conn->query("DELETE FROM Timetables WHERE 1");
+}

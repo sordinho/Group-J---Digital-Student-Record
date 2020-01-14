@@ -189,7 +189,8 @@ class cpage {
 								<a class="dropdown-item text-white" role="presentation" href="./uploadParentCredentials.php"><span>Manual Insert</span></a>
 								<a class="dropdown-item text-white" role="presentation" href="./uploadCSVParentCredentials.php"><span>CSV Upload</span></a></div>';
                     $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./handleTeacherMasterData.php"><i class="far fa-address-book mx-3"></i><span class="text-nowrap mx-2">Teachers\' Data</span></a></li>';
-                    break;
+                    $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./generateTimetables.php"><i class="far fa-clock mx-3"></i><span class="text-nowrap mx-2">Generate timetables</span></a></li>';    
+                break;
                 case "admin":
                     $hidden_menu .= '		<li class="nav-item"><a class="nav-link text-left text-white py-1 px-0" href="./registerAccount.php"><i class="fas fa-user-plus mx-3"></i><span class="text-nowrap mx-2">Register Account</span></a></li>';
 

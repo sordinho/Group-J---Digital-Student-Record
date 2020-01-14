@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Creato il: Dic 26, 2019 alle 17:46
+-- Creato il: Gen 13, 2020 alle 20:45
 -- Versione del server: 5.7.28-0ubuntu0.16.04.2
 -- Versione PHP: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -62,21 +62,7 @@ CREATE TABLE `FinalGrades` (
 --
 
 INSERT INTO `FinalGrades` (`ID`, `StudentID`, `TopicID`, `Mark`, `TermID`) VALUES
-(24, 2, 6, 0, 1),
-(25, 2, 5, 0, 1),
-(26, 2, 1, 9, 1),
-(27, 2, 8, 0, 1),
-(28, 2, 3, 0, 1),
-(29, 2, 7, 0, 1),
-(30, 2, 2, 8, 1),
-(31, 4, 6, 6, 1),
-(32, 4, 5, 6, 1),
-(33, 4, 1, 10, 1),
-(34, 4, 8, 0, 1),
-(35, 4, 3, 0, 1),
-(36, 4, 7, 10, 1),
-(37, 4, 2, 5, 1),
-(38, 4, 4, 5, 1);
+(42, 2, 1, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -166,7 +152,9 @@ INSERT INTO `MarksRecord` (`ID`, `StudentID`, `Mark`, `TeacherID`, `TopicID`, `T
 (32, 4, 6, 6, 6, '2019-12-03 10:00:00', 0),
 (33, 4, 10, 7, 7, '2019-12-03 11:00:00', 0),
 (34, 2, 10, 1, 2, '2019-12-03 10:43:54', 1),
-(35, 4, 10, 1, 1, '2019-12-03 10:43:54', 0);
+(35, 4, 10, 1, 1, '2019-12-03 10:43:54', 0),
+(36, 8, 10, 1, 1, '2020-01-06 09:53:23', 1),
+(37, 2, 1, 1, 1, '2020-01-06 17:24:51', 0);
 
 -- --------------------------------------------------------
 
@@ -191,7 +179,10 @@ INSERT INTO `MeetingReservation` (`ID`, `ParentID`, `TeacherAvailabilityID`, `Da
 (2, 5, 1, '2020-01-13', 2),
 (3, 2, 2, '2020-01-17', 2),
 (4, 2, 4, '2020-01-15', 1),
-(5, 7, 4, '2020-01-22', 0);
+(5, 7, 4, '2020-01-22', 0),
+(7, 5, 9, '2020-01-27', 1),
+(8, 5, 8, '2020-01-13', 1),
+(9, 5, 8, '2020-01-13', 0);
 
 -- --------------------------------------------------------
 
@@ -423,21 +414,21 @@ CREATE TABLE `Teacher` (
 
 INSERT INTO `Teacher` (`ID`, `MeetingHourID`, `UserID`, `FiscalCode`) VALUES
 (1, 0, 3, 'MTFiscalCode'),
-(2, 0, 4, 'fc2'),
-(3, 0, 5, 'fc3'),
-(4, 0, 6, 'fc4'),
-(5, 0, 7, 'fc5'),
-(6, 0, 8, 'fc6'),
-(7, 0, 9, 'fc7'),
+(2, 0, 4, 'TCHTHR14A01A007F'),
+(3, 0, 5, 'TCHTHR14A01B300W'),
+(4, 0, 6, 'LLORAI73A41B259F'),
+(5, 0, 7, 'NSGNGN73A41B647A'),
+(6, 0, 8, 'DJZCTD36R14A485P'),
+(7, 0, 9, 'QDLQVP51P54I962V'),
 (8, 0, 57, 'VTRNTN80M01F839G'),
-(11, 0, 64, 'fc10'),
-(12, 0, 65, 'fc11'),
-(13, 0, 66, 'fc10'),
-(14, 0, 67, 'fc10'),
-(15, 0, 68, 'fc10'),
-(16, 0, 69, 'fc10'),
-(17, 0, 70, 'fc10'),
-(18, 0, 71, 'fc10'),
+(11, 0, 64, 'RKARJG54T05L797F'),
+(12, 0, 65, 'MMVDZB68M06G387F'),
+(13, 0, 66, 'ZLTWWG92L10H553D'),
+(14, 0, 67, 'VGPHPN91T28L998D'),
+(15, 0, 68, 'ZVMLHY45E52D875H'),
+(16, 0, 69, 'YJFPTR77S65A258U'),
+(17, 0, 70, 'RRAHVP52C42A474I'),
+(18, 0, 71, 'HBFDDZ68T06A243E'),
 (19, -1, 72, 'noteacherfc1');
 
 -- --------------------------------------------------------
@@ -458,10 +449,9 @@ CREATE TABLE `TeacherAvailability` (
 --
 
 INSERT INTO `TeacherAvailability` (`ID`, `TeacherID`, `DayOfWeek`, `HourSlot`) VALUES
-(1, 7, 1, 2),
-(2, 8, 4, 1),
-(3, 13, 4, 5),
-(4, 1, 2, 3);
+(8, 1, 0, 2),
+(9, 1, 0, 3),
+(10, 1, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -503,56 +493,31 @@ CREATE TABLE `Timetables` (
 --
 
 INSERT INTO `Timetables` (`ID`, `TeacherID`, `TopicID`, `SpecificClassID`, `DayOfWeek`, `HourSlot`) VALUES
-(392, 18, 8, 2, 0, 0),
-(393, 18, 8, 2, 1, 0),
-(394, 18, 8, 2, 2, 0),
-(395, 15, 5, 2, 3, 0),
-(396, 13, 3, 2, 4, 0),
-(397, 18, 8, 2, 0, 1),
-(398, 18, 8, 2, 1, 1),
-(399, 16, 6, 2, 2, 1),
-(400, 14, 4, 2, 3, 1),
-(401, 12, 2, 2, 4, 1),
-(402, 17, 7, 2, 0, 2),
-(403, 13, 3, 2, 1, 2),
-(404, 16, 6, 2, 2, 2),
-(405, 14, 4, 2, 3, 2),
-(406, 12, 2, 2, 4, 2),
-(407, 13, 3, 2, 0, 3),
-(408, 17, 7, 2, 1, 3),
-(409, 13, 3, 2, 2, 3),
-(410, 13, 3, 2, 3, 3),
-(411, 11, 1, 2, 4, 3),
-(413, 18, 8, 2, 1, 4),
-(414, 13, 3, 2, 2, 4),
-(415, 13, 3, 2, 3, 4),
-(416, 11, 1, 2, 4, 4),
-(419, 15, 5, 2, 2, 5),
-(422, 1, 1, 1, 0, 0),
-(423, 3, 3, 1, 1, 0),
-(424, 3, 3, 1, 2, 0),
-(425, 3, 3, 1, 3, 0),
-(426, 8, 8, 1, 4, 0),
-(427, 1, 1, 1, 0, 1),
-(428, 3, 3, 1, 1, 1),
-(429, 3, 3, 1, 2, 1),
-(430, 7, 7, 1, 3, 1),
-(431, 8, 8, 1, 4, 1),
-(432, 1, 2, 1, 0, 2),
-(433, 4, 4, 1, 1, 2),
-(434, 5, 5, 1, 2, 2),
-(435, 8, 8, 1, 3, 2),
-(436, 7, 7, 1, 4, 2),
-(437, 1, 2, 1, 0, 3),
-(438, 3, 3, 1, 1, 3),
-(439, 6, 6, 1, 2, 3),
-(440, 8, 8, 1, 3, 3),
-(441, 3, 3, 1, 4, 3),
-(442, 4, 4, 1, 0, 4),
-(443, 5, 5, 1, 1, 4),
-(444, 6, 6, 1, 2, 4),
-(445, 8, 8, 1, 3, 4),
-(449, 8, 8, 1, 2, 5);
+(452, 1, 1, 1, 0, 0),
+(453, 3, 3, 1, 1, 0),
+(454, 3, 3, 1, 2, 0),
+(455, 3, 3, 1, 3, 0),
+(456, 8, 8, 1, 4, 0),
+(457, 1, 1, 1, 0, 1),
+(458, 3, 3, 1, 1, 1),
+(459, 3, 3, 1, 2, 1),
+(460, 7, 7, 1, 3, 1),
+(461, 8, 8, 1, 4, 1),
+(462, 2, 2, 1, 0, 2),
+(463, 4, 4, 1, 1, 2),
+(464, 5, 5, 1, 2, 2),
+(465, 8, 8, 1, 3, 2),
+(466, 7, 7, 1, 4, 2),
+(467, 2, 2, 1, 0, 3),
+(468, 4, 4, 1, 1, 3),
+(469, 6, 6, 1, 2, 3),
+(470, 8, 8, 1, 3, 3),
+(471, 3, 3, 1, 4, 3),
+(472, 3, 3, 1, 0, 4),
+(473, 5, 5, 1, 1, 4),
+(474, 6, 6, 1, 2, 4),
+(475, 8, 8, 1, 3, 4),
+(479, 8, 8, 1, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -667,12 +632,8 @@ CREATE TABLE `UploadedClassDocuments` (
 --
 
 INSERT INTO `UploadedClassDocuments` (`ID`, `FileName`, `DiskFileName`, `SpecificClassID`, `Description`, `Date`, `SubjectID`) VALUES
-(3, 'emailSec.pdf', '8290566acbb0d5e1388dc6008275431a_emailSec.pdf', 1, 'Email security lioy', '2019-12-15 16:45:20', 2),
-(4, 'Designers_Personas_Presentation_en.pptx', '3292103ac1749a4ec06dc15b592ef270_Designers_Personas_Presentation_en.pptx', 1, 'Personas Template', '2019-12-15 17:34:35', 1),
 (5, 'HistoryNotes.txt', '4147fc3ec062e49b5f19c5a4c9078329_HistoryNotes.txt', 1, 'History Notes', '2019-12-16 12:11:52', 1),
-(6, 'README.md', 'dc6ee570c4469821a4f4977fe7a4cf33_README.md', 2, 'This is a readme file', '2019-12-17 10:50:00', 1),
-(7, 'Dockerfile', 'c4de739d81ce66af524a8d1eb4d7b945_Dockerfile', 1, 'M dockerfile', '2019-12-17 11:03:32', 2),
-(9, 'Notes.txt', '5dc4c3e30a85be5a5099b423cd6361ac_Notes.txt', 1, 'notes ', '2019-12-17 14:51:39', 1);
+(9, 'Notes.txt', '5dc4c3e30a85be5a5099b423cd6361ac_Notes.txt', 2, 'notes ', '2019-12-17 14:51:39', 1);
 
 -- --------------------------------------------------------
 
@@ -969,7 +930,7 @@ ALTER TABLE `Communication`
 -- AUTO_INCREMENT per la tabella `FinalGrades`
 --
 ALTER TABLE `FinalGrades`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT per la tabella `Homework`
 --
@@ -979,12 +940,12 @@ ALTER TABLE `Homework`
 -- AUTO_INCREMENT per la tabella `MarksRecord`
 --
 ALTER TABLE `MarksRecord`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT per la tabella `MeetingReservation`
 --
 ALTER TABLE `MeetingReservation`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT per la tabella `Note`
 --
@@ -1029,7 +990,7 @@ ALTER TABLE `Teacher`
 -- AUTO_INCREMENT per la tabella `TeacherAvailability`
 --
 ALTER TABLE `TeacherAvailability`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT per la tabella `Terms`
 --
@@ -1039,7 +1000,7 @@ ALTER TABLE `Terms`
 -- AUTO_INCREMENT per la tabella `Timetables`
 --
 ALTER TABLE `Timetables`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=452;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=482;
 --
 -- AUTO_INCREMENT per la tabella `Topic`
 --

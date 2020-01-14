@@ -421,10 +421,10 @@ class officer extends user {
 		}
 
 		$conn = $this->connectMySQL();
-
+		$classID = intval($classID);
 		$stmt = $conn->query("SELECT TopicID,Hours 
                                         FROM YearTopicHour y,SpecificClass s
-                                        WHERE y.YearClassID=s.YearClassID AND s.ID=$classID");
+                                        WHERE y.YearClassID=s.YearClassID AND s.ID=".$classID);
 		while ($row = $stmt->fetch_assoc()) {
 			$hoursForTopic[$row['TopicID']] = $row['Hours'];
 		}
