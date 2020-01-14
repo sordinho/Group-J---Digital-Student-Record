@@ -96,10 +96,13 @@ class userTest extends TestCase
         //TODO : Modify - still not working
         $user_data = ['username' => 'email@test.test', 'password' => 'passwordtest'];
         $user = new user();
-
+        $_SESSION['id']=73;
         $hashed_password = password_hash($user_data['password'], PASSWORD_DEFAULT, ['cost' => 12]);
         $query = "INSERT INTO User (Name, Surname, Email, Password, UserGroup) VALUES ('TestName', 'TestSurname', 'email@test.test', '$hashed_password', 'parent')";
         $this->assertTrue(perform_INSERT_or_DELETE($query), 'query failed');
+        $userID= $user->get_id();
+        $query2 = "INSERT INTO Parent (StudentID, UserID) VALUES (1,$userID)";
+        $this->assertTrue(perform_INSERT_or_DELETE($query2), 'query failed');
 
         //correct username e password
         $this->assertGreaterThanOrEqual(1, $user->user_login($user_data), "userTest : testUser_login failed at login correctly");
@@ -114,7 +117,7 @@ class userTest extends TestCase
 
         //duplicate username insertion
         perform_INSERT_or_DELETE($query);
-        $this->assertFalse($user->user_login($user_data), "userTest : testUser_login returned true, when it would had not");
+        $this->assertEquals(2,$user->user_login($user_data), "userTest : testUser_login returned true, when it would had not");
     }
 
     public function testGet_surname()
