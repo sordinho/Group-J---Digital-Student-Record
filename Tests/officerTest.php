@@ -127,12 +127,12 @@ class officerTest extends TestCase {
 	public function testGetParentsWithoutAccessCredentials() {
 		$off = new officer();
 
-		$res = $off->get_parents_without_access_credentials();
-		$this->assertEquals(0, sizeof($res));
+		$res1 = $off->get_parents_without_access_credentials();
+		//$this->assertEquals(1, sizeof($res1));
 
-		$off->add_new_user("Jon", "Snow", "kingIn@the.north");
+		$off->add_new_user("John", "Smith", "JohnSmith@rrr.de");
 		$res = $off->get_parents_without_access_credentials();
-		$this->assertEquals(1, sizeof($res));
+		$this->assertEquals(sizeof($res1)+1, sizeof($res));
 	}
 
 	public function testGenerateAndRegisterPassword() {
@@ -313,6 +313,7 @@ class officerTest extends TestCase {
 	public function testPublishCommunication() {
 		// Test with not logged officer
 		$off1 = new officer();
+		$_SESSION['officerID'] = -1;
 		$this->assertEquals(-1, $off1->publish_communication("testTitle", "Test Description"));
 
 		// Logged in
@@ -346,9 +347,9 @@ class officerTest extends TestCase {
 	public function testRegister_teacher_data() {
 		$off1 = new officer();
 		$id = 3;
-		$name = "Jon";
-		$surname = "Snow";
-		$email = "kingIn@the.north";
+		$name = "Jonny";
+		$surname = "Snowy";
+		$email = "kingIn2@the.north";
 		$fiscalcode = "SNWJNO80A01F839C";
 		$this->assertTrue($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should have been successful"));
 		$conn = TestsConnectMySQL();
@@ -361,9 +362,9 @@ class officerTest extends TestCase {
 		$this->assertEquals($email, $row[2], $this->printErrorMessage("testRegister_teacher_data", ""));
 		$this->assertEquals($fiscalcode, $row[3], $this->printErrorMessage("testRegister_teacher_data", ""));
 
-		$id = -1;
+		$id = null;
 		$this->assertFalse($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
-		$id = 1;
+		$id = 3;
 		$this->assertFalse($off1->register_teacher_data($name, $surname, $email, $fiscalcode, $id), $this->printErrorMessage("testRegister_teacher_data", "this operation should not have been successful"));
 	}
 
@@ -403,13 +404,13 @@ class officerTest extends TestCase {
 		$timetable[0][2] = "2|1|insert";
 		$timetable[0][3] = "2|1|insert";
 		$timetable[0][4] = "4|4|insert";
-		$timetable[0][5] = "||nothing";
+		$timetable[0][5] = "0|0|nothing";
 		$timetable[1][0] = "3|3|insert";
 		$timetable[1][1] = "3|3|insert";
 		$timetable[1][2] = "4|4|insert";
 		$timetable[1][3] = "3|3|insert";
 		$timetable[1][4] = "5|5|insert";
-		$timetable[1][5] = "||nothing";
+		$timetable[1][5] = "0|0|nothing";
 		$timetable[2][0] = "3|3|insert";
 		$timetable[2][1] = "3|3|insert";
 		$timetable[2][2] = "5|5|insert";
@@ -421,13 +422,13 @@ class officerTest extends TestCase {
 		$timetable[3][2] = "8|8|insert";
 		$timetable[3][3] = "8|8|insert";
 		$timetable[3][4] = "8|8|insert";
-		$timetable[3][5] = "||nothing";
+		$timetable[3][5] = "0|0|nothing";
 		$timetable[4][0] = "8|8|insert";
 		$timetable[4][1] = "8|8|insert";
 		$timetable[4][2] = "7|7|insert";
 		$timetable[4][3] = "3|3|insert";
-		$timetable[4][4] = "||nothing";
-		$timetable[4][5] = "||nothing";
+		$timetable[4][4] = "0|0|nothing";
+		$timetable[4][5] = "0|0|nothing";
 
 		return $timetable;
 	}
