@@ -46,7 +46,7 @@ class administrator extends user {
 		$options = ['cost' => 12];
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
 
-		$sql = "INSERT INTO User (Name, Surname, Email, PasswordF, UserGroup) VALUES (?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO User (Name, Surname, Email, Password, UserGroup) VALUES (?, ?, ?, ?, ?)";
 		$query = $mysqli->prepare($sql);
 		$query->bind_param("sssss", $user_first_name, $user_last_name, $user_email, $hashed_password, $usergroup);
 
