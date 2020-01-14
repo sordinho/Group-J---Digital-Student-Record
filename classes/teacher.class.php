@@ -740,17 +740,17 @@ CREATE TABLE `TopicRecord` (
     public function get_average_mark_for_topic($topicID,$studentID){
         $conn = $this->connectMySQL();
         $stmt = $conn->prepare("SELECT StudentID,AVG(Mark) AS Average FROM MarksRecord,Terms WHERE TopicID=? AND StudentID=? AND 
-                                        Timestamp < ? AND 
                                         Timestamp > (SELECT LimitDay FROM Terms WHERE LimitDay < ? ORDER BY LimitDay DESC LIMIT 1 OFFSET 1)
                                         GROUP BY StudentID");
         if (!$stmt)
-            return 0;
-        $stmt->bind_param("iiss", $topicID,$studentID,date("Y-m-d"),date("Y-m-d"));
+			return 0;
+		$curr_date = date("Y-m-d");
+        $stmt->bind_param("iiss", $topicID,$studentID, $curr_date);
         if (!$stmt->execute())
             return 0;
         $res = $stmt->get_result();
         if ($res->num_rows == 1) {
-            $row=$res->fetch_assoc();
+			$row=$res->fetch_assoc();
             return $row['Average'];
         }else{
             return 0;
