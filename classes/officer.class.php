@@ -341,7 +341,7 @@ class officer extends user {
 		$stmtTotHour->bind_result($totHourValue);
 		$stmtTotHour->fetch();
 
-
+		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("SELECT COUNT(*)
                                     FROM Timetables
                                     WHERE SpecificClassID=?");
