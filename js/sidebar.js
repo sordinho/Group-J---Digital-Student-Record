@@ -40,7 +40,7 @@
             body.animate({'padding-left':'0'},100);
         }
         else if (win.width() > 992 && sidebar.hasClass('collapsed')) {
-            body.animate({'padding-left':'14rem'},100);
+            body.animate({'padding-left':'15rem'},100);
         }
         
         if (!sidebar.hasClass('collapsed')) {
