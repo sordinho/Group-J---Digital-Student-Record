@@ -31,7 +31,7 @@ class csite{
     public function render(){
         
         foreach($this->headers as $header){
-            $h_path = FULL_PATH."/".$header;
+            $h_path = FULL_PATH.$header;
             include $h_path;
         }
         /*echo '<div id="main">
@@ -44,7 +44,7 @@ class csite{
         //echo '</div>';
 
         foreach($this->footers as $footer){
-            include FULL_PATH."/".$footer;
+            include FULL_PATH.$footer;
         }
     }
     
