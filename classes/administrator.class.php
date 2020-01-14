@@ -17,7 +17,7 @@ class administrator extends user {
 	 * @param $user_first_name
 	 * @param $user_last_name
 	 * @param $user_email
-	 * @param $usergroup: ONLY teacher OR officer !!!
+	 * @param $usergroup : ONLY teacher OR officer !!!
 	 * @param $fcode
 	 * @return bool
 	 * @throws Exception
@@ -26,8 +26,9 @@ class administrator extends user {
 	function register_new_user($user_first_name, $user_last_name, $user_email, $usergroup, $fcode) {
 		$fields = func_get_args();
 		foreach ($fields as $f) {
-			if ($f == null || $f == '')
+			if ($f == null || $f == '') {
 				return false;
+			}
 		}
 
 		// Check fiscal code validity. Function from user class
@@ -37,12 +38,13 @@ class administrator extends user {
 
 		$mysqli = $this->connectMySQL();
 		$password = $this->random_str(10);
-		if ($password == "")
+		if ($password == "") {
 			return false;
+		}
 
 		//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
 		// default is 10, better have a little more security
-		//echo "Name: ".$user_first_name." Surname: ".$user_last_name." Email: ".$user_email." Usergroup: ".$usergroup." Password: ".$password." Fcode: ".$fcode;
+		//debug "Name: ".$user_first_name." Surname: ".$user_last_name." Email: ".$user_email." Usergroup: ".$usergroup." Password: ".$password." Fcode: ".$fcode;
 		$options = ['cost' => 12];
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT, $options);
 
@@ -59,19 +61,19 @@ class administrator extends user {
 		$stmt = $mysqli->prepare("SELECT ID FROM User WHERE Email=? AND UserGroup=?");
 		$stmt->bind_param('ss', $user_email, $usergroup);
 
-		//TODO: first retrieve ID from user table of the inserted user
-		//echo $selectID;
+		//TD: first retrieve ID from user table of the inserted user
+		//debug $selectID;
 		$IDinsertedUser = -1;
 		if ($stmt->execute()) {
 			$res = $stmt->get_result();
 			$row = $res->fetch_assoc();
 			$IDinsertedUser = $row['ID'];
-			//echo "ID after Insert: ".$IDinsertedUser;
+			//debug "ID after Insert: ".$IDinsertedUser;
 		} else {
 			return false;
 		}
 		$tempzero = 0;
-		//TODO before sending email with credentials, insert data in officer/teacher tables.
+		//TD before sending email with credentials, insert data in officer/teacher tables.
 		switch ($usergroup) {
 			case "teacher":
 				$queryInsert = 'INSERT INTO Teacher (MeetingHourID,UserID,FiscalCode) VALUES (?,?,?)';
@@ -89,8 +91,9 @@ class administrator extends user {
 				break;
 		}
 
-		if ($queryInsertSpecificTable == '')
+		if ($queryInsertSpecificTable == '') {
 			return false;
+		}
 		$result = $queryInsertSpecificTable->execute();
 		if (!$result) {
 			printf("Error message: %s\n", $mysqli->error);
@@ -99,8 +102,8 @@ class administrator extends user {
 			return false;
 		}
 
-		//TODO:if usergroup=teacher -> add record in topicteacherclass (specificclassid=-1)
-		//TODO:decide about topic ID
+		//TD:if usergroup=teacher -> add record in topicteacherclass (specificclassid=-1)
+		//TD:decide about topic ID
 		$query->close();
 		$mysqli->close();
 

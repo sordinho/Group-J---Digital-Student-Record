@@ -107,7 +107,7 @@ CREATE TABLE `TopicRecord` (
 	 * */
 	public function get_topics($selectedClass = 0) {
 		$topics = array();
-		// TODO create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
+		// TD create TopicTeacherClass table logic scheme TopicTeacherClass(TopicID, TeacherID, SpecificClassID)
 		// Write correct query, use AS to define alias with following names (TopicID, TopicName, TopicDescription)
 		$conn = $this->connectMySQL();
 		//$teacherID = $this->get_teacher_ID();
@@ -122,7 +122,7 @@ CREATE TABLE `TopicRecord` (
 			$stmt->bind_param('ii', $teacherID, $selectedClass);
 
 		} else {
-		    // TODO fix duplicates, ``SELECT DISTINCT...`` temp workaround
+		    // TD fix duplicates, ``SELECT DISTINCT...`` temp workaround
 			$stmt = $conn->prepare("SELECT DISTINCT tc.ID as TopicID, tc.Name as TopicName, tc.Description as TopicDescription 
                                             FROM TopicTeacherClass as ttc, Topic as tc, Teacher as t 
                                             WHERE ttc.TeacherID=t.ID and tc.ID=ttc.TopicID and t.ID=? ");
@@ -621,7 +621,7 @@ CREATE TABLE `TopicRecord` (
 	 * @return true on success or false on failure
 	 */
 	public function insert_material($fname, $servername, $specificClassID, $description, $subjectID) {
-		# TODO:
+		# TD:
 		# Missing: checks on (class, subject) (is learned by this teacher?)
 		# Should the teacher be warned if a file was already uploaded with this name ?
 		$teacherID = $_SESSION['teacherID'];
@@ -1030,7 +1030,7 @@ CREATE TABLE `TopicRecord` (
         $conn = $this->connectMySQL();
 		$dayOfWeek = calendar::from_dow_to_num($day);
 		
-		# TODO: comment following line if minutes should be accounted for
+		# TD: comment following line if minutes should be accounted for
 		$hour = explode( ':', $hour)[0].":00";
 		$hourSlot = calendar::from_hour_to_slot($hour);
         if ($dayOfWeek == -1 || $hourSlot == -1) {

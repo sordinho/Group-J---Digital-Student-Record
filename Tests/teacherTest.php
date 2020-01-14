@@ -104,19 +104,19 @@ class teacherTest extends TestCase
         $this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $timestamp, $classID));
 
         $topicRecordID = perform_SELECT_return_single_value("SELECT ID FROM TopicRecord WHERE Timestamp ='$timestamp'");
-        //printf("topicRecordID: %d\n",$topicRecordID);
+        //debug("topicRecordID: %d\n",$topicRecordID);
 
         // Try to modify the topic record
         $teacherObject->modify_lecture_topic($modifiedDescription, $topicRecordID);
 
         $this->assertEquals($modifiedDescription, perform_SELECT_return_single_value("SELECT Description FROM TopicRecord WHERE ID=$topicRecordID"), "Test non superato");
-        //printf("%s",$modifiedDescription);
+        //debug("%s",$modifiedDescription);
 
     }
 
     public function testInsert_new_lecture_topic()
     {
-        //TODO
+        //TD
         // variables
         $_SESSION["teacherID"] = 1;
         $teacherObject = new Teacher();
@@ -129,10 +129,10 @@ class teacherTest extends TestCase
         $this->assertNotNull($teacherObject->insert_new_lecture_topic($description, $topicID, $dateActualDate, $classID));
 
         $topicRecordID = perform_SELECT_return_single_value("SELECT ID FROM TopicRecord WHERE Timestamp ='$dateActualDate'");
-        //printf("topicRecordID: %d\n",$topicRecordID);
+        //debug("topicRecordID: %d\n",$topicRecordID);
 
         $count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM TopicRecord WHERE ID =$topicRecordID");
-        //printf("Count: %d\n",$count);
+        //debug("Count: %d\n",$count);
 
         $this->assertEquals($count, 1, "Test non superato!");
 
@@ -328,7 +328,7 @@ class teacherTest extends TestCase
 
     public function testInsert_new_assignment()
     {
-        //TODO
+        //TD
         // variables
         $_SESSION["teacherID"] = 1;
         $teacherObject = new Teacher();
@@ -336,24 +336,24 @@ class teacherTest extends TestCase
         $description = "Assignment 1 topic 1";
         $dateActualDate = date("Y-m-d H:i:s");
         $classID = 1;
-        //printf("DbName: %s",DBName);
+        //debug("DbName: %s",DBName);
 
         //perform insertion in the DB
         //$assignmentDescription, $topicID, $timestamp, $classID
         //$this->assertNotNull($teacherObject->insert_new_assignment($description, $topicID, $dateActualDate, $classID));
         $this->assertTrue($teacherObject->insert_new_assignment($description, $topicID, $dateActualDate, $classID));
         //$AssignmentID = perform_SELECT_return_single_value("SELECT ID FROM Homework WHERE Deadline ='$dateActualDate';");
-        //printf("AssignmentID: %d\n",$AssignmentID);
+        //debug("AssignmentID: %d\n",$AssignmentID);
 
         //$count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM Homework WHERE ID =$AssignmentID");
-        //printf("Count: %d\n",$count);
+        //debug("Count: %d\n",$count);
 
         //$this->assertEquals($count, 1, "Test non superato!");
 
         //$this->assertTrue(perform_INSERT_or_DELETE("DELETE FROM TopicRecord WHERE ID=$AssignmentID"));
 
         //Prints for debug
-        //printf("TeacherID: %d\nDateActual: %s\nDescription: %s\nTopicID: %d\nSpecifiClassID: %d",$teacherID,$dateActualDate,$description,$topicID,$specificClassID);
+        //debug("TeacherID: %d\nDateActual: %s\nDescription: %s\nTopicID: %d\nSpecifiClassID: %d",$teacherID,$dateActualDate,$description,$topicID,$specificClassID);
 
     }
 

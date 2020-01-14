@@ -50,7 +50,7 @@ class user {
 			$return = -1;
 		}
 
-		//TODO: extend with name and surname (maybe save that in an array as user_info[] ?)
+		//TD: extend with name and surname (maybe save that in an array as user_info[] ?)
 		// Here using prepared statement to avoid SQLi
 		$query = $mysqli->prepare("SELECT ID, Name, Surname, Password, UserGroup FROM User WHERE Email = ?");
 		$query->bind_param('s', $username);
@@ -363,7 +363,7 @@ class user {
 			$html = "<meta http-equiv='refresh' content='0; url=" . PLATFORM_PATH . "/error.php?errorID=$id&noref=1' />";
 		}
 		print $html;
-		//echo "url=".$this->base_url."/error.php?message=$id";
+		//debug "url=".$this->base_url."/error.php?message=$id";
 		exit();
 	}
 

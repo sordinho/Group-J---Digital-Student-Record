@@ -15,7 +15,7 @@ if (!$sparent->is_logged()) {
 	exit();
 }
 
-// TODO check if child was selected 
+// TD check if child was selected 
 
 # Declare the div where the calendar will be injected, include dependency and custom js script to handle calendar
 $content = '<div id="calendar"></div>

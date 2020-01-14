@@ -387,8 +387,8 @@ class officer extends user {
 		foreach ($data as $hourSlot => $days) {
 			foreach ($days as $day=> $hourOfDay) {
 				$pieces = explode("|", $hourOfDay);
-				//TODO Verificare per ogni materia che sia rispettato il numero di ore
-				//TODO insert nuovo campo nothing per le ore buche
+				//TD Verificare per ogni materia che sia rispettato il numero di ore
+				//TD insert nuovo campo nothing per le ore buche
 				if ($pieces[2] == "update") { 
 					// update nel DB
 					$stmt = $conn->prepare("UPDATE Timetables SET TeacherID = ?, TopicID = ?

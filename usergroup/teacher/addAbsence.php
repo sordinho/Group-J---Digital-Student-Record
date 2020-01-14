@@ -235,7 +235,7 @@ OUT;
         //$string = "aId:".isset($_POST["absence_2"])."---lID:".isset($_POST["late_2"])."---eeID:".isset($_POST["early_exit_hour_2"]);
         //header("Location: addAbsence.php?operation_result=$string");
         //exit();
-        //TODO
+        //TD
         for ($i = 0; $i < sizeof($students_info); $i++) {
             //*******************************************************
             $id = $students_info[$i]['ID'];

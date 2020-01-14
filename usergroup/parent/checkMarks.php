@@ -54,7 +54,7 @@ if ($cur_child == -1) {
     $grades = $sparent->get_grades($cur_child);
     if ($grades) {
         foreach ($grades as $i => $row) {
-            //TODO: CHANGE WHEN get_grades return correct data
+            //TD: CHANGE WHEN get_grades return correct data
             //NOT t.Name, Mark, Timestamp, u.Surname (u.surname is useless)
             $content .= '<tr>
         <th scope="row">' . $row['Timestamp'] . '</th>
