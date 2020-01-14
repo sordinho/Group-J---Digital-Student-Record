@@ -17,7 +17,7 @@ class administrator extends user {
 	 * @param $user_first_name
 	 * @param $user_last_name
 	 * @param $user_email
-	 * @param $usergroup: ONLY teacher OR officer !!!
+	 * @param $usergroup : ONLY teacher OR officer !!!
 	 * @param $fcode
 	 * @return bool
 	 * @throws Exception
@@ -26,8 +26,9 @@ class administrator extends user {
 	function register_new_user($user_first_name, $user_last_name, $user_email, $usergroup, $fcode) {
 		$fields = func_get_args();
 		foreach ($fields as $f) {
-			if ($f == null || $f == '')
+			if ($f == null || $f == '') {
 				return false;
+			}
 		}
 
 		// Check fiscal code validity. Function from user class
@@ -37,8 +38,9 @@ class administrator extends user {
 
 		$mysqli = $this->connectMySQL();
 		$password = $this->random_str(10);
-		if ($password == "")
+		if ($password == "") {
 			return false;
+		}
 
 		//'salt' => custom_function_for_salt(), //eventually define a function to generate a  salt
 		// default is 10, better have a little more security
@@ -89,8 +91,9 @@ class administrator extends user {
 				break;
 		}
 
-		if ($queryInsertSpecificTable == '')
+		if ($queryInsertSpecificTable == '') {
 			return false;
+		}
 		$result = $queryInsertSpecificTable->execute();
 		if (!$result) {
 			printf("Error message: %s\n", $mysqli->error);
