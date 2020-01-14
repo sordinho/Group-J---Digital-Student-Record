@@ -172,8 +172,9 @@ function assign_teacher_to_class(&$teacher_assigned_classes, $teachersByTopic, $
             $candidateteacher_classes = sizeof($teacher_assigned_classes[$teacherID]);
         }
     }
-    if($assigned_teacherID == -1)
+    if($assigned_teacherID == -1) {
         die("Not enough teacher?");
+    }
     #print("Choosen teacher: $assigned_teacherID");
 
     // Add the teacher to the class topic structure
@@ -193,7 +194,9 @@ function get_topicteacher() {
     $topicTeacher = array();
     $conn = connectMySQL();
     $stmt = $conn->prepare("SELECT * FROM TopicTeacherClass");
-    if (!$stmt) return false;
+    if (!$stmt) {
+        return false;
+    }
     $stmt->execute();
     $res = $stmt->get_result();
     if ($res > 0) {
@@ -243,7 +246,9 @@ function get_teachers_by_topic() {
     $teachersByTopic = array();
     $conn = connectMySQL();
     $stmt = $conn->prepare("SELECT * FROM TopicTeacherClass ORDER BY TopicID ASC");
-    if (!$stmt) return false;
+    if (!$stmt) {
+        return false;
+    }
     $stmt->execute();
     $res = $stmt->get_result();
     if ($res > 0) {
@@ -267,7 +272,9 @@ function get_classes_info() {
     $stmt = $conn->prepare("SELECT SpecificClass.ID AS specificClassID, SpecificClass.YearClassID as YearClassID, Section, UploadedPath, CoordinatorTeacherID, TopicID, Hours 
                             FROM SpecificClass 
                             JOIN YearTopicHour ON SpecificClass.YearClassID=YearTopicHour.YearClassID");
-    if (!$stmt) return false;
+    if (!$stmt) {
+        return false;
+    }
     $stmt->execute();
     $res = $stmt->get_result();
     if ($res > 0) {
