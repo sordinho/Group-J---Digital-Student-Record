@@ -854,7 +854,8 @@ CREATE TABLE `TopicRecord` (
         $stmt->bind_param("is",$teacherAvailabilityID,$date);
         $stmt->execute();
         $res = $stmt->get_result();
-        if($res->num_rows>0) return $res->fetch_row()[0];
+        $num = $res->fetch_row();
+        if($res->num_rows>0) return $num[0];
         else return 0;
     }
 
