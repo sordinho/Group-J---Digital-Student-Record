@@ -63,8 +63,8 @@ if ($_GET["action"] != "generateTimetable") {
             #echo "Tothours: ".sizeof($classInfo["neededTopics"]);
             $maxHoursReached = false;
 
-            for ($i=0; $i < 5 && !$maxHoursReached && !$failflag; $i++) { 
-                for ($j=0; $j < 6 && !$maxHoursReached && !$failflag; $j++) { 
+            for ($i=0; $i < 6 && !$maxHoursReached && !$failflag; $i++) { 
+                for ($j=0; $j < 5 && !$maxHoursReached && !$failflag; $j++) { 
                     #print $i.$j."<BR>";
                     if(sizeof($classInfo["neededTopics"]) == 0){
                         $maxHoursReached = true;
@@ -114,8 +114,15 @@ if ($_GET["action"] != "generateTimetable") {
     if(!$failflag){
         foreach ($timetables as $classID => $data) {
             //print $classID."<br> ";
+            if (!$officer->check_weekly_hours($data, $classID)) {
+                die("Error somewhere".$classID);
+            }
             $officer->set_timetable_class($data, $classID);
         }
+        $content.= '
+            <div class="alert alert-success" role="alert">
+            Timetables successfully generated. Go <a href="index.php" class="alert-link">back to your homepage.</a>
+            </div>';
         //var_dump($timetables);
     }
     else{
