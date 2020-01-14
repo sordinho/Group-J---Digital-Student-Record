@@ -36,7 +36,7 @@ class administratorTest extends TestCase
 
         $query = "SELECT u.ID 
                   FROM Officer p, User u 
-                  WHERE p.UserID = u.ID AND u.Name = 'Ned' AND u.Surname = 'Stak' AND u.Email = 'king@inthe.grave';";
+                  WHERE p.UserID = u.ID AND u.Name = 'Ned' AND u.Surname = 'Stark' AND u.Email = 'king@inthe.grave';";
 
         $ID = perform_SELECT_return_single_value($query);
 
