@@ -76,7 +76,7 @@ if ( isset($_POST) && isset($_FILES["file"])) {
                                // echo "$day_n $dayid $j ->".$row[$j];
                                // exit();
 
-                            $classID = -1; //todo : cosa succede se non esiste quella materia per quella classe? al momento semplicemente ignoro il resto
+                            $classID = -1; //td : cosa succede se non esiste quella materia per quella classe? al momento semplicemente ignoro il resto
                             //       della timetable e non la carico... da modificare
                             //  break;
                         }

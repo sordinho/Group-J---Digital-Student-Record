@@ -18,7 +18,7 @@ class teacher extends user {
 	 *                      false           otherwise
 	 * */
 	public function insert_new_lecture_topic($lectureDescription, $topicID, $timestamp, $classID) {
-		//todo : come arriva la data dell'inserzione? UNIX timestamp o già formattata?
+		//td : come arriva la data dell'inserzione? UNIX timestamp o già formattata?
 		//       come salviamo nel db il timestamp? Al momento sto ipotizzando arrivino
 		//       nello stesso formato di actual_date
 		//$classID = -1; //

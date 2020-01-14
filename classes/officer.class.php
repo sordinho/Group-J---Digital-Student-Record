@@ -155,7 +155,7 @@ class officer extends user {
 
 	public function get_parents_without_access_credentials() {
 		$conn = $this->connectMySQL();
-		//todo : to be edited
+		//td : to be edited
 		// Se un parent non ha password cosa c'è in quel campo della tabella User? Stringa vuota o altro?
 		$res = $conn->query("SELECT ID,Email FROM User WHERE UserGroup = 'parent' AND Password = ''");
 		if ($res->num_rows == 0)
@@ -178,7 +178,7 @@ class officer extends user {
 		if ($userID == null)
 			return "";
 		$hashed_password = password_hash($rand_pass, PASSWORD_DEFAULT, $options);
-		//todo check correctness
+		//td check correctness
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("UPDATE User SET Password = ? WHERE ID = ?");
 		if (!$stmt)
@@ -608,7 +608,7 @@ class officer extends user {
 
 	public function register_teacher_data($name, $surname, $email, $fiscalcode, $id) {
 		if (!isset($name) || !isset($surname) || !isset($email) || !isset($fiscalcode) || !isset($id)) return false;
-		//todo UNCOMMENT THIS WHEN ALL FISCAL CODES ARE COHERENT
+		//td UNCOMMENT THIS WHEN ALL FISCAL CODES ARE COHERENT
 		//if( !$this->check_fiscal_code($fiscalcode) ) return false;
 		$conn = $this->connectMySQL();
 		$conn->autocommit(FALSE);

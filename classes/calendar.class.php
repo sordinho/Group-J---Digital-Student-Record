@@ -61,7 +61,7 @@ class calendar
         if ($actual_date >= $max_limit)
             return false;
         //cond 2.2 : giorno della settimana di lecture precedente alla domenica della settimana stessa
-        //todo : check correctness
+        //td : check correctness
         $lecture_day_of_the_week_n = date('N', $lecture_date);
         $actual_day_of_the_week_n = date('N', $actual_date);
         if ($actual_day_of_the_week_n < $lecture_day_of_the_week_n)
