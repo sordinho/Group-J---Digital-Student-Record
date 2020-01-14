@@ -12,7 +12,7 @@ class calendar
         return $d and $d->format($format) === $date;
     }
 
-    public static function is_holiday($date, $format = "Y-m-d", $filename = "../files/holidays.csv")
+    public static function is_holiday($date, $format = "Y-m-d", $filename = FULL_PATH."files/holidays.csv")
     {
         try {
             $d = new DateTime($date);

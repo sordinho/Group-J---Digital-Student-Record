@@ -43,7 +43,6 @@ class administratorTest extends TestCase
         printf($ID);
 
         $this->assertNotNull($ID,$this->printErrorMessage("test_register_new_user_officer","there are no new entries in the teacher table."));
-
     }
 
     public function test_register_new_user_teacher(){
