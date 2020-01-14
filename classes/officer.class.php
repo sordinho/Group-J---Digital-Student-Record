@@ -396,6 +396,8 @@ class officer extends user {
 					$par5 = intval($day);
 					$stmt->bind_param('iiiii', $par1, $par2, $classID, $par4, $par5);
 				} else if ($pieces[2] == "nothing") {
+					$day++;
+					continue;
 					$skip = true;
 				} else {
 					return false;
