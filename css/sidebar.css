@@ -129,7 +129,7 @@ body {
 }
 
 .sidebar.collapsed {
-  width: 0 !important;
+  width: 4rem !important;
 }
 
 @media (max-width: 991px) {
