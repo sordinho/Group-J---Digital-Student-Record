@@ -33,10 +33,9 @@ if ($_GET["action"] != "generateTimetable") {
     // 4. For each class, for each dayOfWeek, for each hourslot: 
         // assignTeacherToClass( teacherID, specificClassID, dayOfWeek, hourSlot)
     // 5. 
-    deleteTimetables();
     $failflag = true;
     for ($max_try=0; $max_try < 40 && $failflag; $max_try++) { 
-
+        deleteTimetables();
         // 1. Load all the teachers into a structured array[Topic][DayOfWeek][HourSlot][teacherID] 
         // and array[teacherID]{topicsList}
         $timetables = array();
