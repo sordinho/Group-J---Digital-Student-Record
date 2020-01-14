@@ -14,8 +14,9 @@ class teacherTest extends TestCase
     private function printErrorMessage($testName, $optionalMsg)
     {
         $toReturn = "teacherTest: error in " . $testName;
-        if (isset($optionalMsg) && !empty($optionalMsg))
+        if (isset($optionalMsg) && !empty($optionalMsg)) {
             $toReturn .= " --> " . $optionalMsg . ".";
+        }
         return $toReturn;
     }
 
@@ -192,8 +193,9 @@ class teacherTest extends TestCase
         $teacher = new teacher();
         $res = $teacher->get_assigned_classes_names();
 
-        if ($res == false)
+        if ($res == false) {
             $this->fail($this->printErrorMessage("testGet_assigned_classes_names", "function returned false instead of an array"));
+        }
         $this->assertNotEquals(0, sizeof($res), $this->printErrorMessage("testGet_assigned_classes_names", "wrong size of returned values"));
         $id1 = $res[0]['ClassID'];
         $this->assertNotEquals(0, $id1, $this->printErrorMessage("testGet_assigned_classes_names", "wrong returned class id"));
@@ -214,15 +216,6 @@ class teacherTest extends TestCase
 
     public function testGet_daily_absences()
     {
-        /*INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `Late`, `ExitHour`) VALUES
-(1, 1, 1, '2019-11-28', 1, 4),
-(2, 2, 1, '2019-11-28', 0, 0),
-(3, 3, 1, '2019-11-28', 0, 4),
-(12, 6, 1, '2019-12-02', 0, 0),
-(13, 3, 1, '2019-12-02', 1, 6),
-(14, 2, 1, '2019-12-02', 1, 6),
-(15, 5, 1, '2019-12-02', 0, 0),
-(16, 4, 1, '2019-12-02', 0, 0);*/
         $_SESSION['teacherID'] = 1;
         $classID = 1;
         $date = date("Y-m-d", mktime(0, 0, 0, 12, 02, 2019));
@@ -241,8 +234,9 @@ class teacherTest extends TestCase
         $teacher = new teacher();
         $res = $teacher->get_assigned_classes();
 
-        if ($res == false)
+        if ($res == false) {
             $this->fail($this->printErrorMessage("testGet_assigned_classes", "function returned false instead of an array"));
+        }
         $this->assertNotEquals(0, sizeof($res), $this->printErrorMessage("testGet_assigned_classes", "wrong size of returned values"));
         $id1 = $res[0]['ClassID'];
         $this->assertNotEquals(0, $id1, $this->printErrorMessage("testGet_assigned_classes_names", "wrong returned class id"));
@@ -253,17 +247,11 @@ class teacherTest extends TestCase
     {
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
-        /*INSERT INTO `TopicRecord` (`ID`, `TeacherID`, `Timestamp`, `Description`, `TopicID`, `SpecificClassID`) VALUES
-(3, 1, '2019-12-02 07:00:00', 'Italy enters the first world war ', 1, 3),
-(5, 1, '2019-12-02 11:00:00', 'The Scientific Revolution ', 1, 3),
-(9, 2, '2019-12-01 23:00:00', 'Italy enters the first world war', 1, 2),
-(10, 1, '2019-12-02 10:00:00', 'Fluid dynamics', 2, 1),
-(12, 1, '2019-12-03 09:00:00', 'angular momentum', 2, 1),
-(13, 7, '2019-12-01 23:00:00', 'Atoms', 4, 3),
-(14, 7, '2019-12-01 23:00:00', 'Lagrangean Relaxation', 3, 3);*/
+
         $res = $teacher->get_topics_record();
-        if ($res == false)
+        if ($res == false) {
             $this->fail($this->printErrorMessage("testGet_topics_record", "function returned false instead of an array"));
+        }
         $this->assertNotEquals(0, sizeof($res), $this->printErrorMessage("testGet_topics_record", "wrong size of returned array"));
         $this->assertTrue(sizeof($res) >= 4, $this->printErrorMessage("testGet_topics_record", "wrong size of returned array"));
         $_SESSION['teacherID'] = 3;
@@ -336,24 +324,7 @@ class teacherTest extends TestCase
         $description = "Assignment 1 topic 1";
         $dateActualDate = date("Y-m-d H:i:s");
         $classID = 1;
-        //debug("DbName: %s",DBName);
-
-        //perform insertion in the DB
-        //$assignmentDescription, $topicID, $timestamp, $classID
-        //$this->assertNotNull($teacherObject->insert_new_assignment($description, $topicID, $dateActualDate, $classID));
         $this->assertTrue($teacherObject->insert_new_assignment($description, $topicID, $dateActualDate, $classID));
-        //$AssignmentID = perform_SELECT_return_single_value("SELECT ID FROM Homework WHERE Deadline ='$dateActualDate';");
-        //debug("AssignmentID: %d\n",$AssignmentID);
-
-        //$count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM Homework WHERE ID =$AssignmentID");
-        //debug("Count: %d\n",$count);
-
-        //$this->assertEquals($count, 1, "Test non superato!");
-
-        //$this->assertTrue(perform_INSERT_or_DELETE("DELETE FROM TopicRecord WHERE ID=$AssignmentID"));
-
-        //Prints for debug
-        //debug("TeacherID: %d\nDateActual: %s\nDescription: %s\nTopicID: %d\nSpecifiClassID: %d",$teacherID,$dateActualDate,$description,$topicID,$specificClassID);
 
     }
 
@@ -448,13 +419,7 @@ class teacherTest extends TestCase
 
     public function test_register_late_arrival()
     {
-        /*INSERT INTO `NotPresentRecord` (`ID`, `StudentID`, `SpecificClassID`, `Date`, `Late`, `ExitHour`) VALUES
-(1, 1, 1, '2019-11-28', 1, 4),
-(2, 2, 1, '2019-11-28', 0, 0),
-(3, 3, 1, '2019-11-28', 0, 4),
-(4, 2, 1, '2020-01-08', 0, 0),
-(5, 2, 1, '2020-01-09', 1, 5);
-*/
+
         $_SESSION["teacherID"] = 1;
         $studentID = 2;
         $teacher = new teacher();
@@ -487,8 +452,9 @@ class teacherTest extends TestCase
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
         $res = $teacher->get_uploaded_material();
-        if (!$res)
+        if (!$res) {
             $this->fail("Returned value should be an array , not a boolean value equals to false");
+        }
         $this->assertTrue(sizeof($res) > 0, $this->printErrorMessage("testGet_uploaded_material", "size of the returned array should be > than 0"));
 
         $_SESSION['teacherID'] = -2;
@@ -573,7 +539,8 @@ class teacherTest extends TestCase
         $this->assertFalse($res, $this->printErrorMessage("testRegister_new_note", "operation should have returned false"));
     }
 
-    public function testGet_Availability(){
+    public function testGet_Availability()
+    {
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
         $res = $teacher->get_availability();
@@ -581,19 +548,20 @@ class teacherTest extends TestCase
         $this->assertNotEmpty($res);
     }
 
-    public function testGet_booked_meetings(){
+    public function testGet_booked_meetings()
+    {
         $_SESSION['teacherID'] = 9999;
         $teacher = new teacher();
         $date = "2020-01-15";
         $teacherAvailabilityID = 9999;
 
-        $res = $teacher->get_booked_meetings($date,$teacherAvailabilityID);
-        $this->assertEquals(1,$res);
+        $res = $teacher->get_booked_meetings($date, $teacherAvailabilityID);
+        $this->assertEquals(1, $res);
 
-        $res = $teacher->get_booked_meetings($date,null);
+        $res = $teacher->get_booked_meetings($date, null);
         $this->assertFalse($res);
 
-        $res = $teacher->get_booked_meetings(null,$teacherAvailabilityID);
+        $res = $teacher->get_booked_meetings(null, $teacherAvailabilityID);
         $this->assertFalse($res);
     }
 
@@ -620,61 +588,61 @@ class teacherTest extends TestCase
     {
         //($studentID,$termID,$specificClassID)
         $specificclassID = 1;
-        $termID=1;
-        $studentID=8888;
+        $termID = 1;
+        $studentID = 8888;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
-        $this->assertFalse($teacher->has_final_grades($studentID,$termID,$specificclassID));
+        $this->assertFalse($teacher->has_final_grades($studentID, $termID, $specificclassID));
 
-        $studentID=9999;
-        $this->assertTrue($teacher->has_final_grades($studentID,$termID,$specificclassID));
+        $studentID = 9999;
+        $this->assertTrue($teacher->has_final_grades($studentID, $termID, $specificclassID));
     }
 
     public function testGet_actual_term()
     {
-        $termID=1;
+        $termID = 1;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
-        $this->assertEquals($termID,$teacher->get_actual_term());
+        $this->assertEquals($termID, $teacher->get_actual_term());
 
     }
 
     public function testGet_missing_term_marks()
     {
-        $termID=1;
-        $studentID=2;
-        $specificclassid=1;
+        $termID = 1;
+        $studentID = 2;
+        $specificclassid = 1;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
-        $this->assertNotEmpty($teacher->get_missing_term_marks($studentID,$termID,$specificclassid));
+        $this->assertNotEmpty($teacher->get_missing_term_marks($studentID, $termID, $specificclassid));
 
-        $studentID=1;
-        $this->assertNotEmpty($teacher->get_missing_term_marks($studentID,$termID,$specificclassid));
+        $studentID = 1;
+        $this->assertNotEmpty($teacher->get_missing_term_marks($studentID, $termID, $specificclassid));
 
     }
 
     public function testGet_student_stamp_by_id()
     {
-        $studentID=1;
+        $studentID = 1;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
         $this->assertEquals("Lozano Hirving", $teacher->get_student_stamp_by_id($studentID));
 
-        $studentID=24;
+        $studentID = 24;
         $this->assertFalse($teacher->get_student_stamp_by_id($studentID));
 
     }
 
     public function testGet_average_mark_for_topic()
     {
-        $studentID=6;
-        $topicID=1;
+        $studentID = 6;
+        $topicID = 1;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
-        $this->assertEquals(8.5, $teacher->get_average_mark_for_topic($topicID,$studentID));
+        $this->assertEquals(8.5, $teacher->get_average_mark_for_topic($topicID, $studentID));
 
-        $studentID=24;
-        $this->assertEquals(0,$teacher->get_average_mark_for_topic($topicID,$studentID));
+        $studentID = 24;
+        $this->assertEquals(0, $teacher->get_average_mark_for_topic($topicID, $studentID));
     }
 
     public function testSet_final_grade()
@@ -682,51 +650,51 @@ class teacherTest extends TestCase
         //public function set_final_grade($value){
         //$value=StudentID_TopicID_Grade_TermID
 
-        $value="1_3_5_1";
-        $classID=1;
+        $value = "1_3_5_1";
+        $classID = 1;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
         $this->assertEquals($classID, $teacher->set_final_grade($value));
 
-        $value="1__5_1";
+        $value = "1__5_1";
         $this->assertFalse($teacher->set_final_grade($value));
 
     }
 
     public function testGet_specificclassid_by_student()
     {
-        $classID=1;
-        $studentID=1;
+        $classID = 1;
+        $studentID = 1;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
         $this->assertEquals($classID, $teacher->get_specificclassid_by_student($studentID));
 
-        $studentID=2;
+        $studentID = 2;
         $this->assertEquals($classID, $teacher->get_specificclassid_by_student($studentID));
 
-        $classID=2;
-        $studentID=9;
+        $classID = 2;
+        $studentID = 9;
         $this->assertEquals($classID, $teacher->get_specificclassid_by_student($studentID));
 
-        $studentID=24;
+        $studentID = 24;
         $this->assertFalse($teacher->get_specificclassid_by_student($studentID));
     }
 
     public function testGet_students_by_class_id2()
     {
-        $classID=1;
+        $classID = 1;
         $_SESSION['teacherID'] = 1;
         $teacher = new teacher();
-        $this->assertCount(8,$teacher->get_students_by_class_id($classID));
+        $this->assertCount(8, $teacher->get_students_by_class_id($classID));
 
-        $classID=2;
-        $this->assertCount(3,$teacher->get_students_by_class_id($classID));
+        $classID = 2;
+        $this->assertCount(3, $teacher->get_students_by_class_id($classID));
 
-        $classID=3;
-        $this->assertCount(1,$teacher->get_students_by_class_id($classID));
+        $classID = 3;
+        $this->assertCount(1, $teacher->get_students_by_class_id($classID));
 
-        $classID=4;
-        $this->assertCount(0,$teacher->get_students_by_class_id($classID));
+        $classID = 4;
+        $this->assertCount(0, $teacher->get_students_by_class_id($classID));
 
     }
 
@@ -734,14 +702,14 @@ class teacherTest extends TestCase
     {
         unset($_SESSION);
         $teacher = new teacher();
-        $this->assertEquals(-1, $teacher->add_availability("no_day","no_hour"));
-        $this->assertEquals(-1, $teacher->add_availability("Saturday","15:00"));
-        $this->assertEquals(-1, $teacher->add_availability(-1,-1));
-        $this->assertEquals(-3, $teacher->add_availability("Monday","08:00"));
+        $this->assertEquals(-1, $teacher->add_availability("no_day", "no_hour"));
+        $this->assertEquals(-1, $teacher->add_availability("Saturday", "15:00"));
+        $this->assertEquals(-1, $teacher->add_availability(-1, -1));
+        $this->assertEquals(-3, $teacher->add_availability("Monday", "08:00"));
         $_SESSION['teacherID'] = 1; // Marco Torchiano (userID=3)
-        $this->assertEquals(-4, $teacher->add_availability("Monday","08:00"));
-        $this->assertEquals(-4, $teacher->add_availability("Monday","10:00"));
-        $this->assertEquals(1, $teacher->add_availability("Monday","12:00"));
+        $this->assertEquals(-4, $teacher->add_availability("Monday", "08:00"));
+        $this->assertEquals(-4, $teacher->add_availability("Monday", "10:00"));
+        $this->assertEquals(1, $teacher->add_availability("Monday", "12:00"));
     }
 
 
