@@ -314,7 +314,7 @@ class officer extends user {
 	 * Delete all the timetables
 	 * @return bool
 	 */
-	public function delete_timetables($classID) {
+	public function delete_timetables() {
 		$conn = $this->connectMySQL();
 		$res = $conn->query("DELETE FROM Timetables WHERE 1");
 		return $res;
@@ -324,7 +324,7 @@ class officer extends user {
 	 * @param $classID
 	 * @return bool
 	 */
-	public function delete_timetable() {
+	public function delete_timetable($classID) {
 		$conn = $this->connectMySQL();
 		$stmt = $conn->prepare("DELETE FROM Timetables WHERE SpecificClassID = ?");
 		$stmt->bind_param("i", $classID);
