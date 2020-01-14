@@ -380,13 +380,14 @@ class officer extends user {
 				$pieces = explode("|", $hourOfDay);
 				//TODO Verificare per ogni materia che sia rispettato il numero di ore
 				//TODO insert nuovo campo nothing per le ore buche
-				if ($pieces[2] == "update") {
+				if ($pieces[2] == "update") { 
 					// update nel DB
 					$stmt = $conn->prepare("UPDATE Timetables SET TeacherID = ?, TopicID = ?
                                                     WHERE SpecificClassID = ?
                                                     AND DayOfWeek = ? 
                                                     AND HourSlot = ?;");
 					$stmt->bind_param('iiiii', intval($pieces[1]), intval($pieces[0]), $classID, $day, $hourSlot);
+					$stmt->execute();
 				} else if ($pieces[2] == "insert") {
 					// insert nel DB
 					$stmt = $conn->prepare("INSERT INTO Timetables (TeacherID, TopicID, SpecificClassID,HourSlot,DayOfWeek) VALUES (?,?,?,?,?);");
@@ -395,14 +396,10 @@ class officer extends user {
 					$par4 = intval($hourSlot);
 					$par5 = intval($day);
 					$stmt->bind_param('iiiii', $par1, $par2, $classID, $par4, $par5);
+					$stmt->execute();
 				} else if ($pieces[2] == "nothing") {
-					$day++;
 					continue;
-					$skip = true;
 				} else {
-					return false;
-				}
-				if (!$skip && !$stmt->execute()) {
 					return false;
 				}
 				$day++;
