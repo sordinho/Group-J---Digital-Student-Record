@@ -301,13 +301,9 @@ class officerTest extends TestCase {
 		// Check number of days = 5
 		$this->assertEquals(5, sizeof($storedTimetable));
 
-		$totalHours = 0;
 		for ($i = 0; $i < 5; $i++) {
-			$totalHours += sizeof($storedTimetable[$i]);
+			$this->assertNotEquals(0,sizeof($storedTimetable[$i]));
 		}
-
-		// 1st year has only 25 hours
-		$this->assertEquals(25, $totalHours);
 	}
 
 	public function testPublishCommunication() {
