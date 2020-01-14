@@ -329,6 +329,10 @@ class sparentTest extends TestCase
         $parent = new sparent();
         $parent->set_current_num_unseen_notes(-1);
         $this->assertEquals(0,$_SESSION['unseenNotes_-1']);
+
+        perform_INSERT_or_DELETE("INSERT INTO NoteRecord (StudentID, NoteID, Seen) VALUES (2, 5, 0);");
+        perform_INSERT_or_DELETE("INSERT INTO NoteRecord (StudentID, NoteID, Seen) VALUES (2, 6, 0);");
+
         $parent->set_current_num_unseen_notes(2);
         $this->assertTrue($_SESSION['unseenNotes_2']>=2);
     }
@@ -340,7 +344,11 @@ class sparentTest extends TestCase
         $teacher = new teacher();
         $teacher->register_note_record(4,1);
         $res = $parent->get_unseen_notes(-1);
-        $this->assertTrue(sizeof($res)>=3);
+        $this->assertTrue(sizeof($res)>=1);
+
+        perform_INSERT_or_DELETE("INSERT INTO NoteRecord (StudentID, NoteID, Seen) VALUES (2, 5, 0);");
+        perform_INSERT_or_DELETE("INSERT INTO NoteRecord (StudentID, NoteID, Seen) VALUES (2, 6, 0);");
+
         $res = $parent->get_unseen_notes(2);
         $this->assertTrue(sizeof($res)>=2);
         $res = $parent->get_unseen_notes(4);
@@ -402,8 +410,23 @@ class sparentTest extends TestCase
         $_SESSION['parentID']=2;
         $parent = new sparent();
 
+        $count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM FinalGrades FG WHERE StudentID = $studentID1 AND TermID = $termID1");
+        if ($count == 0) {
+            perform_INSERT_or_DELETE("INSERT INTO FinalGrades(StudentID, TopicID, Mark, TermID) VALUES($studentID1, 1, 8, $termID1)");
+        }
+
         $this->assertNotEmpty($parent->get_final_term_marks_by_studentID($studentID1,$termID1));
+
+        $count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM FinalGrades FG WHERE StudentID = $studentID2 AND TermID = $termID1");
+        if ($count == 0) {
+            perform_INSERT_or_DELETE("INSERT INTO FinalGrades(StudentID, TopicID, Mark, TermID) VALUES($studentID2, 1, 8, $termID1)");
+        }
         $this->assertNotEmpty($parent->get_final_term_marks_by_studentID($studentID2,$termID1));
+
+        $count = perform_SELECT_return_single_value("SELECT COUNT(*) FROM FinalGrades FG WHERE StudentID = $studentID3 AND TermID = $termID2");
+        if ($count == 0) {
+            perform_INSERT_or_DELETE("INSERT INTO FinalGrades(StudentID, TopicID, Mark, TermID) VALUES($studentID3, 1, 8, $termID2)");
+        }
         $this->assertFalse($parent->get_final_term_marks_by_studentID($studentID3,$termID2));
     }
 
@@ -411,8 +434,9 @@ class sparentTest extends TestCase
 		$_SESSION['parentID']=2;
 		$parent = new sparent();
 
+        unset($_SESSION['curChild']);
 		// No child for the parent
-		$this->assertEquals(0,sizeof($parent->get_teacher_availability()));
+        $this->assertEquals(0, sizeof($parent->get_teacher_availability()));
 
 		// Set children info in session
 		$parent->set_current_child(2);
@@ -431,10 +455,11 @@ class sparentTest extends TestCase
 
 		$datetime = new DateTime('tomorrow');
 		$tomorrow = $datetime->format('Y-m-d');
-		$queryInsert = "INSERT INTO MeetingReservation (ParentID,TeacherAvailabilityID,Date,Timeslot) VALUES (10,3,'".$tomorrow."',0)";
+
+		$queryInsert = "INSERT INTO MeetingReservation (ParentID,TeacherAvailabilityID,Date,Timeslot) VALUES (10,8,'".$tomorrow."',0)";
 		perform_INSERT_or_DELETE($queryInsert);
 
-		$this->assertEquals(1,sizeof($parent->get_future_reservations_by_teacher_availability_id(3)));
+		$this->assertEquals(1,sizeof($parent->get_future_reservations_by_teacher_availability_id(8)));
 	}
 
 	public function testBook_meeting(){
@@ -454,7 +479,7 @@ class sparentTest extends TestCase
 		$this->assertFalse($parent->book_meeting(1,date("Y-m-d"),3,null));
 
 		// Valid meeting
-		$this->assertTrue($parent->book_meeting(1,"2020-01-29",3,0));
+		$this->assertTrue($parent->book_meeting(1,"2020-01-27",3,0));
 	}
 
 	public function testGetLectureTopics(){
@@ -477,7 +502,7 @@ class sparentTest extends TestCase
          */
 
         // assuming childID 13 is in class 3, which has no timetable
-        $this->assertFalse($parent->get_timetable(13));
+        $this->assertFalse($parent->get_timetable(19));
 
         /*
          * get result > 0
