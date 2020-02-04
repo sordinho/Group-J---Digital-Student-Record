@@ -31,6 +31,7 @@ Digital Student Record project. Softeng 2 Course @ PoliTo
 - 44 Story Points out of 44
 - [Docker Image](https://hub.docker.com/repository/docker/se2polito/team-j)
 - [Demo Presentation](https://docs.google.com/presentation/d/1jqTpf5la1wleiKWul7YWuJ8tGjcmK8aboKAzr6-C4l0/edit?usp=sharing)
+- [Retrospective](https://docs.google.com/presentation/d/11TFVCtlbntwyJdcHwDfff_V6KwWQe8Be7OAuig-jqqk/edit?usp=sharing)
 
 ## Usernames and password :e-mail: :paperclip:
 Usernames and passwords for testing purposes can be found [HERE](USERNAMES.md)
